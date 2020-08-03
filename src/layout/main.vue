@@ -7,7 +7,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 .itv-page-content{
     flex: 1;
     overflow-y: auto;

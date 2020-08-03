@@ -1,29 +1,17 @@
-import render from '../libs/render'
-import { timers } from 'jquery'
-var dom
+
 
 export default {
     created() {},
 
-    computed: {
-        tempMonth() {
-            //
-            var month = []
-            for (let i = 1; i <= 31; i++) {
-                month.push[
-                    {
-                        day: i,
-                    }
-                ]
-            }
-            return month
-        },
-    },
     data() {
         return {
             monthDaysArr: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+            
         }
     },
+    computed:{
+        
+    }, 
     methods: {
         //计算下个月是否存在同一天
         calcNextSameDay(value) {
@@ -147,6 +135,7 @@ export default {
                     week: _dayWeek,
                     year: _year,
                     month: _month,
+                    number: parseInt(_year+''+_month),
                     msg: _year + '/' + _month + '/' + _day,
                     time: new Date(_year + '/' + _month + '/' + _day).getTime(),
                     id: this.getId(),
@@ -179,6 +168,7 @@ export default {
                     week: dayWeek,
                     year: year,
                     month: month,
+                    number:parseInt(year+''+month),
                     msg: year + '/' + month + '/' + i,
                     time: new Date(year + '/' + month + '/' + i).getTime(),
                     id: this.getId(),
@@ -225,6 +215,7 @@ export default {
                     year: _year,
                     month: _month,
                     day: lastDay,
+                    number:parseInt(_year+''+_month),
                     msg: _year + '/' + _month + '/' + lastDay,
                     id: this.getId(),
                     time: new Date(_year + '/' + _month + '/' + lastDay).getTime(),
@@ -252,6 +243,7 @@ export default {
                     week: _dayWeek,
                     year: _year,
                     month: _month,
+                    number:parseInt(_year+''+_month),
                     msg: _year + '/' + _month + '/' + i,
                     time: new Date(_year + '/' + _month + '/' + i).getTime(),
                     id: this.getId(),

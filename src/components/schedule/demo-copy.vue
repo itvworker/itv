@@ -1,11 +1,9 @@
 <template>
     <itv-container>
         <itv-header>schedule</itv-header>
-        <div class="pt79"></div>
         <slide-calendar ref="calendar" min="2020/7" max="2020/9"  />
         <div class="itv-page-content" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
-            <div class="pt6"></div>
-            <div class="pt5"></div>
+                
         </div>
 
     </itv-container>
@@ -41,18 +39,7 @@
 </script>
 
 <style lang="less" scoped>
-.pt79{
-    height: 79ipx ;
-}
 
-.pt6{
-    height: 300ipx;
-    background-color: #ddd;
-}
-.pt5{
-    height: 250ipx;
-    background-color: #ccc;
-}
 </style>
 
 

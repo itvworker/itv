@@ -31,7 +31,7 @@
                 :class="{animating: isAni, 'slow-action':isMove}"
                 @transitionend="aniamteend"
             >
-                <div class="week-item">
+                <div class="week-item" :class="{'none-item':isWeekMin}">
                     <div
                         class="day-item"
                         :class="{'day-active':currentValue===item.time}"
@@ -53,7 +53,7 @@
                         <div class="active">{{item.day}}</div>
                     </div>
                 </div>
-                <div class="week-item">
+                <div class="week-item" :class="{'none-item':isWeekMax}">
                     <div
                         class="day-item"
                         :class="{'day-active':currentValue===item.time}"
@@ -72,7 +72,7 @@
                 @transitionend="aniamteend"
                 :style="{transform: 'translateX('+this.calendarX+'px)'}"
             >
-                <div class="month-item">
+                <div class="month-item" :class="{'none-item':isCalendarMinMonth}">
                     <div
                         class="day-item"
                         :class="{'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
@@ -93,7 +93,7 @@
                         <div class="active">{{item.day}}</div>
                     </div>
                 </div>
-                <div class="month-item">
+                <div class="month-item" :class="{'none-item':isCalendarMaxMonth}">
                     <div
                         class="day-item"
                         :class="{'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
@@ -129,6 +129,14 @@ export default {
         value: {
             type: String,
             value: formatDate("", "Y/M/D")
+        },
+        max: {
+            type: String,
+            value: ''
+        },
+        min: {
+            type: String,
+            value: ''
         },
         //星期的文字
         weekText: {

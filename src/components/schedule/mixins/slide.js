@@ -27,12 +27,56 @@ export default {
             isClickChange: false, //是否为点击切换上一个月,或下一个月
         }
     },
+
     mounted() {
         dom = render(this.$refs.slide)
         wdom = render(this.$refs.week)
         hdom = slideHeight(this.$refs.calendar)
     },
+    computed: {
+        //计算当有是不是已经是最小月值
+        isCalendarMinMonth() {
+            if(this.min){
+                let temp = new Date(this.min+'/1').getTime();
+                if(temp > this.prevMonth[14].time) {
+                    return true
+                }   
+            }
+            return false;
+        },
+        isCalendarMaxMonth() {
+            if(this.max){
+                let temp = new Date(this.max+'/28').getTime();
+                if(temp > this.nextMonth[14].time) {
+                    return false
+                }   
+            }
+            return true;
+        },
+        isWeekMin() {
+            if(this.min) {
+                let temp = new Date(this.min+'/1').getTime();
+                if(this.prevWeek[6].time<temp){
+                    return true
+                }
+            }
+            return false;
+        },
+        isWeekMax() {
+            if(this.max) {
+                let arr = this.max.split('/');
+                arr[1] = parseInt(arr[1])
+                let number = parseInt(arr[0]+''+arr[1]);    
+                
+                if(this.nextWeek[0].number>number){
+                    return true
+                }
+            }
+            return false;
+        }      
+    },
     methods: {
+       
         aniamteend() {
             this.isAni = false
             if (this.calendarStatus === 1) {
@@ -162,6 +206,8 @@ export default {
             let y = self[0].pageY
 
             let obj = this.getDirection(this.moveX, this.moveY, x, y)
+            
+          
             //判断是否滑动并判断滑动的类型
             if (obj.type > 0 && !this.isMove) {
                 if (obj.type === 1 || obj.type === 2) {
@@ -180,12 +226,11 @@ export default {
 
             if (obj.type > 0 && this.isMove) {
                 //   e.preventDefault();
-
                 this.moveX = x
                 this.moveY = y
                 switch (this.screenType) {
                     case 'vertical':
-                        this.y += obj.angy
+                        this.y += Math.round(obj.angy)
                         if (this.y <= this.rowHeight) {
                             this.y = this.rowHeight
                             this.calendarStatus = 0
@@ -195,16 +240,26 @@ export default {
                             this.calendarStatus = 1
                         }
                         this.setShowTop()
-
                         hdom(this.y)
                         break
                     case 'progress':
-                        this.x += obj.angx
+
+                        let isMin = (this.isCalendarMinMonth || this.isWeekMin) && this.x > -this.elWidth && obj.angx > 0;
+                        let isMax = (this.isCalendarMaxMonth || this.isWeekMax )&&  this.x < -this.elWidth &&  obj.angx < 0;
+
+                        
+                        if(isMin||isMax){
+                            this.x += Math.round(obj.angx*0.3) 
+                        }else{
+                            this.x += Math.round(obj.angx)
+                        }
+                        
                         if (this.calendarStatus === 0) {
                             wdom(-this.x, 0, 1)
                         } else {
                             dom(-this.x, 0, 1)
                         }
+                        
 
                         break
                 }
@@ -212,6 +267,8 @@ export default {
         },
 
         touchend(e) {
+            
+            
             if (this.aniStatus) {
                 e.preventDefault()
                 e.stopPropagation()
@@ -250,32 +307,47 @@ export default {
                     let now = new Date().getTime()
                     let dis = this.moveX - this.startX
                     let isfast = Math.abs(dis) > 30 && now - this.startTime < 300 //是否快速滑过
+                   
                     if ((isfast && dis > 0) || x >= -this.elWidth * (2 / 3)) {
-                        this.x = 0
-
-                        if (this.calendarStatus === 0) {
+                        
+                        if (this.calendarStatus === 0 && !this.isWeekMin) {
+                            this.x = 0
                             this.weekX = 0
-                        } else {
-                            this.calendarX = 0
+                            this.endStatus = 0
+                            return
                         }
-                        this.endStatus = 0
-                        return
+                        
+                        //日历
+                        if(this.calendarStatus === 1 && !this.isCalendarMinMonth) {
+                            this.x = 0
+                            this.calendarX = 0
+                            this.endStatus = 0
+                            return
+                        }
+                        
                     }
 
                     if ((isfast && dis < 0) || x <= -this.elWidth - this.elWidth / 3) {
-                        this.x = -this.elWidth * 2
-
-                        if (this.calendarStatus === 0) {
+                       
+                        if (this.calendarStatus === 0 && !this.isWeekMax) {
+                            this.x = -this.elWidth * 2
                             this.weekX = -this.elWidth * 2
-                        } else {
+                            this.endStatus = 2
+                            return
+                        } 
+                        if(this.calendarStatus === 1 &&  !this.isCalendarMaxMonth) {
                             this.calendarX = -this.elWidth * 2
+                            this.x = -this.elWidth * 2
+                            this.endStatus = 2
+                            return
                         }
-                        this.endStatus = 2
-                        return
+                        
                     }
+
+
+
                     this.endStatus = 1
                     this.x = -this.elWidth
-
                     if (this.calendarStatus === 0) {
                         this.weekX = -this.elWidth
                         wdom(this.elWidth, 0, 1)
@@ -293,7 +365,7 @@ export default {
             var angy = endy - starty
             var result = 0
             //如果滑动距离太短
-            if (Math.abs(angx) < 1.5 && Math.abs(angy) < 1.5) {
+            if (Math.abs(angx) < 3 && Math.abs(angy) < 3) {
                 return result
             }
             var angle = this.getAngle(angx, angy)
