@@ -10,7 +10,24 @@ export default {
         }
     },
     computed:{
-        
+        maxMonthNumber() {
+            if(this.max) {
+                let arr = this.max.split('/');
+                arr[1] = parseInt(arr[1])
+                let number = parseInt(arr[0]+''+arr[1]);    
+                return number
+            }
+            return 0
+        },
+        minMonthNumber() {
+            if(this.min) {
+                let arr = this.min.split('/');
+                arr[1] = parseInt(arr[1])
+                let number = parseInt(arr[0]+''+arr[1]);    
+                return number
+            }
+            return 0
+        },
     }, 
     methods: {
         //计算下个月是否存在同一天
@@ -76,7 +93,7 @@ export default {
 
         //查找索引
         findWeekIndex(time) {
-            let i = 0
+          
             for (let i = 0, l = this.nowWeek.length; i < l; i++) {
                 if (this.nowWeek[i].time === time) {
                     this.currentIndexWeek = i
@@ -86,7 +103,7 @@ export default {
         },
 
         findWeekRow(time) {
-            let i = 0
+          
             for (let i = 0, l = this.nowMonth.length; i < l; i++) {
                 if (this.nowMonth[i].time === time) {
                     this.rows = parseInt(i / 7)

@@ -1,22 +1,5 @@
 export default [
-    {
-        path: '/',
-        name: 'itv_home',
-        component: () => import('@/pages/index.vue'),
-        meta: {
-            keepAlive: false,
-            title: '首页',
-        },
-    },
-    {
-        path: '/demo',
-        name: 'itv_dome',
-        component: () => import('@/pages/demo.vue'),
-        meta: {
-            keepAlive: false,
-            title: '首页',
-        },
-    },
+   
     {
         path: '/demo/picker',
         name: 'itv_picker',
@@ -91,7 +74,7 @@ export default [
     },
     {
         path: '/demo/scroller',
-        name: 'itv_popup',
+        name: 'itv_scroller',
         component: () => import('@/components/scroller/demo.vue'),
         meta: {
             keepAlive: false,

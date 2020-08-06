@@ -1,5 +1,7 @@
 <template lang="html">
-       <router-view />
+    
+        <router-view />
+
 </template>
 
 <script>
@@ -43,6 +45,7 @@ body,html{
     padding: 0px;
     margin: 0px;
     height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 #app {
     background-color: @itv-page-white;

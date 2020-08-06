@@ -52,7 +52,7 @@ export default {
             news: [],
             ismore: false,
             isloading: false,
-            index:0
+            index: 0
         }
     },
     methods: {

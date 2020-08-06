@@ -34,16 +34,7 @@ module.exports = {
             {
                 test: /\.vue$/,
                 use: [
-                    {loader: 'vue-loader'},
-                    {
-                        loader: 'units-loader',
-                        options: {
-                            unit: 'rem',
-                            divisor: 37.5,
-                            accuracy: 6,
-                            raw: 'ipx'
-                        }
-                    }
+                    {loader: 'vue-loader'}
                 ]
 
             },
@@ -58,25 +49,11 @@ module.exports = {
                         loader: 'css-loader',
                     },
                     {
-                        loader: 'units-loader',
-                        options: {
-                            unit: 'rem',
-                            divisor: 37.5,
-                            accuracy: 6,
-                            raw: 'ipx'
-                        }
-                    },
-                    {
                         loader: 'postcss-loader'
                     },
                     {
-                        loader: 'less-loader',
-                        options: {
-                            importLoaders: 5,
-                            javascriptEnabled: true
-                        }
+                        loader: 'less-loader'
                     },
-
                     {
                         loader: 'sass-resources-loader',
                         options: {
@@ -91,8 +68,7 @@ module.exports = {
                 test: /\.js$/,
                 use: [
                     {loader: 'babel-loader'}
-                ],
-                include: [resolve('src'), resolve('packages'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+                ]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -142,12 +118,5 @@ module.exports = {
             template: 'public/index.dev.html',
             inject: true
         })
-        // new CopyWebpackPlugin([
-        //     {
-        //         from: path.resolve(__dirname, '../public'),
-        //         to: '.',
-        //         ignore: ['.*'],
-        //     },
-        // ]),
     ]
 }

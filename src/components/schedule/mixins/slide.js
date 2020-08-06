@@ -25,36 +25,47 @@ export default {
             startTime: 0, //屏幕手指接触时间
             calendarStatus: 0, //0为星期滑动，1为月滑动
             isClickChange: false, //是否为点击切换上一个月,或下一个月
+            dom:'',
+            wdom: '',
+            hdom: ''
         }
     },
 
     mounted() {
-        dom = render(this.$refs.slide)
-        wdom = render(this.$refs.week)
-        hdom = slideHeight(this.$refs.calendar)
+        this.dom = render(this.$refs.slide)
+        this.wdom = render(this.$refs.week)
+        this.hdom = slideHeight(this.$refs.calendar)
     },
     computed: {
         //计算当有是不是已经是最小月值
         isCalendarMinMonth() {
             if(this.min){
-                let temp = new Date(this.min+'/1').getTime();
-                if(temp > this.prevMonth[14].time) {
+                let arr = this.min.split('/');
+                arr[1] = parseInt(arr[1])
+                let number = parseInt(arr[0]+''+arr[1]);   
+                console.log(number,this.prevMonth[14].number);
+                if(number > this.prevMonth[14].number) {
                     return true
                 }   
             }
+            
             return false;
         },
         isCalendarMaxMonth() {
             if(this.max){
-                let temp = new Date(this.max+'/28').getTime();
-                if(temp > this.nextMonth[14].time) {
-                    return false
-                }   
+                let arr = this.max.split('/');
+                arr[1] = parseInt(arr[1])
+                let number = parseInt(arr[0]+''+arr[1]);   
+             
+                if(number < this.nextMonth[14].number) {
+                    return true
+                }      
             }
-            return true;
+            return false;
         },
         isWeekMin() {
             if(this.min) {
+                
                 let temp = new Date(this.min+'/1').getTime();
                 if(this.prevWeek[6].time<temp){
                     return true
@@ -67,11 +78,11 @@ export default {
                 let arr = this.max.split('/');
                 arr[1] = parseInt(arr[1])
                 let number = parseInt(arr[0]+''+arr[1]);    
-                
                 if(this.nextWeek[0].number>number){
                     return true
                 }
             }
+       
             return false;
         }      
     },
@@ -239,8 +250,9 @@ export default {
                             this.y = this.elHeight
                             this.calendarStatus = 1
                         }
+                        
                         this.setShowTop()
-                        hdom(this.y)
+                        this.hdom(this.y)
                         break
                     case 'progress':
 
@@ -255,9 +267,9 @@ export default {
                         }
                         
                         if (this.calendarStatus === 0) {
-                            wdom(-this.x, 0, 1)
+                            this.wdom(-this.x, 0, 1)
                         } else {
-                            dom(-this.x, 0, 1)
+                            this.dom(-this.x, 0, 1)
                         }
                         
 
@@ -279,10 +291,15 @@ export default {
             this.isMove = false
             let screenType = this.screenType
             this.screenType = ''
-            let self = e.targetTouches
+            
+            let now = new Date().getTime()
+            let dis = screenType==='progress'?this.moveX - this.startX:this.moveY - this.startY
+            let isfast = Math.abs(dis) > 20 && now - this.startTime < 200
+            let x = this.x
+            let y = this.y
             switch (screenType) {
                 case 'vertical':
-                    if (this.y <= this.rowHeight) {
+                    if (this.y <= this.rowHeight  ) {
                         this.slideHeight = this.rowHeight
                         return
                     }
@@ -291,7 +308,8 @@ export default {
                         return
                     }
                     this.aniStatus = true
-                    if (this.y > this.rowHeight * 3) {
+                     
+                    if ((!isfast && this.y > this.rowHeight * 3) || (isfast && dis > 0 )) {
                         window.requestAnimationFrame(this.aniUnfold)
                         return
                     }
@@ -302,11 +320,7 @@ export default {
                     e.stopPropagation()
                     this.isAni = true
                     this.aniStatus = true
-                    let x = this.x
-
-                    let now = new Date().getTime()
-                    let dis = this.moveX - this.startX
-                    let isfast = Math.abs(dis) > 30 && now - this.startTime < 300 //是否快速滑过
+                     //是否快速滑过
                    
                     if ((isfast && dis > 0) || x >= -this.elWidth * (2 / 3)) {
                         
@@ -350,10 +364,10 @@ export default {
                     this.x = -this.elWidth
                     if (this.calendarStatus === 0) {
                         this.weekX = -this.elWidth
-                        wdom(this.elWidth, 0, 1)
+                        this.wdom(this.elWidth, 0, 1)
                     } else {
                         this.calendarX = -this.elWidth
-                        dom(this.elWidth, 0, 1)
+                        this.dom(this.elWidth, 0, 1)
                     }
 
                 default:
@@ -406,36 +420,37 @@ export default {
                 this.showTop = false
             }
         },
-
+        //展开
         aniUnfold() {
             this.y += this.step
             if (this.y >= this.elHeight) {
                 this.aniStatus = false
-                hdom(this.y)
+                this.y = this.elHeight
+                this.hdom(this.y)
                 this.showTop = false
                 this.calendarStatus = 1
-                this.slideHeight = this.y
+                this.slideHeight = this.elHeight;
                 this.setShowTop()
                 return
             }
 
-            hdom(this.y)
+            this.hdom(this.y)
             this.setShowTop()
             window.requestAnimationFrame(this.aniUnfold)
         },
-
+        //收缩
         aniShrink() {
             this.y -= this.step
             if (this.y <= this.rowHeight) {
                 this.aniStatus = false
                 this.y = this.rowHeight
-                this.slideHeight = this.y
+                this.slideHeight = this.rowHeight
                 this.calendarStatus = 0
                 hdom(this.y)
                 this.setShowTop()
                 return
             }
-            hdom(this.y)
+            this.hdom(this.y)
             this.setShowTop()
             window.requestAnimationFrame(this.aniShrink)
         },

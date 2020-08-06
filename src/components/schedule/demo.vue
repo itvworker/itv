@@ -3,7 +3,8 @@
         <itv-header>schedule</itv-header>
         <div class="pt79"></div>
         <slide-calendar ref="calendar" min="2020/7" max="2020/9"  />
-        <div class="itv-page-content" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
+        <slide-calendar ref="calendar"   />
+        <div class="itv-page-content">
             <div class="pt6"></div>
             <div class="pt5"></div>
         </div>
@@ -23,15 +24,7 @@
             }
         },
         methods: {
-            touchstart(e) {
-                this.$refs.calendar.touchstart(e)
-            },
-            touchmove(e) {
-                this.$refs.calendar.touchmove(e)
-            },
-            touchend(e){
-                this.$refs.calendar.touchend(e)
-            }
+           
         },
         mounted() {
 

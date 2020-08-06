@@ -1,11 +1,9 @@
 <template lang="html">
     <itv-container class="doc-page">
-        
         <div v-html="doc"></div>
         <div class="phone-show"  >
             <iframe :src="url"></iframe>
         </div>
-
     </itv-container>
 </template>
 
@@ -15,12 +13,12 @@ import html from '@/doc/doc.js'
 export default {
     computed:{
         doc() {
-            let name = this.$route.query.page
+            let name = this.$route.params.type
             let msg = new html(doc[name]).getHtml()
             return msg
         },
         url() {
-            let name = this.$route.query.page
+            let name = this.$route.params.type
             return `/#/demo/${name}`
         }
     },
@@ -34,4 +32,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.doc-page{
+    flex-direction: row;
+}
 </style>

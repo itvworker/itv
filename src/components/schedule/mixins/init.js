@@ -25,14 +25,14 @@ export default {
             this.year = year;
             this.month = month
             this.calcInit(year, month);
-
             this.initWeek(year, month, day, dayWeek);
             this.$nextTick(()=>{
-                this.findWeekIndex(this.currentValue);
-                this.findWeekRow(this.currentValue)
+                this.findWeekIndex(value);
+                this.findWeekRow(value)
                 this.elHeight = this.$refs.slide.clientHeight;
                 this.rowHeight =  this.elHeight /6
                 this.slideHeight = this.rowHeight;
+                this.currentValue = value;
                 this.step = parseInt(this.rowHeight*5/20)
                 
             })
