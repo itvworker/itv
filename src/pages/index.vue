@@ -20,6 +20,8 @@
                 <div class="nav-item">
                     捐赠、赞助
                 </div>
+                <div class="nav-item" @click="topage">
+                    DEMO</div>                    
             </div>
         </div>
         <router-view />
@@ -30,7 +32,13 @@
 export default {
     mounted() {
         
-        console.log('weeewrewr------');
+    },
+    methods: {
+        topage() {
+            this.$router.push({
+                path:'/demo/schedule'
+            })
+        }
     }
 }
 </script>

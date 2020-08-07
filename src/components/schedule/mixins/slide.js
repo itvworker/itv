@@ -446,7 +446,7 @@ export default {
                 this.y = this.rowHeight
                 this.slideHeight = this.rowHeight
                 this.calendarStatus = 0
-                hdom(this.y)
+                this.hdom(this.y)
                 this.setShowTop()
                 return
             }

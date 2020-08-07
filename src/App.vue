@@ -1,13 +1,18 @@
 <template lang="html">
-    
-        <router-view />
+    <router-view />
 
 </template>
 
 <script>
 import $ from 'jquery'
+import Router from 'vue-router'
 export default {
     mounted() {
+        Router.$on('push go',this.changeRoute)
+        setTimeout(()=>{
+             Router.$off('push go',this.changeRoute)
+        },2000)
+       
         $(document).on('click','.doc-tab-group>.tab-item-btn', function(e){
             e.stopPropagation();
             let index = $(this).index();
@@ -22,6 +27,9 @@ export default {
         }
     },
     methods: {
+        changeRoute(value, content) {
+            console.log(value);
+        },
         IsPC() {
             var userAgentInfo = navigator.userAgent;
             var Agents = ["Android", "iPhone",
