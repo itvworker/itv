@@ -370,8 +370,9 @@ export default {
 
         },
         refresh() {
+            this.$emit('refresh')
             setTimeout(()=>{
-                this.restartRefresh()
+                // this.restartRefresh()
             },3000)
         }
     }

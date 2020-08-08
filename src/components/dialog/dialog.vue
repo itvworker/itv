@@ -1,12 +1,10 @@
 <template lang="html">
-    <div class="itv-model" :class="className">
+    <div class="itv-model" >
         <transition name="itv-fade">
             <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex}"></div>
         </transition>
-        <transition name="itv-dialog">
-            <div class="itv-dialog"   v-show="value" :style="{'z-index':zIndex+1}">
-                <div v-show="content"  v-html="content"></div>
-                <div v-show="domShow" ref="content"></div>
+        <transition :name="animate">
+            <div :class="className"   v-show="value" :style="{'z-index':zIndex+1}">
                 <slot></slot>
             </div>
         </transition>
@@ -21,6 +19,10 @@ export default {
         value: {
             type: Boolean,
             default: false
+        },
+        type: {
+            type:String,
+            default: 'center'
         },
         zIndex: {
             type: Number,
@@ -41,6 +43,27 @@ export default {
 
     },
     computed: {
+        animate() {
+            switch (this.type) {
+                case 'center':
+                    return 'itv-dialog'
+                case 'bottom':
+                    return 'slide-top'
+            
+                default:
+                    break;
+            }
+        },
+        className() {
+            switch (this.type) {
+                case 'center':
+                    return 'itv-dialog'
+                case 'bottom':
+                    return 'itv-dialog-bottom'
+                default:
+                    break;
+            }
+        },
         domShow() {
             if(typeof html === 'object') {
                 return true
@@ -102,6 +125,17 @@ export default {
     left: 0px;
     right: 0px;
 }
+.itv-dialog-bottom {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+
 .itv-dialog {
     position: fixed;
     top: 50%;

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import watch from '@/libs/router'
+import watch from 'watch-vue-router'
 import router from '@/router'
 import store from '@/store'
 import i18n from '@/lang'
@@ -19,7 +19,7 @@ Vue.prototype.hljs = function () {
         hljs.highlightBlock(el)
     })
 }
-watch('useurl')
+watch('itvtemp')
 new Vue({
     router,
     i18n,

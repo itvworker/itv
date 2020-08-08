@@ -7,7 +7,7 @@
             <div class="tab-btn" :class="{'active': index===2}" @click="tabIndex(2)">看什么</div>
         </div>
         <itv-main>
-            <nut-scroller @ontab="change" ref="scroller">
+            <nut-scroller @ontab="change" ref="scroller" >
                 <scroller-content>
                     <div  class="nut-vert-list-panel">
                         <div class="item" v-for="(item, index) in list" @click="alert(item, index)">
@@ -61,7 +61,10 @@ export default {
             this.$refs.scroller.changeTab(index)
         },
         change(index) {
+            this.$refs.scroller.restartRefresh()
             this.index = index;
+            this.isloading = false
+
         },
         alert(item, index) {
             alert(item.name+index,)
@@ -80,8 +83,10 @@ export default {
             }
         },
         pulldown(e) {
+            debugger
             this.isloading = true;
             setTimeout(() => {
+                console.log('------------');
                 this.list = [];
                 this.createList(100);
                 this.isloading  = false;

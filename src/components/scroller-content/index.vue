@@ -7,7 +7,6 @@
                      <span class="word">下拉刷新</span>
                 </div>
                 
-               
             </div>  
             <slot />
         </div>

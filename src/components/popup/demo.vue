@@ -1,6 +1,6 @@
 <template>
     <itv-container class="page-dialog">
-        <itv-header>dialog</itv-header>
+        <itv-header>popup</itv-header>
         <itv-main>
             <div class="h10"></div>
             <section>

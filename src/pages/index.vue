@@ -5,23 +5,10 @@
                 iTV
             </div>
             <div class="nav">
-                <div class="nav-item">
-                    介绍
+                <div class="nav-item" v-for="item in navs" @click.stop="topage(item)">
+                    {{item.name}}
                 </div>
-                <div class="nav-item">
-                    组件
-                </div>
-                <div class="nav-item">
-                    主题
-                </div>
-                <div class="nav-item">
-                    发布日志
-                </div>
-                <div class="nav-item">
-                    捐赠、赞助
-                </div>
-                <div class="nav-item" @click="topage">
-                    DEMO</div>                    
+                                   
             </div>
         </div>
         <router-view />
@@ -30,13 +17,44 @@
 
 <script>
 export default {
+    data() {
+        return {
+            navs:[
+                {
+                    name: "介绍",
+                    routerName: ''
+                },
+                {
+                    name: "组件",
+                    routerName: 'itv_doc_index'
+                },
+                {
+                    name: "主题",
+                    routerName: ''
+                },
+                {
+                    name: "发布日志",
+                    routerName: ''
+                },
+                {
+                    name: "捐赠、赞助",
+                    routerName: ''
+                },
+                {
+                    name: "DEMO",
+                    routerName:'itv_demo_enter'
+                }
+            ]
+        }
+    },
     mounted() {
+        
         
     },
     methods: {
-        topage() {
+        topage(item) {
             this.$router.push({
-                path:'/demo/schedule'
+                name:item.routerName
             })
         }
     }
