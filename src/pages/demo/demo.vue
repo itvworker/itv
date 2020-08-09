@@ -65,6 +65,9 @@ export default {
         i{
             color:@itv-page-main;
         }
+        &:nth-child(4n) {
+            border-right: #ddd solid 0px;
+        }
     }
 }
 

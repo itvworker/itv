@@ -124,7 +124,7 @@ export default [
             },
             {
                 path: '/demo/schedule',
-                name: 'itv_slide-calendar',
+                name: 'itv_slide_schedule',
                 component: () => import('@/components/schedule/demo.vue'),
                 meta: {
                     keepAlive: false,
