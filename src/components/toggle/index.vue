@@ -3,7 +3,7 @@
          <transition name="itv-fade">
             <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex}"></div>
         </transition>
-        <transition name="slide-top" >
+        <transition name="itv-slide-top" >
             <div class="itv-toggle"  v-show="value" :style="{'z-index':zIndex+1}">
                 <div class="itv-msg-content" :style=" {'max-height': maxHeight}">
                     <div class="itv-msg-title"> 班次信息
@@ -76,13 +76,13 @@ export default {
 
 <style lang="less" scoped>
 @itv-sec: 300ms;
-.slide-top-enter-active {
-    animation: slide-top @itv-sec;
+.itv-slide-top-enter-active {
+    animation: itv-slide-top @itv-sec;
 }
-.slide-top-leave-active {
-    animation: slide-top @itv-sec reverse;
+.itv-slide-top-leave-active {
+    animation: itv-slide-top @itv-sec reverse;
 }
-@keyframes slide-top {
+@keyframes itv-slide-top {
     0% {
         transform: translateY(100%);
     }

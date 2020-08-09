@@ -5,10 +5,13 @@
             <div class="h10"></div>
             <section>
                 
-                <itv-cell :showIcon="true" title="我是标题" @click="show=true"  desc="中间弹出">
+                <itv-cell :showIcon="true" title="中间弹出" @click="show=true"  desc="中间弹出">
                 </itv-cell>
 
-                <itv-cell :showIcon="true" title="itv-dialog" @click="bottomShow=true"  desc="向下弹出">
+                <itv-cell :showIcon="true" title="向下弹出" @click="bottomShow=true"  desc="向下弹出">
+                </itv-cell>
+
+                <itv-cell :showIcon="true" title="从上弹出" @click="topshow=true"  desc="从上弹出">
                 </itv-cell>
             
             </section>
@@ -21,9 +24,15 @@
             </itv-dialog>
         <itv-dialog v-model="bottomShow" type="bottom" :hideOnClick="true">
             <div class="slide-bottom">
-                 我是向下弹出来的内容
+                我是向下弹出来的内容
             </div>
            
+        </itv-dialog>
+
+        <itv-dialog v-model="topshow" type="top" :hideOnClick="true">
+            <div class="slide-bottom">
+                我是向上弹出来的内容
+            </div>
         </itv-dialog>
        
     </itv-container>
@@ -35,7 +44,8 @@ export default {
   data() {
     return {
         show:false,
-        bottomShow: false
+        bottomShow: false,
+        topshow: false
     };
   },
   methods: {

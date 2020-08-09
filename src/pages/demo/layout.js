@@ -21,7 +21,19 @@ export default {
                     icon:'itv-demo-icon-dialog',
                     routerName:"itv_dialog",
                     name: 'itv-dialog'
-                }
+                },
+                {
+                    icon:'itv-demo-icon-popup',
+                    routerName:"itv_popup",
+                    name: 'itv-popup'
+                },
+                {
+                    icon:'itv-demo-icon-circle',
+                    routerName:"itv_circle",
+                    name: 'itv-circle'
+                },
+
+                
 
                 
             ]

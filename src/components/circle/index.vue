@@ -57,7 +57,7 @@ export default {
         radius: {
             type: Number,
             default: 40
-        }
+        },
     },
     data() {
         return {

@@ -21,9 +21,12 @@ const plugin = {
                 cancelText: '取消',
                 title: '',
                 content: '' }
+                merge($vm, def)   
         }
         const popup = {
             alert (options = {}) {
+                init()
+                merge($vm, options) 
                 $vm.value = true
                 $vm.hideBtnCancel = true
                 $vm.$on('cancel', () => {
@@ -34,24 +37,25 @@ const plugin = {
                 })
 
                 $vm.$on('confirm', () => {
-                    $vm.value = false
-                    if (options.onHide) {
-                        options.onHide()
-                    }
 
+                    $vm.value = false
                     if (options.onConfirm) {
                         options.onConfirm()
                     }
                 })
 
-                $vm.$on('close', () => {
+                $vm.$on('hide', () => {
+                    if (options.onHide) {
+                        options.onHide()
+                    }
                     $vm.$off('cancel')
                     $vm.$off('confirm')
+                    $vm.$off('hide')
                 })
             },
             confirm (options = {}) {
-                reset()
-                init(options)
+                init()
+                merge($vm, options) 
                 $vm.value = true
                 $vm.hideBtnCancel = false
                 $vm.$on('cancel', () => {
@@ -63,18 +67,19 @@ const plugin = {
 
                 $vm.$on('confirm', () => {
                     $vm.value = false
-                    if (options.onHide) {
-                        options.onHide()
-                    }
-
                     if (options.onConfirm) {
                         options.onConfirm()
                     }
                 })
+                
 
-                $vm.$on('close', () => {
+                $vm.$on('hide', () => {
+                    if (options.onHide) {
+                        options.onHide()
+                    }
                     $vm.$off('cancel')
                     $vm.$off('confirm')
+                    $vm.$off('hide')
                 })
             },
             hide () {

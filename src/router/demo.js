@@ -149,6 +149,15 @@ export default [
                     title: 'circle',
                 },
             },
+            {
+                path: '/demo/popup',
+                name: 'itv_popup',
+                component: () => import('@/components/popup/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'popup',
+                },
+            },
         ]
     },  
     

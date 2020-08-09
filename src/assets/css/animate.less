@@ -1,13 +1,29 @@
 @itv-sec: 300ms;
-.slide-top-enter-active {
-    animation: slide-top @itv-sec;
+.itv-slide-top-enter-active {
+    animation: itv-slide-top @itv-sec;
 }
-.slide-top-leave-active {
-    animation: slide-top @itv-sec reverse;
+.itv-slide-top-leave-active {
+    animation: itv-slide-top @itv-sec reverse;
 }
-@keyframes slide-top {
+@keyframes itv-slide-top {
     0% {
         transform: translate3d(0,100%,0)
+    }
+    100% {
+        transform: translate3d(0,0,0)
+    }
+}
+
+
+.itv-slide-bottom-enter-active {
+    animation: itv-slide-bottom @itv-sec;
+}
+.itv-slide-bottom-leave-active {
+    animation: itv-slide-bottom @itv-sec reverse;
+}
+@keyframes itv-slide-bottom {
+    0% {
+        transform: translate3d(0,-100%,0)
     }
     100% {
         transform: translate3d(0,0,0)

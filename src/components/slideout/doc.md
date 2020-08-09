@@ -72,7 +72,7 @@ $#/div
             <input type="">
 
         </itv-main>
-        <transition name="slide-top">
+        <transition name="itv-slide-top">
             <itv-container class="cliper-main-box" v-show="toggle">
                 <itv-header :showArrow="false">
                   <div class="btn-close" @click="toggle=false">关闭</div>

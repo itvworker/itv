@@ -27,11 +27,7 @@ export default {
         zIndex: {
             type: Number,
             default:99
-        },
-        className: {
-            type: String,
-            default: ''
-        },
+        },  
         hideOnClick: {
             type: Boolean,
             default: false
@@ -45,13 +41,12 @@ export default {
     computed: {
         animate() {
             switch (this.type) {
-                case 'center':
-                    return 'itv-dialog'
                 case 'bottom':
-                    return 'slide-top'
-            
+                    return 'itv-slide-top'
+                case 'top':
+                    return 'itv-slide-bottom'
                 default:
-                    break;
+                    return 'itv-dialog'
             }
         },
         className() {
@@ -60,6 +55,8 @@ export default {
                     return 'itv-dialog'
                 case 'bottom':
                     return 'itv-dialog-bottom'
+                case 'top':
+                    return 'itv-dialog-top'    
                 default:
                     break;
             }
@@ -135,6 +132,18 @@ export default {
     left: 0;
     right: 0;
 }
+
+.itv-dialog-top {
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    left: 0;
+    right: 0;
+}
+
 
 .itv-dialog {
     position: fixed;

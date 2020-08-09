@@ -3,7 +3,7 @@
          <transition name="itv-fade">
             <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex}"></div>
         </transition>
-        <transition name="slide-top" >
+        <transition name="itv-slide-top" >
             <div class="itv-acitonsheet" v-show="value" :style="{'z-index':zIndex+1}">
                 <div class="itv-item" v-for="(item, index) in items" :key="index" @click="confirm(item)">
                     {{item.text}}

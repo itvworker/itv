@@ -3,8 +3,8 @@
         <div class="itv-popup">
             <div class="itv-popup-content">
                 <slot>
-                    <h2>{{title}}</h2>
-                    <div class="itv-popup-msg">
+                    <h2 v-html="title" v-show="title"></h2>
+                    <div class="itv-popup-msg" v-html="content" v-show="content">
                         {{content}}
                     </div>
                 </slot>
@@ -64,18 +64,19 @@ export default {
     watch: {
         value(a, b) {
             if (!a) {
-                this.$emit("close");
+                this.$emit("hide");
             }
         }
     },
     methods: {
         cancel() {
-            this.$emit("hide");
             this.$emit("cancel");
+            this.$emit("hide");
         },
         confirm() {
-            this.$emit("hide");
+           
             this.$emit("confirm");
+            this.$emit("hide");
         }
     }
 };
@@ -141,7 +142,7 @@ export default {
         text-align: center;
         font-size: 14ipx;
         padding-bottom: 10ipx;
-        color: #999;
+        color: #666;
     }
 }
 </style>
