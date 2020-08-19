@@ -2,7 +2,8 @@
     <itv-container>
         <itv-header>Datetime</itv-header>
         <itv-main>
-            <datepicker
+			<itv-dialog v-model="value" type="bottom" :hideOnClick="hideOnClick">
+				<datepicker
 				:is-visible="true"
 				title="请选择日期时间"
 				type="datetime"
@@ -12,12 +13,13 @@
 				@close="switchPicker('isVisible2')"
 				@choose="setChooseValue2"
 				:lastChange="true"
-			></datepicker>
+				></datepicker>
+    		</itv-dialog>
         </itv-main>
     </itv-container>
 </template>
 <script>
-import datepicker from './datepicker.vue';
+import datepicker from './index.vue';
 export default {
     components: {
         datepicker,
@@ -65,7 +67,7 @@ export default {
     data(){
         return{
             data() {
-					
+				value: true	
 			}
         }
     },
