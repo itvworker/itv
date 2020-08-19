@@ -1,18 +1,18 @@
 <template>
-  <div class="itv-picker-list">
+  <div class="itv-picker-list" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"  @touchcancel="touchEnd">
     <div class="itv-picker-roller" ref="roller">
         <div class="itv-picker-roller-item"
             :class="{'itv-picker-roller-item-hidden': isHidden(index + 1)}"
             v-for="(item,index) in listData"
             :style="setRollerStyle(index + 1)"
             :key="item.label ? item.label : index">
-                {{item.name || item.value ? item.value : item}}
+                {{(item.name || item.value || item) | formatWord(word)}}
         </div>
     </div>
     <div class="itv-picker-content" ref="height">
         <div class="itv-picker-list-panel" ref="list">
             <div class="itv-picker-item" v-for="(item,index) in listData"
-                :key="item.label ? item.label : index">{{item.value ? item.value : item}}
+                :key="item.label ? item.label : index">{{(item.name || item.value || item) | formatWord(word)}}
             </div>
         </div>
     </div>
@@ -38,7 +38,16 @@ export default {
         isUpdate: {
             type: Boolean,
             default: false
+        },
+        lastChange: {
+            type: Boolean,
+            default: false
+        },
+        word: {
+            type: String,
+            default: '{value}'
         }
+        
     },
     data() {
         return {
@@ -58,19 +67,40 @@ export default {
     },
     watch: {
         'isUpdate': function() {
+              
             this.transformY = 0;
             this.modifyStatus();
         },
         'defaultValue': function() {
             this.transformY = 0;
             this.modifyStatus();
+           
+        },
+        transformY(n,o){
+            
+        },
+        listData(n,o) {
+            if(this.lastChange){
+                let lineIndex = Math.abs(parseInt(this.scrollDistance/this.lineSpacing));
+                let index = Math.min(n.length-1, lineIndex)
+                this.scrollDistance = -index*this.lineSpacing
+                this.transformY = this.scrollDistance
+                this.modifyStatus()
+            }
+            
         }
     },
     methods: {
         updateTransform(value) {
+            if(this.keyIndex===1) {
+               
+            }
             if (value) {
+                
+              
                 this.transformY = 0;
                 this.timer = setTimeout(() => {
+                   
                     this.modifyStatus(null, value);
                 }, 10);
             }
@@ -133,9 +163,13 @@ export default {
                 this.currIndex = (Math.abs(Math.round(updateMove/ this.lineSpacing)) + 1);
             }
         },
+        setLastValue(index) {
 
+            this.setChooseValue(-this.lineSpacing*index)
+        },
         setChooseValue(move) {
-            this.$emit('chooseItem', this.listData[(Math.round(-move / this.lineSpacing))], this.keyIndex);
+            let index = Math.round(-move / this.lineSpacing)
+            this.$emit('chooseItem', this.listData[index], this.keyIndex, index);
         },
 
 	    touchStart(event) {
@@ -144,6 +178,8 @@ export default {
             this.touchParams.startY = changedTouches.pageY;
             this.touchParams.startTime = event.timestamp || Date.now();
             this.transformY = this.scrollDistance;
+            
+            
         },
 
         touchMove(event) {
@@ -186,26 +222,29 @@ export default {
             let move = index === -1 ? 0 : (index * this.lineSpacing);
             type && this.setChooseValue(-move);
             this.setMove(-move);
-        }
+        },
     },
-
+    
     mounted() {
-         this.lineSpacing = this.$refs.height.clientHeight;
+        this.lineSpacing = this.$refs.height.clientHeight;
 
         this.$nextTick(() => {
             this.modifyStatus(true);
-            // 监听
-            this.$el.addEventListener('touchstart', this.touchStart);
-            this.$el.addEventListener('touchmove', this.touchMove);
-            this.$el.addEventListener('touchend', this.touchEnd);
+          
         });
+     
     },
     beforeDestroy() {
-        // 移除监听
-        this.$el.removeEventListener('touchstart', this.touchStart);
-        this.$el.removeEventListener('touchmove', this.touchMove);
-        this.$el.removeEventListener('touchend', this.touchEnd);
         clearTimeout(this.timer);
+    },
+    filters: {
+        formatWord(value, format) {
+            
+            if(!value) return ''
+           
+           
+            return format.replace('{value}',value)
+        }
     }
 }
 </script>

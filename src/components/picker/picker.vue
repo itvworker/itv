@@ -7,6 +7,8 @@
                 @chooseItem="chooseItem"
                 :key="index"
                 :key-index="index"
+                :lastChange="lastChange"
+              
             ></picker-slot>
     </div>
 </template>
@@ -35,6 +37,10 @@ export default {
             type: Array,
             default: () => []
         },
+        lastChange: {
+            type: Boolean,
+            default: false
+        }
     },
     components: {
         pickerSlot

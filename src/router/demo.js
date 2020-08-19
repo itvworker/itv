@@ -158,6 +158,24 @@ export default [
                     title: 'popup',
                 },
             },
+            {
+                path: '/demo/datetime',
+                name: 'itv_datetime',
+                component: () => import('@/components/datetime/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'datetime',
+                },
+            },
+            {
+                path: '/demo/datepicker',
+                name: 'itv_datepicker',
+                component: () => import('@/components/datepicker/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'datepicker',
+                },
+            },
         ]
     },  
     
