@@ -6,7 +6,7 @@
             </itv-cell>
             <itv-cell :showIcon="true" title="日期时间选择器" subTitle="限制开始结束日期" :desc="datetime || placeholder" @click="openDatetime" >
             </itv-cell>
-            <itv-cell :showIcon="true" title="时间选择" subTitle="限制开始结束日期" :desc="datetime || placeholder" @click="openTime" >
+            <itv-cell :showIcon="true" title="时间选择" subTitle="限制开始结束日期" :desc="time || placeholder" @click="openTime" >
             </itv-cell>
         </itv-main>
     </itv-container>
@@ -28,6 +28,7 @@ export default {
                     datetime: '',
                     placeholder:'请选择',
                     date:'',
+                    time:''
                     
            }
        
@@ -52,14 +53,21 @@ export default {
                 type:'date',
                 removeFormat: true,
                 confirm:(value)=> {
-                    debugger
-                    this.datetime = value[5]
+                    this.date = value[3]
                 }
             })
         },
 
         openTime() {
-
+            this.$itv.datepicker.show({
+                defaultValue:this.time,
+                type:'time',
+                isSetSecond: true,
+                confirm:(value)=> {
+                    
+                    this.time = value[3]
+                }
+            })
         },
 
         

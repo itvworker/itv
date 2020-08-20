@@ -67,7 +67,12 @@ const plugin = {
                     opts.hide()
                     options.confirm(value)
                 })
-                
+                $vm.$on('hide', () => {
+                    
+                    $vm.$off('cancel')
+                    $vm.$off('confirm')
+                    $vm.$off('hide')
+                })
                 
                 
             },
@@ -77,29 +82,19 @@ const plugin = {
                 $vm.value = true
                 $vm.hideBtnCancel = false
                 $vm.$on('cancel', () => {
-                    $vm.value = false
-                    if (options.onHide) {
-                        options.onHide()
-                    }
+                   
                 })
 
                 $vm.$on('confirm', () => {
-                    $vm.value = false
+                   
+                    
                     if (options.onConfirm) {
                         options.onConfirm()
                     }
                 })
                 
 
-                $vm.$on('hide', () => {
-                    if (options.onHide) {
-                        options.onHide()
-                    }
-                    $vm.$off('cancel')
-                    $vm.$off('confirm')
-                    $vm.$off('hide')
-                    vm.$off('choose')
-                })
+               
             },
             hide () {
                 $vm.isVisible = false
