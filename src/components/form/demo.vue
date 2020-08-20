@@ -3,13 +3,12 @@
         <itv-header>Form表单</itv-header>
         <itv-main>
             <itv-form>
-                <itv-label :label="item.name" v-for="item in inputList">
+                <itv-label :label="item.name" :key="id" v-for="item in inputList">
                     <itv-input placeholder="请输入你的名字" />
                 </itv-label>
+                
             </itv-form>
-            <div class="" @click="add">
-                添加
-            </div>
+           
         </itv-main>
     </itv-container>
 </template>
@@ -33,7 +32,8 @@
             return{
                 rules: schema,
                 inputList: [
-                    {
+                    {   
+                        id:1,
                         name: "名字"
                     }
                 ]

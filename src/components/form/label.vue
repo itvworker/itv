@@ -23,9 +23,6 @@
             }
         },
         data(){
-            return{
-                name:'itv-label'
-            }
         },
         methods:{
             vaildate(value, type) {
@@ -35,5 +32,26 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" >
+.itv-label {
+    display: flex;
+    min-height: 44ipx;
+    border-bottom: #eee solid 1px;
+    .itv-label-title{
+        height: 100%;
+        line-height: 44ipx;
+        min-width: 80ipx;
+        font-size: 14ipx;
+        padding-left: 15ipx;
+    }
+    .itv-label-content{
+        flex: 1;
+        input {
+            height: 100%;
+            font-size: 14ipx;
+            width: 100%;
+        }
+    }
+    
+}
 </style>

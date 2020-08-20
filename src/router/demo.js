@@ -158,6 +158,15 @@ export default [
                     title: 'popup',
                 },
             },
+            {
+                path: '/demo/form',
+                name: 'itv_form',
+                component: () => import('@/components/form/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'Form',
+                },
+            },
         ]
     },  
     

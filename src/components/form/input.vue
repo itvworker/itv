@@ -1,8 +1,12 @@
 <template>
+<div class="itv-input-">
     <input :type="type" :placeholder="placeholder"
            :maxlength="maxlength" :minlength="minlength"
            @input="input" @change="change"  @blur="blur"
     />
+    <i></i>
+</div>
+    
 </template>
 
 <script>
