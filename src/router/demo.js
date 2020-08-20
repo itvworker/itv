@@ -159,12 +159,30 @@ export default [
                 },
             },
             {
+<<<<<<< HEAD
                 path: '/demo/form',
                 name: 'itv_form',
                 component: () => import('@/components/form/demo.vue'),
                 meta: {
                     keepAlive: false,
                     title: 'Form',
+=======
+                path: '/demo/datetime',
+                name: 'itv_datetime',
+                component: () => import('@/components/datetime/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'datetime',
+                },
+            },
+            {
+                path: '/demo/datepicker',
+                name: 'itv_datepicker',
+                component: () => import('@/components/datepicker/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'datepicker',
+>>>>>>> 9d776accf1e5a34656dcf3c57b73ccc2548048bf
                 },
             },
         ]

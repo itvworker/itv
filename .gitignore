@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+nutui-2-dev/
 /dist/
 /components/
 npm-debug.log*

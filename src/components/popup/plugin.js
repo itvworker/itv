@@ -91,19 +91,15 @@ const plugin = {
         }
 
         // all Vux's plugins are included in this.$vux
-        if (!vue.$itv) {
-            vue.$itv = {
+        if (!vue.prototype.$itv) {
+            vue.prototype.$itv = {
                 popup
             }
         } else {
-            vue.$itv.popup = popup
+            vue.prototype.$itv.popup = popup
         }
 
-        vue.mixin({
-            created: function () {
-                this.$itv = vue.$itv
-            }
-        })
+       
     }
 }
 

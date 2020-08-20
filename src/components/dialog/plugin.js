@@ -34,19 +34,15 @@ const plugin = {
             $vm.value = false
         })
         console.log($vm.$el.children[0])
-        if (!vue.$itv) {
-          vue.$itv = {
+        if (!vue.prototype.$itv) {
+          vue.prototype.$itv = {
             dialog
           }
         } else {
-          vue.$itv.dialog = dialog
+          vue.prototype.$itv.dialog  = dialog
         }
 
-        vue.mixin({
-          created: function () {
-            this.$itv = vue.$itv
-          }
-        })
+        
 
     }
 }

@@ -35,10 +35,12 @@
         title="请选择城市"
         :default-value-data="defaultValueData"
         :list-data="custmerCityData"
+        :lastChange="true"
         @close="switchPicker('isVisible2')"
         @confirm="setChooseValueCustmer"
         @choose="updateChooseValueCustmer"
         @close-update="closeUpdateChooseValueCustmer"
+
       ></picker>
   </itv-main>
   </itv-container>
@@ -70,6 +72,10 @@ const APIData = [
       },
       {
         label: 6,
+        value: "测试2"
+      },
+      {
+        label: 7,
         value: "测试2"
       }
     ]
@@ -232,6 +238,7 @@ export default {
     },
 
     updateChooseValue(self, index, value, cacheValueData) {
+    
       index < 2 && this.updateLinkage(self, value, index + 1, null);
     },
 
@@ -253,6 +260,7 @@ export default {
         var resItems = APIData.find(item => item.label == label);
         if (resItems && resItems.array.length) {
           this.$set(this.custmerCityData, index + 1, resItems.array);
+         
         }
       }, 100);
     },

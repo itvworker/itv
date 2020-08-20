@@ -7,6 +7,8 @@
                 @chooseItem="chooseItem"
                 :key="index"
                 :key-index="index"
+                :lastChange="lastChange"
+              
             ></picker-slot>
     </div>
 </template>
@@ -35,6 +37,10 @@ export default {
             type: Array,
             default: () => []
         },
+        lastChange: {
+            type: Boolean,
+            default: false
+        }
     },
     components: {
         pickerSlot
@@ -54,7 +60,7 @@ export default {
         }
     },
     mounted() {
-        console.log(this.defaultValueData);
+        
 
     },
     methods: {
@@ -83,6 +89,7 @@ export default {
             if (this.cacheValueData[index] !== value) {
                 this.cacheValueData[index] = value;
                 this.$emit('choose', this, index, value, this.cacheValueData);
+                
             }
         }
     },
