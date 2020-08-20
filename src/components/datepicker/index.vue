@@ -1,16 +1,19 @@
 <template>
-  <picker
-    :is-visible="true"
-     title="请选择日期"
-    :list-data="listData"
-    :default-value-data="defaultValueData"
-    :custom-class-name="`nut-datepicker`"
-    @close="switchPicker('isVisible')"
-    @confirm="setChooseValue"
-    @choose="updateChooseValue"
-    @close-update="closeUpdateChooseValue"
-  >
-  </picker>
+<itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
+	
+	<picker
+		:is-visible="isVisible"
+		title="请选择日期"
+		:list-data="listData"
+		:default-value-data="defaultValueData"
+		:custom-class-name="`nut-datepicker`"
+		@confirm="setChooseValue"
+		@choose="updateChooseValue"
+		@close-update="closeUpdateChooseValue"
+	/>   
+ </itv-dialog>
+  
+
 </template>
 <script>
 import picker from '../picker/picker.vue';
@@ -20,6 +23,10 @@ import Utils from '../../libs/date.js';
 export default {
   name: 'datepicker',
   props: {
+	value: {
+		type: String,
+		defalut: null
+	},
     type: {
       type: String,
       default: 'date'
@@ -108,7 +115,7 @@ export default {
   data() {
     return {
         listData: [],
-        defaultValueData: null,
+        defaultValueData: this.value,
         startDateArr: null,
         endDateArr: null,
         startYear: null,

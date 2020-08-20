@@ -57,19 +57,28 @@ const plugin = {
     }
 
     // all Vux's plugins are included in this.$vux
-    if (!vue.$itv) {
-      vue.$itv = {
-        toast
-      }
+    // if (!vue.$itv) {
+    //   vue.$itv = {
+    //     toast
+    //   }
+    // } else {
+    //   vue.$itv.toast = toast
+    // }
+
+    // vue.mixin({
+    //   created: function () {
+    //     this.$itv = vue.$itv
+    //   }
+    // })
+
+      if (!vue.prototype.$itv) {
+        vue.prototype.$itv = {
+            toast
+        }
     } else {
-      vue.$itv.toast = toast
+        vue.prototype.$itv.toast = toast
     }
 
-    vue.mixin({
-      created: function () {
-        this.$itv = vue.$itv
-      }
-    })
   }
 }
 

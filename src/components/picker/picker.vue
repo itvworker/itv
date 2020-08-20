@@ -60,7 +60,7 @@ export default {
         }
     },
     mounted() {
-        console.log(this.defaultValueData);
+        
 
     },
     methods: {
@@ -89,6 +89,7 @@ export default {
             if (this.cacheValueData[index] !== value) {
                 this.cacheValueData[index] = value;
                 this.$emit('choose', this, index, value, this.cacheValueData);
+                
             }
         }
     },
