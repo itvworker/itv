@@ -57,6 +57,7 @@ const plugin = {
                 }
                 merge($vm, options) 
                 $vm.isVisible = true
+                $vm.init()
                 $vm.$on('hide', () => {
                     opts.hide()
                     if (options.onHide) {
@@ -98,9 +99,7 @@ const plugin = {
             },
             hide () {
                 $vm.isVisible = false
-                setTimeout(()=>{
-                    init()
-                },300)
+                
              
             },
             state () {
