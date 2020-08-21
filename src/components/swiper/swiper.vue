@@ -77,6 +77,7 @@ export default {
     },
     methods: {
         aniamteend() {
+          
             this.isAnimating = false;
             
             if(this.isLoop && this.nowIndex === 0) {
@@ -97,6 +98,7 @@ export default {
                 this.setPostion()
                 return
             }
+           
             this.$emit('change', this.nowIndex)
             this.$emit('input', this.nowIndex)
             
@@ -335,7 +337,7 @@ export default {
             if(value < 0 || value >= this.number) return
             this.isAnimating = !!isAnimate;
             if(this.isLoop) {
-                 this.nowIndex = value + 1
+                this.nowIndex = value + 1
                 this.coordinate = this.nowIndex*this.elSize;
                 this.setPostion()
                 this.$emit('input', value)
@@ -344,7 +346,7 @@ export default {
             }
             this.nowIndex = value;
             this.coordinate = this.nowIndex*this.elSize;
-            this.setPostion()
+            this.setPostion();
             this.$emit('input', value)
             this.$emit('change', value)
         }

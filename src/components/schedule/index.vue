@@ -22,7 +22,7 @@
             ref="calendar"
             :style="{height: slideHeight+'px'}"
         >
-
+            
             <div
                 class="week-slide"
                 v-show="showTop"
@@ -32,6 +32,7 @@
                 @transitionend="aniamteend"
             >
                 <div class="week-item" :class="{'none-item':isWeekMin}">
+                    
                     <div
                         class="day-item"
                         :class="{'day-active':currentValue===item.time}"

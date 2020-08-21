@@ -176,6 +176,15 @@ export default [
                     title: 'datepicker',
                 },
             },
+            {
+                path: '/demo/between-time',
+                name: 'itv_between-time',
+                component: () => import('@/components/between-time/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'dbetween-time',
+                },
+            },
         ]
     },  
     

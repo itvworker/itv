@@ -25,7 +25,7 @@
                 </div>
             </banner>
             <h2>纵向</h2>
-            <banner  direction="column" :loop="true" v-model="columnIndex" class="itv-swpier-height">
+            <banner  direction="column" :loop="false" v-model="columnIndex" class="itv-swpier-height">
                 <banner-item>
                     <div class="demo-banner banner-1">1</div>
                 </banner-item>
