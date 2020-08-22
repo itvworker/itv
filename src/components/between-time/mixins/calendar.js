@@ -221,10 +221,11 @@ export default {
             }
             prev = prev.concat(now)
 
-            let newday = prev[prev.length - 1]
+            // let newday = prev[prev.length - 1]
 
-            let last = this.calcNextMonth(newday.year, newday.month, newday.week, 42 - prev.length)
-            return prev.concat(last)
+            // let last = this.calcNextMonth(newday.year, newday.month, newday.week, 42 - prev.length)
+            // return prev.concat(last)
+            return prev
         },
         //计算下一天星期几
         calcNextWeek(next) {
@@ -234,6 +235,7 @@ export default {
 
         //计算上个月填充所有内容
         calcPrevMonth(year, month, dayWeek) {
+            
             let _year = year
             let _month = month - 1
             if (dayWeek === 0) {
@@ -270,6 +272,7 @@ export default {
         },
         //计算下个月填充所有内容
         calcNextMonth(year, month, dayWeek, num) {
+            
             if (num === 0) return []
             let _year = year
             let _month = month + 1

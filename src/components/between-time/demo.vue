@@ -14,43 +14,103 @@
                     <div class="week-bar">
                         <div class="week-item" v-for="(item, index ) in weekText" :key="index">{{item}}</div>
                     </div>
-                    <swiper ref="swiper"  direction="column" @change="change" :loop="false" v-model="columnIndex" class="itv-swpier-between-time">
-                        <swiper-item class="itv-swpier-calendar">
-                           <div
-                                class="day-item"
-                                @click="selectDay(index, item)"
-                                :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
-                                v-for="(item, index) in prevMonth"
-                                :key="item.id"
-                            >
-                                <div class="active">{{item.day===1? item.month+'月':item.day}}</div>
-                            </div>
-                        </swiper-item>
-                        <swiper-item class="itv-swpier-calendar">
+                    <div class="itv-between-time-change">
+                        <swiper ref="swiper"  direction="column" @change="change" :loop="false" v-model="columnIndex" class="itv-swpier-between-time">
+                            <swiper-item class="itv-swpier-calendar">
                             <div
-                                class="day-item"
-                                @click="selectDay(index, item)"
-                                :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
-                                v-for="(item, index) in nowMonth"
-                                :key="item.id"
-                            >
-                                <div class="active">{{item.day===1? item.month+'月':item.day}}</div>
-                            </div>
-                        </swiper-item>
-                        <swiper-item class="itv-swpier-calendar">
-                            <div
-                                class="day-item"
-                                @click="selectDay(index, item)"
-                                :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
-                                v-for="(item, index) in nextMonth"
-                                :key="item.id"
-                            >
-                                <div class="active">
-                                    {{item.day===1? item.month+'月':item.day}}
+                                    class="day-item"
+                                    @click="selectDay(index, item)"
+                                    :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                                    v-for="(item, index) in prevMonth"
+                                    :key="item.id"
+                                >
+                                    <div class="active">{{item.day===1? item.month+'月':item.day}}</div>
                                 </div>
+                            </swiper-item>
+                            <swiper-item class="itv-swpier-calendar">
+                                <div
+                                    class="day-item"
+                                    @click="selectDay(index, item)"
+                                    :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                                    v-for="(item, index) in nowMonth"
+                                    :key="item.id"
+                                    key-index="0"
+                                    @chooseItem="chooseItem"
+                                >
+                                    <div class="active">{{item.day===1? item.month+'月':item.day}}</div>
+                                </div>
+                            </swiper-item>
+                            <swiper-item class="itv-swpier-calendar">
+                                <div
+                                    class="day-item"
+                                    @click="selectDay(index, item)"
+                                    :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                                    v-for="(item, index) in nextMonth"
+                                    :key="item.id"
+                                >
+                                    <div class="active">
+                                        {{item.day===1? item.month+'月':item.day}}
+                                    </div>
+                                </div>
+                            </swiper-item>
+                        </swiper>
+                        <div class="itv-picker-slot-box">
+                                <picker-slot ref="picker-0"
+                                    :default-value="startHour"
+                                    :is-update="false"
+                                    :list-data="startHourData"
+                                    @chooseItem="chooseItem"
+                                    :key-index="0"
+
+                                ></picker-slot>
+
+                              <div class="itv-picker-list itv-picker-list-mark ">
+                                     <div class="itv-picker-indicator itv-picker-mark">
+                                        ：
+                                    </div>
+                                </div>
+
+                                <picker-slot 
+                                    ref="picker-1"
+                                    :default-value="startMinute"
+                                    :is-update="false"
+                                    :list-data="startMinutesData"
+                                    @chooseItem="chooseItem"
+                                    :key-index="1"
+                                ></picker-slot>
+
+                                <div class="itv-picker-list itv-picker-list-mark ">
+                                     <div class="itv-picker-indicator itv-picker-mark">
+                                        ~
+                                    </div>
+                                </div>
+
+                                <picker-slot ref="picker-2"
+                                    :default-value="endHour"
+                                    :is-update="false"
+                                    :list-data="endHourData"
+                                    @chooseItem="chooseItem"
+                                    :key-index="2"
+                                ></picker-slot>
+
+                              <div class="itv-picker-list itv-picker-list-mark ">
+                                     <div class="itv-picker-indicator itv-picker-mark">
+                                        ：
+                                    </div>
+                                </div>
+
+                                <picker-slot 
+                                    ref="picker-3"
+                                    :default-value="endMinute"
+                                    :is-update="false"
+                                    :list-data="endMinutesData"
+                                    @chooseItem="chooseItem"
+                                    :key-index="3"
+                                ></picker-slot>
                             </div>
-                        </swiper-item>
-                    </swiper>
+                    </div>
+                    
+                    
                 </div>       
             </itv-dialog>
         </itv-main>
@@ -66,9 +126,10 @@
     import ItvDialog from '../dialog/dialog'
     import calendar from './mixins/calendar'
     import init from './mixins/init'
+    import time from './mixins/time'
     export default {
         name: 'drawer',
-        mixins:[calendar, init],
+        mixins:[calendar, init, time],
         components: {
             swiper,
             swiperItem,
@@ -77,7 +138,7 @@
         },
         props: {
             value: {
-                type:[String||Number],
+                type:[String,Number],
                 default: new Date().getTime()
             },
             weekText: {
@@ -96,7 +157,11 @@
                columnIndex:1,
                currentValue: this.value,
                year:0,
-               month:0
+               month:0,
+               startHour: '12',
+               startMinute:'00',
+               endHour: '13',
+               endMinute:'23'
             }
         },
         methods: {

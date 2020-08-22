@@ -67,14 +67,12 @@ export default {
     },
     watch: {
         'isUpdate': function() {
-              
             this.transformY = 0;
             this.modifyStatus();
         },
         'defaultValue': function() {
             this.transformY = 0;
             this.modifyStatus();
-           
         },
         transformY(n,o){
             
@@ -87,17 +85,12 @@ export default {
                 this.transformY = this.scrollDistance
                 this.modifyStatus()
             }
-            
         }
     },
     methods: {
         updateTransform(value) {
-            if(this.keyIndex===1) {
-               
-            }
+            
             if (value) {
-                
-              
                 this.transformY = 0;
                 this.timer = setTimeout(() => {
                    
