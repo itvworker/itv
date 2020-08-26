@@ -57,7 +57,7 @@
                         <div class="itv-picker-slot-box">
                                 <picker-slot ref="picker-0"
                                     :default-value="startHour"
-                                    :is-update="false"
+                                    :is-update="true"
                                     :list-data="startHourData"
                                     @chooseItem="chooseItem"
                                     :key-index="0"
@@ -138,8 +138,8 @@
         },
         props: {
             value: {
-                type:[String,Number],
-                default: new Date().getTime()
+                type: String,
+                default: '2028-08-26 11:12 ~ 12:22'
             },
             weekText: {
                 type: Array,
@@ -158,10 +158,7 @@
                currentValue: this.value,
                year:0,
                month:0,
-               startHour: '12',
-               startMinute:'00',
-               endHour: '13',
-               endMinute:'23'
+              
             }
         },
         methods: {

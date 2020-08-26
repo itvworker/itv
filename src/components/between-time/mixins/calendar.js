@@ -1,3 +1,4 @@
+import { parse } from "qs";
 
 
 export default {
@@ -9,10 +10,16 @@ export default {
             nowMonth:[],
             nextMonth:[],
             monthDaysArr: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-            
+            currentDate:''
         }
     },
     computed:{
+        currentDateNumber() {
+            return parseInt(this.currentDate.replace(/-/ig,''))
+        },
+        currentDateInt() {
+            return 
+        },
         maxMonthNumber() {
             if(this.max) {
                 let arr = this.max.split('/');
