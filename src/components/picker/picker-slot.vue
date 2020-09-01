@@ -168,12 +168,13 @@ export default {
         },
 
 	    touchStart(event) {
+            this.isTouch = true
             event.preventDefault();
             let changedTouches = event.changedTouches[0];
             this.touchParams.startY = changedTouches.pageY;
             this.touchParams.startTime = event.timestamp || Date.now();
             this.transformY = this.scrollDistance;
-            this.isTouch = true
+            
             
         },
 
@@ -183,11 +184,14 @@ export default {
             let changedTouches = event.changedTouches[0];
             this.touchParams.lastY = changedTouches.pageY;
             this.touchParams.lastTime = event.timestamp || Date.now();
+           
             let move = this.touchParams.lastY - this.touchParams.startY;
+            console.log(this.touchParams.lastY+'last');
             this.setMove(move);
         },
 
         touchEnd(event) {
+            this.isTouch = false
             event.preventDefault();
 
             let changedTouches = event.changedTouches[0];

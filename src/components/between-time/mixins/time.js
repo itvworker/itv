@@ -6,6 +6,12 @@ export default {
             endHourData:[],
             endMinutesData:[],
             
+            cacheStartHour: "",
+            
+            startHour: '12',
+            startMinute:'00',
+            endHour: '13',
+            endMinute:'23'
         }
     },
     computed: {
@@ -31,17 +37,17 @@ export default {
         chooseItem(value, index) {
             switch (index) {
                 case 0:
-                    this.startHour = value
+                    // this.startHour = value
                     this.initHour()
                     break;
                 case 1:
-                    this.startMinute = value
+                    // this.startMinute = value
                     break;
                 case 2:
-                    this.endHour = value
+                    // this.endHour = value
                     break;
                 case 3:
-                    this.endMinute = value
+                    // this.endMinute = value
                     break;
             }
         },

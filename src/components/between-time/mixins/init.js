@@ -1,13 +1,11 @@
 export default {
-    created() {
-        
-       this.init(this.currentValue)
-    },
+    
     mounted() {
-        
+        this.init()
         this.resize();
         
     },
+    
     methods: {
         resize() {
             this.elWidth = this.$el.clientWidth;
@@ -17,13 +15,17 @@ export default {
             this.x = -this.elWidth
         },
         init(value) {
-            let date = new Date(value)
-            let year = date.getFullYear(); //获取年份
-            let month = date.getMonth()+1
+            let datetime = value || this.value    
+            let arr = datetime.split(' ');
+            let ymd = arr[0].split('-');
+                
+
+            let year = parseInt(ymd[0]); //获取年份
+            let month = parseInt(ymd[1])
             this.year = year;
             this.month = month
             this.calcInit(year, month);
-            this.currentValue = value;
+            this.currentDate = arr[0];
         },
 
     
