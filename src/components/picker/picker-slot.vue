@@ -62,7 +62,8 @@ export default {
             scrollDistance: 0,
             lineSpacing: 44,
             rotation: 24,
-            timer: null
+            timer: null,
+            isTouch: false
         }
     },
     watch: {
@@ -161,6 +162,7 @@ export default {
             this.setChooseValue(-this.lineSpacing*index)
         },
         setChooseValue(move) {
+            if(this.isTouch) return;
             let index = Math.round(-move / this.lineSpacing)
             this.$emit('chooseItem', this.listData[index], this.keyIndex, index);
         },
@@ -171,7 +173,7 @@ export default {
             this.touchParams.startY = changedTouches.pageY;
             this.touchParams.startTime = event.timestamp || Date.now();
             this.transformY = this.scrollDistance;
-            
+            this.isTouch = true
             
         },
 
@@ -201,6 +203,7 @@ export default {
             } else {
                 this.setMove(move, 'end');
             }
+            this.isTouch = false
         },
 
         modifyStatus (type, defaultValue) {
