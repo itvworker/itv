@@ -78,12 +78,13 @@ export default {
         },
         percent: {
             type: Number,
-            default: 0.9
+            default: 0.95
         },
         speed: {
             type: Number,
             default: 60
-        }
+        },
+        
 
     },
     data() {
@@ -106,7 +107,8 @@ export default {
             isMove: false,//是否在滑动
             direction:null, //滑动方向, 当 pattern=freedom时失效
             stepX: 0, //动画每步的时速度的变化值
-            stepY: 0 //动画每步的时速度的变化值
+            stepY: 0, //动画每步的时速度的变化值
+        
         }
     },
     

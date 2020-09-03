@@ -1,3 +1,5 @@
+import { timers } from "jquery";
+
 export default {
     methods: {
         /**
@@ -10,8 +12,8 @@ export default {
             let parentHeight = parent.clientHeight;
             let childWidth = child.clientWidth;
             let childHeight = child.clientHeight;
-            this.maxX = Math.max(0,childWidth-parentWidth);
-            this.maxY = Math.max(0,childHeight-parentHeight);
+            this.maxX = Math.max(0,childWidth - parentWidth);
+            this.maxY = Math.max(0,childHeight - parentHeight);
 
             
             //当滚动值超过最大值时，恢复到最大值
@@ -24,7 +26,6 @@ export default {
             if(this.scrollY > this.maxY) {
                 this.scrollY =  this.maxY;
                 this.y =  this.maxY
-                
             }
             
         },
@@ -45,6 +46,11 @@ export default {
                     break
                 }
                 first = i;
+            }
+            let x= touchList[last].x-touchList[first].x 
+            let y = touchList[last].y-touchList[first].y
+            if(this.pattern === 'vertical' &&  this.direction === 'vertical' ) {
+                x = 0;
             }
             return {
                 x: touchList[last].x-touchList[first].x,

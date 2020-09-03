@@ -2,7 +2,7 @@
     <itv-container class="page-dialog">
         <itv-header>Itvscroll</itv-header>
         <itv-main>
-            <itv-scroll>
+            <itv-scroll :topBounce="true" :bottomBounce="true">
                <div class="item-list" v-for="(item, index) in list" :key="index">
                    {{item.name}}{{index}}
                </div>
