@@ -162,6 +162,7 @@ export default {
             this.setChooseValue(-this.lineSpacing*index)
         },
         setChooseValue(move) {
+            if(this.isTouch) return;
             let index = Math.round(-move / this.lineSpacing)
             this.$emit('chooseItem', this.listData[index], this.keyIndex, index);
         },
@@ -174,7 +175,6 @@ export default {
             this.touchParams.startTime = event.timestamp || Date.now();
             this.transformY = this.scrollDistance;
             
-           
             
         },
 
@@ -207,6 +207,7 @@ export default {
             } else {
                 this.setMove(move, 'end');
             }
+            this.isTouch = false
         },
 
         modifyStatus (type, defaultValue) {
