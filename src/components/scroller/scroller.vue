@@ -9,7 +9,6 @@
                 <slot />
             </div> -->
         </div>
-
     </div>
 </template>
 
@@ -138,7 +137,7 @@ export default {
             if (touches.length == null) {
                 throw new Error("Invalid touch list: " + touches);
             }
-
+            
 
             // 两只手指滑动处理中心点
             let currentTouchLeft, currentTouchTop;
@@ -311,9 +310,6 @@ export default {
                     this.landscapeRender(this.x, 0 ,1);
                     return
                 }
-
-
-                
                 return
             }
             

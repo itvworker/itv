@@ -13,7 +13,7 @@ export default (function() {
             requestFrame(callback, root)
         };requestAnimationFrame
     }
-
+    
     var TARGET_FPS = 60;
     var requests = {};
     var requestCount = 0;

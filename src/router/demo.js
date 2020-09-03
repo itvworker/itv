@@ -185,6 +185,15 @@ export default [
                     title: 'dbetween-time',
                 },
             },
+            {
+                path: '/demo/itvscroll',
+                name: 'itv_scroll',
+                component: () => import('@/components/itvscroll/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'itvscroll',
+                },
+            },
         ]
     },  
     
