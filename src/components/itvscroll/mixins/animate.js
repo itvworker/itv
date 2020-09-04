@@ -32,6 +32,11 @@ export default {
         animate(speed, value) {
             this.stepX = speed.x;
             this.stepY = speed.y;
+
+            if(this.isVertcialMove) {
+               
+                this.stepX = 0;
+            }
          
             if(Math.abs(this.stepX) <= this.stopStep) {
                 this.stepX = 0
@@ -51,6 +56,8 @@ export default {
         step(time, value) {
             let continuing = true;
             if(this.isTouch || this.isMove) return;
+
+            console.log(this.stepX);
             let scrollX = this.scrollX - this.stepX
             let scrollY = this.scrollY - this.stepY
             
@@ -92,7 +99,10 @@ export default {
                 this.stepY = 0
             }
 
-            
+            if(this.pattern === 'vertical') {
+                this.stepX = 0;
+                this.scrollX = 0;
+            }
 
             this.scrollX = scrollX;
             this.scrollY = scrollY;
@@ -102,10 +112,7 @@ export default {
             this.stepX = this.stepX * this.percent
             this.stepY = this.stepY * this.percent
             
-            if(this.pattern === 'vertical') {
-                this.stepX = 0;
-                this.scrollX = 0;
-            }
+            
 
             
 

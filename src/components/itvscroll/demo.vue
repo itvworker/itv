@@ -2,7 +2,7 @@
     <itv-container class="page-dialog">
         <itv-header>Itvscroll</itv-header>
         <itv-main>
-            <itv-scroll ref="scroller" :topBounce="true" :bottomBounce="true" :pullDown="true" @refersh="refersh">
+            <itv-scroll ref="scroller" :topBounce="true" :bottomBounce="true" :pullDown="true" pattern="auto" @refersh="refersh">
                <div class="item-list" v-for="(item, index) in list" :key="index">
                    {{item.name}}{{index}}
                </div>
@@ -34,10 +34,10 @@ export default {
        },
        refersh() {
            console.log('下拉刷新');
-           setTimeout(()=>{
+        //    setTimeout(()=>{
                
-               this.$refs.scroller.refresh()
-           },3000)
+        //        this.$refs.scroller.refresh()
+        //    },3000)
        } 
     },
     created() {

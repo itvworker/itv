@@ -92,14 +92,17 @@ export default {
                 
             }
 
-            if(this.pattern === 'auto') {
-                
-            }
-            
-            if(this.pattern === 'vertical' && this.direction === 'vertical') {
+           
+          
+            if(this.isVertcialMove) {
                 
                 let scrollY = this.scrollY - res.angy;
-                 
+
+                if(this.pattern === 'vertical') {
+                    this.scrollX = 0;
+                }
+
+                
                 //允许弹动时
                 if((scrollY < 0 && this.topBounce) || (scrollY > this.maxY && this.bottomBounce)) {
                     if((this.scrollY < 0 && res.angy > 0) || (this.scrollY > this.maxY && res.angy < 0) ) {
@@ -140,7 +143,11 @@ export default {
 
            
            
-            if(this.pattern === 'vertical' && this.direction === 'vertical') { 
+            if(this.direction === 'vertical') { 
+                if(this.pattern === 'vertical') {
+                    this.scrollX = 0;
+                }
+
                 if(this.scrollY < 0 ) {
                     if(this.pullDown) {
                         //触发下拉刷新事件
@@ -149,7 +156,7 @@ export default {
                             this.$emit('refersh');
                         }
                             
-                        this.scrollTo(this.scrollX,this.pullDownPoint,1.5)
+                        this.scrollTo(this.scrollX, this.pullDownPoint, 1.5)
                         return
                     }
                     this.scrollTo(this.scrollX,0,1.5)
@@ -163,7 +170,7 @@ export default {
             }
 
             let speed = this.calcMoveSpeed()
-            this.direction = null
+            
             this.animate(speed);
 
         

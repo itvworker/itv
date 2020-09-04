@@ -10,7 +10,23 @@ export default {
         // },6000)
        
     },
+    computed: {
+        /**
+         * 判断是否竖向滑动
+         */
+        isVertcialMove() {
+            return (this.pattern === 'vertical' || this.pattern === 'auto') && this.direction === 'vertical'
+        },
+
+        /**
+         * 判断是否横向滑动
+         */
+        isHorizontalMove() {
+            return (this.pattern === 'horizontal' || this.pattern === 'auto') && this.direction === 'horizontal'
+        },
+    },
     methods: {
+        
         /**
          * 计滚动到一定距离的stepX,stepY的开始步数
          * @param {Number} distance 
@@ -71,15 +87,13 @@ export default {
             let first = 0;
             for(let i = last; i >= 0; i--) {
                 if(touchList[last].time-touchList[i].time > this.speed) {
-                    console.log(touchList[last].time-touchList[i].time);
-                    console.log(i);
                     break
                 }
                 first = i;
             }
             let x= touchList[last].x-touchList[first].x 
             let y = touchList[last].y-touchList[first].y
-            if(this.pattern === 'vertical' &&  this.direction === 'vertical' ) {
+            if(this.isVertcialMove) {
                 x = 0;
             }
             return {
