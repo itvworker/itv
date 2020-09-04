@@ -1,7 +1,31 @@
 import { timers } from "jquery";
 
 export default {
+    mounted() {
+        // setTimeout(()=>{
+        //     this.scrollTo(1000, 1000)
+        // },3000)
+        // setTimeout(()=>{
+        //     this.scrollTo(1000, 200)
+        // },6000)
+       
+    },
     methods: {
+        /**
+         * 计滚动到一定距离的stepX,stepY的开始步数
+         * @param {Number} distance 
+         */
+        calcStep(distance) {
+            let dis = Math.abs(distance);
+            let step = this.stopStep; 
+            let numDis = 0;
+            while(numDis<dis) {
+                numDis+= step/this.percent
+                step = step/this.percent
+            }
+            step = step/this.percent
+            return step
+        },
         /**
          * 计算滚动的最大值
          */
@@ -28,6 +52,12 @@ export default {
                 this.y =  this.maxY
             }
             
+            //计算下拉加载触发点
+            if(this.pullDown) {
+               this.pullDownPoint =  -this.$refs.pull.clientHeight
+            }
+            
+
         },
         //计算touch结束后的滑动速度
         calcMoveSpeed() {

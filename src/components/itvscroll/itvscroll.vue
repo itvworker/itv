@@ -1,18 +1,23 @@
 <template>
     <div class="itv-scroll" @touchstart="touchstart($event,true)" @touchmove="touchmove($event,true)" @touchend="touchend($event,true)" @touchcancel="touchend($event,true)" >
         <!-- 跟随x轴滚动 -->
-        <div class="itv-scroll-x-touch" ref="x">
+        <div class="itv-scroll-x-touch" ref="x" :style="{'transform':`translate3d(-${x},0,0)`,'WebkitTransform':`translate3d(-${x},0,0)`}">
             <slot name="x"/>
         </div>
         <!-- 跟随y轴滚 -->
-        <div class="itv-scroll-y-touch" ref="y" >
+        <div class="itv-scroll-y-touch" ref="y" :style="{'transform':`translate3d(0,-${y},0)`,'WebkitTransform':`translate3d(0,-${y},0)`}" >
             <slot name="y"/>
         </div>
         <slot name="other"/>
         <!-- 滚动的内容 -->
-        <div class="itv-scroll-content" style="" >
-            <div class="itv-scroll-touch" ref="scroller" :style="{'transform':`translate3d(${x},${y},0)`,'WebkitTransform':`translate3d(${x},${y},0)`}">
-                 <slot/>   
+        <div class="itv-scroll-content"  >
+            <div class="itv-scroll-touch" ref="scroller" :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">
+                <div class="pull-top" v-if="pullDown" ref="pull">
+                    <slot name='pull'>
+                         下拉刷新
+                    </slot>
+                </div>   
+                <slot/>   
             </div>
         </div>    
     </div>
@@ -38,6 +43,10 @@ export default {
             default: false
         },
         rightBounce: { //右部是否弹起
+            type: Boolean,
+            default: false
+        },
+        pullDown: { //开启此功能必须，要开启topBounce
             type: Boolean,
             default: false
         },
@@ -85,6 +94,7 @@ export default {
             default: 60
         },
         
+        
 
     },
     data() {
@@ -108,7 +118,10 @@ export default {
             direction:null, //滑动方向, 当 pattern=freedom时失效
             stepX: 0, //动画每步的时速度的变化值
             stepY: 0, //动画每步的时速度的变化值
-        
+            stopStep: 0.5, //当stepX,stepY绝对值小于0.5停止滚动
+            scrollToX: null, //滚动到某一点，仅存
+            scrollToY: null, //滚动到某一点，仅存
+            pullDownPoint: 0, //下拉加载的触发点
         }
     },
     

@@ -10,6 +10,8 @@ export default {
             }
             this.direction = null;
             this.isTouch = true;
+            this.scrollToX = null;
+            this.scrollToY = null;
             let touches = e.touches;
             //检查手指数量
             if (touches.length == null) {
@@ -115,6 +117,8 @@ export default {
 
                 this.scrollY = scrollY  
                 this.scrollRender(this.scrollX, this.scrollY, 1)
+                this.scrollXRender(this.scrollX, 0, 1)
+                this.scrollYRender(0, this.scrollY, 1)
 
                 return
             }
@@ -134,8 +138,22 @@ export default {
             this.isTouch = false;
             this.touchMoveList[this.touchMoveList.length-1].time = new Date().getTime()
 
+           
+           
             if(this.pattern === 'vertical' && this.direction === 'vertical') { 
-                if(this.scrollY < 0 || this.scrollY > this.maxY) {
+                if(this.scrollY < 0 ) {
+                    if(this.pullDown) {
+                        //触发下拉刷新事件
+                        this.$emit('refersh');
+                        this.scrollTo(this.scrollX,this.pullDownPoint,1.5)
+                        return
+                    }
+                    this.scrollTo(this.scrollX,0,1.5)
+                    return
+                } 
+
+                if(this.scrollY > this.maxY) {
+                    this.scrollTo(this.scrollX,this.maxY,1.5)
                     return
                 } 
             }
@@ -143,6 +161,8 @@ export default {
             let speed = this.calcMoveSpeed()
             this.direction = null
             this.animate(speed);
+
+        
            
         }
     }
