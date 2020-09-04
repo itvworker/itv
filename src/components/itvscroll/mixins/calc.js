@@ -33,6 +33,10 @@ export default {
          */
         calcStep(distance) {
             let dis = Math.abs(distance);
+
+            if(dis===0) {
+                return 0
+            }
             let step = this.stopStep; 
             let numDis = 0;
             while(numDis<dis) {

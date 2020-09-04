@@ -8,6 +8,7 @@ export default {
          * @param {Nubmer} value 速度倍数 
          */
         scrollTo(x,y,value=1) {
+     
             this.scrollToX =x;
             this.scrollToY = y;
             let dx = this.scrollX - x;
@@ -106,8 +107,8 @@ export default {
 
             this.scrollX = scrollX;
             this.scrollY = scrollY;
-            this.scrollRender(0, this.scrollY, 1)
-            this.scrollXRender(0,0,1)
+            this.scrollRender(this.scrollX , this.scrollY, 1)
+            this.scrollXRender(this.scrollX,0,1)
             this.scrollYRender(0,this.scrollY,1)
             this.stepX = this.stepX * this.percent
             this.stepY = this.stepY * this.percent

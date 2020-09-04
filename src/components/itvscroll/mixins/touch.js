@@ -144,6 +144,7 @@ export default {
            
            
             if(this.direction === 'vertical') { 
+          
                 if(this.pattern === 'vertical') {
                     this.scrollX = 0;
                 }
@@ -170,6 +171,7 @@ export default {
             }
 
             let speed = this.calcMoveSpeed()
+
             
             this.animate(speed);
 
