@@ -14,7 +14,7 @@
             <div class="itv-scroll-touch" ref="scroller" :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">
                 <div class="pull-top" v-if="pullDown" ref="pull">
                     <slot name='pull'>
-                         下拉刷新
+                        下拉刷新
                     </slot>
                 </div>   
                 <slot/>   
@@ -122,6 +122,7 @@ export default {
             scrollToX: null, //滚动到某一点，仅存
             scrollToY: null, //滚动到某一点，仅存
             pullDownPoint: 0, //下拉加载的触发点
+            isTriggerPullDown: false //是否触发了下拉加载
         }
     },
     

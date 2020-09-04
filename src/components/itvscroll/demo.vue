@@ -2,7 +2,7 @@
     <itv-container class="page-dialog">
         <itv-header>Itvscroll</itv-header>
         <itv-main>
-            <itv-scroll :topBounce="true" :bottomBounce="true" :pullDown="true">
+            <itv-scroll ref="scroller" :topBounce="true" :bottomBounce="true" :pullDown="true" @refersh="refersh">
                <div class="item-list" v-for="(item, index) in list" :key="index">
                    {{item.name}}{{index}}
                </div>
@@ -31,6 +31,13 @@ export default {
                    name: '测试一下内容条数'
                })
            }
+       },
+       refersh() {
+           console.log('下拉刷新');
+           setTimeout(()=>{
+               
+               this.$refs.scroller.refresh()
+           },3000)
        } 
     },
     created() {
