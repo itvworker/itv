@@ -11,7 +11,7 @@
         <slot name="other"/>
         <!-- 滚动的内容 -->
         <div class="itv-scroll-content"  >
-            <div class="itv-scroll-touch" ref="scroller" :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">
+            <div class="itv-scroll-touch" ref="scroller"  :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">
                 <div class="pull-top" v-if="pullDown" ref="pull">
                     <slot name='pull'>
                         下拉刷新

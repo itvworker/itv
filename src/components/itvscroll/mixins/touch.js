@@ -88,21 +88,16 @@ export default {
              * vertical竖向滚动，
              * horizontal横向滚动
             */
-            if(this.pattern === 'freedom') {
-                
-            }
+           
 
            
           
-            if(this.isVertcialMove) {
-                
+            if(this.isVertcialMove || this.pattern === 'freedom') {
                 let scrollY = this.scrollY - res.angy;
 
-                if(this.pattern === 'vertical') {
+                if(this.pattern === 'vertical' && this.pattern !== 'freedom') {
                     this.scrollX = 0;
                 }
-
-                
                 //允许弹动时
                 if((scrollY < 0 && this.topBounce) || (scrollY > this.maxY && this.bottomBounce)) {
                     if((this.scrollY < 0 && res.angy > 0) || (this.scrollY > this.maxY && res.angy < 0) ) {
@@ -119,16 +114,37 @@ export default {
                 }
 
                 this.scrollY = scrollY  
-                this.scrollRender(this.scrollX, this.scrollY, 1)
-                this.scrollXRender(this.scrollX, 0, 1)
-                this.scrollYRender(0, this.scrollY, 1)
-
-                return
             }
+            if(this.isHorizontalMove || this.pattern === 'freedom' ) {
+               
+                let scrollX = this.scrollX - res.angx;
+                if(this.pattern === 'horizontal' && this.pattern !== 'freedom') {
+                    this.scrollY = 0;
+                }
 
-            if(this.pattern === 'horizontal') {
-                return
+
+                //允许弹动时
+                if((scrollX < 0 && this.leftBounce) || (scrollX > this.maxX && this.rightBounce)) {
+                    if((this.scrollX < 0 && res.angx > 0) || (this.scrollX > this.maxX && res.angx < 0) ) {
+                        
+                        scrollX = this.scrollX - (res.angx*0.5)
+                    }
+                }
+                //不许弹动时
+                if(scrollX < 0 && !this.leftBounce) {
+                    scrollX = 0
+                }
+                //不许弹动时
+                if(scrollX > this.maxX && !this.rightBounce) {
+                    scrollX = this.maxX
+                }
+                this.scrollX = scrollX;
+
             }
+           
+            this.scrollRender(this.scrollX, this.scrollY, 1)
+            this.scrollXRender(this.scrollX, 0, 1)
+            this.scrollYRender(0, this.scrollY, 1)
 
 
 
@@ -142,7 +158,23 @@ export default {
             this.touchMoveList[this.touchMoveList.length-1].time = new Date().getTime()
 
            
-           
+            if(this.direction === 'horizontal') {
+                if(this.pattern === 'horizontal') {
+                    this.scrollY = 0;
+                }
+
+                if(this.scrollX < 0 ) {
+                    
+                    this.scrollTo(0, this.scrollY,1.5)
+                   
+                    return
+                } 
+
+                if(this.scrollX > this.maxX) {
+                    this.scrollTo(this.maxX, this.scrollY,1.5)
+                    return
+                } 
+            }
             if(this.direction === 'vertical') { 
           
                 if(this.pattern === 'vertical') {

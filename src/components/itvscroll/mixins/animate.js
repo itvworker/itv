@@ -1,3 +1,5 @@
+import { timers } from "jquery";
+
 export default {
     methods: {
         //滚动到指定位置
@@ -17,7 +19,7 @@ export default {
             this.stepX = dx > 0? this.calcStep(dx):-this.calcStep(dx)
             this.stepX*=value
             this.stepY*=value
-
+           
            
             window.requestAnimationFrame(this.step);                 
 
@@ -31,9 +33,10 @@ export default {
         },
         //
         animate(speed, value) {
+            
             this.stepX = speed.x;
             this.stepY = speed.y;
-
+          
             if(this.isVertcialMove) {
                
                 this.stepX = 0;
@@ -58,18 +61,27 @@ export default {
             let continuing = true;
             if(this.isTouch || this.isMove) return;
 
-            console.log(this.stepX);
+           
             let scrollX = this.scrollX - this.stepX
             let scrollY = this.scrollY - this.stepY
             
 
             //当快要滚动到指定点的Y轴时
-            let arrive = ((this.stepY < 0 && scrollY > this.scrollToY) || (this.stepY > 0 && scrollY < this.scrollToY)) && this.scrollToY!==null
-            if(arrive) {
+            let arriveY = ((this.stepY < 0 && scrollY > this.scrollToY) || (this.stepY > 0 && scrollY < this.scrollToY)) && this.scrollToY!==null
+            if(arriveY) {
                 this.stepY = 0;
                 scrollY = this.scrollToY;
                 this.scrollToY = null;
                 continuing = false;
+                
+            }
+
+            let arriveX = ((this.stepX < 0 && scrollX > this.scrollToX) || (this.stepX > 0 && scrollX < this.scrollToX)) && this.scrollToX!==null
+            if(arriveX) {
+                this.stepX = 0;
+                scrollX = this.scrollToX;
+                this.scrollToX = null;
+                
                 
             }
 
@@ -87,7 +99,6 @@ export default {
                     scrollY = this.scrollY - this.stepY*0.5
                     this.stepY = this.stepY*0.8
                 }
-                
             }
             //不许弹动时
             if(scrollY < 0 && !this.topBounce) {
@@ -99,10 +110,44 @@ export default {
                 scrollY = this.maxY
                 this.stepY = 0
             }
+            //当是指定滚动到某一点时
+            if((scrollX < 0 && this.leftBounce) || (scrollX >= this.maxX && this.rightBounce)) {
+                //是否回弹
+                
+                let isBounce = (this.stepX < 0 && this.scrollX < 0) || (this.stepX > 0 && this.scrollX> this.maxX);
+            
+                if(!isBounce) {
+                    
+                    scrollX = this.scrollX - this.stepX*0.5
+                    this.stepX = this.stepX*0.8
+                }
+            }
+
+            //不许弹动时
+            if(scrollX < 0 && !this.leftBounce) {
+            
+                scrollX = 0
+                this.stepX= 0
+            }
+            //不许弹动时
+            if(scrollX > this.maxX && !this.rightBounce) {
+                scrollX = this.maxX
+                this.stepX = 0
+            }
+
 
             if(this.pattern === 'vertical') {
                 this.stepX = 0;
                 this.scrollX = 0;
+            }
+
+            if(this.pattern === 'horizontal') {
+                this.stepY = 0;
+                this.scrollY = 0;
+            }
+
+            if(this.pattern === 'auto' && this.direction === 'vertcial') {
+                this.stepX = 0;
             }
 
             this.scrollX = scrollX;
@@ -131,6 +176,14 @@ export default {
 
                 if(this.scrollY > this.maxY && continuing) {
                     this.scrollTo(this.scrollToX, this.maxY, 1.5)
+                } 
+
+                if(this.scrollX < 0 && continuing) {
+                    this.scrollTo(0, this.scrollToY, 1.5)
+                }
+
+                if(this.scrollX > this.maxX && continuing) {
+                    this.scrollTo(this.maxX, this.scrollToY, 1.5)
                 }
                 return
             }

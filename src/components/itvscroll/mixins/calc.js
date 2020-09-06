@@ -43,6 +43,8 @@ export default {
                 numDis+= step/this.percent
                 step = step/this.percent
             }
+
+            
             step = step/this.percent
             return step
         },
@@ -59,7 +61,7 @@ export default {
             this.maxX = Math.max(0,childWidth - parentWidth);
             this.maxY = Math.max(0,childHeight - parentHeight);
 
-            
+          
             //当滚动值超过最大值时，恢复到最大值
 
             if(this.scrollX > this.maxX) {
@@ -95,14 +97,19 @@ export default {
                 }
                 first = i;
             }
-            let x= touchList[last].x-touchList[first].x 
+            let x = touchList[last].x-touchList[first].x 
             let y = touchList[last].y-touchList[first].y
             if(this.isVertcialMove) {
                 x = 0;
             }
+
+            if(this.isHorizontalMove) {
+                y = 0;
+            }
+            
             return {
-                x: touchList[last].x-touchList[first].x,
-                y: touchList[last].y-touchList[first].y
+                x: x,
+                y: y
             }
         }
     }
