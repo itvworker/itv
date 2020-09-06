@@ -27,8 +27,15 @@ export default {
         scrollbarHeight() {
           return parseInt((this.contentHeight /this.maxY)*100);
         },
+        scrollbarWidth() {
+            return parseInt((this.contentWidth / this.maxX)*100);
+        },
         scrollBarOuter() {
             return this.contentHeight - parseInt(this.scrollbarHeight)/100 * this.contentHeight;
+        },
+        scrollBarOuterWidth() {
+            
+            return this.contentWidth - parseInt(this.scrollbarWidth)/100 * this.contentWidth;
         },
           
     },
@@ -68,6 +75,7 @@ export default {
             this.maxX = Math.max(0,childWidth - parentWidth);
             this.maxY = Math.max(0,childHeight - parentHeight);
             this.contentHeight = parentHeight;
+            this.contentWidth = parentWidth;
            
             //当滚动值超过最大值时，恢复到最大值
 

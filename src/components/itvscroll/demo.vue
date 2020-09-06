@@ -20,14 +20,13 @@
             @scroll="scroll" 
             @stopscroll="stopscroll"
             @refersh="refersh">
-                <itv-scroll v-if="tabIndex===0" ref="scroller3" :leftBounce="true" :rightBounce="true"  :percent="0.9" pattern="horizontal" class="case-box">
-                <div class="itv-case-box">
-                    <div class="item-list-section" v-for="(item, index) in list" :key="index">
-                        {{item.name}}{{index}}
+                <itv-scroll v-if="tabIndex===0" ref="scroller3" :showScrollBar="true" :leftBounce="true" :rightBounce="true"  :percent="0.9" pattern="horizontal" class="case-box">
+                    <div class="itv-case-box">
+                        <div class="item-list-section" v-for="(item, index) in list" :key="index">
+                            {{item.name}}{{index}}
+                        </div>
                     </div>
-                </div>
-               
-            </itv-scroll>
+                </itv-scroll>
                <div class="item-list" v-for="(item, index) in list" :key="index">
                    {{item.name}}{{index}}
                </div>
@@ -38,9 +37,7 @@
                 </div> -->
             </itv-scroll>
 
-             <itv-scroll v-if="tabIndex===1" ref="scrolle4" pattern="freedom" :key="1" >
-               
-
+             <itv-scroll v-if="tabIndex===1" ref="scrolle4" pattern="freedom" :key="1"  :showScrollBar="true" >
                <div class="msg-word">
                     {{word}}
                </div>

@@ -11,8 +11,11 @@
         <slot name="other"/>
         <!-- 滚动的内容 -->
         <div class="itv-scroll-content"  >
-            <div class="scroller-bar" v-if="showScrollBar" v-show="!hideBarY" >
+            <div class="scroller-bar" v-if="showScrollBar" v-show="!hideBarY && maxY > 0 && (direction === 'vertical' || parttern === 'freedom')" >
                 <div class="scroll-indoor" ref="barY" :style="{'height':scrollbarHeight+'%','transform':`translate3d(0,${scrollbarY}px,0)`,'WebkitTransform':`translate3d(0,${scrollbarY}px,0)`}"></div>
+            </div>
+            <div class="scroller-barx" v-if="showScrollBar " v-show="!hideBarY && maxX > 0 && (direction === 'horizontal' || parttern === 'freedom')" >
+                <div class="scroll-indoor" ref="barX" :style="{'width':scrollbarWidth+'%','transform':`translate3d(${scrollbarX}px,0,0)`,'WebkitTransform':`translate3d(${scrollbarX}px,0,0)`}"></div>
             </div>
             <div class="itv-scroll-touch" ref="scroller"  :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">
                 <div class="pull-top" v-if="pullDown" ref="pull">
@@ -133,6 +136,9 @@ export default {
             scrollXRender: '',//设定滚动位置 ref = y
             scrollYRender: '',//设定滚动位置 ref = x
             scrollBarYRender :'', //y轴滚动动条
+            scrollBarXRender :'', //x轴滚动动条
+
+          
             isTouch: false, //是否手指在屏幕上
             isMove: false,//是否在滑动
             direction:null, //滑动方向, 当 pattern=freedom时失效
@@ -146,6 +152,8 @@ export default {
             contentHeight: 0, //可视框高度
             scrollbarY: 0, //缓存真实位置用到
             cacheScrollbarY:0, //缓存用，滚动条y的真实位置
+            scrollbarX: 0, //缓存真实位置用到
+            cacheScrollbarX:0, //缓存用，滚动条y的真实位置
             hideBarY: true, //不可视化滚动动条
             scrollBarTimeout: '',
         }
