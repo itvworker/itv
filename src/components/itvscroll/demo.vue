@@ -9,7 +9,17 @@
         <itv-main>
            
 
-            <itv-scroll v-if="tabIndex===0" :key="0" ref="scrolle2" :topBounce="true" :bottomBounce="true" :pullDown="true" pattern="auto" @refersh="refersh">
+            <itv-scroll 
+            v-if="tabIndex===0" 
+            :key="0" ref="scrolle2" 
+            :topBounce="true" 
+            :bottomBounce="true" 
+            :pullDown="true" 
+            pattern="auto" 
+            :showScrollBar="true"
+            @scroll="scroll" 
+            @stopscroll="stopscroll"
+            @refersh="refersh">
                 <itv-scroll v-if="tabIndex===0" ref="scroller3" :leftBounce="true" :rightBounce="true"  :percent="0.9" pattern="horizontal" class="case-box">
                 <div class="itv-case-box">
                     <div class="item-list-section" v-for="(item, index) in list" :key="index">
@@ -63,33 +73,40 @@ export default {
         }
     },
     methods: {
-       changeList(size, page) {
-           for(let i = 0; i <= size; i++) {
-               this.list.push({
-                   name: '测试一下内容条数'
-               })
-           }
-       },
-       refersh() {
-           console.log('下拉刷新');
-        //    setTimeout(()=>{
-               
-        //        this.$refs.scroller.refresh()
-        //    },3000)
-       },
-       changeTab(index) {
-           if(this.tabIndex === index) return
-           let name = this.$route.name;
-           this.$router.replace({
-               name: name,
-               query: {
-                   index: index
-               }
-           })
-       } 
+        changeList(size, page) {
+            for(let i = 0; i <= size; i++) {
+                this.list.push({
+                    name: '测试一下内容条数'
+                })
+            }
+        },
+        scroll(obj) {
+            console.log(`scroll:{ x: ${obj.x}, y: ${obj.y} }`);
+        },
+        stopscroll(obj) {
+            console.log(`stopscroll:{ x: ${obj.x}, y: ${obj.y} }`);
+            
+        },
+        refersh() {
+            console.log('下拉刷新');
+            //    setTimeout(()=>{
+                
+            //        this.$refs.scroller.refresh()
+            //    },3000)
+        },
+        changeTab(index) {
+            if(this.tabIndex === index) return
+            let name = this.$route.name;
+            this.$router.replace({
+                name: name,
+                query: {
+                    index: index
+                }
+            })
+        } 
     },
     created() {
-        this.changeList(100,1)
+        this.changeList(50,1)
     },
     mounted() {
        

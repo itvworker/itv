@@ -51,7 +51,13 @@ export default {
             }
 
             if(this.stepY===0 && this.stepX === 0) {
-                this.$emit('stopscroll')
+                this.$emit('stopscroll',{
+                    x: this.scrollX,
+                    y: this.scrollY
+                })
+                this.scrollBarTimeout = setTimeout(()=>{
+                    this.hideBarY = true;
+                },2000)
                 return 
             }
             window.requestAnimationFrame(this.step, value)
@@ -148,18 +154,33 @@ export default {
 
             if(this.pattern === 'auto' && this.direction === 'vertcial') {
                 this.stepX = 0;
+                
             }
 
             this.scrollX = scrollX;
             this.scrollY = scrollY;
+            this.hideBarY = false;
             this.scrollRender(this.scrollX , this.scrollY, 1)
-            this.scrollXRender(this.scrollX,0,1)
-            this.scrollYRender(0,this.scrollY,1)
+            
+           
+            if(this.scrollXRender) {
+                this.scrollXRender(this.scrollX,0,1)
+            }
+            if(this.scrollYRender) {
+                this.scrollYRender(0,this.scrollY,1)
+            }
+
+            if(this.scrollBarYRender) {
+                let percent = parseInt(this.scrollY / this.maxY * 100)/100;
+                this.cacheScrollBarY = this.scrollBarOuter*percent;
+                this.scrollBarYRender(0,-this.cacheScrollBarY,1)
+            }
+            this.$emit('scroll',{
+                x: this.scrollX,
+                y: this.scrollY
+            })
             this.stepX = this.stepX * this.percent
             this.stepY = this.stepY * this.percent
-            
-            
-
             
 
             if(Math.abs(this.stepX) <= this.stopStep) {
@@ -172,19 +193,30 @@ export default {
             if(this.stepX===0 && this.stepY === 0) {
                 if(this.scrollY < 0 && continuing) {
                     this.scrollTo(this.scrollToX, 0, 1.5)
+                    return
                 }
 
                 if(this.scrollY > this.maxY && continuing) {
                     this.scrollTo(this.scrollToX, this.maxY, 1.5)
+                    return
                 } 
 
                 if(this.scrollX < 0 && continuing) {
                     this.scrollTo(0, this.scrollToY, 1.5)
+                    return
                 }
 
                 if(this.scrollX > this.maxX && continuing) {
                     this.scrollTo(this.maxX, this.scrollToY, 1.5)
+                    return
                 }
+                this.$emit('stopscroll', {
+                    x: this.scrollX,
+                    y: this.scrollY
+                })
+                this.scrollBarTimeout = setTimeout(()=>{
+                    this.hideBarY = true;
+                },2000)
                 return
             }
             

@@ -1,16 +1,19 @@
 <template>
     <div class="itv-scroll" @touchstart="touchstart($event,true)" @touchmove="touchmove($event,true)" @touchend="touchend($event,true)" @touchcancel="touchend($event,true)" >
         <!-- 跟随x轴滚动 -->
-        <div class="itv-scroll-x-touch" ref="x" :style="{'transform':`translate3d(-${x},0,0)`,'WebkitTransform':`translate3d(-${x},0,0)`}">
+        <div class="itv-scroll-x-touch" v-if="scrollXel" ref="x" :style="{'transform':`translate3d(-${x},0,0)`,'WebkitTransform':`translate3d(-${x},0,0)`}">
             <slot name="x"/>
         </div>
         <!-- 跟随y轴滚 -->
-        <div class="itv-scroll-y-touch" ref="y" :style="{'transform':`translate3d(0,-${y},0)`,'WebkitTransform':`translate3d(0,-${y},0)`}" >
+        <div class="itv-scroll-y-touch" v-if="scrollYel" ref="y" :style="{'transform':`translate3d(0,-${y},0)`,'WebkitTransform':`translate3d(0,-${y},0)`}" >
             <slot name="y"/>
         </div>
         <slot name="other"/>
         <!-- 滚动的内容 -->
         <div class="itv-scroll-content"  >
+            <div class="scroller-bar" v-if="showScrollBar" v-show="!hideBarY" >
+                <div class="scroll-indoor" ref="barY" :style="{'height':scrollbarHeight+'%','transform':`translate3d(0,${scrollbarY}px,0)`,'WebkitTransform':`translate3d(0,${scrollbarY}px,0)`}"></div>
+            </div>
             <div class="itv-scroll-touch" ref="scroller"  :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">
                 <div class="pull-top" v-if="pullDown" ref="pull">
                     <slot name='pull'>
@@ -93,6 +96,22 @@ export default {
             type: Number,
             default: 60
         },
+        //是否黒示滚动条
+        showScrollBar: {
+            type: Boolean,
+            default: false
+        },
+
+        //开启随y轴滚动dom
+        scrollYel:{
+            type: Boolean,
+            default: false,
+        },
+         //开启随X轴滚动dom
+        scrollXel:{
+            type: Boolean,
+            default: false,
+        }
         
         
 
@@ -113,6 +132,7 @@ export default {
             scrollRender: '', //设定滚动位置 ref=scroller
             scrollXRender: '',//设定滚动位置 ref = y
             scrollYRender: '',//设定滚动位置 ref = x
+            scrollBarYRender :'', //y轴滚动动条
             isTouch: false, //是否手指在屏幕上
             isMove: false,//是否在滑动
             direction:null, //滑动方向, 当 pattern=freedom时失效
@@ -122,7 +142,12 @@ export default {
             scrollToX: null, //滚动到某一点，仅存
             scrollToY: null, //滚动到某一点，仅存
             pullDownPoint: 0, //下拉加载的触发点
-            isTriggerPullDown: false //是否触发了下拉加载
+            isTriggerPullDown: false, //是否触发了下拉加载
+            contentHeight: 0, //可视框高度
+            scrollbarY: 0, //缓存真实位置用到
+            cacheScrollbarY:0, //缓存用，滚动条y的真实位置
+            hideBarY: true, //不可视化滚动动条
+            scrollBarTimeout: '',
         }
     },
     

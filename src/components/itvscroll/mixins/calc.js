@@ -24,6 +24,13 @@ export default {
         isHorizontalMove() {
             return (this.pattern === 'horizontal' || this.pattern === 'auto') && this.direction === 'horizontal'
         },
+        scrollbarHeight() {
+          return parseInt((this.contentHeight /this.maxY)*100);
+        },
+        scrollBarOuter() {
+            return this.contentHeight - parseInt(this.scrollbarHeight)/100 * this.contentHeight;
+        },
+          
     },
     methods: {
         
@@ -60,8 +67,8 @@ export default {
             let childHeight = child.clientHeight;
             this.maxX = Math.max(0,childWidth - parentWidth);
             this.maxY = Math.max(0,childHeight - parentHeight);
-
-          
+            this.contentHeight = parentHeight;
+           
             //当滚动值超过最大值时，恢复到最大值
 
             if(this.scrollX > this.maxX) {

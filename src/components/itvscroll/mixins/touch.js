@@ -1,5 +1,5 @@
 import getDirection from '../../../libs/touch'
-import { type } from 'jquery';
+import { type, timers } from 'jquery';
 export default {
     methods: {
         touchstart(e, self) {
@@ -143,8 +143,29 @@ export default {
             }
            
             this.scrollRender(this.scrollX, this.scrollY, 1)
-            this.scrollXRender(this.scrollX, 0, 1)
-            this.scrollYRender(0, this.scrollY, 1)
+
+            if(this.scrollXRender) {
+                this.scrollXRender(this.scrollX,0,1)
+            }
+            if(this.scrollYRender) {
+                this.scrollYRender(0,this.scrollY,1)
+            }
+            this.hideBarY = false;
+            if(this.scrollBarYRender) {
+                let percent = parseInt(this.scrollY / this.maxY * 100)/100;
+                this.cacheScrollBarY = this.scrollBarOuter*percent;
+                this.scrollBarYRender(0,-this.cacheScrollBarY,1)
+            }
+            if(this.scrollBarTimeout){
+                this.hideBarY = false;
+                clearTimeout(this.scrollBarTimeout)
+                this.scrollBarTimeout = null
+            }
+           
+            this.$emit('scroll',{
+                x: this.scrollX,
+                y: this.scrollY
+            })
 
 
 
