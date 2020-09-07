@@ -17,7 +17,7 @@ export default {
             this.stepX*=value
             this.stepY*=value
 
-           
+            
             window.requestAnimationFrame(this.step);                 
 
         },
