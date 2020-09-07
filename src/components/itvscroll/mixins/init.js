@@ -1,9 +1,28 @@
 import render from '../../../libs/render'
+import { timers } from 'jquery';
 export default {
     mounted() {
         this.scrollRender =  render(this.$refs.scroller);
-        this.scrollXRender = render(this.$refs.x);
-        this.scrollYRender = render(this.$refs.y);
+        
+        if(this.scrollXel) {
+            this.scrollXRender = render(this.$refs.x);
+        }
+        if(this.scrollYel) {
+            this.scrollYRender = render(this.$refs.y);
+        }
+        if(this.showScrollBar ) {
+        
+            if(this.pattern === 'horizontal' || this.pattern==='freedom' || this.pattern==='auto')  {
+                this.scrollBarXRender = render(this.$refs.barX);
+                
+            }
+            if(this.pattern === 'vertical' || this.pattern==='freedom' || this.pattern==='auto') {
+                this.scrollBarYRender = render(this.$refs.barY);
+            }
+            
+            
+            
+        }
         this.calcMax()
     },
     

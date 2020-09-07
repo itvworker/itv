@@ -1,5 +1,5 @@
 import getDirection from '../../../libs/touch'
-import { type } from 'jquery';
+import { type, timers } from 'jquery';
 export default {
     methods: {
         touchstart(e, self) {
@@ -67,9 +67,11 @@ export default {
             if(!res) return
             if((res.type===1 || res.type === 2) && !this.direction) {
                 this.direction = 'vertical'
+                this.cacheDirection = 'vertical'
             }
             if((res.type===3 || res.type === 4) && !this.direction) {
-                this.direction = 'horizontal'  
+                this.direction = 'horizontal'
+                this.cacheDirection = 'horizontal'  
             }
             if(!this.direction) return
 
@@ -88,18 +90,16 @@ export default {
              * vertical竖向滚动，
              * horizontal横向滚动
             */
-            if(this.pattern === 'freedom') {
-                
-            }
+           
 
-            if(this.pattern === 'auto') {
-                
-            }
-            
-            if(this.pattern === 'vertical' && this.direction === 'vertical') {
-                
+           
+          
+            if(this.isVertcialMove || this.pattern === 'freedom') {
                 let scrollY = this.scrollY - res.angy;
-                 
+
+                if(this.pattern === 'vertical' && this.pattern !== 'freedom') {
+                    this.scrollX = 0;
+                }
                 //允许弹动时
                 if((scrollY < 0 && this.topBounce) || (scrollY > this.maxY && this.bottomBounce)) {
                     if((this.scrollY < 0 && res.angy > 0) || (this.scrollY > this.maxY && res.angy < 0) ) {
@@ -116,16 +116,64 @@ export default {
                 }
 
                 this.scrollY = scrollY  
-                this.scrollRender(this.scrollX, this.scrollY, 1)
-                this.scrollXRender(this.scrollX, 0, 1)
-                this.scrollYRender(0, this.scrollY, 1)
-
-                return
             }
+            if(this.isHorizontalMove || this.pattern === 'freedom' ) {
+               
+                let scrollX = this.scrollX - res.angx;
+                if(this.pattern === 'horizontal' && this.pattern !== 'freedom') {
+                    this.scrollY = 0;
+                }
 
-            if(this.pattern === 'horizontal') {
-                return
+
+                //允许弹动时
+                if((scrollX < 0 && this.leftBounce) || (scrollX > this.maxX && this.rightBounce)) {
+                    if((this.scrollX < 0 && res.angx > 0) || (this.scrollX > this.maxX && res.angx < 0) ) {
+                        
+                        scrollX = this.scrollX - (res.angx*0.5)
+                    }
+                }
+                //不许弹动时
+                if(scrollX < 0 && !this.leftBounce) {
+                    scrollX = 0
+                }
+                //不许弹动时
+                if(scrollX > this.maxX && !this.rightBounce) {
+                    scrollX = this.maxX
+                }
+                this.scrollX = scrollX;
+
             }
+           
+            this.scrollRender(this.scrollX, this.scrollY, 1)
+
+            if(this.scrollXRender) {
+                this.scrollXRender(this.scrollX,0,1)
+            }
+            if(this.scrollYRender) {
+                this.scrollYRender(0,this.scrollY,1)
+            }
+            this.hideBarY = false;
+            if(this.scrollBarYRender) {
+                let percent = parseInt(this.scrollY / this.maxY * 100)/100;
+                this.cacheScrollBarY = this.scrollBarOuter*percent;
+                this.scrollBarYRender(0,-this.cacheScrollBarY,1)
+            }
+            if(this.scrollBarXRender) {
+             
+                let percent = parseInt(this.scrollX / this.maxX * 100)/100;
+                this.cacheScrollBarX = this.scrollBarOuterWidth*percent;
+                this.scrollBarXRender( -this.cacheScrollBarX,0,1)
+            }
+            if(this.scrollBarTimeout){
+                this.hideBarY = false;
+                clearTimeout(this.scrollBarTimeout)
+                this.scrollBarTimeout = null
+            }
+           
+            this.$emit('scroll',{
+                x: this.scrollX,
+                y: this.scrollY
+            })
 
 
 
@@ -139,8 +187,29 @@ export default {
             this.touchMoveList[this.touchMoveList.length-1].time = new Date().getTime()
 
            
-           
-            if(this.pattern === 'vertical' && this.direction === 'vertical') { 
+            if(this.direction === 'horizontal') {
+                if(this.pattern === 'horizontal') {
+                    this.scrollY = 0;
+                }
+
+                if(this.scrollX < 0 ) {
+                    
+                    this.scrollTo(0, this.scrollY,1.5)
+                   
+                    return
+                } 
+
+                if(this.scrollX > this.maxX) {
+                    this.scrollTo(this.maxX, this.scrollY,1.5)
+                    return
+                } 
+            }
+            if(this.direction === 'vertical') { 
+          
+                if(this.pattern === 'vertical') {
+                    this.scrollX = 0;
+                }
+
                 if(this.scrollY < 0 ) {
                     if(this.pullDown) {
                         //触发下拉刷新事件
@@ -149,7 +218,7 @@ export default {
                             this.$emit('refersh');
                         }
                             
-                        this.scrollTo(this.scrollX,this.pullDownPoint,1.5)
+                        this.scrollTo(this.scrollX, this.pullDownPoint, 1.5)
                         return
                     }
                     this.scrollTo(this.scrollX,0,1.5)
@@ -163,7 +232,8 @@ export default {
             }
 
             let speed = this.calcMoveSpeed()
-            this.direction = null
+
+            
             this.animate(speed);
 
         
