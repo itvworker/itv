@@ -6,11 +6,11 @@
                         <div class="time" :class="{'active':dataType===1}" @click="changeTab(1)">{{currentHour}}:{{currentMin}}</div>
                         <div class="btn-confirm">确定</div>
                     </div>
-                    <div class="week-bar">
-                            <div class="week-item" v-for="(item, index ) in weekText" :key="index">{{item}}</div>
-                    </div>   
+                      
                     <div class="itv-between-time-change" :class="{'itv-select-time': dataType===1}">
-                        
+                        <div class="week-bar">
+                            <div class="week-item" v-for="(item, index) in weekText" :key="index">{{item}}</div>
+                        </div> 
                         <swiper ref="swiper" :bounce="false"
                             direction="column" @change="change" 
                             @last="change(2)" @first="change(0)" 
@@ -130,7 +130,7 @@
             },
             weekText: {
                 type: Array,
-                default: () => ["日", "一", "二", "三", "四", "五", "六"]
+                default: ["日", "一", "二", "三", "四", "五", "六"]
             },
             confirmText: {
                 type: String,
@@ -149,9 +149,10 @@
                 
             },
             isVisible(n) {
-                if(!n && this.dateType === 'calendar-time' && this.dateType === 'calendar') {
+                if(!n && (this.dateType === 'calendar-time' || this.dateType === 'calendar')) {
                     setTimeout(()=>{
                         this.dataType = 0 
+                        
                     },300)
                        
                 }

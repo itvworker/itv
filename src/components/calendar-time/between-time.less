@@ -56,16 +56,18 @@
     display: flex;
     position: absolute;
     width: 100%;
-    z-index: 2;
-    top: 44ipx;
-    border-bottom: #ddd solid 1px;
+    top: -1px;
+    height: 30ipx;
+    border-bottom: #ddd solid 2px;
+    z-index: 10;
+    
     .week-item{
       flex: 1;
       text-align: center;
       background-color: @bg-color-light;
       margin-top:1px;
-      height: 28ipx;
-      line-height: 28ipx;
+      height: 30ipx;
+      line-height: 30ipx;
     }
   }
 
@@ -89,13 +91,15 @@
  
 }
 .itv-swpier-between-time {
-  height:320ipx;
+  height:350ipx;
   flex: 0 0 auto;
+  padding-top: 30ipx;
   width: 100%;
+  box-sizing: border-box;
  
   .itv-swpier-calendar{
     box-sizing: border-box;
-    height: 320ipx;
+    height: 350ipx;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
