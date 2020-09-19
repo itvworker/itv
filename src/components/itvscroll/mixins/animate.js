@@ -120,9 +120,7 @@ export default {
             //当是指定滚动到某一点时
             if((scrollX < 0 && this.leftBounce) || (scrollX >= this.maxX && this.rightBounce)) {
                 //是否回弹
-                
                 let isBounce = (this.stepX < 0 && this.scrollX < 0) || (this.stepX > 0 && this.scrollX> this.maxX);
-            
                 if(!isBounce) {
                     
                     scrollX = this.scrollX - this.stepX*0.5
@@ -132,7 +130,6 @@ export default {
 
             //不许弹动时
             if(scrollX < 0 && !this.leftBounce) {
-            
                 scrollX = 0
                 this.stepX= 0
             }
@@ -141,7 +138,7 @@ export default {
                 scrollX = this.maxX
                 this.stepX = 0
             }
-
+    
 
             if(this.pattern === 'vertical') {
                 this.stepX = 0;
@@ -151,8 +148,7 @@ export default {
             if(this.pattern === 'horizontal') {
                 this.stepY = 0;
                 this.scrollY = 0;
-            }
-
+            }   
             if(this.pattern === 'auto' && this.direction === 'vertcial') {
                 this.stepX = 0;
                 

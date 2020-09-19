@@ -194,6 +194,15 @@ export default [
                     title: 'itvscroll',
                 },
             },
+            {
+                path: '/demo/calendar-time',
+                name: 'itv_calendar-time',
+                component: () => import('@/components/calendar-time/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'itvscroll',
+                },
+            },
         ]
     },  
     

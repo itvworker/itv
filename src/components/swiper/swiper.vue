@@ -11,6 +11,7 @@
 <script>
 import render  from  '../../libs/render'
 import getDirection from '../../libs/touch'
+
 import judge from './mixins/judge'
 let dom;
 export default {
@@ -30,6 +31,25 @@ export default {
             type: String,
             default: 'row'
         },
+        bounce: {
+            type: Boolean,
+            default: true
+        },
+        /**
+         * 向下或向右滑动是否弹，此属只在0-max,最大张数间有数，例如有1234这个属性只在23中有效
+         */
+        beginBounce: {
+            type: Boolean,
+            default: false
+        },
+
+        /**
+         * 向上或向左滑动是否弹，此属只在0-max,最大张数间有数，例如有1234这个属性只在23中有效
+         */
+        endBounce: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return  {
@@ -44,7 +64,7 @@ export default {
             nowIndex: 0, //当有滚动的张数
             intialIncex:0, //初始化是第一张的索引
             intialLastIndex: 0, //初始化是后一张的索引
-            coordinate: 0,
+            coordinate: 0, //滑动值
             initialCoordinate: 0,//上一次的位置
             isMove: 0,// 0为初始状态，1允许滑动，2不允许滑动
             number: 0, //子元素张数
@@ -59,7 +79,7 @@ export default {
     watch: {
         value(n, old) {
             let coordinate = n*this.elSize;
-             if(this.isLoop) {
+            if(this.isLoop) {
                 coordinate = ( n + 1)*this.elSize;
             }
 
@@ -121,7 +141,6 @@ export default {
             }
         },
         touchmove(e) {
-             
             if (!this.isTouch) {
                 return false
             }
@@ -130,9 +149,9 @@ export default {
             let x = self[0].pageX
             let y = self[0].pageY
              
-            let obj = getDirection(this.moveX, this.moveY, x, y)
+            let obj = getDirection(this.moveX, this.moveY, x, y, this.screenType)
 
-        
+            
             if(obj.type > 2 && this.isMove === 0) {
                 this.screenType = 'progress'
                 if(this.direction === 'row') {
@@ -140,7 +159,6 @@ export default {
                 }else{
                     this.isMove = 2
                 }
-                
             }
 
             if(obj.type >= 1 && obj.type <= 2 && this.isMove === 0) {
@@ -168,10 +186,21 @@ export default {
                 switch (this.screenType) {
                     case 'vertical':
                         if(this.isMoveMax(obj.angy)) {
-                            this.coordinate -= obj.angy*0.4;
+                            let post = this.coordinate - obj.angy*0.4;
+                            this.coordinate = post
+                           
                         }else{
-                            this.coordinate -= obj.angy;
-                        }   
+                            console.log(this.coordinate+'+'+ this.nowPosition);
+                            if((this.beginBounce && obj.type === 2 && this.coordinate < this.nowPosition)||(this.endBounce && obj.type === 1 && this.coordinate > this.nowPosition)) {
+                                this.coordinate -= obj.angy*0.4;
+                            }else{
+                                this.coordinate -= obj.angy;
+                            }
+                            
+                        }
+                        
+                            
+
                         break
                     case 'progress':
                         if(this.isMoveMax(obj.angx)) {
@@ -182,11 +211,24 @@ export default {
                         break
                 }
 
+                if(!this.bounce) {
+                    if(this.coordinate<=0) {
+                        this.coordinate = 0;
+                    }
+                    if(this.coordinate >= this.moveMax) {
+                        this.coordinate = this.moveMax;
+                    }
+
+                    if(this.coordinate > this.moveMax || this.coordinate<=0) {
+                        
+                    }
+                }
                 this.setPostion()
             }
         },
         touchend(e) {
             this.$emit('touchend')
+           
             if (this.isMove===1) {
                 e.preventDefault()
                 e.stopPropagation()
@@ -215,34 +257,40 @@ export default {
                    } 
 
                     //滑动到最小值
-                    if(this.coordinate<0 && isChangePos) {
-                        
+                    if(this.coordinate<=0) {
                         this.coordinate = 0;
                         this.nowIndex = 0
                         this.setPostion()
                         this.$emit('first')
                         return
                     }
-
+                       
                      //滑动到最大值
-                    if(this.coordinate > this.moveMax && isChangePos) {
+                    if(this.coordinate >= this.moveMax) {
                         this.coordinate = this.moveMax;
                         this.setPostion()
-                        this.$emit('last')
+                        this.$emit('last') 
+                        
                         return
                     }
                     //快速滑过
                         
                      
                     if((isfast && dis<-50) || this.isSpeedDir()==='next') {
-                       this.nowIndex++;
+                        if(!this.endBounce) {
+                           this.nowIndex++;
+                        }
+                       
                        this.coordinate = this.nowIndex*this.elSize;
                        this.setPostion() 
                        return    
                     }
 
                     if((isfast && dis>50)||this.isSpeedDir()==='prev') {
-                       this.nowIndex--;
+                       if(!this.beginBounce) {
+                           this.nowIndex--;
+                       }
+                       
                        this.coordinate = this.nowIndex*this.elSize
                        this.setPostion()     
                        return

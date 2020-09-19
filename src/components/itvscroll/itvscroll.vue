@@ -11,10 +11,10 @@
         <slot name="other"/>
         <!-- 滚动的内容 -->
         <div class="itv-scroll-content"  >
-            <div class="scroller-bar" v-if="showScrollBar" v-show="!hideBarY && maxY > 0 && (cacheDirection === 'vertical' || pattern === 'freedom' )" >
+            <div class="scroller-bar" v-if="showScrollBar" v-show="!hideBarY && maxY > 2 && (cacheDirection === 'vertical' || pattern === 'freedom' )" >
                 <div class="scroll-indoor" ref="barY" :style="{'height':scrollbarHeight+'%','transform':`translate3d(0,${scrollbarY}px,0)`,'WebkitTransform':`translate3d(0,${scrollbarY}px,0)`}"></div>
             </div>
-            <div class="scroller-barx" v-if="showScrollBar " v-show="!hideBarY && maxX > 0 && (cacheDirection === 'horizontal' || pattern === 'freedom')" >
+            <div class="scroller-barx" v-if="showScrollBar " v-show="!hideBarY && maxX > 2 && (cacheDirection === 'horizontal' || pattern === 'freedom')" >
                 <div class="scroll-indoor" ref="barX" :style="{'width':scrollbarWidth+'%','transform':`translate3d(${scrollbarX}px,0,0)`,'WebkitTransform':`translate3d(${scrollbarX}px,0,0)`}"></div>
             </div>
             <div class="itv-scroll-touch" ref="scroller"  :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">

@@ -37,10 +37,13 @@
                 </div> -->
             </itv-scroll>
 
-             <itv-scroll v-if="tabIndex===1" ref="scrolle4" pattern="freedom" :key="1"  :showScrollBar="true" >
+            <itv-scroll v-if="tabIndex===1" ref="scrolle4" pattern="freedom" :key="1"  :showScrollBar="true" >
                <div class="msg-word">
                     {{word}}
                </div>
+            </itv-scroll>
+            <itv-scroll v-if="tabIndex===2" ref="scrolle5" pattern="vercial" :key="2"  :showScrollBar="false" >
+                <fixation></fixation>
             </itv-scroll>
         </itv-main>
         

@@ -6,6 +6,10 @@ export default {
         //是否满足循环需求
         isLoop() {
             return this.number >2 && this.loop 
+        },
+        //现在所处大小
+        nowPosition() {
+            return this.nowIndex*this.elSize
         }
     },
     methods: {
@@ -32,7 +36,8 @@ export default {
             }
 
             return 'now' //不变当前张
-        }
+        },
+        
 
     }
 }
