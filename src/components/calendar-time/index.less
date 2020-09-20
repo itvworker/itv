@@ -1,6 +1,6 @@
 
 @import '../swiper/swiper.less';
-.itv-between-time{
+.itv-calendar-time{
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -14,7 +14,18 @@
     line-height: 44ipx;
     font-size: 14ipx;
   }
-  >.itv-between-time-top{
+
+  .itv-calendar-top {
+      height: 66ipx;
+      background-color: #fff;
+      font-size: 16ipx;
+      .title {
+        line-height: 40ipx;
+        height: 40ipx;
+      }
+      text-align: center;
+  }
+  >.itv-calendar-time-top{
       background-color:@bg-color-light ;// #fff;
       display: flex;
       height: 44ipx;
@@ -56,9 +67,9 @@
     display: flex;
     position: absolute;
     width: 100%;
-    top: -1px;
+    top: 0px;
     height: 30ipx;
-    border-bottom: #ddd solid 2px;
+    border-bottom: #ddd solid 1.5px;
     z-index: 10;
     
     .week-item{
@@ -71,12 +82,13 @@
     }
   }
 
-  .itv-between-time-change{
+  .itv-calendar-time-change{
     display: flex;
     flex-direction: row;
     transform: translateX(0);
     transition: transform ease .2s;
     position: relative;
+    
   }
 
   .itv-select-time {
@@ -90,32 +102,60 @@
   display: flex;
  
 }
-.itv-swpier-between-time {
-  height:350ipx;
+.itv-swpier-calendar-time {
+  height:360ipx;
   flex: 0 0 auto;
-  padding-top: 30ipx;
   width: 100%;
+  margin-top: 30ipx;
   box-sizing: border-box;
+  overflow: hidden;
  
   .itv-swpier-calendar{
-    box-sizing: border-box;
-    height: 350ipx;
+    height: 360ipx;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    
+    // padding-top: 10ipx;
+    padding-bottom: 10ipx;
     position: relative;
     background-color: #fff;
     .month-number{
         position: absolute;
-        font-size: 160ipx;
+        
         z-index: 1;
         color:@primary-color;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+       
         opacity: 0.3;
+        white-space: nowrap;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .year{
+          font-size: 24ipx;
+          position: absolute;
+          left: 50%;
+          top: 20ipx;
+          transform: translateX(-50%);
+        }
+        .month{
+          font-size: 160ipx;
+        }
 
+    }
+    .year-month{
+      width: 100%;
+      text-align: center;
+      background-color: #f1f1f1;
+      line-height: 30ipx;
+      font-size: 14ipx;
+      height: 30ipx;
+      color: #666;
+      display: none;
     }
     .day-item{
     position: relative;
@@ -156,20 +196,7 @@
     }
     
   }
-}
 
-.banner-1{
-  background-color: #eee;
   
 }
-.banner-2{
-  background-color: #ddd;
- 
-}
-.banner-2,.banner-1 {
-    height: 300ipx;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  font-size: 50ipx;   
-}
+

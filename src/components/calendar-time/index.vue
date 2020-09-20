@@ -1,13 +1,21 @@
 <template>
    <itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
-                <div class="itv-between-time">
-                    <div class="itv-between-time-top" v-if="dateType==='calendar-time'">
+                <div class="itv-calendar-time">
+                    <div class="itv-calendar-time-top" v-if="dateType==='calendar-time'">
                         <div class="date" :class="{'active':dataType===0}" @click="changeTab(0)">{{currentValue | formatDate('Y-M-D')}}</div>
                         <div class="time" :class="{'active':dataType===1}" @click="changeTab(1)">{{currentHour}}:{{currentMin}}</div>
-                        <div class="btn-confirm">确定</div>
+                        <div class="btn-confirm">{{confirmText}}</div>
+                    </div>
+
+                    <div class="itv-calendar-top" v-if="dateType==='calendar'">
+                        <div class="title">{{titleText}}</div>
+                        
+                        <div class="year-month">
+                                    {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
+                        </div>
                     </div>
                       
-                    <div class="itv-between-time-change" :class="{'itv-select-time': dataType===1}">
+                    <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1}">
                         <div class="week-bar">
                             <div class="week-item" v-for="(item, index) in weekText" :key="index">{{item}}</div>
                         </div> 
@@ -16,13 +24,24 @@
                             @last="change(2)" @first="change(0)" 
                             :loop="false" 
                             v-model="columnIndex"
-                            class="itv-swpier-between-time"
+                            class="itv-swpier-calendar-time"
                             :beginBounce="beginBounce"
                            >
                             <swiper-item class="itv-swpier-calendar">
                                
                                 <div class="month-number" v-if="!beginBounce">
-                                    {{prevMonth[15]?prevMonth[15].month:''}}
+                                    <div class="year">
+                                        {{prevMonth[15]?prevMonth[15].year:''}}
+                                    </div>
+                                    <div class="month">
+                                        {{prevMonth[15]?prevMonth[15].month:''}}
+                                    </div>
+                                </div>
+
+                                <div class="month-number">
+                                    
+                                    
+                                    
                                 </div>
                                 <div v-if="!beginBounce"
                                     class="day-item"
@@ -35,8 +54,18 @@
                                 </div>
                             </swiper-item>
                             <swiper-item class="itv-swpier-calendar">
+                                <!-- <div class="year-month">
+                                    {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
+                                </div> -->
                                 <div class="month-number">
-                                    {{nowMonth[15]?nowMonth[15].month:''}}
+                                    <div class="year">
+                                        {{nowMonth[15]?nowMonth[15].year:''}}
+                                    </div>
+                                    <div class="month">
+                                        {{nowMonth[15]?nowMonth[15].month:''}}
+                                    </div>
+                                    
+                                    
                                 </div>
                                 <div
                                     class="day-item"
@@ -49,7 +78,14 @@
                                 </div>
                             </swiper-item>
                             <swiper-item class="itv-swpier-calendar">
-                                <div class="month-number">{{nextMonth[15]?nextMonth[15].month:''}}</div>
+                                <div class="month-number">
+                                    <div class="year">
+                                        {{nextMonth[15]?nextMonth[15].year:''}}
+                                    </div>
+                                    <div class="month">
+                                        {{nextMonth[15]?nextMonth[15].month:''}}
+                                    </div>
+                                </div>
                                 <div
                                     class="day-item"
                                     @click="selectDay(index, item, 'select')"
@@ -63,7 +99,7 @@
                                 </div>
                             </swiper-item>
                         </swiper>
-                        <div class="itv-picker-slot-box">
+                        <div class="itv-picker-slot-box" v-if="dateType==='calendar-time'">
                                 <picker-slot ref="picker-0"
                                     :default-value="currentHour"
                                     :is-update="true"
@@ -130,11 +166,15 @@
             },
             weekText: {
                 type: Array,
-                default: ["日", "一", "二", "三", "四", "五", "六"]
+                default: () => ["日", "一", "二", "三", "四", "五", "六"]
             },
             confirmText: {
                 type: String,
                 default: "确定"
+            },
+            titleText: {
+                type: String,
+                default:'请选择日期'
             }
         },
         watch: {
@@ -274,7 +314,7 @@
                         break;
                      
                 }
-                if(select) {
+                if(select && this.dateType === 'calendar-time') {
                     this.dataType = 1;
                 }   
             }   
@@ -289,7 +329,7 @@
 </script>
 
 <style lang="less" >
-@import './between-time.less';
+@import './index.less';
 </style>
 
 

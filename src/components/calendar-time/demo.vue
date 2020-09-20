@@ -7,7 +7,7 @@
                 <itv-cell :isLink="true" @click="confirm('html')" :showIcon="true" title="选择日期时间">
                 </itv-cell>
 
-                <itv-cell :isLink="true" @click="alert('html')" :showIcon="true" title="Alert">
+                <itv-cell :isLink="true" @click="alert('html')" :showIcon="true" title="日历类型">
                 </itv-cell>
             </section>
         </itv-main>
@@ -32,17 +32,10 @@ export default {
           })
       },
       alert() {
-          this.$itv.popup.alert({
-              title:"你是谁",
-              content:"我是提示的内容",
-              hideOnClick: true,
-              onHide() {
-                console.log('hide---');
-              },
-              onConfirm() {
-                console.log('confirm---');
-              }
-          })
+            this.$itv.calendarTime.show({
+                value: '2020-09-12 10:15',
+                dateType: 'calendar'
+            })
       },
       page() {
           console.log('page------');
