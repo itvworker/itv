@@ -4,14 +4,13 @@
                     <div class="itv-calendar-time-top" v-if="dateType==='calendar-time'">
                         <div class="date" :class="{'active':dataType===0}" @click="changeTab(0)">{{currentValue | formatDate('Y-M-D')}}</div>
                         <div class="time" :class="{'active':dataType===1}" @click="changeTab(1)">{{currentHour}}:{{currentMin}}</div>
-                        <div class="btn-confirm">{{confirmText}}</div>
+                        <div class="btn-confirm" @click="confrimSelect">{{confirmText}}</div>
                     </div>
 
                     <div class="itv-calendar-top" v-if="dateType==='calendar'">
                         <div class="title">{{titleText}}</div>
-                        
                         <div class="year-month">
-                                    {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
+                             {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
                         </div>
                     </div>
                       
@@ -26,6 +25,7 @@
                             v-model="columnIndex"
                             class="itv-swpier-calendar-time"
                             :beginBounce="beginBounce"
+                            :endBounce="endBounce"
                            >
                             <swiper-item class="itv-swpier-calendar">
                                
@@ -78,7 +78,7 @@
                                 </div>
                             </swiper-item>
                             <swiper-item class="itv-swpier-calendar">
-                                <div class="month-number">
+                                <div class="month-number" v-if="!endBounce">
                                     <div class="year">
                                         {{nextMonth[15]?nextMonth[15].year:''}}
                                     </div>
@@ -86,7 +86,7 @@
                                         {{nextMonth[15]?nextMonth[15].month:''}}
                                     </div>
                                 </div>
-                                <div
+                                <div v-if="!endBounce"
                                     class="day-item"
                                     @click="selectDay(index, item, 'select')"
                                     :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
@@ -101,9 +101,10 @@
                         </swiper>
                         <div class="itv-picker-slot-box" v-if="dateType==='calendar-time'">
                                 <picker-slot ref="picker-0"
+                                    class="itv-calendar-picker"
                                     :default-value="currentHour"
-                                    :is-update="true"
-                                    :list-data="startHourData"
+                                    :is-update="false"
+                                    :list-data="hour24"
                                     @chooseItem="chooseItem"
                                     :key-index="0"
 
@@ -116,9 +117,10 @@
                                 </div>
                                 <picker-slot 
                                     ref="picker-1"
+                                     class="itv-calendar-picker"
                                     :default-value="currentMin"
                                     :is-update="false"
-                                    :list-data="startMinutesData"
+                                    :list-data="minutes"
                                     @chooseItem="chooseItem"
                                     :key-index="1"
                                 ></picker-slot>
@@ -127,9 +129,6 @@
                 </div>       
     </itv-dialog> 
 </template>
-
-
-
 <script>
     import swiper from '../swiper/swiper'
     import swiperItem from '../swiper-item/swiper-item.vue'
@@ -148,31 +147,31 @@
             ItvDialog
         },
         props: {
-            value: {
+            value: { //当前值
                 type: String,
                 default: '2020-08-26 11:12'
             },
-            minDate: {
+            minDate: { //最大选择日期时间的
                 type: String,
                 default: '2020-07-26 11:12'
             },
-            maxDate: {
+            maxDate: { //最小选择日期时间的
                 type: String,
                 default: '2200-12-30 23:59'
             },
-            dateType: {
+            dateType: { //插件模式， calendar-time , calendar
                 type: String,
                 default:'calendar-time'
             },
-            weekText: {
+            weekText: { //星期的多语言数组
                 type: Array,
                 default: () => ["日", "一", "二", "三", "四", "五", "六"]
             },
-            confirmText: {
+            confirmText: { //确定按钮文字，dateType === 'calendar-time' 生效
                 type: String,
                 default: "确定"
             },
-            titleText: {
+            titleText: { //日期的多语言 dateType === 'calendar' 生效
                 type: String,
                 default:'请选择日期'
             }
@@ -180,6 +179,7 @@
         watch: {
             value(n) {
                 let arr = n.split(' ')
+                
                 this.currentValue = arr[0];
                 if(this.dateType === 'calendar-time') {
                     let time = arr[1].split(':');
@@ -192,24 +192,24 @@
                 if(!n && (this.dateType === 'calendar-time' || this.dateType === 'calendar')) {
                     setTimeout(()=>{
                         this.dataType = 0 
-                        
                     },300)
-                       
+                }
+                if(!n) {
+                    this.emit('hide')
                 }
             }
         },
         data() {
             return {
-               isVisible: false,
-               hideOnClick: true,
-               columnIndex:1,
+               isVisible: false, //显示或隐藏
+               hideOnClick: true, //是否点背景关闭
+               columnIndex:1, //日历滑动的索引
                currentValue: '2020-08-26', //选中日期
-               currentHour: '11',
-               currentMin:"12",
-               beginBounce: false,
+               currentHour: '11', //当前小时
+               currentMin:"12", //当前选中的分
                year:0, //
                month:0,
-               dataType: 0
+               dataType: 0 //数据类型，0显示日历 1显示选择器
             }
         },
         methods: {
@@ -255,8 +255,9 @@
                     } else {
                         _month++
                     }
-                    this.nextMonth = this.calcMonth(_year, _month)
+                    this.nextMonth = this.calcMonth(_year, _month);
                     let time = this.calcNextSameDay()
+                       
                     let obj = this.findMonthIndex(time)
                     this.selectDay(obj.index, obj.item)
                     this.$refs.swiper.scrollTo(1, false)  
@@ -264,30 +265,26 @@
                let arr =  this.currentValue.split('-');
                let num = parseInt(arr[0]+''+arr[1]);
                
-               if(num <= this.calcMinDate) {
-                   this.beginBounce = true
-               }else{
-                   this.beginBounce = false
-               }
-
-               if(num >= this.calcMaxDate) {
-                   this.endBounce = true
-                  
-               }else{
-                   this.endBounce = false
-               }
+           
                
            },
            selected(index, item) {
                 this.currentValue = item.time;
-               
                 this.$emit("selected", item);
                 this.calcInit(item.year, item.month);
                 this.year = item.year;
                 this.month = item.month;
             },
+            confrimSelect() {
+                this.$emit('confirm', this.currentValue+' ' + this.currentHour+':' +this.currentMin);
+                this.isVisible = false;   
+            },
+            /**
+             * 选择日期
+             */
             selectDay(index, item, select) {
-               
+                //不在可选范围内不给选择
+               if(item.ymdnumber > this.calcMaxYmd  || item.ymdnumber < this.calcMinYmd)  return
                 switch (item.type) {
                     case "prev":
                         this.isClickChange = true;
@@ -316,13 +313,20 @@
                 }
                 if(select && this.dateType === 'calendar-time') {
                     this.dataType = 1;
-                }   
+                }
+                
+                if(select && this.dateType === 'calendar') {
+                    this.isVisible = false;   
+                    this.$emit('confirm', this.currentValue)
+                }
             }   
         },
         mounted() {
             // setTimeout(()=>{
             //     this.$refs.swiper.scrollTo(1, false)
             // },5000)
+
+            
         }
 
     };

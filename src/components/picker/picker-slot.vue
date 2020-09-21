@@ -72,8 +72,8 @@ export default {
             this.modifyStatus();
         },
         'defaultValue': function() {
-            this.transformY = 0;
-            this.modifyStatus();
+            // this.transformY = 0;
+            // this.modifyStatus();
         },
         transformY(n,o){
             
@@ -94,7 +94,6 @@ export default {
             if (value) {
                 this.transformY = 0;
                 this.timer = setTimeout(() => {
-                   
                     this.modifyStatus(null, value);
                 }, 10);
             }
@@ -186,7 +185,6 @@ export default {
             this.touchParams.lastTime = event.timestamp || Date.now();
            
             let move = this.touchParams.lastY - this.touchParams.startY;
-            console.log(this.touchParams.lastY+'last');
             this.setMove(move);
         },
 

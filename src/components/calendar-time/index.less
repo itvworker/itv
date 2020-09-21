@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: @bg-color-primary; // #efefef;
+  background-color: #fff; // #efefef;
   .itv-picker-list-mark {
     width: 14ipx;
     flex:0 0 auto;
@@ -88,6 +88,7 @@
     transform: translateX(0);
     transition: transform ease .2s;
     position: relative;
+    background-color: #fff;
     
   }
 
@@ -98,8 +99,15 @@
 .itv-picker-slot-box{
   width: 100%;
   flex: 0 0 auto;
-  padding-top: 36ipx;
+  padding-top: 66ipx;
   display: flex;
+  height: 250ipx;
+  background-color: #fff;
+  .itv-calendar-picker{
+     /deep/ .itv-picker-content{
+       overflow: visible;
+     }
+  }
  
 }
 .itv-swpier-calendar-time {

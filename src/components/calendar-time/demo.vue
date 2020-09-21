@@ -28,7 +28,9 @@ export default {
       },
       confirm(value) {
           this.$itv.calendarTime.show({
-               value: '2020-09-12 10:15'
+               minDate: '2020-08-05 00:00',
+               value: '2020-09-12 10:15',
+               maxDate: '2300-09-18 10:15'
           })
       },
       alert() {

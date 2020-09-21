@@ -95,6 +95,24 @@ export default {
             let arr = this.minDate.split(' ');
             let num = arr[0].replace(/-/ig, '');
             return parseInt(num)
+        },
+        /**
+         * 是否到了最小月份
+         */
+        beginBounce(){
+            let date = this.currentValue.split('-');
+            let num = parseInt(date[0]+''+date[1])
+            if(num <= this.calcMinDate)  return true
+            return false
+        },
+        /**
+         * 是否到了最小月份
+         */
+        endBounce(){
+            let date = this.currentValue.split('-');
+            let num = parseInt(date[0]+''+date[1])
+            if(num >= this.calcMaxDate) return true
+            return false
         }
     }, 
     methods: {
@@ -105,7 +123,7 @@ export default {
             let year = date.getFullYear() //获取年份
             let month = date.getMonth() + 1
             let day = date.getDate()
-
+           
             if (month === 12) {
                 return new Date(year + 1 + '/1/' + day).getTime()
             }
@@ -119,7 +137,19 @@ export default {
             if (day >= days) {
                 day = days
             }
-            return new Date(year + '/' + month + '/' + day).getTime()
+            
+            
+            let datenum = parseInt(year + '' + this.gt(month) + '' + this.gt(day));
+            let datenumber = datenum;
+            
+            if(datenum < this.calcMinYmd) {
+                datenumber = this.calcMinYmd
+            }
+
+            if(datenum > this.calcMaxYmd) {
+                datenumber = this.calcMaxYmd
+            }
+            return datenumber;  
         },
 
         //计算上一个月是否存在同一天
@@ -144,13 +174,24 @@ export default {
             if (day >= days) {
                 day = days
             }
+           
+            let datenum = parseInt(year + '' + this.gt(month) + '' + this.gt(day));
+            let datenumber = datenum;
+            
+            if(datenum < this.calcMinYmd) {
+                datenumber = this.calcMinYmd
+            }
 
-            return new Date(year + '/' + month + '/' + day).getTime()
+            if(datenum > this.calcMaxYmd) {
+                datenumber = this.calcMaxYmd
+            }
+            return datenumber;     
         },
         findMonthIndex(value) {
             value = value || this.currentValue
+            
             for (let i = 0, l = this.nowMonth.length; i < l; i++) {
-                if (this.nowMonth[i].time === value) {
+                if (this.nowMonth[i].time === value || this.nowMonth[i].ymdnumber === value) {
                     return {
                         index: i,
                         item: this.nowMonth[i],
@@ -158,8 +199,6 @@ export default {
                 }
             }
         },
-
-       
 
         getNowDate() {
             let month = this.month

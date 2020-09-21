@@ -190,9 +190,10 @@ export default {
                             this.coordinate = post
                            
                         }else{
-                            console.log(this.coordinate+'+'+ this.nowPosition);
+                            
                             if((this.beginBounce && obj.type === 2 && this.coordinate < this.nowPosition)||(this.endBounce && obj.type === 1 && this.coordinate > this.nowPosition)) {
                                 this.coordinate -= obj.angy*0.4;
+                               
                             }else{
                                 this.coordinate -= obj.angy;
                             }

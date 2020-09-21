@@ -27,6 +27,18 @@ const plugin = {
                 $vm.$nextTick(()=>{
                     $vm.resize()
                 })
+                
+                $vm.$off('hide')
+                $vm.$off('confirm')
+
+               
+                $vm.$on('confirm', (msg) => {
+                    if(options.confrim) {
+                        options.confirm(msg)
+                    }
+                })
+
+               
                
             },
             hide () {
