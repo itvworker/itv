@@ -19,6 +19,7 @@ const plugin = {
             
         const opts = {
             show (options) {
+               
                 if (typeof options === 'object') {
                     merge($vm, options)
                 }

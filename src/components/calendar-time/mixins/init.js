@@ -32,7 +32,7 @@ export default {
             this.currentHour = timeArr[0];
             this.currentMin = timeArr[1]
             let ymdnumber = parseInt(year + this.gt(month))
-       
+            
         },
         
 

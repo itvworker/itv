@@ -1,5 +1,3 @@
-import { parse } from "qs";
-
 
 export default {
     created() {},
@@ -62,6 +60,60 @@ export default {
             }
             return false;
         },
+        /**
+         * 计算最大年月数字
+         */
+        calcMaxDate() {
+            let arr = this.maxDate.split(' ');
+            let num = arr[0].replace('-', '');
+            num = num.split('-')
+            return parseInt(num)
+        },
+        /**
+         * 计算最小年月数字
+         */
+        calcMinDate() {
+            let arr = this.minDate.split(' ');
+            let num = arr[0].replace('-', '');
+            num = num.split('-')
+           
+            return parseInt(num[0])
+        },
+        /**
+         * 计算最大年月数字
+         */
+        calcMaxYmd() {
+            let arr = this.maxDate.split(' ');
+            let num = arr[0].replace(/-/ig, '');
+            return parseInt(num)
+        },
+        /**
+         * 计算最小年月数字
+         */
+        calcMinYmd() {
+            let arr = this.minDate.split(' ');
+            let num = arr[0].replace(/-/ig, '');
+            return parseInt(num)
+        },
+        /**
+         * 是否到了最小月份
+         */
+        beginBounce(){
+            let date = this.currentValue.split('-');
+            let num = parseInt(date[0]+''+date[1])
+           
+            if(num <= this.calcMinDate)  return true
+            return false
+        },
+        /**
+         * 是否到了最小月份
+         */
+        endBounce(){
+            let date = this.currentValue.split('-');
+            let num = parseInt(date[0]+''+date[1])
+            if(num >= this.calcMaxDate) return true
+            return false
+        }
     }, 
     methods: {
         //计算下个月是否存在同一天
@@ -71,7 +123,7 @@ export default {
             let year = date.getFullYear() //获取年份
             let month = date.getMonth() + 1
             let day = date.getDate()
-
+           
             if (month === 12) {
                 return new Date(year + 1 + '/1/' + day).getTime()
             }
@@ -85,7 +137,19 @@ export default {
             if (day >= days) {
                 day = days
             }
-            return new Date(year + '/' + month + '/' + day).getTime()
+            
+            
+            let datenum = parseInt(year + '' + this.gt(month) + '' + this.gt(day));
+            let datenumber = datenum;
+            
+            if(datenum < this.calcMinYmd) {
+                datenumber = this.calcMinYmd
+            }
+
+            if(datenum > this.calcMaxYmd) {
+                datenumber = this.calcMaxYmd
+            }
+            return datenumber;  
         },
 
         //计算上一个月是否存在同一天
@@ -110,37 +174,28 @@ export default {
             if (day >= days) {
                 day = days
             }
+           
+            let datenum = parseInt(year + '' + this.gt(month) + '' + this.gt(day));
+            let datenumber = datenum;
+            
+            if(datenum < this.calcMinYmd) {
+                datenumber = this.calcMinYmd
+            }
 
-            return new Date(year + '/' + month + '/' + day).getTime()
+            if(datenum > this.calcMaxYmd) {
+                datenumber = this.calcMaxYmd
+            }
+            return datenumber;     
         },
         findMonthIndex(value) {
             value = value || this.currentValue
+            
             for (let i = 0, l = this.nowMonth.length; i < l; i++) {
-                if (this.nowMonth[i].time === value) {
+                if (this.nowMonth[i].time === value || this.nowMonth[i].ymdnumber === value) {
                     return {
                         index: i,
                         item: this.nowMonth[i],
                     }
-                }
-            }
-        },
-
-        //查找索引
-        findWeekIndex(time) {
-          
-            for (let i = 0, l = this.nowWeek.length; i < l; i++) {
-                if (this.nowWeek[i].time === time) {
-                    this.currentIndexWeek = i
-                    break
-                }
-            }
-        },
-
-        findWeekRow(time) {
-            for (let i = 0, l = this.nowMonth.length; i < l; i++) {
-                if (this.nowMonth[i].time === time) {
-                    this.rows = parseInt(i / 7)
-                    break
                 }
             }
         },
@@ -163,38 +218,7 @@ export default {
                 }
             }
         },
-        /**
-         *
-         * @param {number} year 年
-         * @param {number} month 月
-         * @param {number} day 日
-         * @param {number} dayWeek 星期几0-6
-         */
-        calcWeek(year, month, day, dayWeek) {
-            let ondays = 3600 * 24 * 1000
-            let nowTime = new Date(year + '/' + month + '/' + day).getTime() - dayWeek * ondays
-            let arr = []
-            for (let i = 0; i <= 6; i++) {
-                let date = new Date(nowTime)
-                let _year = date.getFullYear() //获取年份
-                let _month = date.getMonth() + 1
-                let _day = date.getDate()
-                let _dayWeek = date.getDay()
-                arr.push({
-                    day: _day,
-                    week: _dayWeek,
-                    year: _year,
-                    month: _month,
-                    number: parseInt(_year+''+_month),
-                    msg: _year + '/' + _month + '/' + _day,
-                    time: new Date(_year + '/' + _month + '/' + _day).getTime(),
-                    id: this.getId(),
-                    type: 'week',
-                })
-                nowTime = nowTime + ondays
-            }
-            return arr
-        },
+        
         getId() {
             let a = Math.random() * 1000000000
             let b = Math.random() * 100000000
@@ -218,8 +242,9 @@ export default {
                     week: dayWeek,
                     year: year,
                     month: month,
-                    number:parseInt(year+''+month),
-                    msg: year + '/' + month + '/' + i,
+                    number:parseInt(year+''+this.gt(month)),
+                    msg: year + '-' + this.gt(month) + '-' + this.gt(i),
+                    ymdnumber:parseInt(year + '' + this.gt(month) + '' + this.gt(i)),
                     time: new Date(year + '/' + month + '/' + i).getTime(),
                     id: this.getId(),
                     type: 'now',
@@ -267,8 +292,9 @@ export default {
                     year: _year,
                     month: _month,
                     day: lastDay,
-                    number:parseInt(_year+''+_month),
-                    msg: _year + '/' + _month + '/' + lastDay,
+                    number:parseInt(_year+''+this.gt(_month)),
+                    msg: _year + '-' + this.gt(_month) + '-' + this.gt(lastDay),
+                    ymdnumber:parseInt(_year + '' + this.gt(_month) + '' + this.gt(lastDay)),
                     id: this.getId(),
                     time: new Date(_year + '/' + _month + '/' + lastDay).getTime(),
                     type: 'prev',
@@ -296,8 +322,9 @@ export default {
                     week: _dayWeek,
                     year: _year,
                     month: _month,
-                    number:parseInt(_year+''+_month),
-                    msg: _year + '/' + _month + '/' + i,
+                    number:parseInt(_year+''+this.gt(_month)),
+                    msg: _year + '-' + this.gt(_month) + '-' + this.gt(i),
+                    ymdnumber:parseInt( _year + '' + this.gt(_month) + '' + this.gt(i)),
                     time: new Date(_year + '/' + _month + '/' + i).getTime(),
                     id: this.getId(),
                     type: 'next',
@@ -306,6 +333,14 @@ export default {
             }
             return arr
         },
+        /**
+         * 将0到9转换成09
+         * @param {Number} value
+         */
+        gt(value) {
+          value = parseInt(value)
+          return value>=10?value:0+''+value
+        }
     },
     filters: {
         formatDate(arg, format) {

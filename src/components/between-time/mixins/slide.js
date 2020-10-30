@@ -1,9 +1,6 @@
 import render from '../libs/render'
 import { slideHeight } from '../libs/height'
 
-var dom
-var wdom
-var hdom
 export default {
     data() {
         return {
@@ -41,10 +38,11 @@ export default {
        
         aniamteend() {
             this.isAni = false
+         
             if (this.calendarStatus === 1) {
                 this.getNowDate()
             }
-
+            
             if (this.endStatus === 2) {
                 if (this.calendarStatus === 0) {
                     this.prevWeek = this.nowWeek
@@ -204,6 +202,7 @@ export default {
                         
                         this.setShowTop()
                         this.hdom(this.y)
+                    
                         break
                     case 'progress':
 

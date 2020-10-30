@@ -13,7 +13,7 @@ import render  from  '../../libs/render'
 import getDirection from '../../libs/touch'
 
 import judge from './mixins/judge'
-let dom;
+
 export default {
     mixins:[judge],
     props: {

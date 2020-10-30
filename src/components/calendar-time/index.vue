@@ -164,8 +164,8 @@
                 default:'calendar-time'
             },
             weekText: { //星期的多语言数组
-                type: Array,
-                default: () => ["日", "一", "二", "三", "四", "五", "六"]
+                type: [Array, Object],
+                default:()=> ["日", "一", "二", "三", "四", "五", "六"]
             },
             confirmText: { //确定按钮文字，dateType === 'calendar-time' 生效
                 type: String,
@@ -195,9 +195,10 @@
                     },300)
                 }
                 if(!n) {
-                    this.emit('hide')
+                    this.$emit('hide')
                 }
-            }
+            },
+           
         },
         data() {
             return {
@@ -209,6 +210,7 @@
                currentMin:"12", //当前选中的分
                year:0, //
                month:0,
+               weekTexts: this.weekText,
                dataType: 0 //数据类型，0显示日历 1显示选择器
             }
         },
@@ -326,7 +328,7 @@
             //     this.$refs.swiper.scrollTo(1, false)
             // },5000)
 
-            
+            console.log(this.weekText);
         }
 
     };

@@ -43,7 +43,7 @@
                </div>
             </itv-scroll>
             <itv-scroll v-if="tabIndex===2" ref="scrolle5" pattern="vercial" :key="2"  :showScrollBar="false" >
-                <fixation></fixation>
+                
             </itv-scroll>
         </itv-main>
         

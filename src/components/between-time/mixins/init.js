@@ -13,23 +13,37 @@ export default {
             this.calendarX = -this.elWidth
             this.weekX = -this.elWidth
             this.x = -this.elWidth
+            this.$refs.swiper.init();
+            if(this.dateType==='calendar-time') {
+                this.dataType = 0;
+            }
         },
         init(value) {
             let datetime = value || this.value    
             let arr = datetime.split(' ');
-            let ymd = arr[0].split('-');
-                
-
+            
+            if(!arr[1]) {
+                arr[1]='00:00'
+            }
+            let timeArr = arr[1].split(':')
+            let ymd = arr[0].split('-');     
             let year = parseInt(ymd[0]); //获取年份
             let month = parseInt(ymd[1])
             this.year = year;
             this.month = month
             this.calcInit(year, month);
-            this.currentDate = arr[0];
+            this.currentValue = arr[0];
+            this.currentHour = timeArr[0];
+            this.currentMin = timeArr[1]
+            
+            // let ymdnumber = parseInt(year + this.gt(month));
+            
+            this.initTime();
+       
         },
+        
 
     
-     
         calcInit(year, month) {
             this.nowMonth = this.calcMonth(year, month);
             switch (month) {
