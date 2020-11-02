@@ -193,7 +193,6 @@ export default {
                             
                             if((this.beginBounce && obj.type === 2 && this.coordinate < this.nowPosition)||(this.endBounce && obj.type === 1 && this.coordinate > this.nowPosition)) {
                                 this.coordinate -= obj.angy*0.4;
-                               
                             }else{
                                 this.coordinate -= obj.angy;
                             }
@@ -204,10 +203,22 @@ export default {
 
                         break
                     case 'progress':
+                        
+                      
                         if(this.isMoveMax(obj.angx)) {
-                            this.coordinate -= obj.angx*0.4;
+                        
+                            // this.coordinate -= obj.angx*0.4;
+                             let post = this.coordinate - obj.angx*0.4;
+                            this.coordinate = post
                         }else{
-                            this.coordinate -= obj.angx;
+                           
+                            // this.coordinate -= obj.angx;
+                         
+                            if((this.beginBounce && obj.type === 4 && this.coordinate < this.nowPosition)||(this.endBounce && obj.type === 3 && this.coordinate > this.nowPosition)) {
+                                this.coordinate -= obj.angx*0.4;
+                            }else{
+                                this.coordinate -= obj.angx;
+                            }
                         }   
                         break
                 }
@@ -263,6 +274,7 @@ export default {
                         this.nowIndex = 0
                         this.setPostion()
                         this.$emit('first')
+                        console.log('---------------------first--------');
                         return
                     }
                        
@@ -308,6 +320,7 @@ export default {
         clone() {
             if(this.loop === false || this.$children.length <= 1) return
         },
+        //设置box的高或宽
         setElSize() {
             if(this.direction==='row'){
                 this.elSize =  this.$el.clientWidth;
@@ -315,6 +328,7 @@ export default {
             }
             this.elSize =  this.$el.clientHeight;
         },
+        //初始box的数量
         initNumber() {
             let number = 0;
             this.children = []
@@ -326,6 +340,7 @@ export default {
             })
             this.number = number
         },
+        //计算
         calcMax() {
             if(this.number>=2 &&  this.loop) {
                 this.moveMax = (this.number+1)*this.elSize
@@ -407,3 +422,6 @@ export default {
     }
 }
 </script>
+<style lang="less" scoped>
+@import './swiper.less';
+</style>

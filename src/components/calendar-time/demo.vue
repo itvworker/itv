@@ -30,7 +30,8 @@ export default {
           this.$itv.calendarTime.show({
                minDate: '2020-08-05 00:02',
                value: '2020-09-12 10:15',
-               maxDate: '2300-09-18 10:15'
+               maxDate: '2300-09-18 10:15',
+               style:"average"
           })
       },
       alert() {

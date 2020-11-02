@@ -16,8 +16,20 @@
   }
 
   .itv-calendar-top {
-      height: 66ipx;
+      height: 44ipx;
       background-color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      &::after {
+        border-bottom: @border-color-base solid 1px;
+        content: ' ';
+        display: block;
+       font-size: 0px;
+        left: 0px;
+        right: 0px;
+        transform: scaleY(0.5);
+      }
       font-size: 16ipx;
       .title {
         line-height: 40ipx;
@@ -111,19 +123,20 @@
  
 }
 .itv-swpier-calendar-time {
-  height:360ipx;
+  height:284ipx;
   flex: 0 0 auto;
   width: 100%;
   margin-top: 30ipx;
+ 
   box-sizing: border-box;
   overflow: hidden;
  
   .itv-swpier-calendar{
-    height: 360ipx;
+    height: 284ipx;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    // padding-top: 10ipx;
+    padding-top: 10ipx;
     padding-bottom: 10ipx;
     position: relative;
     background-color: #fff;
@@ -144,7 +157,7 @@
         align-items: center;
         justify-content: center;
         .year{
-          font-size: 24ipx;
+          font-size: 32ipx;
           position: absolute;
           left: 50%;
           top: 20ipx;
@@ -168,7 +181,7 @@
     .day-item{
     position: relative;
     z-index: 10;
-      height: 50ipx;
+      height: 44ipx;
       width: 100/7%;
       text-align: center;
       line-height: 0;
@@ -176,10 +189,10 @@
       align-items: center;
       justify-content: center;
       .active{
-        width: 40ipx;
-        height: 40ipx;
+        width: 30ipx;
+        height: 30ipx;
         border-radius: 50%;
-        line-height: 40ipx;
+        line-height: 30ipx;
         font-size: 14ipx;
       }
 
@@ -199,12 +212,8 @@
       
       &.next-month,&.prev-month{
         opacity: 0;
-      }
-      
-    }
-    
+      } 
+    } 
   }
-
-  
 }
 

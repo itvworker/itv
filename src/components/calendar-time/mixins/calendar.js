@@ -78,7 +78,8 @@ export default {
             let arr = this.minDate.split(' ');
             let num = arr[0].replace('-', '');
             num = num.split('-')
-            return parseInt(num)
+           
+            return parseInt(num[0])
         },
         /**
          * 计算最大年月数字
@@ -102,6 +103,7 @@ export default {
         beginBounce(){
             let date = this.currentValue.split('-');
             let num = parseInt(date[0]+''+date[1])
+           
             if(num <= this.calcMinDate)  return true
             return false
         },
@@ -253,11 +255,11 @@ export default {
             }
             prev = prev.concat(now)
 
-            // let newday = prev[prev.length - 1]
+            let newday = prev[prev.length - 1]
 
-            // let last = this.calcNextMonth(newday.year, newday.month, newday.week, 42 - prev.length)
-            // return prev.concat(last)
-            return prev
+            let last = this.calcNextMonth(newday.year, newday.month, newday.week, 42 - prev.length)
+            return prev.concat(last)
+            // return prev
         },
         //计算下一天星期几
         calcNextWeek(next) {
@@ -306,7 +308,7 @@ export default {
         //计算下个月填充所有内容
         calcNextMonth(year, month, dayWeek, num) {
             
-            if (num === 0) return []
+            if (num === 0 || this.style ==='average') return []
             let _year = year
             let _month = month + 1
             let _dayWeek = this.calcNextWeek(dayWeek)

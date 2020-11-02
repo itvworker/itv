@@ -94,27 +94,27 @@ export default {
     align-items: center;
     justify-content: center;
     display: flex;
-    font-size: 50ipx;   
+    font-size: 100pt;   
 }
 .itv-swpier-height {
-    height:300ipx;
+    height:600pt;
     .banner-2,.banner-1{
-        height: 300ipx;
+        height: 600pt;
     }
 }
 .dot-bar{
     position: absolute;
-    bottom: 10ipx;
+    bottom: 20pt;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     .dot{
-        width: 16ipx;
-        height: 16ipx;
+        width: 32pt;
+        height: 32pt;
         text-align: center;
         background-color: #fff;
-        margin:0 2ipx;
-        border-radius: 8ipx;
+        margin:0 4pt;
+        border-radius: 8pt;
         display: flex;
         justify-content: center;
         align-items: center;

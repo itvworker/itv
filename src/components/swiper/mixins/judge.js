@@ -20,8 +20,12 @@ export default {
             //     if(this.coordinate<0 && value>0) return true
             //     if(this.coordinate>this.moveMax && value<0) return true
             // }
+
+           
             if(this.coordinate<0 && value>0) return true
             if(this.coordinate>this.moveMax && value<0) return true    
+            
+           
             return false
         },
         //滑动后是切换到下张，还是上一张,
