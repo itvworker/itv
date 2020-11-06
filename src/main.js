@@ -11,6 +11,9 @@ import './layout'
 import './components/index.js'
 import './assets/css/index.less'
 
+// import VConsole from 'vconsole'
+// new VConsole()
+
 // resources: [resolve('packages/assets/css/animate.less'), resolve('packages/assets/css/page.less'), resolve('packages/assets/css/theme.less')]
 
 Vue.prototype.hljs = function () {

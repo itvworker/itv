@@ -203,6 +203,26 @@ export default [
                     title: 'itvscroll',
                 },
             },
+
+            {
+                path: '/demo/schedule-date',
+                name: 'itv_schedule-date',
+                component: () => import('@/components/scheduleDate/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'schedule-date',
+                }
+            },
+            {
+                path: '/demo/text2img',
+                name: 'itv_text2img',
+                component: () => import('@/components/text2img/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'text2img',
+                }
+            },
+
         ]
     },  
     

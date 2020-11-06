@@ -67,7 +67,7 @@ export default {
         step(time, value) {
             let continuing = true;
             if(this.isTouch || this.isMove) return;
-
+                
            
             let scrollX = this.scrollX - this.stepX
             let scrollY = this.scrollY - this.stepY

@@ -1,0 +1,256 @@
+@calendar-rowHeight: 52ipx;
+.calendar-week-text {
+    display: flex;
+    border-top: @border-color-base solid 1px;
+    border-bottom: @border-color-base solid 1px;
+    box-sizing: border-box;
+    height: 28ipx;
+    font-family: PingFangSC-Regular, PingFang SC,Arial, Helvetica, sans-serif;
+    align-items: center;
+    color: @color-text-base;
+    .week-text-item {
+        flex: 1;
+        text-align: center;
+        &:first-child,&:last-child {
+            color: @dark-color;
+        }
+    }
+    
+}
+.itv-schedule-calendar {
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    background-color: @bg-color-light;
+    box-shadow: 0px 2ipx 8ipx 0px rgba(0, 0, 0, 0.05);
+    flex: 0 0 auto;
+
+}
+.calendar-title {
+    text-align: center;
+    font-size: @font-size-base;
+    height: 36ipx;
+    line-height: 36ipx;
+}
+.calendar-week-text {
+    position: relative;
+}
+.week-slide {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: @bg-color-light;
+    .week-item {
+        background-color: @bg-color-light;
+        
+        .day-item {
+           
+            height: @calendar-rowHeight;
+        }
+    }
+    z-index: 10;
+}
+.calendar-box {
+    position: relative;
+    overflow: hidden;
+    min-height: @calendar-rowHeight;
+   
+    .calendar {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+}
+
+.calendar,
+.week-slide {
+    display: flex;
+    align-items:flex-start;
+    .month-item,
+    .week-item {
+        width: 100%;
+        flex: 0 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+     
+        box-sizing: border-box;
+        position: relative;
+        align-content: flex-start;
+       
+        .month-name{
+            position: absolute;
+            font-size: 10ipx;
+            top: 4ipx;
+            left: 0;
+            color: #999;
+        }
+        .month-tips{
+            position: absolute;
+            font-size: 200ipx;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            opacity: 0.1;
+            color: @primary-color;
+            font-family: PingFangSC-Light, PingFang SC, Arial, Helvetica, sans-serif;
+        }
+        .year-tips{
+            position: absolute;
+            font-size: 36ipx;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 20ipx;
+            z-index: 1;
+            opacity: 0.1;
+            color: @primary-color;
+            font-family: PingFangSC-Light, PingFang SC, Arial, Helvetica, sans-serif;
+        }
+        .day-item {
+            z-index: 2;
+            width: 14.258%;
+            flex: 0 0 auto;
+            text-align: center;
+            height: @calendar-rowHeight;
+            display: flex;
+            padding-top: 10ipx;
+            box-sizing: border-box;
+           
+            justify-content: center;
+            font-size: @font-size-base;
+            position: relative;
+            z-index: 2;
+            color: #333;
+            .active {
+                width: 30ipx;
+                height: 30ipx;
+                border-radius: 15ipx;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            &.gray {
+                color: #999;
+            }
+            &.day-today {
+                .active {
+                    color: #fff;
+                    background-color: #999;
+                }
+            }    
+            &.day-active {
+                .active {
+                    color: #fff;
+                    background-color: @primary-color;
+                }
+                .tips-word {
+                    background-color: #fff !important;
+                }
+            }
+            &.prev-month {
+                color: #999;
+                opacity: 0;
+            }
+            &.next-month {
+                color: #999;
+            }
+            &.forbid{
+                color: #999;
+                .month-name{
+                    color: #999;
+                }
+            }
+            .worktime{
+                position: absolute;
+                bottom: 12pt;
+                width: 100;
+                text-align: center;
+                font-size: 20pt;
+               
+                color: #999;
+            }
+            .tips-word{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                margin-top: 2ipx;
+                height: 4ipx;
+                width: 4ipx;
+                text-align: center;
+                font-size: 13ipx;
+                line-height: 13*1.3pt;
+                overflow: hidden;
+                border-radius: 3ipx;
+               
+
+            }
+            
+        }
+        
+    }
+    .none-item{
+        .day-item,.month-tips,.month-tips{opacity: 0;}
+    }
+    
+}
+
+.calendar{
+    min-height: @calendar-rowHeight;
+    .calendar-content{
+        position: relative;
+        width: 100%;
+        height: 100%;
+       
+        .month-item{
+            position: absolute;
+            top: 0;
+            width: 100%;
+         
+            &.prev-item-month {
+               left: 0%; 
+            }
+    
+            &.now-item-month {
+                left: 100%; 
+            }
+            &.next-item-month {
+                left: 200%; 
+            } 
+        }
+    }
+    
+}
+
+
+.animating {
+    transition: transform 0.3s;
+    
+}
+.slow-action {
+    transition: all 0ms ease 0s;
+}
+.icon-bar {
+    height: 56pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: #eee solid 1px;
+    
+    img {
+        width: 14pt;
+    }
+    .icon-xiangshang{
+        transform: rotate(180deg);
+        font-size: 40pt;
+        color:@dark-color ;
+    }
+    .rotate180 {
+        
+        transform: rotate(0deg);
+    }
+}
+

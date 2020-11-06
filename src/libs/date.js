@@ -63,7 +63,7 @@ let Utils = {
     let d = this.getNumTwoBit(date.getDate());
     return [y, m, d].join(split);
   },
-
+  
   /**
    * 返回日期格式字符串
    * @param {Number} 0返回今天的日期、1返回明天的日期，2返回后天得日期，依次类推

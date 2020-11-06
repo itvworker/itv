@@ -114,7 +114,8 @@ export default {
         scrollXel:{
             type: Boolean,
             default: false,
-        }
+        },
+        
         
         
 
