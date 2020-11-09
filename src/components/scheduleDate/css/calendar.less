@@ -1,4 +1,5 @@
-@calendar-rowHeight: 52ipx;
+@calendar-rowHeight: 45ipx;
+@padding-top: 10ipx;
 .calendar-week-text {
     display: flex;
     border-top: @border-color-base solid 1px;
@@ -43,7 +44,7 @@
     background-color: @bg-color-light;
     .week-item {
         background-color: @bg-color-light;
-        
+        padding-top: @padding-top;
         .day-item {
            
             height: @calendar-rowHeight;
@@ -55,7 +56,7 @@
     position: relative;
     overflow: hidden;
     min-height: @calendar-rowHeight;
-   
+    padding-top: @padding-top;
     .calendar {
         height: 100%;
         width: 100%;
@@ -69,6 +70,7 @@
 .week-slide {
     display: flex;
     align-items:flex-start;
+   
     .month-item,
     .week-item {
         width: 100%;
@@ -83,9 +85,10 @@
         .month-name{
             position: absolute;
             font-size: 10ipx;
-            top: 4ipx;
-            left: 0;
+            top: -5ipx;
+            left: 5ipx;
             color: #999;
+
         }
         .month-tips{
             position: absolute;
@@ -125,8 +128,8 @@
             z-index: 2;
             color: #333;
             .active {
-                width: 30ipx;
-                height: 30ipx;
+                width: 28ipx;
+                height: 28ipx;
                 border-radius: 15ipx;
                 display: flex;
                 justify-content: center;
@@ -234,7 +237,7 @@
     transition: all 0ms ease 0s;
 }
 .icon-bar {
-    height: 56pt;
+    height: @padding-top;
     display: flex;
     align-items: center;
     justify-content: center;

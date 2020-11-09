@@ -3,7 +3,7 @@
         <itv-header>schedule-date</itv-header>
         <itv-main>
            
-            <schedule-date >
+            <schedule-date :bounceTop="true" @refresh="refresh" @pull="pull" ref="schedule">
                 <div class="test-list" v-for="(item, index) in list">
                     {{item.title}} {{index}}
                 </div>
@@ -22,27 +22,41 @@ export default {
     },
     data() {
         return {
-            
+            list:[]
         }
     },
     computed: {
-       list() {
-            let arr = [];
-            for(let i = 0; i < 100; i++) {
-                arr.push({
-                    title: '测试内容'
-                })
-            }
-            return arr;
-       } 
+    //    list() {
+    //         let arr = [];
+    //         for(let i = 0; i < 100; i++) {
+    //             arr.push({
+    //                 title: '测试内容'
+    //             })
+    //         }
+    //         return arr;
+    //    } 
     },
     methods: {
-       
+       refresh() {
+          
+           setTimeout(()=>{
+                this.$refs.schedule.refresh()
+           },1000)
+          
+       },
+       pull(y) {
+           console.log(y);
+       }
     },
     created() {
       
     },
     mounted() {
+        setInterval(()=>{
+            this.list.push({
+                title: '测试内容'
+            })
+        },500)
        
     }
 

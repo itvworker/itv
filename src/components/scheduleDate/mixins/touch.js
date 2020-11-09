@@ -138,7 +138,7 @@ export default {
            
         },
         touchmove(e) {
-            console.log(e.pageX);
+            
             if (this.aniStatus) {
                 e.preventDefault()
                 e.stopPropagation()
@@ -216,18 +216,20 @@ export default {
                     case 'vertical':
                         
                      //下拉刷新
-                     if(obj.type === 2 && this.y >= this.maxHeight && this.sy>=0) {
+                     if(obj.type === 2 && this.y >= this.maxHeight && this.sy>=0 && this.bounceTop) {
                         this.py +=  Math.round(obj.angy*0.3)
                         this.scrollerDom(0, -this.py,1 )
+                        this.$emit('pull',this.py)
                         return
                     }
 
-                    if(obj.type === 1 && this.y >= this.maxHeight && this.py > 0) {
+                    if(obj.type === 1 && this.y >= this.maxHeight && this.py > 0 && this.bounceTop) {
                       
                         this.py +=  Math.round(obj.angy)
                         if(this.py<0) {
                             this.py = 0
                         }
+                        this.$emit('pull',this.py)
                         this.scrollerDom(0, -this.py,1 )
                         return
                     }
@@ -287,7 +289,9 @@ export default {
                 return
             }
 
-           
+            if(this.py >= 0) {
+                this.$emit('refresh')
+            }
             this.isTouch = false
             this.isMove = false
             let screenType = this.screenType

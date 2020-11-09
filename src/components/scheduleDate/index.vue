@@ -6,6 +6,15 @@
     @touchcancel="touchend"
      >
     <div class="itv-schedule-scroller" ref="scroller">
+        <div class="itv-schedule-refresh">
+            <slot name="pull">
+                <div class="itv-schedule-pull">
+                    松开刷新
+                </div>
+            </slot>
+              
+        </div>
+        <slot name="top"></slot>
         <!-- 日历部份 -->
             <div class="itv-schedule-calendar">
                 <!-- 星期文字体  从周日到周六 -->
@@ -135,12 +144,12 @@
                     
                 </div>
             </div>
-            <!-- <div class="icon-bar" @click="toggleCalendar">
+            <div class="icon-bar" @click="toggleCalendar">
                 <span class="icon iconfont icon-xiangshang" :class="{'rotate180': calendarStatus===1}"></span>
-            </div> -->
+            </div>
             </div>
             <div class="itv-schedule-scroll">
-                <div class="scroll-content" ref="scroll">
+                <div class="scroll-content" ref="scroll" @resize="refresh">
                     <slot></slot>
                 </div>
             </div>
@@ -247,6 +256,26 @@ export default {
         };
         
     },
+    methods: {
+        /** 
+         * 列表内容有更新时调用
+        */
+        refresh() {
+            if(this.py > 0) {
+                this.scrollerTo(0, 0, 1)
+            }
+            let dom = this.$refs.scroll;
+            let parent = dom.parentNode;
+            let ph = dom.clientHeight;
+            this.sMaxY = ph - parent.clientHeight || 0;
+            if(this.sy>=this.sMaxY) {
+                this.scrollDom(0, this.sMaxY, 1) 
+                this.sy = -this.sMaxY
+            }
+        },
+        
+        
+    }
         
 }
 </script>

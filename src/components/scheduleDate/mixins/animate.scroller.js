@@ -30,10 +30,12 @@ export default {
             }
 
             this.scrollerDom(0, -this.py, 1)
+            this.$emit('pull', this.py)
             if(Math.abs(this.pStepY) <=0.8 || this.py === this.ptoY) {
                 this.pStepY =0 ;
                 this.py  = this.ptoY;
                 this.scrollerDom(0, -this.py, 1)
+                this.$emit('pull', this.py)
                 return
             }
 

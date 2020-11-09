@@ -296,11 +296,7 @@ export default {
                     time: new Date(_year + '/' + _month + '/' + _day).getTime(),
                     id: this.getId(),
                     type: 'week',
-                    actualDutyHour: 0,
-                    isAbnormal: false,
-                    isOverTime: false,
-                    isVacation: false,
-                    hasSchedule: false
+                   
                 })
                 nowTime = nowTime + ondays
             }
@@ -339,11 +335,7 @@ export default {
                     time: new Date(year + '/' + month + '/' + i).getTime(),
                     id: this.getId(),
                     type: 'now',
-                    actualDutyHour: 0,
-                    isAbnormal: false,
-                    isOverTime: false,
-                    isVacation: false,
-                    hasSchedule: false
+                    actualDutyHour: 0
                 })
                 dayWeek = this.calcNextWeek(dayWeek)
             }
@@ -403,16 +395,12 @@ export default {
                     time: new Date(_year + '/' + _month + '/' + lastDay).getTime(),
                     type: 'prev',
                     actualDutyHour: 0,
-                    isAbnormal: false,
-                    isOverTime: false,
-                    isVacation: false,
-                    hasSchedule: false
                 })
                 lastDay--
             }
             return arr
         },
-        //计算下个月填充所有内容
+        //计算下个月填充所有内容 将行数填充为6行
         calcNextMonth(year, month, dayWeek, num) {
             return [];
             // if (num === 0) return []

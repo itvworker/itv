@@ -233,7 +233,7 @@ export default {
 
             let speed = this.calcMoveSpeed();
             this.animate(speed);
-
+            
         
            
         }
