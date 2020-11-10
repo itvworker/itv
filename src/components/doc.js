@@ -5,6 +5,7 @@ import slider from './slider/doc.md'
 import picker from './picker/doc.md'
 import slideout from './slideout/doc.md'
 import swiper from './swiper/doc.md'
+import schedule from './schedule/doc.md'
 export default {
     toast,
     cliper,
@@ -12,5 +13,6 @@ export default {
     slider,
     picker,
     slideout,
-    swiper
+    swiper,
+    schedule
 }

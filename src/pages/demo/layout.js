@@ -46,10 +46,12 @@ export default {
                     icon:'itv-demo-icon-picker',
                     routerName:"itv_picker",
                     name: 'itv-picker'
+                },
+                {
+                    icon:'itv-demo-icon-schedule-date',
+                    routerName:"itv_schedule-date",
+                    name: 'Schedule'
                 }
-                
-
-                
             ]
         }
     }

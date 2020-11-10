@@ -263,7 +263,10 @@ export default {
                             this.verticalMoveCalendar(obj.angy)
                         }
                         
-                      
+                        this.$emit('scroll', {
+                            max: this.sMaxY,
+                            scroll: this.sy
+                        })
 
                         // this.verticalMoveCalendar(obj.angy)
                         break;
@@ -289,7 +292,10 @@ export default {
                 return
             }
 
-            if(this.py >= 0) {
+            //触发下拉刷新
+            let pullHeight = this.pullDis || this.pullHeight 
+            if(this.py >= pullHeight && !this.isRefresh) {
+                this.isRefresh = true
                 this.$emit('refresh')
             }
             this.isTouch = false
@@ -308,8 +314,8 @@ export default {
             switch (screenType) {
                 case 'vertical':
                     if(this.py > 0) {
-                        if(this.py > this.pullDis) {
-                            this.scrollerTo(0,this.pullDis, 1)
+                        if(this.py > pullHeight ) {
+                            this.scrollerTo(0,pullHeight, 1)
                         }else{
                            
                             this.scrollerTo(0, 0, 1)

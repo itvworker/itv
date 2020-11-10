@@ -1,51 +1,75 @@
 <template>
-    <itv-container>
-        <itv-header>schedule</itv-header>
-        <div class="pt79"></div>
-        <slide-calendar ref="calendar" min="2020/7" max="2020/9"  />
-        <slide-calendar ref="calendar"   />
-        <div class="itv-page-content">
-            <div class="pt6"></div>
-            <div class="pt5"></div>
-        </div>
-
+    <itv-container class="page-dialog">
+        <itv-header>schedule-date</itv-header>
+        <itv-main>
+           
+            <schedule-date  v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="true" @refresh="refresh" @pull="pull" ref="schedule">
+                <div class="test-list" v-for="(item, index)  in list">
+                    {{item.title}} {{index}}
+                </div>
+            </schedule-date>
+        </itv-main>
     </itv-container>
 </template>
 
 <script>
-    import SlideCalendar from './index';
-    export default {
-        components: {
-            SlideCalendar
-        },
-        data() {
-            return {
-
-            }
-        },
-        methods: {
-           
-        },
-        mounted() {
-
+import ScheduleDate from './index';
+export default {
+    components: {
+        ScheduleDate
+    },
+    data() {
+        return {
+            list:[],
+            currentDate: '2020/10/10',
+            minMonth:'2020/10',
+            maxMonth: '2021/12'
         }
+    },
+    computed: {
+    //    list() {
+    //         let arr = [];
+    //         for(let i = 0; i < 100; i++) {
+    //             arr.push({
+    //                 title: '测试内容'
+    //             })
+    //         }
+    //         return arr;
+    //    } 
+    },
+    methods: {
+       refresh() {
+           setTimeout(()=>{
+                this.$refs.schedule.refresh()
+           },2000)
+       },
+       pull(y) {
+           console.log(y);
+       }
+    },
+    created() {
+      
+    },
+    mounted() {
+        setInterval(()=>{
+            this.list.push({
+                title: '测试内容'
+            })
+        },500)
+       
+    }
 
-    };
+};
 </script>
 
 <style lang="less" scoped>
-.pt79{
-    height: 79ipx ;
+.test-list {
+    padding:15ipx 15ipx;
+    border-bottom: #ddd solid 1px;
+   
 }
 
-.pt6{
-    height: 300ipx;
-    background-color: #ddd;
-}
-.pt5{
-    height: 250ipx;
-    background-color: #ccc;
-}
 </style>
 
 
+ 

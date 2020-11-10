@@ -27,12 +27,12 @@ export default {
 <style lang="less">
 @font-face {
   font-family: 'itvdemo';  /* project id 1994629 */
-  src: url('//at.alicdn.com/t/font_1994629_64ru68ig0ck.eot');
-  src: url('//at.alicdn.com/t/font_1994629_64ru68ig0ck.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1994629_64ru68ig0ck.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1994629_64ru68ig0ck.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1994629_64ru68ig0ck.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1994629_64ru68ig0ck.svg#itvdemo') format('svg');
+  src: url('//at.alicdn.com/t/font_1994629_7jf6ntshn4q.eot');
+  src: url('//at.alicdn.com/t/font_1994629_7jf6ntshn4q.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1994629_7jf6ntshn4q.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1994629_7jf6ntshn4q.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1994629_7jf6ntshn4q.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1994629_7jf6ntshn4q.svg#itvdemo') format('svg');
 }
 
 *[class^="itv-demo-icon"] {
@@ -76,6 +76,9 @@ export default {
     content: '\e737';
 }
 
+.itv-demo-icon-schedule-date::before {
+    content: '\e62f';
+}
 
 @ani-sec: .3s;
 .itv-demo-left-enter-active,

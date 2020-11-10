@@ -2,7 +2,7 @@
     <itv-container class="doc-page">
         <div v-html="doc"></div>
         <div class="phone-show"  >
-            <iframe :src="url"></iframe>
+            <!-- <iframe :src="url"></iframe> -->
         </div>
     </itv-container>
 </template>
@@ -15,6 +15,7 @@ export default {
         doc() {
             let name = this.$route.params.type
             let msg = new html(doc[name]).getHtml()
+           
             return msg
         },
         url() {

@@ -1,63 +1,85 @@
-# calender
+# schedule
 
-slideout 是一个可以左滑动的按组件
+ schedule 是一个日程组件，目前支下拉刷新，上拉加载更改，要实现加载更多可以自己行实现
 
 ## 安装
 
----
 
-$#div.class=doc-tab_doc-contet.id=page
-    $#div.class=doc-tab-group
-$#div.class=tab-item-btn_active 全局注册 $#/div
-$#div.class=tab-item-btn 局部注册 $#/div
-$#/div
-    $#div.class=doc-tab-content
-\$#div.class=doc-tab-item
+```vue
+<template>
+    <schedule
+        v-model="currentDate" 
+        :min="minMonth"   
+        :max="maxMonth"
+        @bounce="slideBounce"
+        @refresh="refresh"   
+    >
+    
+    </schedule>
 
-```javascript
-// 在入口处引入
-import { slideout, slideitem, slidebutton } from 'itv'
-
-Vue.use(slideout)
-Vue.use(slideitem)
-Vue.use(slidebutton)
-```
-
-$#/div
-$#div.class=doc-tab-item
-
-```javascript
-import { slideout, slideitem, slidebutton } from 'itv'
+    
+</template>
+<script>
+import schedule from './schedule'
 export default {
     components: {
-        slideout,
-        slideitem,
-        slidebutton,
+        schedule,
     },
+    data() {
+        return {
+            currentDate: new Date().getTime(),
+            minMonth:'2019/10',
+            maxMonth: '2020/12'
+        }
+    },
+    methods: {
+        slideBounce(obj) {
+            let size = obj.width - Math.abs(obj.x);
+            if(Math.abs(size)>40){
+                alert('已经滑动滑尽头')
+            }
+        },
+        refresh() {
+            
+        }   
+    }
 }
+<script>
 ```
 
-$#/div
-$#/div
-\$#/div
 
-```html
 
-```
+
+
 
 ### 属性
 
-| 名字         | 类型   | 默认值   | 说明                                                                            | 版本要求 |
-| ------------ | ------ | -------- | ------------------------------------------------------------------------------- | -------- |
-| width        | number | 200      | 裁剪的宽度                                                                      |          |
-| height       | number | 200      | 裁剪的高度                                                                      |          |
-| clipType     | string | orthogon | 可选值 orthogon(矩形裁前), circle(圆形裁剪) width 与 height 必须设置为同一数值; |          |
-| outputFormat | string | png      | 输出图片类型                                                                    |          |
+| 名字         | 类型   | 是否必传 |默认值   | 说明  | 版本要求 |
+| ------------ | ------ | -------- | ---| -------- ||
+| value    | String | 无 |Y| 必传，必须传2020/10/10这样的格式  |          |
+| min       | String | 无 |N | 格式2020/10 |        |
+| max     | String | 无 | N | 格式2020/12 |        |
+|weekText|Array|N|["日", ....]| 周日至周六文字 ||
+|monthText|Array|N|["1月", ....]| 1月至12月文字 ||
+|toggleStatus|Number|N|1|只有初始化时才起用作，初始化结束后不起作用，0为日历收起,1为日历展开|
+|iconBgColor| Stirng|N|"rgba(200,200,200,1)"|下拉刷新图标底色,必须为rgba格式||
+|iconColor| Stirng|N|"rgba(200,200,200,1)"|下拉刷新图标主色,必须为rgba格式||
+|bounceTop| Boolean|N|true|是否启用下拉刷新||
+|speed| Number|N|30|数据滚动速度，0-100，数字越大滚动越快，并且滚动越久||
+|pullDis|Number|N|60|触发下拉刷新的高度,当bounceTop为true才起作用，如果传0将自动获取下拉刷新图标内容的高度||
+
 
 ### 方法
 
 | 名字        | 参数           | 说明             | 版本要求 |
 | ----------- | -------------- | ---------------- | -------- |
-| insertImage | value 图片路径 | 参数是图片 url   |
-| reset       | --             | 重置操作的图片   |          |
-| done        | --             | 返回 base64 图片 |          |
+| init | (value) | value为字日期字符串，如2010/10/10  |
+| refresh|  无 | 数据有更新时调用，下刷新结束时也必须调用 |         |
+
+
+### 事件
+| 名字        | 参数           | 说明             | 版本要求 |
+| ----------- | -------------- | ---------------- | -------- |
+| @scroll | obj | 滚动的最大值，和当月的最大滚动值 ||
+| @refresh|  无 | 数据有更新时调用，下刷新结束时也必须调用 ||
+|@pull|postionY|下拉的距离, 下拉的时候触发||

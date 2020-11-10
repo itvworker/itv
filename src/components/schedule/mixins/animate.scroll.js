@@ -71,15 +71,21 @@ export default {
             if(scrollY <= -this.sMaxY){
                 this.scrollDom(0, this.sMaxY, 1) 
                 this.sy = -this.sMaxY
+                this.$emit('scroll', {
+                    max: this.sMaxY,
+                    scroll: this.sy
+                })
                 return;
             };
             
            
             if(scrollY >= 0) {
-               
-
                 this.scrollDom(0, 0, 1) 
                 this.sy = 0
+                this.$emit('scroll', {
+                    max: this.sMaxY,
+                    scroll: this.sy
+                })
                 return
                 
             }
@@ -94,6 +100,10 @@ export default {
            
             
             this.scrollDom(0, -scrollY, 1) 
+            this.$emit('scroll', {
+                max: this.sMaxY,
+                scroll: this.sy
+            })
             if(Math.abs(this.sStepY) <=0.8) {
                 this.sStepY =0 ;
                 return

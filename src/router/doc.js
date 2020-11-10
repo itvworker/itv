@@ -20,7 +20,7 @@ export default [
         {
             path: '/component',
             name: 'itv_doc_index',
-            component: () => import ('@/pages/website//components/index.vue'),
+            component: () => import ('@/pages/website/components/index.vue'),
             redirect:"/component/info/install",
             meta: {
                 keepAlive: false,

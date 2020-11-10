@@ -122,15 +122,15 @@ export default [
                     title: 'scroller',
                 },
             },
-            {
-                path: '/demo/schedule',
-                name: 'itv_slide_schedule',
-                component: () => import('@/components/schedule/demo.vue'),
-                meta: {
-                    keepAlive: false,
-                    title: 'schedule',
-                },
-            },
+            // {
+            //     path: '/demo/schedule',
+            //     name: 'itv_slide_schedule',
+            //     component: () => import('@/components/schedule/demo.vue'),
+            //     meta: {
+            //         keepAlive: false,
+            //         title: 'schedule',
+            //     },
+            // },
             {
                 path: '/demo/circle',
                 name: 'itv_circle',
@@ -205,12 +205,12 @@ export default [
             },
 
             {
-                path: '/demo/schedule-date',
-                name: 'itv_schedule-date',
-                component: () => import('@/components/scheduleDate/demo.vue'),
+                path: '/demo/schedule',
+                name: 'itv_schedule',
+                component: () => import('@/components/schedule/demo.vue'),
                 meta: {
                     keepAlive: false,
-                    title: 'schedule-date',
+                    title: 'schedule',
                 }
             },
             {

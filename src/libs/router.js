@@ -97,7 +97,7 @@ export default function (paramname){
         Router.events.forEach(element => {
             let arr = element.name.split(' ');
             if(arr.indexOf('forward')>=0) {
-                element.fun('forwar', 'forward')
+                element.fun('forward', 'forward')
             }    
         });
     }

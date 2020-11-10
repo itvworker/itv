@@ -11,15 +11,10 @@ export default {
             this.pStepX = dx > 0? this.calcStep(dx,2):-this.calcStep(dx,2)
             this.pStepX*=value
             this.pStepY*=value
-       
             window.requestAnimationFrame(this.scrollerStep);  
-                        
-
         },
         //滚动动动画
         scrollerStep() {
-
-           
             if(this.isTouch) return;
             let scrollY = this.py - this.pStepY;
             this.py = scrollY;

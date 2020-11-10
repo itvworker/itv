@@ -1,5 +1,12 @@
 @calendar-rowHeight: 45ipx;
 @padding-top: 10ipx;
+
+
+@bg-color-light:#fff;
+@color-text-base:#333;
+@font-size-base: 15ipx;
+@primary-color:#1d78f4;
+@border-color-base:#EDF0F2;
 .calendar-week-text {
     display: flex;
     border-top: @border-color-base solid 1px;
@@ -12,9 +19,7 @@
     .week-text-item {
         flex: 1;
         text-align: center;
-        &:first-child,&:last-child {
-            color: @dark-color;
-        }
+       
     }
     
 }
@@ -92,23 +97,23 @@
         }
         .month-tips{
             position: absolute;
-            font-size: 200ipx;
+            font-size: 150ipx;
             transform: translate(-50%, -50%);
             left: 50%;
-            top: 50%;
+            top: 140ipx;
             z-index: 1;
-            opacity: 0.1;
+            opacity: 0.07;
             color: @primary-color;
             font-family: PingFangSC-Light, PingFang SC, Arial, Helvetica, sans-serif;
         }
         .year-tips{
             position: absolute;
-            font-size: 36ipx;
+            font-size: 40ipx;
             transform: translate(-50%, -50%);
             left: 50%;
-            top: 20ipx;
+            top: 40ipx;
             z-index: 1;
-            opacity: 0.1;
+            opacity: 0.07;
             color: @primary-color;
             font-family: PingFangSC-Light, PingFang SC, Arial, Helvetica, sans-serif;
         }

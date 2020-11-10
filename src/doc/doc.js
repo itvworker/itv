@@ -1,8 +1,11 @@
 export default class Doc {
     constructor (doc) {
         this.doc = doc
+    
     }
     getHtml () {
+
+       
         this.doc = this.doc.replace(/<p>[\S\s]+?<\/p>/ig, (word) => {
             if (word.indexOf('$#') === -1) {
                 return word

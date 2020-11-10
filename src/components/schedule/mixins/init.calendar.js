@@ -21,6 +21,7 @@ export default {
          * @param {String} value  年月日字符串
          */
         init(value) {
+            
             let date = new Date(value)
             let year = date.getFullYear(); //获取年份
             let month = date.getMonth()+1
