@@ -14,10 +14,7 @@
         @bounce="slideBounce"
         @refresh="refresh"   
     >
-    
     </schedule>
-
-    
 </template>
 <script>
 import schedule from './schedule'

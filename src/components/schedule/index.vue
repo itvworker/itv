@@ -170,7 +170,7 @@ import animateScroller from './mixins/animate.scroller'
 import move from './mixins/move'
 import refreshIcon from './refresh'
 import {svgXml} from '../../libs/tool'
-import icon from './assets/icon.svg';
+
 
 export default {
     mixins: [
