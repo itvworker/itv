@@ -214,6 +214,15 @@ export default [
                 }
             },
             {
+                path: '/demo/slivers',
+                name: 'itv_slivers',
+                component: () => import('@/components/slivers/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'slivers',
+                }
+            },
+            {
                 path: '/demo/text2img',
                 name: 'itv_text2img',
                 component: () => import('@/components/text2img/demo.vue'),

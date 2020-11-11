@@ -72,11 +72,18 @@ export default {
             lastOne:'', //循环是复制后一张
             firstOne: '',//循环是复制第一张
             children: [],
-            dom:''
+            dom:'',
+            winWidth: window.innerWidth
             
         }
     },
     watch: {
+         winWidth() {
+            this.$nextTick(()=>{
+                 this.resize();
+            })
+           
+        },
         value(n, old) {
             let coordinate = n*this.elSize;
             if(this.isLoop) {
@@ -382,12 +389,11 @@ export default {
             this.clone();
         },
         resize() {
-            setTimeout(()=>{
-                this.setElSize()
-                this.calcMax();
-                this.coordinate = this.nowIndex*this.elSize;
-                this.setPostion();
-            },300)
+            this.setElSize()
+            this.calcMax();
+            this.coordinate = this.nowIndex*this.elSize;
+            this.setPostion();
+
         },
         setPostion() {
             if(this.direction === 'row'){
@@ -418,7 +424,10 @@ export default {
     
     mounted() {
         this.init()
-        window.addEventListener('resize', this.resize)
+         window.addEventListener('resize', ()=>{
+            this.winWidth = window.innerWidth
+        })
+
     }
 }
 </script>

@@ -1,0 +1,128 @@
+<template>
+    <div class="itv-slivers-box" 
+    @touchstart="touchstart"
+    @touchmove="touchmove"
+    @touchend="touchend"
+    @touchcancel="touchend"
+     >
+    <div class="itv-slivers-scroller" ref="scroller">
+        <div class="itv-schedule-refresh" ref="pull">
+            <slot name="pull"></slot>
+        </div>
+        
+        <div class="itv-sliver-top" ref="header" :style="{height: headerHeight+'px'}">
+            header
+            <slot name="header"></slot>
+        </div>
+        <div class="itv-slivers-group" ref="group">
+            <slot></slot>
+        </div>
+    </div>    
+    </div>
+</template>
+<script>
+
+import touch from './mixins/touch'
+import render from '../../libs/render'
+import { slideHeight } from '../../libs/tool'
+export default {
+    mixins: [
+       touch
+    ],
+    components: {
+       
+    },
+    props: {    
+        //头部的最小高度
+        headerMinHeight: {
+            type: Number,
+            default:  44
+        },
+        //头部的最大高度
+        headerMaxHeight: {
+            type: Number,
+            default:  250
+        },
+        //是开启触发下拉刷新
+        refreshStatus: {
+            type: Boolean,
+            default: false,
+        },
+        //下拉刷新触发的距离
+        refreshHeight: {
+            type: Number,
+            default: 60
+        },
+        //是开启子项目sliver触发下拉刷新,开启该下拉时， refreshStatus会失效
+        refreshStatus:{
+            type: Boolean,
+            default: false,
+        },
+        //字滚动元素索引
+        sliverIndex: {
+            type: Number,
+            default: 0
+        }
+    },
+
+    data() {
+        return {
+            //头部高度，改此值将触发，vue刷新
+            headerHeight: this.headerMaxHeight,
+            //头部高度，改变此不会触发vue更新dom,此值只用于dom操作
+            headerDomHeight: this.headerMaxHeight,
+            py:0,
+            domPy:0,
+            //存储手指滑动队列
+            touchMoveList:[],
+            //touch事件开始的触发点
+            startX:0,
+            startY: 0,
+
+            //touchmove上一次触发点
+            passMoveX:0,
+            passMoveX:0,
+            //touchmove 当前的触发点
+            moveX: 0,
+            moveY: 0,
+
+            //dom操方法
+            headerDom: "",
+            scrollerDom:"",
+            //touchmove的滑动方法  Horizontal为横向 vertical为竖向
+            moveDirection: "horizontal",
+            //touchmove是否有滑动，1向上 2向下 3向左 4向右 0未滑动
+            touchDirection: 0,
+            childrenSlivers:[],
+            nowSliver:'' //当前所处的子元素
+        };
+        
+    },
+
+    mounted() {     
+        //初始化
+        this.headerDom = slideHeight(this.$refs.header)
+        this.scrollerDom = render(this.$refs.scroller);
+        this.calcSlivers();
+    
+
+    },
+    methods: {
+        //计算子滑动sliver元素
+        calcSlivers() {
+            this.childrenSlivers = []
+            let arr = this.$slots.default;
+            arr.forEach((item)=>{
+                if(item.child && item.child.componentName === 'sliver') {
+                    this.childrenSlivers.push(item.child)
+                }
+            })
+        }
+        
+    },
+        
+}
+</script>
+<style lang="less">
+@import './css/index.less';
+</style>
