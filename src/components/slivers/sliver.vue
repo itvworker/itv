@@ -13,6 +13,10 @@ export default {
         index: {
             type: Number,
             default: 0
+        },
+        bounceTop: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -22,7 +26,8 @@ export default {
             y: 0, //滚动值，会触发vue更新dom
             domY: 0, //滚动值，不会触发vue更新dom，直接更新dom，不经过vue
             isRefresh: false, //是否处于刷新状态
-            scrollDom:'' //dom位置更新方法
+            scrollDom:'', //dom位置更新方法
+            
         }
     },
     methods:{
@@ -41,8 +46,13 @@ export default {
             this.vy = this.y;
         },
         touchmove(dis) {
-            this.domY += dis;
-            this.scrollDom(0, this.domY, 0)
+            this.domY -= dis;
+
+            if(!this.bounceTop && this.domY < 0) {
+                this.domY = 0;
+            }
+            console.log(this.domY);
+            this.scrollDom(0, this.domY, 1)
         }
 
     },
@@ -58,6 +68,8 @@ export default {
     flex: 0 0 auto;
     height: 100%;
     overflow: hidden;
-    
+    .itv-sliver-scroller{
+        transition: all 0ms ease 0s;
+    }
 }
 </style>

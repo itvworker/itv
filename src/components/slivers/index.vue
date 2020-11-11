@@ -25,9 +25,13 @@
 import touch from './mixins/touch'
 import render from '../../libs/render'
 import { slideHeight } from '../../libs/tool'
+import calcscroll from './mixins/calcscroll'
+import animate from './mixins/animate.scroller'
 export default {
     mixins: [
-       touch
+       touch,
+       calcscroll,
+       animate
     ],
     components: {
        
@@ -62,6 +66,14 @@ export default {
         sliverIndex: {
             type: Number,
             default: 0
+        },
+        speed: {
+            type: Number,
+            default: 60
+        },
+        percent: {
+            type: Number,
+            default: 0.95
         }
     },
 
@@ -85,7 +97,8 @@ export default {
             //touchmove 当前的触发点
             moveX: 0,
             moveY: 0,
-
+            stepY: 0,//滚动动画每一步的速度
+            isTouch: false,//是否已经触屏
             //dom操方法
             headerDom: "",
             scrollerDom:"",

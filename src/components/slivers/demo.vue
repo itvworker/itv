@@ -3,7 +3,7 @@
         <itv-header>schedule-date</itv-header>
         <itv-main>
            
-            <slivers ref="slivers">
+            <slivers :headerMaxHeight="150" :headerMinHeight="44" ref="slivers">
                 <div class="name"></div>
                 <sliver>
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
