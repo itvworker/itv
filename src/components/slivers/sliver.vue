@@ -72,6 +72,9 @@ export default {
             console.log(domY);
             this.domY = domY;
             this.scrollDom(0, this.domY, 1)
+        },
+        setPosition() {
+            this.scrollDom(0, this.domY, 1)
         }
     },
     mounted() {

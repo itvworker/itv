@@ -107,7 +107,6 @@ export default {
                             if(this.headerDomHeight > this.headerMaxHeight) {
                                 this.headerDomHeight = this.headerMaxHeight;
                             }
-                            //更新头部
                             this.headerDom(this.headerDomHeight);
 
                            
@@ -120,7 +119,44 @@ export default {
                                             || (obj.type === 2 && this.nowSliver.domY > 0)
                                             || (obj.type ===2 && this.headerDomHeight >= this.headerMaxHeight)                    
                         if(isScorllSliver) {
-                            this.nowSliver.touchmove(obj.angy, obj.type);
+                            let domY = this.nowSliver.domY - obj.angy;
+                            let status = 0
+                            if(!this.nowSliver.bounceTop && domY < 0) {
+                                this.nowSliver.domY = 0;
+                                status = 1
+                                
+                            }
+
+                            if(this.nowSliver.bounceTop && domY <= 0 && obj.type === 2) {
+                                this.nowSliver.domY =  this.nowSliver.domY - (obj.angy * 0.3);
+                                status = 2
+                            }
+
+                            if(domY < 0 && obj.type === 2 && this.nowSliver.domY > 0) {
+                                this.nowSliver.domY =  0
+                                status = 3
+                            }
+                            
+                          
+                            if(domY > 0 && obj.type ===1 && this.nowSliver.domY < 0) {
+                                this.nowSliver.domY =  0
+                                status = 4
+                            }
+
+                            if(this.nowSliver.domY === 0 && domY >=0 && obj.type === 1  && this.headerDomHeight > this.headerMinHeight) {
+                                this.nowSliver.domY =  0
+                                status = 5
+                            }
+                            
+
+                            if (status===0) {
+                                this.nowSliver.domY = domY
+                            }
+                            
+
+                          
+                            
+                            this.nowSliver.setPosition();
                         }
                         break;
                     case 'horizontal':

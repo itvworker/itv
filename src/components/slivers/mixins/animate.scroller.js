@@ -95,53 +95,7 @@ export default {
             this.stepY *= this.percent;
 
            
-            // let continuing = true;
-            // if(this.isTouch) return;
-        
            
-            // // let scrollX = this.sx - this.sStepX
-            
-
-            // let scrollY = this.sy + this.sStepY
-
-
-            // //如超出最大滚动值时
-            // if(scrollY <= -this.sMaxY){
-            //     this.scrollDom(0, this.sMaxY, 1) 
-            //     this.sy = -this.sMaxY
-            //     this.$emit('scroll', {
-            //         max: this.sMaxY,
-            //         scroll: this.sy
-            //     })
-            //     return;
-            // };
-            
-           
-            // if(scrollY >= 0) {
-            //     this.scrollDom(0, 0, 1) 
-            //     this.sy = 0
-            //     this.$emit('scroll', {
-            //         max: this.sMaxY,
-            //         scroll: this.sy
-            //     })
-            //     return
-                
-            // }
-          
-            
-            // this.scrollDom(0, -scrollY, 1) 
-            // this.$emit('scroll', {
-            //     max: this.sMaxY,
-            //     scroll: this.sy
-            // })
-            // if(Math.abs(this.sStepY) <=0.8) {
-            //     this.sStepY =0 ;
-            //     return
-            // }
-            // // this.sStepX = this.sStepX * this.percent;
-            // this.sStepY = this.sStepY * this.percent;
-            // this.sy = scrollY;
-            // console.log(this.sy);
           
             
             window.requestAnimationFrame(this.srollStep)

@@ -5,7 +5,7 @@
            
             <slivers :headerMaxHeight="150" :headerMinHeight="44" ref="slivers">
                 <div class="name"></div>
-                <sliver bounceTop>
+                <sliver :bounceTop="true">
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
                         sliver1{{item.title}} {{index}}
                     </div>
