@@ -14,9 +14,20 @@ export default {
             type: Number,
             default: 0
         },
+        //是否开启顶部弹动
         bounceTop: {
             type: Boolean,
             default: false
+        },
+        //是否开启下拉刷新
+        refreshStatus: {
+            type: Boolean,
+            defualt: false
+        },
+        //触发下拉刷新高度
+        refreshHeight: {
+            type: Number,
+            defualt: 60
         }
     },
     data() {
@@ -45,16 +56,23 @@ export default {
         cache() {
             this.vy = this.y;
         },
-        touchmove(dis) {
-            this.domY -= dis;
-
-            if(!this.bounceTop && this.domY < 0) {
+        touchmove(dis, dir) {
+            let domY = this.domY - dis;
+            if(!this.bounceTop && domY < 0) {
                 this.domY = 0;
             }
-            console.log(this.domY);
+
+            if(this.bounceTop && domY <= 0 && dir === 2) {
+                domY =  this.domY - (dis * 0.3);
+            }
+
+            if(dir === 1 && domY <= 0) {
+                domY = 0
+            }
+            console.log(domY);
+            this.domY = domY;
             this.scrollDom(0, this.domY, 1)
         }
-
     },
     mounted() {
         this.scrollDom = render(this.$refs.scroller)

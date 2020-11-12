@@ -84,7 +84,7 @@ export default {
             e.preventDefault()
             e.stopPropagation()
 
-           
+            
             this.moveX = x
             this.moveY = y
                 switch (this.moveDirection) {
@@ -94,8 +94,9 @@ export default {
 
                         //当向上滚动时，并且还未处最小收缩度
                         //是否收缩头部
-                        let isScrollHeader = (obj.type === 1 && this.headerDomHeight > this.headerMinHeight)
-                                            ||(obj.type === 2 && this.nowSliver.domY <=0)
+                        let isScrollHeader = (obj.type === 1 && this.headerDomHeight > this.headerMinHeight && this.nowSliver.domY === 0)
+                                            || (obj.type === 2 && this.nowSliver.domY === 0)
+
                         if(isScrollHeader) {
                             this.headerDomHeight += obj.angy;
                             //当高度为最小高度时
@@ -107,20 +108,20 @@ export default {
                                 this.headerDomHeight = this.headerMaxHeight;
                             }
                             //更新头部
-                            this.headerDom(this.headerDomHeight)
-                            return
+                            this.headerDom(this.headerDomHeight);
+
+                           
                         }
                         
                          //当向上滚动时，并且header还处最小收缩度
                         //是否滚动子元素
                          let isScorllSliver = (obj.type === 1 && this.headerDomHeight <= this.headerMinHeight)
-                                             || (obj.type === 2 && this.nowSliver.domY > 0)
+                                            || (obj.type ===1 && this.nowSliver.domY < 0)
+                                            || (obj.type === 2 && this.nowSliver.domY > 0)
+                                            || (obj.type ===2 && this.headerDomHeight >= this.headerMaxHeight)                    
                         if(isScorllSliver) {
-                            this.nowSliver.touchmove(obj.angy);
-                            return
+                            this.nowSliver.touchmove(obj.angy, obj.type);
                         }
-             
-
                         break;
                     case 'horizontal':
                         break
@@ -136,7 +137,7 @@ export default {
             // let isfast = Math.abs(dis) > 20 && now - this.startTime < 200
             // let x = this.x
             // let y = this.y
-           
+            
             switch (this.moveDirection) {
                 case 'vertical':
                     

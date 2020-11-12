@@ -5,13 +5,13 @@
            
             <slivers :headerMaxHeight="150" :headerMinHeight="44" ref="slivers">
                 <div class="name"></div>
-                <sliver>
+                <sliver bounceTop>
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
                         sliver1{{item.title}} {{index}}
                     </div>
                 </sliver>
 
-                <sliver>
+                <sliver >
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
                         sliver2{{item.title}} {{index}}
                     </div>
@@ -77,7 +77,7 @@ export default {
 .test-list {
     padding:15ipx 15ipx;
     border-bottom: #ddd solid 1px;
-   
+    background-color: #eee;
 }
 
 </style>
