@@ -57,6 +57,10 @@ export default {
             type: Number,
             default: 60
         },
+        bounceTop: {
+            type: Boolean,
+            default: false
+        },
         //是开启子项目sliver触发下拉刷新,开启该下拉时， refreshStatus会失效
         refreshStatus:{
             type: Boolean,

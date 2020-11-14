@@ -3,9 +3,9 @@
         <itv-header>schedule-date</itv-header>
         <itv-main>
            
-            <slivers :headerMaxHeight="150" :headerMinHeight="44" ref="slivers">
+            <slivers :headerMaxHeight="150" :headerMinHeight="44" ref="slivers" :bounceTop="true">
                 <div class="name"></div>
-                <sliver :bounceTop="true">
+                <sliver :bounceTop="false">
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
                         sliver1{{item.title}} {{index}}
                     </div>
