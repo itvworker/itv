@@ -140,6 +140,8 @@ export default {
                 }
             })
         },
+
+        //下拉刷新复位
         refresh() {
             if(this.domPy < 0) {
                 let speed = this.calcStep(this.domPy, 1.2);
@@ -147,6 +149,12 @@ export default {
                 // this.isRefresh = false;
                 this.bounceAnimate(speed);
             }
+        },
+        /**
+         * 设置header的高度
+         */
+        setHeaderHeight(value) {
+            this.headerDom(value);
         }
         
     },
