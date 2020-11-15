@@ -31,6 +31,7 @@ export default {
                 numDis+= step/this.percent
                 step = step/this.percent
             }
+
             step = step/this.percent
             return step*num
         },

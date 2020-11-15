@@ -6,12 +6,14 @@
     @touchcancel="touchend"
      >
     <div class="itv-slivers-scroller" ref="scroller">
-        <div class="itv-schedule-refresh" ref="pull">
-            <slot name="pull"></slot>
+        <div class="itv-slivers-refresh" ref="pull" v-if="refreshLoad">
+            <slot name="pull">
+                <refresh-bar v-model="isRefresh" :top="domPy" :triggerDir="refreshHeight"></refresh-bar>
+            </slot>
         </div>
         
         <div class="itv-sliver-top" ref="header" :style="{height: headerHeight+'px'}">
-            header
+          
             <slot name="header"></slot>
         </div>
         <div class="itv-slivers-group" ref="group">
@@ -27,14 +29,16 @@ import render from '../../libs/render'
 import { slideHeight } from '../../libs/tool'
 import calcscroll from './mixins/calcscroll'
 import animate from './mixins/animate.scroller'
+import refreshBar from './refresh.vue'
 export default {
     mixins: [
        touch,
        calcscroll,
        animate
+       
     ],
     components: {
-       
+       refreshBar
     },
     props: {    
         //头部的最小高度
@@ -48,7 +52,7 @@ export default {
             default:  250
         },
         //是开启触发下拉刷新
-        refreshStatus: {
+        refreshLoad: {
             type: Boolean,
             default: false,
         },
@@ -57,14 +61,10 @@ export default {
             type: Number,
             default: 60
         },
+        //是否开启顶部弹动
         bounceTop: {
             type: Boolean,
             default: false
-        },
-        //是开启子项目sliver触发下拉刷新,开启该下拉时， refreshStatus会失效
-        refreshStatus:{
-            type: Boolean,
-            default: false,
         },
         //字滚动元素索引
         sliverIndex: {
@@ -89,6 +89,10 @@ export default {
             headerDomHeight: this.headerMaxHeight,
             py:0,
             domPy:0,
+            bouncePy:0,//回弹的位置
+            StepPy: 0,
+            isRefresh: false,
+
             //存储手指滑动队列
             touchMoveList:[],
             //touch事件开始的触发点
@@ -111,6 +115,7 @@ export default {
             //touchmove是否有滑动，1向上 2向下 3向左 4向右 0未滑动
             touchDirection: 0,
             childrenSlivers:[],
+            stopStep: 0.5, //当sStepX,sStepY绝对值小于0.5停止滚动
             nowSliver:'' //当前所处的子元素
         };
         
@@ -121,7 +126,7 @@ export default {
         this.headerDom = slideHeight(this.$refs.header)
         this.scrollerDom = render(this.$refs.scroller);
         this.calcSlivers();
-    
+
 
     },
     methods: {
@@ -134,6 +139,14 @@ export default {
                     this.childrenSlivers.push(item.child)
                 }
             })
+        },
+        refresh() {
+            if(this.domPy < 0) {
+                let speed = this.calcStep(this.domPy, 1.2);
+                this.bouncePy = 0;
+                // this.isRefresh = false;
+                this.bounceAnimate(speed);
+            }
         }
         
     },

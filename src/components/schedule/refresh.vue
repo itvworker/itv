@@ -11,7 +11,7 @@
 </template>
 <script>
 import {svgXml} from '../../libs/tool'
-import icon from './assets/icon';
+import icon from './assets/icon.js';
 export default {
     props: {
         value: {

@@ -49,7 +49,7 @@ export default {
                 },
                 {
                     icon:'itv-demo-icon-schedule-date',
-                    routerName:"itv_schedule-date",
+                    routerName:"itv_schedule",
                     name: 'Schedule'
                 }
             ]

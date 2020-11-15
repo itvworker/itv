@@ -63,6 +63,8 @@
 </template>
 
 <script>
+
+
 export default {
     data() {
         return {
@@ -71,7 +73,16 @@ export default {
     },
     methods: {
         open() {
-            this.show = true;
+            this.$itv.actionsheet.show({
+                items:[
+                    {
+                        text:'选项一'
+                    },
+                    {
+                        text:'选项二'
+                    }
+                ]
+            })
         },
         plugin(value) {
             this.$itv.popup.confirm({

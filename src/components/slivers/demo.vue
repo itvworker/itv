@@ -1,9 +1,17 @@
 <template>
     <itv-container class="page-dialog">
-        <itv-header>schedule-date</itv-header>
+        <itv-header>slivers</itv-header>
         <itv-main>
            
-            <slivers :headerMaxHeight="150" :headerMinHeight="44" ref="slivers" :bounceTop="true">
+            <slivers 
+            ref="slivers"
+            :bounceTop="true"
+            :headerMaxHeight="160"  
+            :headerMinHeight="44" 
+            :sliverIndex="sliverIndex"
+            :refreshLoad="true"
+            @refresh = refresh
+            >
                 <div class="name"></div>
                 <sliver :bounceTop="false">
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
@@ -34,7 +42,8 @@ export default {
             // list:[],
             currentDate: '2020/10/10',
             minMonth:'2020/10',
-            maxMonth: '2021/12'
+            maxMonth: '2021/12',
+            sliverIndex: 0
         }
     },
     computed: {
@@ -50,13 +59,15 @@ export default {
     },
     methods: {
        refresh() {
+        
            setTimeout(()=>{
-                this.$refs.schedule.refresh()
+                this.$refs.slivers.refresh()
            },2000)
        },
        pull(y) {
            console.log(y);
-       }
+       },
+       
     },
     created() {
       

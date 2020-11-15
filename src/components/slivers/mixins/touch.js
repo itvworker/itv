@@ -1,8 +1,12 @@
-import { timers } from 'jquery';
 import getDirection from '../../../libs/touch'
 export default {
     methods: {
         touchstart(e) {
+            if(this.isRefresh) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+            }
             this.isTouch = true;
             this.startTime = new Date().getTime()
             this.touchDirection = 0; //重置touch滑动方向
@@ -33,7 +37,11 @@ export default {
 
         },
         touchmove(e) {
-            
+            if(this.isRefresh) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+            }
             
             let touches = e.touches;
             if (touches.length == null) {
@@ -207,6 +215,11 @@ export default {
            
         },
         touchend(e) {    
+            if(this.isRefresh) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+            }
             let now = new Date().getTime()
             this.isTouch = false;
             // let dis = this.moveDirection==='progress'?this.moveX - this.startX:this.moveY - this.startY
@@ -216,8 +229,26 @@ export default {
             
             switch (this.moveDirection) {
                 case 'vertical':
-                    
-                    
+
+                    //slivers回弹，即父元素回弹
+                    if(this.bounceTop){
+                        if((!this.refreshLoad && this.domPy<0) ||(this.refreshLoad && this.domPy >-this.refreshHeight) ) {
+                            let speed = this.calcStep(this.domPy, 1.2);
+                            this.bouncePy = 0;
+                            this.bounceAnimate(speed)
+                            return
+                        }
+
+                        if(this.refreshLoad && this.domPy < -this.refreshHeight) {
+                            let dis = this.domPy - this.refreshHeight;
+                            this.bouncePy = -this.refreshHeight;
+                            let speed = this.calcStep(dis, 1.2);
+                            this.bounceAnimate(speed);
+                            this.isRefresh = true;
+                            this.$emit('refresh')
+                            return
+                        }
+                    }
                     // let speed = this.calcMoveSpeed();
                     // this.animate(speed)
                     

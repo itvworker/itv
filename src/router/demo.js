@@ -24,6 +24,15 @@ export default [
                 },
             },
             {
+                path: '/demo/actionsheet',
+                name: 'itv_actionsheet',
+                component: () => import('@/components/actionsheet/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'picker',
+                },
+            },
+            {
                 path: 'cliper',
                 name: 'itv_cliper',
                 component: () => import('@/components/cliper/demo.vue'),
@@ -231,6 +240,7 @@ export default [
                     title: 'text2img',
                 }
             },
+            
 
         ]
     },  

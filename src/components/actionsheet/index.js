@@ -54,6 +54,7 @@ const plugin = {
         if (!vue.prototype.$itv) {
             vue.prototype.$itv = {}
         }
+        vue.prototype.$itv.actionsheet = opts;
       
     }
 }

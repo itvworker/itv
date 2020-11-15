@@ -6,6 +6,16 @@
         <div class="icon-refresh-main" :class="{'animate-loading': value}" :style="{'height':height, transform:`translateX(-50%) scale(${scale})`}">
             <img :src="main" />
         </div>
+        <div class="text" v-if="value">
+            {{loadingText}}
+        </div>
+        <div class="text" v-else-if="Math.abs(top) > triggerDir">
+            {{letgoText}}
+        </div>
+
+        <div class="text" v-else>
+            {{pullDownText}}
+        </div>
         
     </div>
 </template>
@@ -17,6 +27,18 @@ export default {
         value: {
             type: Boolean,
             default: false
+        },
+        pullDownText: {
+            type: String,
+            default:'下拉刷新'
+        },
+        loadingText: {
+            type: String,
+            default:'更新中'
+        },
+        letgoText: {
+            type: String,
+            default:'松开刷新'
         },
         bgIconColor:{
             type: String,
@@ -58,7 +80,7 @@ export default {
                 return 1
             }
             let top = this.top>this.triggerDir?this.triggerDir: this.top;
-            return top/this.triggerDir
+            return -top/this.triggerDir
 
         },
         icon() {
@@ -82,17 +104,17 @@ export default {
     height: 60ipx;
     position: relative;
     .icon-refresh-bg, .icon-refresh-main{
-        width: 44ipx;
-        height: 44ipx;
+        width: 36ipx;
+        height: 36ipx;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 8ipx;
+        bottom: 20ipx;
         // transition: all 300ms ease-in;
         z-index: 0;
         img {
-            width: 44ipx;
-            height: 44ipx;
+            width: 36ipx;
+            height: 36ipx;
             position: absolute;
             left: 0;
             bottom: 0;
@@ -100,12 +122,18 @@ export default {
     }
     .icon-refresh-main {
         z-index: 2;
-        height: 0ipx;
-        overflow: hidden;
-        height: 0ipx;
+        
+      
     }
     .animate-loading{
         animation: refreshLoading 1s infinite 0s;
+        overflow: hidden;
+    }
+    .text{
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        width: 100%;
     }
 }
 
