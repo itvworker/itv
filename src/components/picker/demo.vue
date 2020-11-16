@@ -285,7 +285,7 @@ export default {
 }
 .btn {
   padding: 5px;
-  border-radius: @btn-border-radius-small;
+  border-radius: @itv-btn-border-radius-small;
   color: #fff;
   background-color: #999;
 }

@@ -22,7 +22,7 @@
       overflow: hidden;
       box-sizing: border-box;
       &::after {
-        border-bottom: @border-color-base solid 1px;
+        border-bottom: @itv-border-color-base solid 1px;
         content: ' ';
         display: block;
        font-size: 0px;
@@ -38,7 +38,7 @@
       text-align: center;
   }
   >.itv-calendar-time-top{
-      background-color:@bg-color-light ;// #fff;
+      background-color:@itv-bg-color-light ;// #fff;
       display: flex;
       height: 44ipx;
       padding-left: 15ipx;
@@ -61,11 +61,11 @@
         padding-right: 15ipx;
       }
       .active {
-         color: @primary-color;
+         color: @itv-primary-color;
          position: relative;
          &::after {
            content: ' ';
-           border-bottom: @primary-color solid 2px;
+           border-bottom: @itv-primary-color solid 2px;
            left: 0;
            right:0;
            bottom: 0;
@@ -87,7 +87,7 @@
     .week-item{
       flex: 1;
       text-align: center;
-      background-color: @bg-color-light;
+      background-color: @itv-bg-color-light;
       margin-top:1px;
       height: 30ipx;
       line-height: 30ipx;
@@ -144,7 +144,7 @@
         position: absolute;
         
         z-index: 1;
-        color:@primary-color;
+        color:@itv-primary-color;
         left: 0;
         top: 0;
         bottom: 0;
@@ -198,8 +198,8 @@
 
       &.day-active{
         .active{
-          background-color: @primary-color;
-          color: @light-color;
+          background-color: @itv-primary-color;
+          color: @itv-light-color;
         }
       }
       &.forbid {

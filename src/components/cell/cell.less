@@ -5,7 +5,7 @@
     -webkit-tap-highlight-color: transparent;
     outline: none;
     &.itv-cell-link:active {
-        background-color: @light-color !important;
+        background-color: @itv-light-color !important;
     }
     .itv-cell-box {
         display: flex;
@@ -21,14 +21,14 @@
     .itv-cell-title {
         display: block;
         line-height: @line-height-base;
-        font-size: @font-size-base;
-        color: @title-color;
+        font-size: @itv-font-size-base;
+        color: @itv-title-color;
     }
     .itv-cell-sub-title {
         display: block;
         line-height: 1;
-        font-size: @font-size-small;
-        color: @text-color;
+        font-size: @itv-font-size-small;
+        color: @itv-text-color;
         margin-top: 5ipx;
         &:empty {
             display: none;
@@ -37,8 +37,8 @@
     .itv-cell-right {
         display: flex;
         align-items: center;
-        font-size: @font-size-small;
-        color: @text-color;
+        font-size: @itv-font-size-small;
+        color: @itv-text-color;
     }
     .itv-cell-icon {
         display: flex;
@@ -59,7 +59,7 @@
         background-position: bottom;
     }
     &:only-of-type {
-        background: linear-gradient(rgba(@dark-color, .5), rgba(@dark-color, .5)) bottom, linear-gradient(rgba(@dark-color, .5), rgba(@dark-color, .5)) top;
+        background: linear-gradient(rgba(@itv-dark-color, .5), rgba(@itv-dark-color, .5)) bottom, linear-gradient(rgba(@itv-dark-color, .5), rgba(@itv-dark-color, .5)) top;
         background-size: 100% 1px;
         background-repeat: no-repeat;
     }
