@@ -10,7 +10,6 @@ export default {
          * @param {Nubmer} value 速度倍数 
          */
         scrollTo(x,y,value=1) {
-     
             this.scrollToX =x;
             this.scrollToY = y;
             let dx = this.scrollX - x;
@@ -19,14 +18,40 @@ export default {
             this.sStepX = dx > 0? this.calcStep(dx):-this.calcStep(dx)
             this.sStepX*=value
             this.sStepY*=value
-           
             window.requestAnimationFrame(this.step);                 
+        },
+        //父元素回弹动画
+        bounceAnimate(speed) {
+            this.stepPy = speed;
+            window.requestAnimationFrame(this.bounceStep);     
 
         },
-       
-        //
-        animate(speed, value) {
+
+        bounceStep() {
+            if(this.isTouch) return;
+            if(this.stepPy===0) {
+                this.$emit('stopscroll',{
+                    y: this.nowSliver.domY
+                })
+                if(this.bouncePy===0) {
+                    this.isRefresh = false;
+                }
+                return
+            }
+            this.domPy += this.stepPy;
             
+            if(this.domPy>this.bouncePy) {
+                this.domPy = this.bouncePy;
+                this.stepPy = 0;
+            }
+            this.scrollerDom(0,this.domPy,1);
+            window.requestAnimationFrame(this.bounceStep);
+            
+        },
+
+       
+        //滚动动画，
+        animate(speed, value) {
             if(this.isTouch) {
                 this.stepY = 0;
                 return
@@ -36,11 +61,8 @@ export default {
                 this.$emit('stopscroll',{
                     y: this.nowSliver.domY
                 })
-            
                 return 
             }
-           
-        
             window.requestAnimationFrame(this.srollStep);
         },
       
@@ -93,11 +115,6 @@ export default {
 
            
             this.stepY *= this.percent;
-
-           
-           
-          
-            
             window.requestAnimationFrame(this.srollStep)
         }
     }

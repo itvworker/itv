@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~@/assets/css/plugin.less";
+// @import "~@/assets/css/plugin.less";
 .itv-bg {
     background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
@@ -104,14 +104,14 @@ export default {
     z-index: 100;
     width: 100%;
     .itv-item {
-        height: 44rpx;
+        height: 44ipx;
         display: flex;
         line-height: 0;
         justify-content: center;
         align-items: center;
         position: relative;
         background-color: #fff;
-        font-size: 16rpx;
+        font-size: 16ipx;
         color: #333;
         &::after {
             content: " ";
@@ -125,7 +125,7 @@ export default {
         }
     }
     .itv-cancel {
-        margin-top: 5rpx;
+        margin-top: 5ipx;
         color: #999;
         // &::after {
         //     display: none;

@@ -16,6 +16,7 @@ export default [
                 keepAlive: false,
                 title: '首页'
             },
+            
         },
         {
             path: '/component',

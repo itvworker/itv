@@ -1,8 +1,12 @@
-import { timers } from 'jquery';
 import getDirection from '../../../libs/touch'
 export default {
     methods: {
         touchstart(e) {
+            if(this.isRefresh) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+            }
             this.isTouch = true;
             this.startTime = new Date().getTime()
             this.touchDirection = 0; //重置touch滑动方向
@@ -33,7 +37,11 @@ export default {
 
         },
         touchmove(e) {
-            
+            if(this.isRefresh) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+            }
             
             let touches = e.touches;
             if (touches.length == null) {
@@ -94,70 +102,110 @@ export default {
 
                         //当向上滚动时，并且还未处最小收缩度
                         //是否收缩头部
-                        let isScrollHeader = (obj.type === 1 && this.headerDomHeight > this.headerMinHeight && this.nowSliver.domY === 0)
-                                            || (obj.type === 2 && this.nowSliver.domY === 0)
 
-                        if(isScrollHeader) {
-                            this.headerDomHeight += obj.angy;
-                            //当高度为最小高度时
-                            if(this.headerDomHeight <= this.headerMinHeight) {
-                                this.headerDomHeight = this.headerMinHeight;
-                            }
-                            //当高度为最大高度时
-                            if(this.headerDomHeight > this.headerMaxHeight) {
-                                this.headerDomHeight = this.headerMaxHeight;
-                            }
-                            this.headerDom(this.headerDomHeight);
-
-                           
-                        }
-                        
-                         //当向上滚动时，并且header还处最小收缩度
-                        //是否滚动子元素
-                         let isScorllSliver = (obj.type === 1 && this.headerDomHeight <= this.headerMinHeight)
-                                            || (obj.type ===1 && this.nowSliver.domY < 0)
-                                            || (obj.type === 2 && this.nowSliver.domY > 0)
-                                            || (obj.type ===2 && this.headerDomHeight >= this.headerMaxHeight)                    
-                        if(isScorllSliver) {
-                            let domY = this.nowSliver.domY - obj.angy;
-                            let status = 0
-                            if(!this.nowSliver.bounceTop && domY < 0) {
-                                this.nowSliver.domY = 0;
-                                status = 1
+                        if(obj.type===1) {
+                            //header处在最大值
+                            if(this.headerDomHeight === this.headerMaxHeight) {
+                                //如果子元素能反弹时，下拉子元素
+                                if(this.nowSliver.domY < 0 && this.nowSliver.bounceTop) {
+                                    this.nowSliver.domY -=  (obj.angy * 0.3);
+                                    //如果从反弹中回来时，回的时候大于0时，马上置0
+                                    if(this.nowSliver.domY>0) {
+                                        this.nowSliver.domY = 0;
+                                    }
+                                    this.nowSliver.setPosition()
+                                    return
+                                }
                                 
-                            }
+                                //当前slivers有开启回弹时，并且已经处于下拉状态时
+                                if(this.nowSliver.domY===0 && this.bounceTop && this.domPy < 0) {
+                                    this.domPy -=  obj.angy;
+                                    if(this.domPy>0) {
+                                        this.domPy = 0;
+                                    }
+                                    this.scrollerDom(0,this.domPy,1)
+                                    return
+                                }
 
-                            if(this.nowSliver.bounceTop && domY <= 0 && obj.type === 2) {
-                                this.nowSliver.domY =  this.nowSliver.domY - (obj.angy * 0.3);
-                                status = 2
+                               
+                                    this.headerDomHeight += obj.angy;
+                                    //当滑动时，小于最小时，马上置为最小值
+                                    if(this.headerDomHeight < this.headerMinHeight) {
+                                        this.headerDomHeight = this.headerMinHeight;
+                                    }
+                                    this.headerDom(this.headerDomHeight);
+                               
                             }
-
-                            if(domY < 0 && obj.type === 2 && this.nowSliver.domY > 0) {
-                                this.nowSliver.domY =  0
-                                status = 3
+                            //头部在过度之间 
+                            if(this.headerDomHeight < this.headerMaxHeight && this.headerDomHeight > this.headerMinHeight) {
+                                this.headerDomHeight += obj.angy;
+                                //当滑动时，小于最小时，马上置为最小值
+                                if(this.headerDomHeight < this.headerMinHeight) {
+                                    this.headerDomHeight = this.headerMinHeight;
+                                }
+                                this.headerDom(this.headerDomHeight);
+                                return
                             }
                             
-                          
-                            if(domY > 0 && obj.type ===1 && this.nowSliver.domY < 0) {
-                                this.nowSliver.domY =  0
-                                status = 4
+                            if(this.headerDomHeight===this.headerMinHeight) {
+                                this.nowSliver.domY -= obj.angy 
+                                this.nowSliver.setPosition();
                             }
 
-                            if(this.nowSliver.domY === 0 && domY >=0 && obj.type === 1  && this.headerDomHeight > this.headerMinHeight) {
-                                this.nowSliver.domY =  0
-                                status = 5
-                            }
-                            
-
-                            if (status===0) {
-                                this.nowSliver.domY = domY
-                            }
-                            
-
-                          
-                            
-                            this.nowSliver.setPosition();
+                            return
                         }
+
+                        if(obj.type===2) {
+                            //header处在最大值
+                            if(this.headerDomHeight === this.headerMaxHeight) {
+                                //如果子元素能反弹时，下拉子元素
+                                if(this.nowSliver.domY<=0 && this.nowSliver.bounceTop) {
+                                    this.nowSliver.domY =  this.nowSliver.domY - (obj.angy * 0.3);
+                                    this.nowSliver.setPosition();
+                                    return
+                                }
+
+                                
+                                if(this.nowSliver.domY === 0 && this.bounceTop) {
+                                    this.domPy -=  (obj.angy * 0.3);
+                                    this.scrollerDom(0,this.domPy,1)
+                                    return
+                                }
+                            }
+                            //当header处理最小值时
+                            if(this.headerDomHeight===this.headerMinHeight) {
+                                //子元素滚动大于0
+                                if(this.nowSliver.domY>0) {
+                                    this.nowSliver.domY -= obj.angy
+                                    //如果子元素将要小于0时，马上置0
+                                    if(this.nowSliver.domY<0) {
+                                        this.nowSliver.domY = 0;
+                                    }
+                                    this.nowSliver.setPosition(); 
+                                    return
+                                }
+                                //过渡，当处理0时， 放大header
+                                if(this.nowSliver.domY===0) {
+                                    this.headerDomHeight += obj.angy;
+                                    this.headerDom(this.headerDomHeight);
+                                    return
+                                }
+                            }
+
+                            if(this.headerDomHeight < this.headerMaxHeight && this.headerDomHeight > this.headerMinHeight) {
+                                this.headerDomHeight += obj.angy;
+                                //过渡，当大于最大时
+                                if(this.headerDomHeight>this.headerMaxHeight) {
+                                    this.headerDomHeight = this.headerMaxHeight;
+                                }
+                                this.headerDom(this.headerDomHeight);
+                            }
+
+                            return
+                        }
+
+                       
+                       
                         break;
                     case 'horizontal':
                         break
@@ -167,6 +215,11 @@ export default {
            
         },
         touchend(e) {    
+            if(this.isRefresh) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+            }
             let now = new Date().getTime()
             this.isTouch = false;
             // let dis = this.moveDirection==='progress'?this.moveX - this.startX:this.moveY - this.startY
@@ -176,10 +229,28 @@ export default {
             
             switch (this.moveDirection) {
                 case 'vertical':
-                    
-                    
-                    let speed = this.calcMoveSpeed();
-                    this.animate(speed)
+
+                    //slivers回弹，即父元素回弹
+                    if(this.bounceTop){
+                        if((!this.refreshLoad && this.domPy<0) ||(this.refreshLoad && this.domPy >-this.refreshHeight) ) {
+                            let speed = this.calcStep(this.domPy, 1.2);
+                            this.bouncePy = 0;
+                            this.bounceAnimate(speed)
+                            return
+                        }
+
+                        if(this.refreshLoad && this.domPy < -this.refreshHeight) {
+                            let dis = this.domPy - this.refreshHeight;
+                            this.bouncePy = -this.refreshHeight;
+                            let speed = this.calcStep(dis, 1.2);
+                            this.bounceAnimate(speed);
+                            this.isRefresh = true;
+                            this.$emit('refresh')
+                            return
+                        }
+                    }
+                    // let speed = this.calcMoveSpeed();
+                    // this.animate(speed)
                     
                    
                     break
