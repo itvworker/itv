@@ -30,11 +30,13 @@ import { slideHeight } from '../../libs/tool'
 import calcscroll from './mixins/calcscroll'
 import animate from './mixins/animate.scroller'
 import refreshBar from './refresh.vue'
+import sliverScroll from './mixins/animte.sliver'
 export default {
     mixins: [
        touch,
        calcscroll,
-       animate
+       animate,
+       sliverScroll 
        
     ],
     components: {

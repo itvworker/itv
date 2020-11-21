@@ -53,6 +53,12 @@ export default {
                 this.y = - this.maxY
             }
         },
+        calcMax() {
+            let dom = this.$refs.scroller;
+            let parent = dom.parentNode;
+            let ph = dom.clientHeight;
+            this.maxY = ph - parent.clientHeight || 0;
+        },
         cache() {
             this.vy = this.y;
         },

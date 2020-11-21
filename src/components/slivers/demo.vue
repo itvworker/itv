@@ -5,15 +5,15 @@
            
             <slivers 
             ref="slivers"
-            :bounceTop="true"
-            :headerMaxHeight="160"  
+            :bounceTop="false"
+            :headerMaxHeight="300"  
             :headerMinHeight="44" 
             :sliverIndex="sliverIndex"
             :refreshLoad="true"
             @refresh = refresh
             >
                 <div class="name"></div>
-                <sliver :bounceTop="false">
+                <sliver :bounceTop="true">
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
                         sliver1{{item.title}} {{index}}
                     </div>

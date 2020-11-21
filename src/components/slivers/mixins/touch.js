@@ -121,7 +121,7 @@ export default {
                                 if(this.nowSliver.domY===0 && this.bounceTop && this.domPy < 0) {
                                     this.domPy -=  obj.angy;
                                     if(this.domPy>0) {
-                                        this.domPy = 0;
+                                        this.domPy = 0;c
                                     }
                                     this.scrollerDom(0,this.domPy,1)
                                     return
@@ -226,13 +226,14 @@ export default {
             // let isfast = Math.abs(dis) > 20 && now - this.startTime < 200
             // let x = this.x
             // let y = this.y
-            
+           
             switch (this.moveDirection) {
                 case 'vertical':
 
                     //slivers回弹，即父元素回弹
                     if(this.bounceTop){
-                        if((!this.refreshLoad && this.domPy<0) ||(this.refreshLoad && this.domPy >-this.refreshHeight) ) {
+                       
+                        if((!this.refreshLoad && this.domPy<0) ||(this.refreshLoad && this.domPy >-this.refreshHeight&& this.domPy<0) ) {
                             let speed = this.calcStep(this.domPy, 1.2);
                             this.bouncePy = 0;
                             this.bounceAnimate(speed)
@@ -249,8 +250,10 @@ export default {
                             return
                         }
                     }
-                    // let speed = this.calcMoveSpeed();
-                    // this.animate(speed)
+                    this.nowSliver.calcMax()
+                    let speed = this.calcMoveSpeed();
+                    console.log('speed----------');
+                    this.animate(speed)
                     
                    
                     break
