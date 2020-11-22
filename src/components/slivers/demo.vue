@@ -5,21 +5,21 @@
            
             <slivers 
             ref="slivers"
-            :bounceTop="false"
-            :headerMaxHeight="300"  
+            :bounceTop="true"
+            :headerMaxHeight="200"  
             :headerMinHeight="44" 
             :sliverIndex="sliverIndex"
             :refreshLoad="true"
             @refresh = refresh
             >
                 <div class="name"></div>
-                <sliver :bounceTop="true">
+                <sliver :bounceTop="true" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
                         sliver1{{item.title}} {{index}}
                     </div>
                 </sliver>
 
-                <sliver >
+                <sliver :ref="'sliver'+1">
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
                         sliver2{{item.title}} {{index}}
                     </div>
@@ -62,6 +62,8 @@ export default {
         
            setTimeout(()=>{
                 this.$refs.slivers.refresh()
+                
+                this.$refs.sliver0.refresh()
            },2000)
        },
        pull(y) {

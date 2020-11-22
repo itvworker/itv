@@ -1,8 +1,9 @@
+import { timers } from 'jquery'
 import getDirection from '../../../libs/touch'
 export default {
     methods: {
         touchstart(e) {
-            if(this.isRefresh) {
+            if(this.isRefresh || this.nowSliver.isRefresh) {
                 e.preventDefault()
                 e.stopPropagation()
                 return
@@ -37,7 +38,7 @@ export default {
 
         },
         touchmove(e) {
-            if(this.isRefresh) {
+            if(this.isRefresh || this.nowSliver.isRefresh) {
                 e.preventDefault()
                 e.stopPropagation()
                 return
@@ -108,11 +109,12 @@ export default {
                             if(this.headerDomHeight === this.headerMaxHeight) {
                                 //如果子元素能反弹时，下拉子元素
                                 if(this.nowSliver.domY < 0 && this.nowSliver.bounceTop) {
-                                    this.nowSliver.domY -=  (obj.angy * 0.3);
+                                    this.nowSliver.domY -= obj.angy// (obj.angy * 0.3);
                                     //如果从反弹中回来时，回的时候大于0时，马上置0
                                     if(this.nowSliver.domY>0) {
                                         this.nowSliver.domY = 0;
                                     }
+                                    
                                     this.nowSliver.setPosition()
                                     return
                                 }
@@ -121,7 +123,7 @@ export default {
                                 if(this.nowSliver.domY===0 && this.bounceTop && this.domPy < 0) {
                                     this.domPy -=  obj.angy;
                                     if(this.domPy>0) {
-                                        this.domPy = 0;c
+                                        this.domPy = 0;
                                     }
                                     this.scrollerDom(0,this.domPy,1)
                                     return
@@ -148,7 +150,18 @@ export default {
                             }
                             
                             if(this.headerDomHeight===this.headerMinHeight) {
-                                this.nowSliver.domY -= obj.angy 
+                                let y =  this.nowSliver.domY - obj.angy
+                                if(y > this.nowSliver.maxY && !this.nowSliver.bounceBottom)  {
+                                    
+                                    y = this.nowSliver.maxY;
+                                }
+
+                                if(y > this.nowSliver.maxY && this.nowSliver.bounceBottom)  {
+                                    
+                                    y =  this.nowSliver.domY - obj.angy*0.3
+                                }
+                                this.nowSliver.domY = y
+                                
                                 this.nowSliver.setPosition();
                             }
 
@@ -215,7 +228,7 @@ export default {
            
         },
         touchend(e) {    
-            if(this.isRefresh) {
+            if(this.isRefresh || this.nowSliver.isRefresh) {
                 e.preventDefault()
                 e.stopPropagation()
                 return
@@ -233,13 +246,14 @@ export default {
                     //slivers回弹，即父元素回弹
                     if(this.bounceTop){
                        
+                        //回弹到0
                         if((!this.refreshLoad && this.domPy<0) ||(this.refreshLoad && this.domPy >-this.refreshHeight&& this.domPy<0) ) {
                             let speed = this.calcStep(this.domPy, 1.2);
                             this.bouncePy = 0;
                             this.bounceAnimate(speed)
                             return
                         }
-
+                        //回弹到下拉刷新的距离
                         if(this.refreshLoad && this.domPy < -this.refreshHeight) {
                             let dis = this.domPy - this.refreshHeight;
                             this.bouncePy = -this.refreshHeight;
@@ -250,9 +264,40 @@ export default {
                             return
                         }
                     }
+                    //子元素回弹    
+                    if(this.nowSliver.bounceTop) {
+                        //回弹到0
+                        if((!this.nowSliver.refreshLoad && this.nowSliver.domY<0) ||(this.nowSliver.refreshLoad && this.nowSliver.domY>-this.nowSliver.refreshHeight&& this.nowSliver.domY<0) ) {
+                      
+                            let speed = this.calcStep(this.nowSliver.domY, 1.2);
+                            this.nowSliver.bounceY = 0;
+                            this.nowSliver.bounceStatus = 0;
+                            this.nowSliver.bounceAnimate(speed)
+                            return
+                        }
+
+                        //回弹到下拉刷新的距离
+                        if(this.nowSliver.refreshLoad && this.nowSliver.domY < -this.nowSliver.refreshHeight) { 
+                            let dis = this.nowSliver.domY - this.nowSliver.refreshHeight;
+                            this.nowSliver.bounceY = -this.nowSliver.refreshHeight;
+                            let speed = this.calcStep(dis, 1.2);
+                            this.nowSliver.bounceAnimate(speed);
+                            this.nowSliver.isRefresh = true;
+                            this.nowSliver.bounceStatus = 0;
+                            this.$emit('refresh', 'sliver')
+                            return
+                        }
+                    }
+
+                    if(this.nowSliver.domY > this.nowSliver.maxY) {
+                        let dis = this.nowSliver.domY - this.nowSliver.maxY;
+                        let speed = this.calcStep(dis, 1.2);
+                        this.nowSliver.bounceY = this.nowSliver.maxY;
+                        this.nowSliver.bounceStatus = 1;
+                        this.nowSliver.bounceAnimate(-speed);
+                    }
                     this.nowSliver.calcMax()
                     let speed = this.calcMoveSpeed();
-                    console.log('speed----------');
                     this.animate(speed)
                     
                    

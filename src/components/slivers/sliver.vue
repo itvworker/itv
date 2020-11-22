@@ -1,14 +1,23 @@
 <template>
     <div class="itv-sliver" >
         <div class="itv-sliver-scroller" ref="scroller">
+            <div class="itv-sliver-refresh" ref="pull" v-if="refreshLoad">
+                <slot name="pull">
+                    <refresh-bar v-model="isRefresh" :top="domY" :triggerDir="refreshHeight"></refresh-bar>
+                </slot>
+             </div>
             <slot></slot>
         </div>
     </div>
 </template>
 <script>
 import render from '../../libs/render'
+import refreshBar from './refresh.vue'
 export default {
     name: 'sliver',
+    components: {
+        refreshBar
+    },
     props: {
         index: {
             type: Number,
@@ -19,15 +28,23 @@ export default {
             type: Boolean,
             default: false
         },
-        //是否开启下拉刷新
-        refreshStatus: {
+        //是开启触发下拉刷新
+        refreshLoad: {
             type: Boolean,
-            defualt: false
+            default: false,
         },
         //触发下拉刷新高度
         refreshHeight: {
             type: Number,
-            defualt: 60
+            default: 60
+        },
+         percent: {
+            type: Number,
+            default: 0.95
+        },
+        bounceBottom: {
+            type: Boolean,
+            default: false,
         }
     },
     data() {
@@ -38,7 +55,11 @@ export default {
             domY: 0, //滚动值，不会触发vue更新dom，直接更新dom，不经过vue
             isRefresh: false, //是否处于刷新状态
             scrollDom:'', //dom位置更新方法
-            
+            isTouch: false,
+            bounceY:0,
+            stepY:0,
+            stopStep: 0.5,
+            bounceStatus: 0 //0 下拉， 1 上拉
         }
     },
     methods:{
@@ -48,11 +69,18 @@ export default {
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
             this.maxY = ph - parent.clientHeight || 0;
+
+            if(this.domY < 0) {
+                let speed = this.calcStep(this.domY, 1.2);
+                this.bounceY = 0;
+                this.bounceAnimate(speed);
+            }
             if(this.y>=this.maxY) {
                 this.scrollDom(0, this.maxY, 1) 
                 this.y = - this.maxY
             }
         },
+
         calcMax() {
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
@@ -65,8 +93,39 @@ export default {
         setPosition() {
             this.scrollDom(0, this.domY, 1)
         },
+    
+        //父元素回弹动画
+        bounceAnimate(speed) {
+            this.stepY = speed;
+            window.requestAnimationFrame(this.bounceStep);     
+        },
 
+        bounceStep() {
+            if(this.isTouch) return;
+            if(this.stepY===0) {
+                this.$emit('stopscroll',{
+                    y: this.domY
+                })
+                if(this.bounceY===0) {
+                    this.isRefresh = false;
+                }
+                return
+            }
+            this.domY += this.stepY;
+            
+            if(this.domY>this.bounceY && this.bounceStatus === 0) {
+                this.domY = this.bounceY;
+                this.stepY = 0;
+            }
 
+            if(this.domY<this.bounceY && this.bounceStatus === 1) {
+                this.domY = this.bounceY;
+                this.stepY = 0;
+            }
+            this.scrollDom(0,this.domY,1);
+            window.requestAnimationFrame(this.bounceStep);
+            
+        },
         /**
          * 计滚动到一定距离的stepX,stepY的开始步数
          * @param {Number} distance 
@@ -86,48 +145,8 @@ export default {
             step = step/this.percent
             return step*num
         },
-        //计算touch结束后的滑动速度
-        calcMoveSpeed() {
-            let touchList = this.touchMoveList;
-            this.touchMoveList = [];
-            let num = touchList.length
-            if(num > 20) {
-                touchList = touchList.slice(num-20, num)
-            }
-            let last = touchList.length-1;
-            let first = 0;
-            for(let i = last; i >= 0; i--) {
-                if(touchList[last].time-touchList[i].time > this.speed) {
-                    first = i+1;
-                    break
-                }
-                first = i;
-            }
-            let x = touchList[last].x-touchList[first].x 
-            let y = touchList[last].y-touchList[first].y
-
-            if(Math.abs(y) < 10) {
-                y = 0
-            }
-
-            if(Math.abs(x) < 0) {
-                x = 0
-            }
-
-            
-            if(this.moveDirection === 'vertical') {
-                x = 0;
-            }
-
-            if(this.moveDirection === 'horizontal') {
-                y = 0;
-            }
-            
-            return {
-                x: x,
-                y: y
-            }
-        },
+    
+        
         //滚动到指定位置
         /**
          * 
@@ -156,7 +175,7 @@ export default {
             this.stepY = speed.y;
             if(this.stepY===0) {
                 this.$emit('stopscroll',{
-                    y: this.nowSliver.domY
+                    y: this.domY
                 })
             
                 return 
@@ -230,6 +249,14 @@ export default {
     overflow: hidden;
     .itv-sliver-scroller{
         transition: all 0ms ease 0s;
+        position: relative;
     }
+    .itv-sliver-refresh{
+            transform: translateY(-100%);
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: -1;
+        }
 }
 </style>
