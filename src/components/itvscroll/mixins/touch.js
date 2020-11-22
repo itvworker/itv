@@ -1,5 +1,4 @@
 import getDirection from '../../../libs/touch'
-import { type, timers } from 'jquery';
 export default {
     methods: {
         touchstart(e, self) {
@@ -186,7 +185,7 @@ export default {
             this.isTouch = false;
             this.touchMoveList[this.touchMoveList.length-1].time = new Date().getTime()
 
-           
+  
             if(this.direction === 'horizontal') {
                 if(this.pattern === 'horizontal') {
                     this.scrollY = 0;

@@ -52,7 +52,6 @@ export default {
                     this.nowSliver.domY-= this.stepY;
                     if(this.nowSliver.domY > this.nowSliver.maxY) {
                         this.nowSliver.domY = this.nowSliver.maxY;
-                        console.log('---------------');
                         this.stepY =0;
                     }
                     this.nowSliver.setPosition()

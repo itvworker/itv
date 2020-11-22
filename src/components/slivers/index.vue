@@ -12,11 +12,11 @@
             </slot>
         </div>
         
-        <div class="itv-sliver-top" ref="header" :style="{height: headerHeight+'px'}">
+        <div class="itv-sliver-top" @touchstart="touchType='header'"   ref="header" :style="{height: headerHeight+'px'}">
           
             <slot name="header"></slot>
         </div>
-        <div class="itv-slivers-group" ref="group">
+        <div class="itv-slivers-group" @touchstart="touchType='group'" ref="group">
             <slot></slot>
         </div>
     </div>    
@@ -118,7 +118,8 @@ export default {
             touchDirection: 0,
             childrenSlivers:[],
             stopStep: 0.5, //当sStepX,sStepY绝对值小于0.5停止滚动
-            nowSliver:'' //当前所处的子元素
+            nowSliver:'', //当前所处的子元素
+            touchType: ''
         };
         
     },

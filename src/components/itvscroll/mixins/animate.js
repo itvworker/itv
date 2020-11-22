@@ -37,16 +37,15 @@ export default {
             this.stepX = speed.x;
             this.stepY = speed.y;
           
-            if(this.isVertcialMove) {
-               
-                this.stepX = 0;
-            }
-         
-            if(Math.abs(this.stepX) <= this.stopStep) {
+          
+           console.log(this.cacheDirection, this.pattern);
+            if(Math.abs(this.stepX)<5 || (this.cacheDirection === 'vertical'  && this.pattern ==='vertical')) {
+             
                 this.stepX = 0
             }
-
-            if(Math.abs(this.stepY) <= this.stopStep) {
+      
+            if(Math.abs(this.stepY)<5 || (this.cacheDirection === 'horizontal'&& this.pattern ==="vertical")) {
+             
                 this.stepY = 0
             }
 

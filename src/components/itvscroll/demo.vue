@@ -15,7 +15,7 @@
             :topBounce="true" 
             :bottomBounce="true" 
             :pullDown="true" 
-            pattern="auto" 
+            pattern="vertical" 
             :showScrollBar="true"
             @scroll="scroll" 
             @stopscroll="stopscroll"
@@ -81,10 +81,10 @@ export default {
             }
         },
         scroll(obj) {
-            console.log(`scroll:{ x: ${obj.x}, y: ${obj.y} }`);
+            // console.log(`scroll:{ x: ${obj.x}, y: ${obj.y} }`);
         },
         stopscroll(obj) {
-            console.log(`stopscroll:{ x: ${obj.x}, y: ${obj.y} }`);
+            // console.log(`stopscroll:{ x: ${obj.x}, y: ${obj.y} }`);
             
         },
         refersh() {

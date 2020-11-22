@@ -1,4 +1,3 @@
-import { timers } from 'jquery'
 import getDirection from '../../../libs/touch'
 export default {
     methods: {
