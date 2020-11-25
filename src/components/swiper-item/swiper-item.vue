@@ -12,3 +12,6 @@ export default {
     }
 }
 </script>
+<style lang="less" scoped>
+@import './swiper-item.less';
+</style>

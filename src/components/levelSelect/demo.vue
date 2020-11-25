@@ -47,44 +47,30 @@
             </section>
 
         </itv-main>
-        <itv-dialog
-            v-model="show"
-            :hideOnClick="true"
-        >这是个什么鬼</itv-dialog>
-        <div
-            class="page-content"
-            ref="page"
-            @click="page"
-        >
-            我不想看见你
-        </div>
-
-        
+        <level-select :selected="selected" :items="items" v-model="show"></level-select>
     </itv-container>
 
 </template>
 
 <script>
-
-
+import levelSelect from './index.vue'
+import area from './area.js'
 export default {
+    components: {
+        levelSelect
+    },
     data() {
         return {
-            show: false
+            show: false,
+            items: area,
+            selected:[420000,421100,421123]
         };
     },
     methods: {
         open() {
-            this.$itv.actionsheet.show({
-                items:[
-                    {
-                        text:'选项一'
-                    },
-                    {
-                        text:'选项二'
-                    }
-                ]
-            })
+            
+            this.show = true;
+            
         },
         plugin(value) {
             this.$itv.popup.confirm({
@@ -94,10 +80,15 @@ export default {
             });
         },
         page() {
-            console.log("page------");
-        }
+            
+        },
+        manageData() {
+          
+        },
     },
-    mounted() {}
+    mounted() {
+      
+    }
 };
 </script>
 

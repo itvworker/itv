@@ -15,11 +15,36 @@
             min-width: 100%;
             .pull-top{
                 position: absolute;
-                height: 50ipx;
-                background-color: #ddd;
+              
                 width: 100%;
                 top: 0;
                 transform: translateY(-100%);
+                .spinner-holder{
+                    height: 60pt;
+                    text-align: center;
+                    -webkit-font-smoothing: antialiased;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding-top: 10pt;
+                    .arrow {
+                        width: 20pt;
+                        height: 20pt;
+                        margin: 8pt auto 0;
+                         transition: transform .2s linear;
+                        &.active{
+                            transform: rotate(-180deg);
+                        }
+                    }
+                    .spinner{
+                        width: 26pt;
+                        height: 26pt;
+                    }
+                    .text{
+                        line-height: 26pt;
+                    }
+                }
             }
         } 
         
