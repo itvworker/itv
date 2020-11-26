@@ -240,6 +240,17 @@ export default [
                     title: 'text2img',
                 }
             },
+            {
+                path: '/demo/level-select',
+                name: 'itv_level-select',
+                component: () => import('@/components/levelSelect/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'level-select',
+                }
+            },
+
+            
             
 
         ]

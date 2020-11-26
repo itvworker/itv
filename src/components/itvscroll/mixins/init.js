@@ -1,5 +1,4 @@
 import render from '../../../libs/render'
-import { timers } from 'jquery';
 export default {
     mounted() {
         this.scrollRender =  render(this.$refs.scroller);
@@ -19,9 +18,6 @@ export default {
             if(this.pattern === 'vertical' || this.pattern==='freedom' || this.pattern==='auto') {
                 this.scrollBarYRender = render(this.$refs.barY);
             }
-            
-            
-            
         }
         this.calcMax()
     },

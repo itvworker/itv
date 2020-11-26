@@ -42,9 +42,100 @@
                     {{word}}
                </div>
             </itv-scroll>
-            <itv-scroll v-if="tabIndex===2" ref="scrolle5" pattern="vercial" :key="2"  :showScrollBar="false" >
-                
-            </itv-scroll>
+             <swiper v-if="tabIndex===2"  :loop="false" v-model="columnIndex" class="itv-swpier-height">
+                <swiper-item class="swiper-item">
+                     <itv-scroll 
+                    class="swpier-scroller"
+                    :key="4" ref="scrolle2" 
+                    :topBounce="true" 
+                    :bottomBounce="true" 
+                    :pullDown="true" 
+                    pattern="vertical" 
+                    :showScrollBar="true"
+                    @scroll="scroll" 
+                    @stopscroll="stopscroll"
+                    @refersh="refersh">
+                        
+                    <div class="item-list" v-for="(item, index) in list" :key="index">
+                        {{item.name}}one{{index}}
+                    </div>
+                    <!-- <div class="itv-case-box">
+                            <div class="item-list-section" v-for="(item, index) in list" :key="index">
+                                {{item.name}}{{index}}
+                            </div>
+                        </div> -->
+                    </itv-scroll>
+                </swiper-item>
+                <swiper-item>
+                    <itv-scroll 
+                    class="swpier-scroller"
+                    :key="7" ref="scrolle2" 
+                    :topBounce="true" 
+                    :bottomBounce="true" 
+                    :pullDown="true" 
+                    pattern="vertical" 
+                    :showScrollBar="true"
+                    @scroll="scroll" 
+                    @stopscroll="stopscroll"
+                    @refersh="refersh">
+                        
+                    <div class="item-list" v-for="(item, index) in list" :key="index">
+                        {{item.name}}one{{index}}
+                    </div>
+                    <!-- <div class="itv-case-box">
+                            <div class="item-list-section" v-for="(item, index) in list" :key="index">
+                                {{item.name}}{{index}}
+                            </div>
+                        </div> -->
+                    </itv-scroll>
+                </swiper-item>
+                <swiper-item>
+                    <itv-scroll 
+                    class="swpier-scroller"
+                    :key="5" ref="scrolle2" 
+                    :topBounce="true" 
+                    :bottomBounce="true" 
+                    :pullDown="true" 
+                    pattern="vertical" 
+                    :showScrollBar="true"
+                    @scroll="scroll" 
+                    @stopscroll="stopscroll"
+                    @refersh="refersh">
+                        
+                    <div class="item-list" v-for="(item, index) in list" :key="index">
+                        {{item.name}}one{{index}}
+                    </div>
+                    <!-- <div class="itv-case-box">
+                            <div class="item-list-section" v-for="(item, index) in list" :key="index">
+                                {{item.name}}{{index}}
+                            </div>
+                        </div> -->
+                    </itv-scroll>
+                </swiper-item>
+                <swiper-item>
+                    <itv-scroll 
+                    class="swpier-scroller"
+                    :key="6" ref="scrolle2" 
+                    :topBounce="true" 
+                    :bottomBounce="true" 
+                    :pullDown="true" 
+                    pattern="vertical" 
+                    :showScrollBar="true"
+                    @scroll="scroll" 
+                    @stopscroll="stopscroll"
+                    @refersh="refersh">
+                        
+                    <div class="item-list" v-for="(item, index) in list" :key="index">
+                        {{item.name}}one{{index}}
+                    </div>
+                    <!-- <div class="itv-case-box">
+                            <div class="item-list-section" v-for="(item, index) in list" :key="index">
+                                {{item.name}}{{index}}
+                            </div>
+                        </div> -->
+                    </itv-scroll>
+                </swiper-item>
+            </swiper>
         </itv-main>
         
 
@@ -55,15 +146,19 @@
 import itvScroll from './itvscroll';
 import "./itvscroll.less";
 import data from './data'
+import swiper from '../swiper/swiper.vue'
+import swiperItem from '../swiper-item/swiper-item.vue'
 export default {
     mixins:[data],
     components: {
-        itvScroll
+        itvScroll,
+        swiper,
+        swiperItem
     },
     data() {
         return {
           list:[],
-
+          columnIndex: 0  
         }
     },
     computed: {
@@ -116,6 +211,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .item {
     height: 60ipx;
     border-bottom: #ddd solid 1px;
@@ -190,7 +286,13 @@ export default {
     line-height: 32ipx;
     color: #666;
 }
-
+.itv-swpier-height {
+    height:100%;
+   
+}
+.swpier-scroller{
+    height: 100%;
+}
 </style>
 
 

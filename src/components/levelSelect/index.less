@@ -1,0 +1,101 @@
+.level-select-box{
+    height: 270ipx;
+    background-color: #fff;
+    width: 100%;
+    .level-select-title{
+        height: 50ipx;
+        border-bottom: @border-color-base @border-style-base @border-width-base;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        font-size: @font-size-large;
+        color: @color-text-base;
+        .btn-cancel {
+            position: absolute;
+            left: 0;
+            height: 50ipx;
+            display: flex;
+            align-items: center;
+            padding-left: 15ipx;
+            padding-right: 16ipx;
+            color: @color-text-sub;
+        }
+        .btn-confirm {
+            position: absolute;
+            right: 0;
+            height: 50ipx;
+            display: flex;
+            align-items: center;
+            padding-left: 15ipx;
+            padding-right: 16ipx;
+            color: @primary-color;
+        }
+    }
+    .level-select-bar{
+        height: 40ipx;
+        display: flex;
+        padding-left: 16ipx;
+        padding-right: 16ipx;
+        width: fit-content;
+        white-space: nowrap;
+        min-width: 100%;
+        box-sizing: border-box;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        .select {
+            flex: 0 0 auto;
+            padding: 0 10ipx;
+            height: 40ipx;
+            display: flex;
+            align-self: baseline;
+            align-items: center;
+            font-size: @font-size-base;
+            position: relative;
+            &.placeholder {
+                color: @color-text-light;
+            }
+            &.active {
+                color: @primary-color;
+               
+                &::after {
+                    content: ' ';
+                    border-bottom: @primary-color solid 3ipx ;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    
+                }
+            }
+           
+        }
+    }
+
+    .case-box{
+        height: 40ipx;
+    }
+
+    .level-item{
+        height: 40ipx;
+        display: flex;
+        align-items: center;
+        padding-left: 20ipx;
+        font-size: @font-size-base;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: @color-text-base;
+        &.active {
+            color: @primary-color;
+            background: @primar-color-bg;
+        }
+    }
+    .body-scroll{
+        height: 180ipx;
+    }
+    .height-opt {
+        opacity: 0;
+        position: absolute;
+        top: -1000px;
+    }
+}

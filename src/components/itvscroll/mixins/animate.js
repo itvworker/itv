@@ -1,5 +1,3 @@
-import { timers } from "jquery";
-
 export default {
     methods: {
         //滚动到指定位置
@@ -20,9 +18,33 @@ export default {
             this.stepX*=value
             this.stepY*=value
            
-           
+            
             window.requestAnimationFrame(this.step);                 
 
+        },
+        /**
+         * 马上滚动到位置
+         * @param {*} x 
+         * @param {*} y 
+         */
+        scrollToNow(x, y) {
+            if(x> this.maxX) {
+                x = this.maxX;
+            }
+            if(x < 0) {
+                x = 0
+            }
+
+            if(y> this.maxY) {
+                y = this.maxY;
+            }
+            if(y < 0) {
+                y = 0
+            }
+
+            this.scrollX =x;
+            this.scrollY = y;
+            this.scrollRender(x, y, 1)
         },
         /**
          * 缓存位置，需要结合keeplive组件
@@ -38,14 +60,13 @@ export default {
             this.stepY = speed.y;
           
           
-           console.log(this.cacheDirection, this.pattern);
-            if(Math.abs(this.stepX)<5 || (this.cacheDirection === 'vertical'  && this.pattern ==='vertical')) {
+            if(Math.abs(this.stepX)<5 || (this.cacheDirection === 'vertical'  && this.pattern ==='horizontal')) {
              
                 this.stepX = 0
             }
       
             if(Math.abs(this.stepY)<5 || (this.cacheDirection === 'horizontal'&& this.pattern ==="vertical")) {
-             
+                
                 this.stepY = 0
             }
 

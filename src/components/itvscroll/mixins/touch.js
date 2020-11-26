@@ -184,17 +184,13 @@ export default {
             this.isMove = false;
             this.isTouch = false;
             this.touchMoveList[this.touchMoveList.length-1].time = new Date().getTime()
-
-  
             if(this.direction === 'horizontal') {
                 if(this.pattern === 'horizontal') {
                     this.scrollY = 0;
                 }
 
                 if(this.scrollX < 0 ) {
-                    
                     this.scrollTo(0, this.scrollY,1.5)
-                   
                     return
                 } 
 
@@ -204,11 +200,9 @@ export default {
                 } 
             }
             if(this.direction === 'vertical') { 
-          
                 if(this.pattern === 'vertical') {
                     this.scrollX = 0;
                 }
-
                 if(this.scrollY < 0 ) {
                     if(this.pullDown) {
                         //触发下拉刷新事件
@@ -231,10 +225,7 @@ export default {
             }
 
             let speed = this.calcMoveSpeed();
-            this.animate(speed);
-            
-        
-           
+            this.animate(speed);          
         }
     }
 }

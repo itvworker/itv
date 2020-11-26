@@ -88,7 +88,8 @@ export default {
                 this.scrollY =  this.maxY;
                 this.y =  this.maxY
             }
-            
+            this.scrollRender(this.scrollX , this.scrollY, 1);
+       
             //计算下拉加载触发点
             if(this.pullDown) {
                this.pullDownPoint =  -this.$refs.pull.clientHeight
