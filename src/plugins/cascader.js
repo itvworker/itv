@@ -18,10 +18,30 @@ const plugin = {
 
         const cascader = {
             show (options = {}) {
+                options.isLast = false;
+                $vm.currentSelect = [];
                 merge($vm, options) 
+                console.log($vm);
                 $vm.value = true;
+                $vm.init();
+                $vm.$off('hide')
+                $vm.$off('confirm');
+                
+             
+
+                $vm.$on('confirm', (msg) => {
+                    if(options.confirm) {
+                        options.confirm(msg)
+                    }
+                    $vm.value = false;
+                })
+                $vm.$on('input', (msg) => {
+                    $vm.value = msg;
+                })
+
+                
             },
-           
+            
             hide () {
                 $vm.value = false
             },

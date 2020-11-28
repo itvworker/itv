@@ -31,7 +31,7 @@
 import ItvDialog from '../dialog/dialog';
 import ItvScroll from '../itvscroll/'
 export default {
-    name: "itv-level-select",
+    name: "itv-cascader",
     components: {
         ItvDialog,
         ItvScroll
@@ -126,7 +126,6 @@ export default {
             this.$emit('input', n)
         },
         selected(n,o) {
-            debugger
             this.currentSelect =  JSON.parse(JSON.stringify(n))
         },
         currentHeader(n,o) {
@@ -235,7 +234,6 @@ export default {
             })
         },
         calcNowItems(isInit) {
-         
             if(!this.currentSelect) return []
             let data = [];
             if(this.currentSelect.length<=0) {

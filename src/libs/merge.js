@@ -4,7 +4,11 @@ export default function ($vm, options) {
     const defaults = {}
     for (let i in $vm.$options.props) {
         if (i !== 'value') {
-            defaults[i] = $vm.$options.props[i].default
+            if( (typeof $vm.$options.props[i].default).toString() === 'function') {
+                defaults[i] = $vm.$options.props[i].default()
+            }else{
+                defaults[i] = $vm.$options.props[i].default
+            }
         }
     }
     const _options = objectAssign({}, defaults, options)

@@ -15,8 +15,8 @@
                     @click=""
                     :showIcon="true"
                     title="我是标题"
-                    subTitle="我是副标题"
-                    desc="展示默认ICON"
+               
+                    desc="请选择地址"
                 >
                 </itv-cell>
                 <itv-cell
@@ -74,13 +74,16 @@ export default {
     },
     methods: {
         open() {
-            
             this.show = true;
             
         },
         plugin(value) {
             this.$itv.cascader.show({
-                items: this.items
+                items: this.items,
+                selected:this.selected,
+                confirm:(res)=>{
+                    
+                }
             });
         },
         page() {
