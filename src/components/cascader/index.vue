@@ -126,6 +126,7 @@ export default {
             this.$emit('input', n)
         },
         selected(n,o) {
+            debugger
             this.currentSelect =  JSON.parse(JSON.stringify(n))
         },
         currentHeader(n,o) {

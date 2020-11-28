@@ -6,11 +6,13 @@
             <section>
                 <itv-cell
                     @click="open"
-                    title="我是标题"
+                    :showIcon="true"
+                    title="地址"
                     desc="描述文字"
                 >
                 </itv-cell>
                 <itv-cell
+                    @click=""
                     :showIcon="true"
                     title="我是标题"
                     subTitle="我是副标题"
@@ -21,7 +23,7 @@
                     :isLink="true"
                     @click="plugin('html')"
                     :showIcon="true"
-                    title="带链接"
+                    title="插件方式调用"
                 >
                 </itv-cell>
             </section>
@@ -47,17 +49,21 @@
             </section>
 
         </itv-main>
-        <level-select :selected="selected" :items="items" v-model="show"></level-select>
+        <cascader v-model="show"
+         :selected="selected"
+         :items="items"
+
+            ></cascader>
     </itv-container>
 
 </template>
 
 <script>
-import levelSelect from './index.vue'
+import Cascader from './index.vue'
 import area from './area.js'
 export default {
     components: {
-        levelSelect
+        Cascader
     },
     data() {
         return {
@@ -73,10 +79,8 @@ export default {
             
         },
         plugin(value) {
-            this.$itv.popup.confirm({
-                html: "weg",
-                hideOnClick: true,
-                text: ""
+            this.$itv.cascader.show({
+                items: this.items
             });
         },
         page() {

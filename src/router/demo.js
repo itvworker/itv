@@ -241,12 +241,12 @@ export default [
                 }
             },
             {
-                path: '/demo/level-select',
-                name: 'itv_level-select',
-                component: () => import('@/components/levelSelect/demo.vue'),
+                path: '/demo/cascader',
+                name: 'itv_cascader',
+                component: () => import('@/components/cascader/demo.vue'),
                 meta: {
                     keepAlive: false,
-                    title: 'level-select',
+                    title: 'Cascader',
                 }
             },
 

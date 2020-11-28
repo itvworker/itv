@@ -9,7 +9,11 @@ import PluginPopup from './popup/plugin.js'
 import PluginDatepicker from './datepicker/plugin.js'
 import PluginCalendarTime from './calendar-time/plugin.js'
 import PluginActionsheet from './actionsheet/index.js'
+import PluginCascader from '../plugins/cascader.js'
+
+
 // import './cell/cell.less'
+Vue.use(PluginCascader)
 Vue.use(PluginActionsheet)
 Vue.use(PluginDatepicker);
 Vue.use(PluginCalendarTime)
