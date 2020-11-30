@@ -2,20 +2,20 @@
 @padding-top: 10ipx;
 
 
-@bg-color-light:#fff;
-@color-text-base:#333;
-@font-size-base: 15ipx;
-@primary-color:#1d78f4;
-@border-color-base:#EDF0F2;
+@itv-bg-color-light:#fff;
+@itv-color-text-base:#333;
+@itv-font-size-base: 15ipx;
+@itv-primary-color:#1d78f4;
+@itv-border-color-base:#EDF0F2;
 .calendar-week-text {
     display: flex;
-    border-top: @border-color-base solid 1px;
-    border-bottom: @border-color-base solid 1px;
+    border-top: @itv-border-color-base solid 1px;
+    border-bottom: @itv-border-color-base solid 1px;
     box-sizing: border-box;
     height: 28ipx;
     font-family: PingFangSC-Regular, PingFang SC,Arial, Helvetica, sans-serif;
     align-items: center;
-    color: @color-text-base;
+    color: @itv-color-text-base;
     .week-text-item {
         flex: 1;
         text-align: center;
@@ -27,14 +27,14 @@
     width: 100%;
     overflow-x: hidden;
     box-sizing: border-box;
-    background-color: @bg-color-light;
+    background-color: @itv-bg-color-light;
     box-shadow: 0px 2ipx 8ipx 0px rgba(0, 0, 0, 0.05);
     flex: 0 0 auto;
 
 }
 .calendar-title {
     text-align: center;
-    font-size: @font-size-base;
+    font-size: @itv-font-size-base;
     height: 36ipx;
     line-height: 36ipx;
 }
@@ -46,9 +46,9 @@
     left: 0;
     right: 0;
     top: 0;
-    background-color: @bg-color-light;
+    background-color: @itv-bg-color-light;
     .week-item {
-        background-color: @bg-color-light;
+        background-color: @itv-bg-color-light;
         padding-top: @padding-top;
         .day-item {
            
@@ -103,7 +103,7 @@
             top: 140ipx;
             z-index: 1;
             opacity: 0.07;
-            color: @primary-color;
+            color: @itv-primary-color;
             font-family: PingFangSC-Light, PingFang SC, Arial, Helvetica, sans-serif;
         }
         .year-tips{
@@ -114,7 +114,7 @@
             top: 40ipx;
             z-index: 1;
             opacity: 0.07;
-            color: @primary-color;
+            color: @itv-primary-color;
             font-family: PingFangSC-Light, PingFang SC, Arial, Helvetica, sans-serif;
         }
         .day-item {
@@ -128,7 +128,7 @@
             box-sizing: border-box;
            
             justify-content: center;
-            font-size: @font-size-base;
+            font-size: @itv-font-size-base;
             position: relative;
             z-index: 2;
             color: #333;
@@ -152,7 +152,7 @@
             &.day-active {
                 .active {
                     color: #fff;
-                    background-color: @primary-color;
+                    background-color: @itv-primary-color;
                 }
                 .tips-word {
                     background-color: #fff !important;
@@ -254,7 +254,7 @@
     .icon-xiangshang{
         transform: rotate(180deg);
         font-size: 40pt;
-        color:@dark-color ;
+        color:@itv-dark-color ;
     }
     .rotate180 {
         

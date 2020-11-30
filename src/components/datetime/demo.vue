@@ -118,8 +118,8 @@ export default {
         top: 104ipx;
         width: 100%;
         height: 44ipx;
-        border-top: 1ipx solid @dark-color;
-        border-bottom: 1ipx solid @dark-color;
+        border-top: 1ipx solid @itv-dark-color;
+        border-bottom: 1ipx solid @itv-dark-color;
         z-index: 3; 
         box-sizing: border-box;
     }
@@ -140,7 +140,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 44ipx;
-        color: @title-color;
+        color: @itv-title-color;
         font-size: 14ipx;
         height: 44ipx;
         text-align: center;
@@ -157,7 +157,7 @@ export default {
             position: absolute;
             top: 0;
             width: 100%;
-            color: @text-color;
+            color: @itv-text-color;
             height: 44ipx;
         }
         .itv-picker-roller-item-hidden {

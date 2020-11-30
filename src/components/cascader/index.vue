@@ -4,13 +4,17 @@
             <div class="level-select-title">
                 <div class="btn-cancel"  @click="cancel">{{cancelText}}</div>    
                 {{titleText}}
-                <div class="btn-confirm" @click="confirm">{{confirmText}}</div>
+                <div class="btn-confirm" @click="confirmBtn">{{confirmText}}</div>
             </div>
             <itv-scroll ref="header"  :percent="0.8" pattern="horizontal" class="case-box">
                 <div class="level-select-bar">
-                    <div class="select" :class="{'active': currentHeader===index||(isLast && index === currentItems.length-1 && currentHeader===null)}" v-for="(item,index) in currentItems" @click="changeNow(index)">
-                        {{item[textKey]}}
-                    </div>
+                    <template v-for="(item,index) in currentItems">
+                         <div class="select" :class="{'active': currentHeader===index||(isLast && index === currentItems.length-1 && currentHeader===null)}"  @click="changeNow(index)">
+                            {{item[textKey]}}
+                        </div>
+                        <div class="arrow-icon" v-if="!(index===currentItems.length-1 && isLast)"></div>
+                    </template>
+                   
                    <div class="select placeholder" v-if="!isLast" :class="{'active': currentHeader===null}" @click="changeNow(null)">{{placehoder}}</div>
                 </div>
             </itv-scroll>
@@ -24,7 +28,6 @@
             </itv-scroll>
         </div>
     </itv-dialog>
-   
 </template>
 
 <script>
@@ -126,7 +129,8 @@ export default {
             this.$emit('input', n)
         },
         selected(n,o) {
-            this.currentSelect =  JSON.parse(JSON.stringify(n))
+            this.currentSelect =  JSON.parse(JSON.stringify(n));
+        
         },
         currentHeader(n,o) {
                 
@@ -152,7 +156,7 @@ export default {
             this.currentItems = [];
             this.currentIndex = [];
             this.currentHeader = null;
-            
+           
             this.$nextTick(()=>{
                 this.calcHeight()
             })
@@ -234,8 +238,11 @@ export default {
             })
         },
         calcNowItems(isInit) {
+            
             if(!this.currentSelect) return []
             let data = [];
+
+      
             if(this.currentSelect.length<=0) {
                 this.items.forEach(element => {
                     if(element[this.pidKey] === 0 || !element[this.pidKey]) {
@@ -248,7 +255,7 @@ export default {
                   })
                  return
             }
-
+          
             if(this.currentSelect.length > 0 && this.currentHeader === null) {
                 let id = this.currentSelect[this.currentSelect.length-1];
                 
@@ -306,7 +313,7 @@ export default {
             this.$emit("hide");
             this.$emit("cancel");
         },
-        confirm(item) {
+        confirmBtn() {
             this.$emit('input', false)
             this.$emit("hide");
             this.$emit("confirm", this.currentItems);

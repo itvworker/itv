@@ -113,7 +113,7 @@ export default {
         transform: scaleY(0.5);
     }
     .itv-popup-confirm {
-        color: @primary-color;
+        color: @itv-primary-color;
     }
     .itv-popup-cancel {
         color: #aaa;

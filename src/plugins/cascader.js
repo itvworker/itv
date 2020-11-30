@@ -21,7 +21,8 @@ const plugin = {
                 options.isLast = false;
                 $vm.currentSelect = [];
                 merge($vm, options) 
-                console.log($vm);
+                $vm.currentSelect = $vm.selected;
+    
                 $vm.value = true;
                 $vm.init();
                 $vm.$off('hide')

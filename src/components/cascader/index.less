@@ -4,14 +4,14 @@
     width: 100%;
     .level-select-title{
         height: 50ipx;
-        border-bottom: @border-color-base @border-style-base @border-width-base;
+        border-bottom: @itv-border-color-base @itv-border-style-base @itv-border-width-base;
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        font-size: @font-size-large;
-        color: @color-text-base;
+        font-size: @itv-font-size-large;
+        color: @itv-color-text-base;
         .btn-cancel {
             position: absolute;
             left: 0;
@@ -20,7 +20,7 @@
             align-items: center;
             padding-left: 15ipx;
             padding-right: 16ipx;
-            color: @color-text-sub;
+            color: @itv-color-text-sub;
         }
         .btn-confirm {
             position: absolute;
@@ -30,7 +30,7 @@
             align-items: center;
             padding-left: 15ipx;
             padding-right: 16ipx;
-            color: @primary-color;
+            color: @itv-primary-color;
         }
     }
     .level-select-bar{
@@ -43,24 +43,24 @@
         min-width: 100%;
         box-sizing: border-box;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        align-items: center;
         .select {
             flex: 0 0 auto;
-            padding: 0 10ipx;
             height: 40ipx;
             display: flex;
             align-self: baseline;
             align-items: center;
-            font-size: @font-size-base;
+            font-size: @itv-font-size-base;
             position: relative;
             &.placeholder {
-                color: @color-text-light;
+                color: @itv-color-text-light;
             }
             &.active {
-                color: @primary-color;
+                color: @itv-primary-color;
                
                 &::after {
                     content: ' ';
-                    border-bottom: @primary-color solid 3ipx ;
+                    border-bottom: @itv-primary-color solid 3ipx ;
                     position: absolute;
                     bottom: 0;
                     left: 0;
@@ -69,6 +69,14 @@
                 }
             }
            
+        }
+        .arrow-icon{
+            width: 12ipx;
+            height: 12ipx;
+            background: url('../../assets/svg/right.svg');
+            background-size: cover;
+            background-blend-mode: lighten;
+            
         }
     }
 
@@ -81,13 +89,13 @@
         display: flex;
         align-items: center;
         padding-left: 20ipx;
-        font-size: @font-size-base;
+        font-size: @itv-font-size-base;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: @color-text-base;
+        color: @itv-color-text-base;
         &.active {
-            color: @primary-color;
-            background: @primar-color-bg;
+            color: @itv-primary-color;
+            background: @itv-primary-color-bg;
         }
     }
     .body-scroll{
