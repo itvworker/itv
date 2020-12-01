@@ -13,10 +13,12 @@
         </div>
         
         <div class="itv-sliver-top" @touchstart="touchType='header'"   ref="header" :style="{height: headerHeight+'px'}">
-          
-            <slot name="header"></slot>
+            <div class="itv-sliver-top-content">
+                <slot name="header"></slot>
+                
+            </div>
         </div>
-        <div class="itv-slivers-group" @touchstart="touchType='group'" ref="group">
+        <div class="itv-slivers-group"  @touchstart="touchType='group'" ref="group">
             <slot></slot>
         </div>
     </div>    
@@ -26,7 +28,7 @@
 
 import touch from './mixins/touch'
 import render from '../../libs/render'
-import { slideHeight } from '../../libs/tool'
+import  slideHeight  from '../../libs/scale.render.js'
 import calcscroll from './mixins/calcscroll'
 import animate from './mixins/animate.scroller'
 import refreshBar from './refresh.vue'
@@ -126,7 +128,7 @@ export default {
 
     mounted() {     
         //初始化
-        this.headerDom = slideHeight(this.$refs.header)
+        this.headerDom = slideHeight(this.$refs.header, this.$refs.group, this.headerMaxHeight)
         this.scrollerDom = render(this.$refs.scroller);
         this.calcSlivers();
 

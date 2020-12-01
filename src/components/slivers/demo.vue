@@ -18,6 +18,9 @@
                         sliver1{{item.title}} {{index}}
                     </div>
                 </sliver>
+                
+                    <img @click="opend" class="image-header" slot="header" src="~@/assets/img/github.png" />
+                
 
                 <sliver :ref="'sliver'+1">
                     <div class="test-list" v-for="(item, index)  in list" :key="index">
@@ -39,7 +42,7 @@ export default {
     },
     data() {
         return {
-            // list:[],
+            list:[],
             currentDate: '2020/10/10',
             minMonth:'2020/10',
             maxMonth: '2021/12',
@@ -47,15 +50,15 @@ export default {
         }
     },
     computed: {
-       list() {
-            let arr = [];
-            for(let i = 0; i < 100; i++) {
-                arr.push({
-                    title: '测试内容'
-                })
-            }
-            return arr;
-       } 
+    //    list() {
+    //         let arr = [];
+    //         for(let i = 0; i < 100; i++) {
+    //             arr.push({
+    //                 title: '测试内容'
+    //             })
+    //         }
+    //         return arr;
+    //    } 
     },
     methods: {
        refresh() {
@@ -69,17 +72,19 @@ export default {
        pull(y) {
            console.log(y);
        },
-       
+       opend() {
+           console.log('-------');
+       }
     },
     created() {
       
     },
     mounted() {
-        // setInterval(()=>{
-        //     this.list.push({
-        //         title: '测试内容'
-        //     })
-        // },500)
+        setInterval(()=>{
+            this.list.push({
+                title: '测试内容'
+            })
+        },500)
        
     }
 
@@ -91,6 +96,10 @@ export default {
     padding:15ipx 15ipx;
     border-bottom: #ddd solid 1px;
     background-color: #eee;
+}
+.image-header{
+    width: 100%;
+    height: 200px;
 }
 
 </style>
