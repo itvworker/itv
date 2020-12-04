@@ -6,6 +6,13 @@
     
     .itv-sliver-top{
         background-color: #ddd;
+        transform-origin:0 0;
+       
+        transition: all 0ms ease 0s;
+        .itv-sliver-top-content{
+            transform-origin:100% 100%;
+            transition: all 0ms ease 0s;
+        }
     }
     .itv-slivers-scroller{
         height: 100%;
@@ -24,6 +31,7 @@
             flex: 1;
             overflow: hidden;
             flex-wrap: wrap;
+            height: 150%;
         }
     }
     

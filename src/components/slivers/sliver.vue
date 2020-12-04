@@ -247,6 +247,7 @@ export default {
     flex: 0 0 auto;
     height: 100%;
     overflow: hidden;
+           
     .itv-sliver-scroller{
         transition: all 0ms ease 0s;
         position: relative;
