@@ -12,6 +12,7 @@ export default {
             this.scrollToX = null;
             this.scrollToY = null;
             let touches = e.touches;
+            this.touchMoveList =[];
             //检查手指数量
             if (touches.length == null) {
                 throw new Error("Invalid touch list: " + touches);
@@ -43,6 +44,7 @@ export default {
         touchmove(e, self) {
             //启用自定义调用事件
             if(this.touchType === 'custom' && self) return
+            if(this.isTouch ===false) return
             e.preventDefault();
             let touches = e.touches;
             //检查手指数量
@@ -60,6 +62,13 @@ export default {
                 moveX = Math.abs(touches[0].pageX + touches[1].pageX) / 2;
                 moveY = Math.abs(touches[0].pageY + touches[1].pageY) / 2;
             }
+
+            let positon = this.elPositon
+            if(moveX  < positon.left || moveX  > positon.right ||  moveY < positon.top ||  moveY > positon.bottom) {
+                this.touchend(e)
+                return
+            }
+
             //判断滑动方向，并获取滑动距离
             let res = getDirection(this.moveX, this.moveY, moveX, moveY, this.direction)
             //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
@@ -181,8 +190,11 @@ export default {
             //启用自定义调用事件
             if(this.touchType === 'custom' && self) return
             
+            if(this.isTouch===false) return; 
             this.isMove = false;
             this.isTouch = false;
+            
+            if(this.touchMoveList.length<=0) return
             this.touchMoveList[this.touchMoveList.length-1].time = new Date().getTime()
             if(this.direction === 'horizontal') {
                 if(this.pattern === 'horizontal') {
@@ -208,7 +220,7 @@ export default {
                         //触发下拉刷新事件
                         if(!this.isTriggerPullDown) {
                             this.isTriggerPullDown = true
-                            this.$emit('refersh');
+                            this.$emit('refresh');
                         }
                             
                         this.scrollTo(this.scrollX, this.pullDownPoint, 1.5)
@@ -223,7 +235,6 @@ export default {
                     return
                 } 
             }
-
             let speed = this.calcMoveSpeed();
             this.animate(speed);          
         }

@@ -73,7 +73,8 @@ export default {
             firstOne: '',//循环是复制第一张
             children: [],
             dom:'',
-            winWidth: window.innerWidth
+            winWidth: window.innerWidth,
+            elPositon:{}
             
         }
     },
@@ -134,7 +135,9 @@ export default {
         touchstart(e) {
             
             //判断动画是否在进行中, 进行中禁止滑动
-            if (this.isAnimating) return
+            // if (this.isAnimating) return
+            this.elPositon = this.$el.getBoundingClientRect()
+            this.isAnimating = false;
             this.touchstartTime= new Date().getTime()
             let self = e.targetTouches
             this.$emit('touchstart')
@@ -155,9 +158,15 @@ export default {
             let self = e.targetTouches
             let x = self[0].pageX
             let y = self[0].pageY
+
+            let positon = this.elPositon
+            if(x < positon.left || x > positon.right ||  y < positon.top ||  y > positon.bottom) {
+                this.touchend(e)
+                return
+            }
              
             let obj = getDirection(this.moveX, this.moveY, x, y, this.screenType)
-
+            
             
             if(obj.type > 2 && this.isMove === 0) {
                 this.screenType = 'progress'
@@ -268,7 +277,7 @@ export default {
                     }
                     
                     
-                    let isfast = Math.abs(dis) > 50 && now - this.touchstartTime < 300 //是否快速滑过
+                    let isfast = Math.abs(dis) > 20 && now - this.touchstartTime < 300 //是否快速滑过
                     let isChangePos = Math.abs(this.coordinate)%this.elSize; //是否有移动
                    
                    if(isChangePos){
@@ -296,7 +305,7 @@ export default {
                     //快速滑过
                         
                      
-                    if((isfast && dis<-50) || this.isSpeedDir()==='next') {
+                    if((isfast && dis<-20) || this.isSpeedDir()==='next') {
                         if(!this.endBounce) {
                            this.nowIndex++;
                         }
@@ -306,7 +315,7 @@ export default {
                        return    
                     }
 
-                    if((isfast && dis>50)||this.isSpeedDir()==='prev') {
+                    if((isfast && dis>20)||this.isSpeedDir()==='prev') {
                        if(!this.beginBounce) {
                            this.nowIndex--;
                        }
@@ -334,6 +343,8 @@ export default {
                 return
             }
             this.elSize =  this.$el.clientHeight;
+            this.elPositon = this.$el.getBoundingClientRect()
+          
         },
         //初始box的数量
         initNumber() {

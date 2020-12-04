@@ -76,7 +76,7 @@ export default {
             this.maxY = Math.max(0,childHeight - parentHeight);
             this.contentHeight = parentHeight;
             this.contentWidth = parentWidth;
-           
+            this.elPositon = this.$el.getBoundingClientRect()
             //当滚动值超过最大值时，恢复到最大值
 
             if(this.scrollX > this.maxX) {

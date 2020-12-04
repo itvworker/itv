@@ -30,6 +30,7 @@ export default {
                 this.scrollTo(this.scrollX, 0, 1.5);
             }
             this.isTriggerPullDown = false
+            this.calcMax()
         }
     }
 }

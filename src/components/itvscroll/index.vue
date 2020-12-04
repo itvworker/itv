@@ -223,6 +223,8 @@ export default {
             cacheScrollbarX:0, //缓存用，滚动条y的真实位置
             hideBarY: true, //不可视化滚动动条
             scrollBarTimeout: '',
+
+            elPostion:{} //位置滑动区所在的位置
         }
     },
     
