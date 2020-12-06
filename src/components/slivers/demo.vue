@@ -22,11 +22,7 @@
                     <img @click="opend" class="image-header" slot="header" src="~@/assets/img/github.png" />
                 
 
-                <sliver :ref="'sliver'+1">
-                    <div class="test-list" v-for="(item, index)  in list" :key="index">
-                        sliver2{{item.title}} {{index}}
-                    </div>
-                </sliver>
+                
             </slivers>
         </itv-main>
     </itv-container>

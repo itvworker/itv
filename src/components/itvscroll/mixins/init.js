@@ -31,6 +31,7 @@ export default {
             }
             this.isTriggerPullDown = false
             this.calcMax()
+            this.$emit("content")
         }
     }
 }

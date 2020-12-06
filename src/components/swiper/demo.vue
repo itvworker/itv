@@ -94,32 +94,33 @@ export default {
     align-items: center;
     justify-content: center;
     display: flex;
-    font-size: 100pt;   
+    font-size: 100ipx;   
 }
 .itv-swpier-height {
-    height:600pt;
+    height:600ipx;
     .banner-2,.banner-1{
-        height: 600pt;
+        height: 600ipx;
     }
 }
 .dot-bar{
     position: absolute;
-    bottom: 20pt;
+    bottom: 20ipx;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     .dot{
-        width: 32pt;
-        height: 32pt;
+        width: 8ipx;
+        height: 8ipx;
         text-align: center;
         background-color: #fff;
-        margin:0 4pt;
-        border-radius: 8pt;
+        margin:0 4ipx;
+        border-radius: 8ipx;
         display: flex;
         justify-content: center;
         align-items: center;
         color: #999;
         line-height: 0;
+        font-size: 0;
         &.active{
             background-color: #e1251b;
             color: #fff;

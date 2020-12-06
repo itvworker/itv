@@ -68,8 +68,9 @@ export default {
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
-            this.maxY = ph - parent.clientHeight || 0;
 
+            
+            this.maxY = Math.max(ph - parent.clientHeight,0);
             if(this.domY < 0) {
                 let speed = this.calcStep(this.domY, 1.2);
                 this.bounceY = 0;
