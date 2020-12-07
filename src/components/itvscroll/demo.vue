@@ -3,30 +3,37 @@
         <itv-header>Itvscroll</itv-header>
         <div class="flex-row-box">
             <div class="flex-row-item" :class="{active:tabIndex===0}" @click="changeTab(0)" >竖向滚动</div>
-            <div class="flex-row-item" :class="{active:tabIndex===1}" @click="changeTab(1)" >横向滚动</div>
-            <div class="flex-row-item" :class="{active:tabIndex===2}" @click="changeTab(2)" >竖向滚动</div>
+            <div class="flex-row-item" :class="{active:tabIndex===1}" @click="changeTab(1)" >自由滚动</div>
+            <div class="flex-row-item" :class="{active:tabIndex===2}" @click="changeTab(2)" >swiper-scroll</div>
         </div>
         <itv-main>
-           
-
             <itv-scroll 
             v-if="tabIndex===0" 
-            :key="0" ref="scrolle2" 
+            :key="0" ref="scrolle1" 
             :topBounce="true" 
             :bottomBounce="true" 
             :pullDown="true" 
             pattern="vertical" 
+            :percent="0.95"
+            :speed="50" 
             :showScrollBar="true"
             @scroll="scroll" 
             @stopscroll="stopscroll"
             @refersh="refersh">
-                <itv-scroll v-if="tabIndex===0" ref="scroller3" :showScrollBar="true" :leftBounce="true" :rightBounce="true"  :percent="0.9" pattern="horizontal" class="case-box">
+                <itv-scroll v-if="tabIndex===0" ref="scroller2" :showScrollBar="true" :leftBounce="true"  :rightBounce="true"  :percent="0.9" pattern="horizontal" class="case-box">
                     <div class="itv-case-box">
                         <div class="item-list-section" v-for="(item, index) in list" :key="index">
                             {{item.name}}{{index}}
                         </div>
                     </div>
                 </itv-scroll>
+                 <fix-action class="content-fix" v-for="(item, index) in fixList" :key="item.title+index" :title="item.title">
+                     <div class="l1" v-for="(subItem, subIndex) in item.list" :key="subIndex">
+                         {{subItem}}{{subIndex}}
+                     </div>
+                     
+                 </fix-action>
+                
                <div class="item-list" v-for="(item, index) in list" :key="index">
                    {{item.name}}{{index}}
                </div>
@@ -46,7 +53,7 @@
                 <swiper-item class="swiper-item">
                      <itv-scroll 
                     class="swpier-scroller"
-                    :key="4" ref="scrolle2" 
+                    :key="4" ref="scrolle3" 
                     :topBounce="true" 
                     :bottomBounce="true" 
                     :pullDown="true" 
@@ -69,7 +76,7 @@
                 <swiper-item>
                     <itv-scroll 
                     class="swpier-scroller"
-                    :key="7" ref="scrolle2" 
+                    :key="7" ref="scrolle4" 
                     :topBounce="true" 
                     :bottomBounce="true" 
                     :pullDown="true" 
@@ -148,12 +155,14 @@ import "./itvscroll.less";
 import data from './data'
 import swiper from '../swiper/swiper.vue'
 import swiperItem from '../swiper-item/swiper-item.vue'
+import fixAction from './fixation'
 export default {
     mixins:[data],
     components: {
         itvScroll,
         swiper,
-        swiperItem
+        swiperItem,
+        fixAction
     },
     data() {
         return {
@@ -259,11 +268,9 @@ export default {
     }
 }
 .itv-case-box {
-    
     padding: 5ipx;
     display: flex;
-    width: 100%;
-
+    width:fit-content;
     .item-list-section{
         width: 120ipx;;
         border:#ddd solid 1px;
@@ -292,6 +299,19 @@ export default {
 }
 .swpier-scroller{
     height: 100%;
+}
+.content-fix{
+    /deep/ .fix-action-header {
+        background-color: #ddd;
+        height: 36ipx;
+        padding-left: 16ipx;
+        line-height: 36ipx;
+    }
+    .l1 {
+        height: 44ipx;
+        line-height: 44ipx;
+        padding-left: 15ipx;
+    }
 }
 </style>
 
