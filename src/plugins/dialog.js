@@ -1,6 +1,6 @@
-import DialogComponent from './dialog.vue';
+import DialogComponent from '../components/dialog/index.vue';
 import objectAssign from 'object-assign'
-import merge from '../../libs/merge'
+import merge from '../libs/merge.js'
 
 let $vm
 let watcher
@@ -26,10 +26,15 @@ const plugin = {
             },
             state() {
                 return $vm.value
+            },
+            isVisible() {
+                return $vm.value
             }
         }
 
-        
+        $vm.$el.children[0].addEventListener('click', ()=>{
+            $vm.value = false
+        })
     
         if (!vue.prototype.$itv) {
           vue.prototype.$itv = {

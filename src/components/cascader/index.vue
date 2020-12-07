@@ -141,7 +141,7 @@ export default {
                     return
                }
                 if(n === null && this.isLast === false) {
-                     this.$refs.body.scrollToNow(0, 0)
+                    this.$refs.body.scrollToNow(0, 0)
                 }
             })
             
@@ -233,9 +233,9 @@ export default {
                if(!this.isLast) {
                    this.$refs.body.scrollToNow(0, 0)
                }
-               
                this.$refs.body.calcMax();
             })
+            this.$emit('select', this.currentItems)
         },
         calcNowItems(isInit) {
             
@@ -313,6 +313,7 @@ export default {
             this.$emit("hide");
             this.$emit("cancel");
         },
+        
         confirmBtn() {
             this.$emit('input', false)
             this.$emit("hide");

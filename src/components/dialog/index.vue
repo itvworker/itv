@@ -1,13 +1,20 @@
 <template lang="html">
     <div class="itv-model" >
         <transition name="itv-fade">
-            <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex}"></div>
+            <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex,'opacity': opacity }"></div>
         </transition>
         <transition :name="animate">
-            <div :class="className"   v-show="value" :style="{'z-index':zIndex+1}">
+            <div ref="content" :class="className"   v-show="value && html" :style="{'z-index':zIndex+1}">
+                
+            </div>
+        </transition>
+        <transition :name="animate"  >
+            <div :class="className"   v-show="value && !html" :style="{'z-index':zIndex+1}">
                 <slot></slot>
             </div>
         </transition>
+
+        
     </div>
 
 </template>
@@ -24,9 +31,13 @@ export default {
             type:String,
             default: 'center'
         },
+         opacity:  {
+            type: Number,
+            default:1
+        },  
         zIndex: {
             type: Number,
-            default:99
+            default:200
         },  
         hideOnClick: {
             type: Boolean,
@@ -82,6 +93,7 @@ export default {
             this.$emit('onShow')
         },
         html(a, b) {
+          
             this.$refs.content.innerHTML= ''
             if(!a){
                 this.content = ''
@@ -114,6 +126,7 @@ export default {
 
 
 <style lang="less" scoped>
+@import '../../assets/css/animate.less';
 .itv-bg {
     background-color: rgba(0, 0, 0, 0.6);
     position: fixed;

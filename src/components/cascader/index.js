@@ -29,7 +29,13 @@ const plugin = {
                 $vm.$off('hide')
                 $vm.$off('show')
                 $vm.$off('confirm')
+                $vm.$off('select')
 
+                $vm.$on('select', (msg)=>{
+                    if(options.select) {
+                        options.select(msg)
+                    }
+                })
                 $vm.$on('hide', (msg) => {
                     options && options.onHide && options.onHide(msg)
                     $vm.value = false
