@@ -11,7 +11,7 @@ export default {
             this.startTime = new Date().getTime()
             this.touchDirection = 0; //重置touch滑动方向
             this.moveDirection = ''; //重置touch滑动方向
-            this.nowSliver =  this.childrenSlivers[this.sliverIndex]; //当前子元素
+         
             let touches = e.touches;
             //检查手指数量
             if (touches.length == null) {

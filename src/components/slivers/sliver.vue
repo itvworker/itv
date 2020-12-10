@@ -45,6 +45,10 @@ export default {
         bounceBottom: {
             type: Boolean,
             default: false,
+        },
+        pid: {
+            type: String,
+            default:"slivers"
         }
     },
     data() {
@@ -234,9 +238,26 @@ export default {
            
             this.stepY *= this.percent;
             window.requestAnimationFrame(this.srollStep)
+        },
+        getParentSliver() {
+            let parent = this.$parent;
+
+            
+            while(parent.id !== this.pid && parent) {
+                parent = parent.$parent
+            }   
+
+            if(parent.id === this.pid){
+                this.parent =  parent
+            }
+            
+        },
+        sliverIndex() {
+            this.parent.nowSliver = this;
         }
     },
     mounted() {
+        this.getParentSliver()
         this.scrollDom = render(this.$refs.scroller)
         this.refresh();
     }

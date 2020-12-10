@@ -12,7 +12,7 @@
                          <div class="select" :class="{'active': currentHeader===index||(isLast && index === currentItems.length-1 && currentHeader===null)}"  @click="changeNow(index)">
                             {{item[textKey]}}
                         </div>
-                        <div class="arrow-icon" v-if="!(index===currentItems.length-1 && isLast)"></div>
+                        <div class="icon-gengduox arrow-icon" v-if="!(index===currentItems.length-1 && isLast)"></div>
                     </template>
                    
                    <div class="select placeholder" v-if="!isLast" :class="{'active': currentHeader===null}" @click="changeNow(null)">{{placehoder}}</div>
@@ -128,10 +128,7 @@ export default {
         isVisible(n,o) {
             this.$emit('input', n)
         },
-        selected(n,o) {
-            this.currentSelect =  JSON.parse(JSON.stringify(n));
-        
-        },
+      
         currentHeader(n,o) {
                 
             this.$nextTick(()=>{
@@ -156,6 +153,7 @@ export default {
             this.currentItems = [];
             this.currentIndex = [];
             this.currentHeader = null;
+            this.currentSelect = JSON.parse(JSON.stringify(this.selected));
            
             this.$nextTick(()=>{
                 this.calcHeight()
@@ -200,6 +198,7 @@ export default {
         },
         changeNow(index) {
             this.currentHeader = index;
+            console.log(this.currentHeader);
             this.calcNowItems()
         },
         selectItem(index) {
@@ -241,8 +240,8 @@ export default {
             
             if(!this.currentSelect) return []
             let data = [];
-
-      
+           
+            //没有默认选择的时候
             if(this.currentSelect.length<=0) {
                 this.items.forEach(element => {
                     if(element[this.pidKey] === 0 || !element[this.pidKey]) {
@@ -255,13 +254,17 @@ export default {
                   })
                  return
             }
-          
+
+            //debugger
             if(this.currentSelect.length > 0 && this.currentHeader === null) {
+               
                 let id = this.currentSelect[this.currentSelect.length-1];
-                
+     
+
                 this.items.forEach(element => {
-                    if(element[this.pidKey] === id ) {
-                        data.push(element)
+                    console.log(element[this.pidKey], id);
+                    if(element[this.pidKey] == id ) {
+                        data.push( JSON.parse(JSON.stringify(element)))
                     }   
                 });
                 if(data.length > 0) {
@@ -272,36 +275,40 @@ export default {
                     })
                 }else{
                     this.isLast = true;
-                    
-                    if(this.nowItems.length<=0) {
-                        let obj = this.currentItems[this.currentItems.length-1];
-                        this.items.forEach(element => {
-                            if(element[this.pidKey] === obj[this.pidKey] ) {
-                                data.push(element)
+                   
+                    let obj = this.currentItems[this.currentItems.length-1];
+                    this.items.forEach(element => {
+                            if(element[this.pidKey] == obj[this.pidKey] ) {
+                                data.push( JSON.parse(JSON.stringify(element)))
                             }   
                         });
-                        this.nowItems = data;
-                        this.$nextTick(()=>{
-                            this.$refs.body.calcMax();
-                            this.$refs.body.scrollToNow(0, this.currentIndex[this.currentIndex.length-1]*this.itemHeight)
-                         })
-                    }
+                    this.nowItems = data;
+                    this.$nextTick(()=>{
+                        this.$refs.body.calcMax();
+                        this.$refs.body.scrollToNow(0, this.currentIndex[this.currentIndex.length-1]*this.itemHeight)
+                    })
+                   
                     if(isInit) {
                         this.$refs.body.scrollToNow(0, this.currentIndex[this.currentIndex.length-1]*this.itemHeight)
                     }
                 }
-                
                return
             }
 
             if(this.currentSelect.length > 0 && this.currentHeader !== null) {
-                let pid = this.currentItems[this.currentHeader].pid
+               
+                let pid = this.currentItems[this.currentHeader][this.pidKey] 
+                
+
                 this.items.forEach(element => {
-                if(element[this.pidKey] === pid ) {
-                        data.push(element)
+                if(element[this.pidKey] == pid ) {
+                    console.log(element);
+                        data.push( JSON.parse(JSON.stringify(element)))
                     }   
                 });
                 this.nowItems = data
+
+                
                 this.$nextTick(()=>{
                     this.$refs.body.calcMax();
                 })

@@ -257,10 +257,7 @@ export default {
         touchend(e) {
             this.$emit('touchend')
            
-            if (this.isMove===1) {
-                e.preventDefault()
-                e.stopPropagation()
-            }
+          
 
             this.isTouch = false
             this.isMove = 0
@@ -268,8 +265,7 @@ export default {
             this.screenType = ''
             let self = e.targetTouches
             if (screenType) {
-                    e.preventDefault()
-                    e.stopPropagation()
+                   
                     let now = new Date().getTime()
                     let dis = this.moveX - this.startX
                     if(this.direction === 'column') {

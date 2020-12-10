@@ -1,11 +1,11 @@
 <template lang="html">
-    <div class="itv-ui">
+    <div class="itv-ui" @touchstart="clickStatus">
          <transition name="itv-fade">
-            <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex}"></div>
+            <div class="itv-bg" @click.stop="close"  v-show="value"  :style="{'z-index':zIndex}"></div>
         </transition>
         <transition name="itv-slide-top" >
             <div class="itv-acitonsheet" v-show="value" :style="{'z-index':zIndex+1}">
-                <div class="itv-item" v-for="(item, index) in items" :key="index" @click="confirm(item)">
+                <div class="itv-item" :class="{'itv-active': current === index}" v-for="(item, index) in items" :key="index" @click="confirm(item)">
                     {{item.text}}
                 </div>
                 <div class="itv-item itv-cancel" @click.stop="close" v-show="!hideBtnCancel">
@@ -52,9 +52,12 @@ export default {
         content: {
             type: String,
             default: ""
+        },
+        current: {
+            type: Number,
+            defualt:null
         }
     },
-
     computed: {
         iosScreen() {
             let isNewIphone =
@@ -64,24 +67,42 @@ export default {
             return isNewIphone;
         }
     },
+    data() {
+        return {
+            status: false
+        }
+    },
     watch: {
         value(a, b) {
             if (!a) {
                 this.$emit("close");
+            }else{
+                this.status = false;
             }
         }
     },
     methods: {
         cancel() {
+            if(!this.status) return
             this.$emit("hide");
             this.$emit("cancel");
         },
         confirm(item) {
+            if(!this.status) return
             this.$emit("hide");
             this.$emit("confirm", item);
         },
         close() {
+            if(!this.status) return
             this.$emit("hide");
+        },
+        closeBg(e) {
+            if(e.target.className.indexOf('itv')>-1) {
+                this.$emit('hide');
+            }
+        },
+        clickStatus() {
+           this.status = true;
         }
     }
 };
