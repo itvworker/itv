@@ -40,6 +40,9 @@ export default function (content, group, maxHeight) {
 
         return function(left, top, zoom) {
             content.style[transformProperty] = 'translate(0,0） scale(' + height/maxHeight + ')';
+            content.children[0].style[transformProperty] = 'translate(0,0) scaleY(' + maxHeight/height + ')'
+            group.style[transformProperty] = 'translate(0,'+(height-maxHeight)+'px)';
+            
         };
 
     } else {
