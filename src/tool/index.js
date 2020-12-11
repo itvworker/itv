@@ -47,3 +47,14 @@ export function formatDate(arg, format) {
         .replace('mm', minute)
         .replace('ss', second)
 }
+/**
+ * 判断是不是指定类型，可以判断
+ * @param {Any} data 
+ * @param {String} type 类型，全小写 可选 object string array number 
+ */
+export function judeType(data, type) {
+    let nowType = Object.prototype.toString.call(data).slice(8,-1).toLowerCase();
+    if(nowType === type) {
+        return true
+    }
+}

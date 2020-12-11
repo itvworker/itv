@@ -46,33 +46,10 @@ export default {
         }
     },
     mounted() {
-        
+        html2img.getSvg(this.$el)
 
        
-        let styles = document.querySelectorAll('style');
-
-        let str = `<div class="header-title">你是谁</div>`
-        let divText = document.createElement('div')
-        divText.innerHTML = str
-
-        let style =`<style type="type/css">.header-title{font-size:1000px;}</style>`
-        let styleText = document.createElement('div')
-        styleText.innerHTML = style;
-
-
-        let str1= new XMLSerializer().serializeToString(divText); 
-
-         let htmlSvg = 'data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">'+
-         '<foreignObject x="0" y="0" width="100%" height="100%">'
-               +str1+styleText.innerHTML+'</foreignObject></svg>';
-
-            console.log(htmlSvg);
-            //  htmlSvg = htmlSvg.replace(/\n/g, '').replace(/\t/g, '').replace(/#/g, '%23');
-            
-            // let xmls = new XMLSerializer().serializeToString(this.$el)
-        
        
-        this.imageUrl = htmlSvg
     }
 };
 </script>
