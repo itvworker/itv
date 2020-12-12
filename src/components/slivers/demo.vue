@@ -6,13 +6,23 @@
             <slivers 
             ref="slivers"
             :bounceTop="false"
-            :headerMaxHeight="200"  
-            :headerMinHeight="44" 
+            :headerMaxHeight="headerMaxHeight"  
+            :headerMinHeight="headerMinHeight" 
             :sliverIndex="sliverIndex"
             :refreshLoad="true"
             @refresh = refresh
-            >
-                <img @click="opend" class="image-header" slot="header" src="~@/assets/img/github.png" />
+            >   <div class="text-header" ref="header"  slot="header">
+                    <img @click="opend" class="image-header" src="~@/assets/img/github.png" />
+                    <div class="demo-tab" ref="btns">
+                        <div class="demo-tab-btn" @click="columnIndex=0" :class="{'active': columnIndex === 0}">
+                            新闻
+                        </div>
+                         <div class="demo-tab-btn" @click="columnIndex=1" :class="{'active': columnIndex === 1}">
+                            公告
+                        </div>
+                    </div>
+                </div>
+                
                  <swiper   :loop="false" v-model="columnIndex" class="itv-swpier-height">
                      <swiper-item class="swiper-item">
                          <sliver  :bounceTop="false" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
@@ -54,6 +64,8 @@ export default {
             maxMonth: '2021/12',
             sliverIndex: 0,
             columnIndex:0,
+            headerMinHeight: 44,
+            headerMinHegiht: 200
         }
     },
     watch: {
@@ -75,7 +87,7 @@ export default {
     },
     methods: {
        refresh() {
-        
+           
            setTimeout(()=>{
                 this.$refs.slivers.refresh()
                 this.$refs.sliver0.refresh()
@@ -90,7 +102,7 @@ export default {
        }
     },
     created() {
-      
+        
     },
     mounted() {
         setInterval(()=>{
@@ -101,6 +113,10 @@ export default {
             // this.$refs.sliver1.refresh()
         },500)
         this.$refs.sliver0.sliverIndex()
+        this.headerMaxHeight = this.$refs.header.clientHeight;
+        this.headerMinHeight = this.$refs.btns.clientHeight;
+        this.$refs.scroller.refresh()
+        
        
     }
 
@@ -113,9 +129,44 @@ export default {
     border-bottom: #ddd solid 1px;
     background-color: #eee;
 }
+.text-header {
+    position: relative;
+    font-size: 0;
+    .demo-tab {
+        height: 44ipx;
+       
+      
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        font-size: 15ipx;
+        background-color: #fff;
+        .demo-tab-btn {
+            flex: 1;
+            height: 44ipx;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 0;
+            position: relative;
+            &.active {
+                color: @itv-primary-color;
+                &::after {
+                    position: absolute;
+                    content: ' ';
+                    width: 20%;
+                    height: 2ipx;
+                    background-color: @itv-primary-color;
+                    bottom: 0px;
+                }
+            }
+        }
+
+    }
+}
 .image-header{
     width: 100%;
-    height: 200px;
+    height: 200ipx;
 }
 .itv-swpier-height{
     height: 100%;

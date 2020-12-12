@@ -33,7 +33,9 @@
                      </div>
                      
                  </fix-action>
-                
+                 <fixed>
+                     你需要夺
+                </fixed>
                <div class="item-list" v-for="(item, index) in list" :key="index">
                    {{item.name}}{{index}}
                </div>
@@ -144,8 +146,6 @@
                 </swiper-item>
             </swiper>
         </itv-main>
-        
-
     </itv-container>
 </template>
 
@@ -155,14 +155,20 @@ import "./itvscroll.less";
 import data from './data'
 import swiper from '../swiper/swiper.vue'
 import swiperItem from '../swiper-item/swiper-item.vue'
-import fixAction from './fixation'
+import fixAction from './evevator'
+import fixed from './fixed'
+import Evevator from './evevator.vue';
+import Fixed from './fixed.vue';
 export default {
     mixins:[data],
     components: {
         itvScroll,
         swiper,
         swiperItem,
-        fixAction
+        fixAction,
+        fixed,
+        Evevator,
+        Fixed
     },
     data() {
         return {

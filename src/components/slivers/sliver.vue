@@ -72,7 +72,7 @@ export default {
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
-
+       
             
             this.maxY = Math.max(ph - parent.clientHeight,0);
             if(this.domY < 0) {
@@ -85,12 +85,14 @@ export default {
                 this.y = - this.maxY
             }
         },
-
+        /**
+         * 计算最大滚动值
+         *  */    
         calcMax() {
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
-            this.maxY = ph - parent.clientHeight || 0;
+            this.maxY = Math.max(ph - parent.clientHeight,0);
         },
         cache() {
             this.vy = this.y;
@@ -101,6 +103,7 @@ export default {
     
         //父元素回弹动画
         bounceAnimate(speed) {
+           
             this.stepY = speed;
             window.requestAnimationFrame(this.bounceStep);     
         },

@@ -285,8 +285,7 @@ export default {
                         this.coordinate = 0;
                         this.nowIndex = 0
                         this.setPostion()
-                        this.$emit('first')
-                        console.log('---------------------first--------');
+                        this.$emit('first') 
                         return
                     }
                        

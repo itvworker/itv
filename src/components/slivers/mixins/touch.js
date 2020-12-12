@@ -215,9 +215,6 @@ export default {
 
                             return
                         }
-
-                       
-                       
                         break;
                     case 'horizontal':
                         break
@@ -234,6 +231,7 @@ export default {
             }
             let now = new Date().getTime()
             this.isTouch = false;
+           
             // let dis = this.moveDirection==='progress'?this.moveX - this.startX:this.moveY - this.startY
             // let isfast = Math.abs(dis) > 20 && now - this.startTime < 200
             // let x = this.x
@@ -271,7 +269,7 @@ export default {
                             let speed = this.calcStep(this.nowSliver.domY, 1.2);
                             this.nowSliver.bounceY = 0;
                             this.nowSliver.bounceStatus = 0;
-                            this.nowSliver.bounceAnimate(speed)
+                            this.nowSliver.bounceAnimate(speed);
                             return
                         }
 
@@ -294,9 +292,11 @@ export default {
                         this.nowSliver.bounceY = this.nowSliver.maxY;
                         this.nowSliver.bounceStatus = 1;
                         this.nowSliver.bounceAnimate(-speed);
+                       
                     }
                     this.nowSliver.calcMax()
                     let speed = this.calcMoveSpeed();
+                    
                     this.animate(speed)
                     
                    

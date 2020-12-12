@@ -88,7 +88,14 @@ export default {
             default:"slivers"
         }
     },
-
+    watch: {
+        headerMaxHeight(n,o) {
+            this.headerHeight = n;
+            this.headerDom = slideHeight(this.$refs.header, this.$refs.group, this.headerMaxHeight)
+            this.scrollerDom = render(this.$refs.scroller);
+            this.contentHeight = this.$el.clientHeight - this.headerMinHeight
+        }
+    },
     data() {
         return {
             //头部高度，改此值将触发，vue刷新

@@ -1,3 +1,5 @@
+
+let indexNum = 0
 export default {
     methods: {
         //滚动动画，
@@ -13,6 +15,8 @@ export default {
                 })
                 return 
             }
+
+            indexNum++
             
             window.requestAnimationFrame(this.srollStep);
         },
@@ -28,7 +32,8 @@ export default {
                 this.stepY = 0;
                 return;
             }
-
+          
+         
            
             //向上滚动
             if(this.stepY < 0) {
@@ -46,7 +51,7 @@ export default {
                     
                 }
                 
-                console.log(this.stepY);
+                
                 if(this.nowSliver.domY < this.nowSliver.maxY) {
                     
                     this.nowSliver.domY-= this.stepY;
@@ -55,21 +60,29 @@ export default {
                         this.stepY =0;
                     }
                     this.nowSliver.setPosition()
+
+                    console.log('------- d');
+                    
                 }
                 
             }
             //向下滚动
             if(this.stepY>0) {
-                
+               
                 let y = this.stepY;
+                
+                
                 if(this.nowSliver.domY > 0) {
-
+                    
                     this.nowSliver.domY-= y;
                     if(this.nowSliver.domY < 0) {
                         this.nowSliver.domY = 0
                     }
+                    
                     this.nowSliver.setPosition()
+                    
                 }else{
+                    
                     if(this.headerDomHeight <= this.headerMaxHeight) {
                         this.headerDomHeight += this.stepY;
                         if(this.headerDomHeight > this.headerMaxHeight) {
@@ -77,7 +90,10 @@ export default {
                         }
                         
                         this.headerDom(this.headerDomHeight)
+
+                       
                     }
+                    
                 }
     
     
