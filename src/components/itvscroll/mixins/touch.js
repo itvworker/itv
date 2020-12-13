@@ -219,14 +219,21 @@ export default {
                 if(this.scrollY < 0 ) {
                     if(this.pullDown) {
                         //触发下拉刷新事件
-                        if(!this.isTriggerPullDown) {
+                        if(!this.isTriggerPullDown && this.scrollY < this.pullDownPoint) {
                             this.isTriggerPullDown = true
                             this.$emit('refresh');
+                            this.scrollTo(this.scrollX, this.pullDownPoint, 1.5)
+                            return
                         }
-                            
-                        this.scrollTo(this.scrollX, this.pullDownPoint, 1.5)
-                        return
+
+                        if(this.scrollY < this.pullDownPoint) {
+                            this.scrollTo(this.scrollX, this.pullDownPoint, 1.5);
+                            return
+                        }
+                        
+                        
                     }
+                    
                     this.scrollTo(this.scrollX,0,1.5)
                     return
                 } 

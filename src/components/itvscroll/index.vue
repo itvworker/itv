@@ -77,6 +77,10 @@ export default {
             type: Boolean,
             default: false
         },
+        pullDis: {
+            type: Number,
+            default: 60
+        },
         
         /**
          * 滑动模式
@@ -169,14 +173,14 @@ export default {
                 this.text = this.refreshText;
                 return
             }
-            if(this.isTouch && n < -60) {
+            if(this.isTouch && n < this.pullDownPoint) {
 
                 this.text = this.loseenText
                 this.status = 1
                 return
             }
 
-            if(this.isTouch && n > -60) {
+            if(this.isTouch && n > this.pullDownPoint) {
                 this.text = this.pullText;
                 this.status = 0
                 return

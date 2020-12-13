@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import watch from 'watch-vue-router'
+import watch from './modules/watch-router'
 import router from '@/router'
 import store from '@/store'
 import i18n from '@/lang'

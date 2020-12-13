@@ -3,12 +3,10 @@
         <itv-header>Form表单</itv-header>
         <itv-main>
             <itv-form>
-                <itv-label :label="item.name" :key="id" v-for="item in inputList">
-                    <itv-input placeholder="请输入你的名字" />
+                <itv-label :label="item.name" :key="index" v-for="(item, index) in inputList">
+                    <itv-input placeholder="请输入你的名字" type="number" inputType="positive" />
                 </itv-label>
-                
             </itv-form>
-           
         </itv-main>
     </itv-container>
 </template>
@@ -19,7 +17,8 @@
 
     let schema = {
         phone: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
+            { required: true, rule:'phone', message: '请输入活动名称', trigger: 'blur' },
+            
         ]
     }
     export default {

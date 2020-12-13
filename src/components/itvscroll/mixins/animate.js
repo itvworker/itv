@@ -18,7 +18,7 @@ export default {
             this.stepX*=value
             this.stepY*=value
            
-            
+           
             window.requestAnimationFrame(this.step);                 
 
         },
@@ -80,6 +80,8 @@ export default {
                 },2000)
                 return 
             }
+
+            
             window.requestAnimationFrame(this.step, value)
         },
       
@@ -88,7 +90,7 @@ export default {
             let continuing = true;
             if(this.isTouch || this.isMove) return;
                 
-           
+            console.log('---------');
             let scrollX = this.scrollX - this.stepX
             let scrollY = this.scrollY - this.stepY
             

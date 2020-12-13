@@ -100,6 +100,8 @@ export default {
         //计算touch结束后的滑动速度
         calcMoveSpeed() {
             let touchList = this.touchMoveList;
+
+           
             this.touchMoveList = [];
             let num = touchList.length
             if(num > 20) {
@@ -120,7 +122,13 @@ export default {
             let x = touchList[last].x-touchList[first].x 
             let y = touchList[last].y-touchList[first].y
             
-            
+            if(Math.abs(x)<2) {
+                x= 0
+            }
+            if(Math.abs(y)<2) {
+                y=0
+            }
+           
             return {
                 x: x,
                 y: y

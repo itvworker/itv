@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import itvScroll from './itvscroll';
+import itvScroll from './index.vue';
 import "./itvscroll.less";
 import data from './data'
 import swiper from '../swiper/swiper.vue'

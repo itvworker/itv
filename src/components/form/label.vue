@@ -23,6 +23,9 @@
             }
         },
         data(){
+            return {
+                
+            }
         },
         methods:{
             vaildate(value, type) {

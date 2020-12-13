@@ -249,6 +249,15 @@ export default [
                     title: 'Cascader',
                 }
             },
+            {
+                path: '/demo/form',
+                name: 'itv_form',
+                component: () => import('@/components/form/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'Cascader',
+                }
+            },
 
             
             

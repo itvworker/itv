@@ -25,6 +25,12 @@ export default {
             $('html').css('font-size', '37.5px')
         }
     },
+    watch: {
+        $route(n) {
+            console.log('app---------');
+            console.log(n);
+        }
+    },
     methods: {
         changeRoute(value, content) {
             console.log(value);

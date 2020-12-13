@@ -27,6 +27,7 @@ export default {
         //下拉加载复位
         refresh() {
             if(this.scrollY < 0) {
+               
                 this.scrollTo(this.scrollX, 0, 1.5);
             }
             this.isTriggerPullDown = false
