@@ -61,6 +61,11 @@ export default {
                     icon:'itv-demo-icon-schedule-date',
                     routerName:"itv_slivers",
                     name: "slivers"
+                },
+                {
+                    icon:'itv-demo-icon-schedule-date',
+                    routerName:"itv_form",
+                    name: "form"
                 }
             ]
         }
