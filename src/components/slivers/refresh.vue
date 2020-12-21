@@ -1,11 +1,16 @@
 <template>
     <div class="refresh-content">
-        <div class="icon-refresh-bg" :style="{'height':height, transform:`translateX(-50%) scale(${scale})`}">
+        <!-- <div class="icon-refresh-bg" :style="{'height':height, transform:`translateX(-50%) scale(${scale})`}">
             <img :src="icon" />
         </div>
         <div class="icon-refresh-main" :class="{'animate-loading': value}" :style="{'height':height, transform:`translateX(-50%) scale(${scale})`}">
             <img :src="main" />
-        </div>
+        </div> -->
+
+        <arrow class="arrow" :class="{'active': -triggerDir > top}"  v-if="!value"  :fillColor="refreshLayerColor"/>
+        <spinner v-show="value" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}"/>
+
+
         <div class="text" v-if="value">
             {{loadingText}}
         </div>
@@ -22,6 +27,9 @@
 <script>
 import {svgXml} from '../../libs/tool'
 import icon from './assets/icon';
+import Spinner from "./Spinner.vue";
+import Arrow from "./Arrow.vue";
+
 export default {
     props: {
         value: {
@@ -40,13 +48,15 @@ export default {
             type: String,
             default:'松开刷新'
         },
-        bgIconColor:{
+        
+        refreshLayerColor: {
             type: String,
-            default: 'rgba(230,230,230,1)'
+            default: "#AAA"
         },
-        iconColor: {
+
+        loadingLayerColor: {
             type: String,
-            default: 'rgba(225,37,34,1)'
+            default: "#AAA"
         },
         top: {
             type: Number,
@@ -57,6 +67,10 @@ export default {
             default: 60
         }
        
+    },
+    components: {
+        Spinner,
+        Arrow
     },
     data() {
         return {
@@ -99,32 +113,12 @@ export default {
     }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less" >
 .refresh-content{
     height: 60ipx;
     position: relative;
-    .icon-refresh-bg, .icon-refresh-main{
-        width: 36ipx;
-        height: 36ipx;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 20ipx;
-        // transition: all 300ms ease-in;
-        z-index: 0;
-        img {
-            width: 36ipx;
-            height: 36ipx;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-        }
-    }
-    .icon-refresh-main {
-        z-index: 2;
-        
-      
-    }
+    display: flex;
+    justify-content: center;
     .animate-loading{
         animation: refreshLoading 1s infinite 0s;
         overflow: hidden;
@@ -135,6 +129,23 @@ export default {
         text-align: center;
         width: 100%;
     }
+    .arrow {
+        width: 20pt;
+        height: 20pt;
+        margin: 8pt auto 0;
+        transition: transform .2s linear;
+        &.active{
+            transform: rotate(-180deg);
+        }
+    }
+    .spinner{
+        width: 26pt;
+        height: 26pt;
+    }
+    .text{
+        line-height: 26pt;
+    }
+    
 }
 
 @keyframes refreshLoading
