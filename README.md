@@ -8,3 +8,6 @@ npm --registry https://registry.npm.taobao.org install node-red-contrib-composer
  npm config set registry https://registry.npm.taobao.org
 全局配置切换到官方源
  npm config set registry http://www.npmjs.org
+
+
+ 

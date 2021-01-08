@@ -284,8 +284,10 @@ export default {
                         });
                     this.nowItems = data;
                     this.$nextTick(()=>{
-                        this.$refs.body.calcMax();
-                        this.$refs.body.scrollToNow(0, this.currentIndex[this.currentIndex.length-1]*this.itemHeight)
+                         if(JSON.stringify(this.nowItems)!==JSON.stringify(data)) {
+                            this.$refs.body.calcMax();
+                            this.$refs.body.scrollToNow(0, this.currentIndex[this.currentIndex.length-1]*this.itemHeight)
+                        }    
                     })
                    
                     if(isInit) {
