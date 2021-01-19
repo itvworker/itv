@@ -58,14 +58,14 @@ export default {
     },
     data() {
         return {
-            list:[],
+            // list:[],
             currentDate: '2020/10/10',
             minMonth:'2020/10',
             maxMonth: '2021/12',
             sliverIndex: 0,
             columnIndex:0,
             headerMinHeight: 44,
-            headerMinHegiht: 200
+            headerMaxHeight: 200
         }
     },
     watch: {
@@ -75,15 +75,15 @@ export default {
         }
     },
     computed: {
-    //    list() {
-    //         let arr = [];
-    //         for(let i = 0; i < 100; i++) {
-    //             arr.push({
-    //                 title: '测试内容'
-    //             })
-    //         }
-    //         return arr;
-    //    } 
+       list() {
+            let arr = [];
+            for(let i = 0; i < 100; i++) {
+                arr.push({
+                    title: '测试内容'
+                })
+            }
+            return arr;
+       } 
     },
     methods: {
        refresh() {
@@ -105,17 +105,17 @@ export default {
         
     },
     mounted() {
-        setInterval(()=>{
-            this.list.push({
-                title: '测试内容'
-            })
-            // this.$refs.sliver0.refresh()
-            // this.$refs.sliver1.refresh()
-        },500)
+        // setInterval(()=>{
+        //     this.list.push({
+        //         title: '测试内容'
+        //     })
+        //     // this.$refs.sliver0.refresh()
+        //     // this.$refs.sliver1.refresh()
+        // },500)
         this.$refs.sliver0.sliverIndex()
         this.headerMaxHeight = this.$refs.header.clientHeight;
         this.headerMinHeight = this.$refs.btns.clientHeight;
-        this.$refs.scroller.refresh()
+        this.$refs.slivers.refresh()
         
        
     }

@@ -1,11 +1,11 @@
 <template>
-    <div class="fix-action">
-        <div class="fix-action-header" ref="header">
+    <div class="itv-scroll-evevator">
+        <div class="itv-scroll-evevator-header" ref="header">
             <slot name="header">
                 {{title}}
             </slot>
         </div>
-        <div class="fix-action-body">
+        <div class="itv-scroll-evevator-body">
             <slot></slot>
         </div>
     </div>
@@ -36,7 +36,6 @@ export default {
            if(res.y > this.top ) {
                let y =res.y-this.top;
                if(y>this.maxY) {
-                 
                    y = this.maxY
                }
                this.y = y
@@ -55,20 +54,24 @@ export default {
     },
     methods: {
         init() {
+            
             this.top = this.$el.offsetTop;
             this.height = this.$el.clientHeight;
-            this.header = render(this.$refs.header);
-            this.headerHeight = this.$refs.header.clientHeight;
+            this.header = render(this.$el.children[0]);
+            this.headerHeight = this.$el.children[0].clientHeight;
             this.maxY = this.height - this.headerHeight;
-
         }
     }
 
 }
 </script>
 <style lang="less">
-.fix-action {
+.itv-scroll-evevator {
     overflow: hidden;
     position: relative;
+    .itv-scroll-evevator-header{
+        margin-top: -0.5px;
+    }
+    
 }
 </style>

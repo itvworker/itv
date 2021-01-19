@@ -28,7 +28,7 @@
 
 import touch from './mixins/touch'
 import render from '../../libs/render'
-import  slideHeight  from '../../libs/scale.render.js'
+import slideHeight  from '../../libs/scale.render.js'
 import calcscroll from './mixins/calcscroll'
 import animate from './mixins/animate.scroller'
 import refreshBar from './refresh.vue'
@@ -81,7 +81,7 @@ export default {
         },
         percent: {
             type: Number,
-            default: 0.95
+            default: 0.92
         },
         id: {
             type: String,

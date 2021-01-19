@@ -1,7 +1,8 @@
 <template>
     <label class="itv-label">
         <div class="itv-label-title">
-            {{label}}
+         *{{label}}
+         
         </div>
         <div class="itv-label-content">
             <slot />
@@ -38,22 +39,27 @@
 <style lang="less" >
 .itv-label {
     display: flex;
-    min-height: 44ipx;
     border-bottom: #eee solid 1px;
-    .itv-label-title{
-        height: 100%;
-        line-height: 44ipx;
-        min-width: 80ipx;
-        font-size: 14ipx;
-        padding-left: 15ipx;
-    }
+    padding: 10.5ipx 15ipx;
+    line-height: 1.6;
+    font-size: 14ipx;
+    align-items: center;
+
     .itv-label-content{
         flex: 1;
-        input {
-            height: 100%;
-            font-size: 14ipx;
-            width: 100%;
-        }
+        display: flex;
+        align-items: center;
+    }
+    .itv-label-title{
+        // margin-right: 10ipx;
+       
+        box-sizing: border-box;
+        display: flex;
+        width: 50ipx;   
+        height: 22ipx;
+        align-items: center;
+        background-color: #aaa;
+        
     }
     
 }

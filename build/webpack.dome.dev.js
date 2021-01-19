@@ -6,6 +6,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
+
+
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
 }
@@ -150,7 +152,7 @@ module.exports = {
             filename: 'index.html',
             template: 'public/index.dev.html',
             inject: true
-        }),
+        })
         // new CleanWebpackPlugin()
         // new CopyWebpackPlugin([
         //     {

@@ -7,8 +7,9 @@
            @keydown="keydown"
            v-model="currentValue"
     />
+    
     <!-- <div class="input-placeholder" v-show="inputValue.toString().length<=0">{{placeholder}}</div> -->
-    <i></i>
+    
 </div>
     
 </template>
@@ -61,7 +62,8 @@
 
             },
             keydown(e) {
-                
+                 
+                 //当type ===number 只能输入数字
                  if(this.numberStr.indexOf(e.key) >-1&& this.type==='number') {
                     e.preventDefault()   
                 }
@@ -84,18 +86,20 @@
 <style lang="less">
 .itv-input-box {
     display: flex;
-    height: 100%;
     position:relative;
-    .input-placeholder{
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-size: @itv-font-size-base;
-        color: @itv-color-text-light;
-
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    .itv-input{
+        line-height: normal;
+        font-size: 14ipx;
+        height: 22ipx;
+        box-sizing: border-box;
+    
+        vertical-align: middle;
+    
+        box-sizing: border-box;
     }
+   
 }
 </style>

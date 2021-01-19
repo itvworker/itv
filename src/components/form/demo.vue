@@ -4,7 +4,7 @@
         <itv-main>
             <itv-form>
                 <itv-label :label="item.name" :key="index" v-for="(item, index) in inputList">
-                    <itv-input placeholder="请输入你的名字" type="number" inputType="positive" />
+                    <itv-input placeholder="请输入你的名字" :type="item.type" inputType="positive" />
                 </itv-label>
             </itv-form>
         </itv-main>
@@ -33,7 +33,13 @@
                 inputList: [
                     {   
                         id:1,
-                        name: "名字"
+                        name: "数字",
+                        type: "number"
+                    },
+                    {   
+                        id:2,
+                        name: "名字",
+                        type: "text"
                     }
                 ]
             }

@@ -94,6 +94,7 @@ export default {
             if(coordinate === this.coordinate) {
                 return
             }
+           
             this.scrollTo(n, true);
             
         }
@@ -412,19 +413,22 @@ export default {
         scrollTo(value, isAnimate) {
             if(value < 0 || value >= this.number) return
             this.isAnimating = !!isAnimate;
-            if(this.isLoop) {
-                this.nowIndex = value + 1
+            this.$nextTick(()=>{
+                if(this.isLoop) {
+                    this.nowIndex = value + 1
+                    this.coordinate = this.nowIndex*this.elSize;
+                    this.setPostion()
+                    this.$emit('input', value)
+                    this.$emit('change', value)
+                    return
+                }
+                this.nowIndex = value;
                 this.coordinate = this.nowIndex*this.elSize;
-                this.setPostion()
+                this.setPostion();
                 this.$emit('input', value)
                 this.$emit('change', value)
-                return
-            }
-            this.nowIndex = value;
-            this.coordinate = this.nowIndex*this.elSize;
-            this.setPostion();
-            this.$emit('input', value)
-            this.$emit('change', value)
+            })
+            
         }
     },
     
