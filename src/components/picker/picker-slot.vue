@@ -1,18 +1,17 @@
 <template>
   <div class="itv-picker-list" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"  @touchcancel="touchEnd">
-    <div class="itv-picker-roller" ref="roller">
-        <div class="itv-picker-roller-item"
-            :class="{'itv-picker-roller-item-hidden': isHidden(index + 1)}"
-            v-for="(item,index) in listData"
-            :style="setRollerStyle(index + 1)"
-            :key="item.label ? item.label : index">
-                {{(item.name || item.value || item) | formatWord(word)}}
-        </div>
-    </div>
-    <div class="itv-picker-content" ref="height">
-        <div class="itv-picker-list-panel" ref="list">
-            <div class="itv-picker-item" v-for="(item,index) in listData"
+   
+    <div class="itv-picker-content" ref="height" @transitionEnd="transitionEnd"  @webkitTransitionEnd="transitionEnd" >
+        <div class="itv-picker-list-panel"  ref="list">
+            <div class="itv-picker-item" v-for="(item,index) in listData" 
+                :key="item.label ? item.label+'up' : index+'up'"
+                >{{(item.name || item.value || item) | formatWord(word)}}
+            </div>
+            <div class="itv-picker-item" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData"
                 :key="item.label ? item.label : index">{{(item.name || item.value || item) | formatWord(word)}}
+            </div>
+            <div class="itv-picker-item" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
+                :key="item.label ? item.label+'next' : index+'next'">{{(item.name || item.value || item) | formatWord(word)}}
             </div>
         </div>
     </div>
@@ -46,6 +45,10 @@ export default {
         word: {
             type: String,
             default: '{value}'
+        },
+        isLoop: {
+            type: Boolean,
+            default: false
         }
         
     },
@@ -54,6 +57,7 @@ export default {
             touchParams: {
                 startY: 0,
                 endY: 0,
+            
                 startTime: 0,
                 endTime: 0
             },
@@ -63,7 +67,9 @@ export default {
             lineSpacing: 44,
             rotation: 24,
             timer: null,
-            isTouch: false
+            isTouch: false,
+            moveArr:[],
+            lastIndex: 0
         }
     },
     watch: {
@@ -86,6 +92,23 @@ export default {
                 this.transformY = this.scrollDistance
                 this.modifyStatus()
             }
+        }
+    },
+    computed: {
+        listLength() {
+            return this.listData.length
+        },
+        minLast() {
+            return (this.listData.length - 1) * this.lineSpacing + (this.listData.length - 3) * this.lineSpacing
+        },
+        maxLast() {
+            return (this.listData.length - 3) * this.lineSpacing
+        },
+        /**
+         * 是否达到循环滚动的条件
+         */
+        isLoopScroll() {
+            return this.isLoop && this.listLength >=5
         }
     },
     methods: {
@@ -112,58 +135,102 @@ export default {
         },
 
         setTransform(translateY = 0, type, time = 1000, deg) {
-            if (type === 'end') {
-                this.$refs.list.style.webkitTransition = `transform ${time}ms cubic-bezier(0.19, 1, 0.22, 1)`;
-                this.$refs.roller.style.webkitTransition = `transform ${time}ms cubic-bezier(0.19, 1, 0.22, 1)`;
+            let dom = this.$refs.list;
+            if (type === 'end') { //手指结束滑动时走这里，给过渡动画加上时间
+                dom.style.webkitTransition = `transform ${time}ms cubic-bezier(0.19, 1, 0.22, 1)`;
+                
             } else {
-                this.$refs.list.style.webkitTransition = '';
-                this.$refs.roller.style.webkitTransition = '';
+               dom.style.webkitTransition = '';
+              
             }
-            this.$refs.list.style.webkitTransform = `translate3d(0, ${translateY}px, 0)`;
-            this.$refs.roller.style.webkitTransform = `rotate3d(1, 0, 0, ${deg})`;
+            //给过dom加上滑动所要滑动的点
+            if(this.isLoopScroll) {
+                dom.style.marginTop=`-${this.lineSpacing*this.listData.length}px`
+            }else{
+                dom.style.marginTop=`0px`
+            }
+            
+            
+            dom.style.webkitTransform = `translate3d(0, ${translateY}px, 0)`;
             this.scrollDistance = translateY;
+            this.transformY =  translateY;
+            
+        },
+        /**
+         * 过渡动画结束
+         */
+        transitionEnd() {
+            this.calcOverScroll();
+            this.setTransform(this.transformY, null, null, 0);
+            this.setChooseValue(this.transformY);
         },
 
         setMove(move, type, time) {
-            let updateMove = move + this.transformY;
-            if (type === 'end') {
+          
+            this.transformY = move + this.transformY;
+           
+            if (type === 'end') { //手指结束滑动走这里
                 // 限定滚动距离
-                if (updateMove > 0) {
-                    updateMove = 0;
-                }
-                if (updateMove < -(this.listData.length - 1) * this.lineSpacing) {
-                    updateMove = -(this.listData.length - 1) * this.lineSpacing;
-                }
+                this.calcOverScroll();
 
                 // 设置滚动距离为lineSpacing的倍数值
-                let endMove = Math.round(updateMove / this.lineSpacing) * this.lineSpacing;
+                let endMove = Math.round(this.transformY / this.lineSpacing) * this.lineSpacing;
                 let deg = `${(Math.abs(Math.round(endMove / this.lineSpacing)) + 1) * this.rotation}deg`;
                 this.setTransform(endMove, type, time, deg);
-                this.timer = setTimeout(() => {
-                    this.setChooseValue(endMove);
-                }, time / 2);
-
+                // this.timer = setTimeout(() => {
+                //     this.setChooseValue(endMove);
+                // }, time / 2);
+                    
                 this.currIndex = (Math.abs(Math.round(endMove/ this.lineSpacing)) + 1);
             } else {
+               
                 let deg = '0deg';
-                if (updateMove < 0) {
-                    deg = `${(Math.abs(updateMove / this.lineSpacing) + 1) * this.rotation}deg`;
-                } else {
-                    deg = `${((-updateMove / this.lineSpacing) + 1) * this.rotation}deg`;
+                if(this.isLoopScroll) {
+                    if(this.transformY>0){
+                        this.transformY = (this.transformY-(this.listData.length - 1) * this.lineSpacing)
+                    } 
+
+                    if (this.transformY < -(this.listData.length - 1) * this.lineSpacing) {
+                        this.transformY = -(this.listData.length - 1) * this.lineSpacing + (this.listData.length - 1) * this.lineSpacing;
+                    }
                 }
 
-                this.setTransform(updateMove, null, null, deg);
-                this.currIndex = (Math.abs(Math.round(updateMove/ this.lineSpacing)) + 1);
+                
+                this.setTransform(this.transformY, null, null, deg);
+                this.currIndex = (Math.abs(Math.round(this.transformY/this.lineSpacing)) + 1);
+               
             }
         },
         setLastValue(index) {
-
             this.setChooseValue(-this.lineSpacing*index)
         },
         setChooseValue(move) {
             if(this.isTouch) return;
-            let index = Math.round(-move / this.lineSpacing)
+            let index = Math.round(-move / this.lineSpacing);
+            console.log(index); 
+            console.log(this.listData[index]);             
             this.$emit('chooseItem', this.listData[index], this.keyIndex, index);
+        },
+        /**
+         * 计算时否超出来滚距离
+         */
+        calcOverScroll(){
+            if(this.isLoopScroll) {
+                if (this.transformY > this.maxLast) {
+                    this.transformY = this.maxLast; 
+                }
+                
+                if (this.transformY < -this.minLast) {
+                    this.transformY = -this.minLast;
+                }
+            }else{
+                if (this.transformY > 0) {
+                    this.transformY = 0;
+                }
+                if (this.transformY < -(this.listData.length - 1) * this.lineSpacing) {
+                    this.transformY = -(this.listData.length - 1) * this.lineSpacing;
+                }
+            }
         },
 
 	    touchStart(event) {
@@ -171,6 +238,7 @@ export default {
             event.preventDefault();
             let changedTouches = event.changedTouches[0];
             this.touchParams.startY = changedTouches.pageY;
+            this.touchParams.lastY = changedTouches.pageY;
             this.touchParams.startTime = event.timestamp || Date.now();
             this.transformY = this.scrollDistance;
             
@@ -179,12 +247,17 @@ export default {
 
         touchMove(event) {
             event.preventDefault();
-
             let changedTouches = event.changedTouches[0];
+            let move = changedTouches.pageY - this.touchParams.lastY;
             this.touchParams.lastY = changedTouches.pageY;
             this.touchParams.lastTime = event.timestamp || Date.now();
-           
-            let move = this.touchParams.lastY - this.touchParams.startY;
+            this.moveArr.push({
+                y: changedTouches.pageY,
+                timestamp: event.timestamp || Date.now()
+            })
+            if(this.moveArr.length>20) {
+               this.moveArr = this.moveArr.splice(-20,20)
+            }
             this.setMove(move);
         },
 
@@ -193,25 +266,63 @@ export default {
             event.preventDefault();
 
             let changedTouches = event.changedTouches[0];
+            let move =changedTouches.pageY - this.touchParams.lastY;
             this.touchParams.lastY = changedTouches.pageY;
             this.touchParams.lastTime = event.timestamp || Date.now();
-            let move = this.touchParams.lastY - this.touchParams.startY;
-
             let moveTime = this.touchParams.lastTime - this.touchParams.startTime;
-            if (moveTime <= 300) {
-                move = move * 2;
-                moveTime = moveTime + 1000;
+            
+            this.moveArr.push({
+                y: changedTouches.pageY,
+                timestamp: event.timestamp || Date.now()
+            })
+            if(this.moveArr.length>20) {
+                this.moveArr = this.moveArr.splice(-20,20)
+            }
+
+
+            let moveDis  = this.getDistance();   
+            if (Math.abs(moveDis.disY)>= 50) {
+                move = moveDis.disY * 2;
+                moveTime = moveDis.timestamp + 500;
                 this.setMove(move, 'end', moveTime);
             } else {
-                this.setMove(move, 'end');
+                this.setMove(move, 'end', 300);
             }
             this.isTouch = false
         },
+        /**
+         * 获取100毫秒的距离和时间
+         *  */
+        getDistance() {
+            let index = this.moveArr.length-1;
+            if(index <=0) {
+                return {
+                    timestamp: 0,
+                    disY: 0
+                }
+            }
+            let last = this.moveArr[index];
+            for(let i = index; i>=0; i--) {
+                if(last.timestamp - this.moveArr[i].timestamp<300) {
+                    index = i;
+                }else{
+                    break;
+                }
+            }
+            if(index === this.moveArr.length-1) {
+                 return {
+                    timestamp: 0,
+                    disY: 0
+                }
+            }
 
+            return {
+                timestamp: last.timestamp - this.moveArr[index].timestamp,
+                disY: last.y - this.moveArr[index].y
+            }
+        },    
         modifyStatus (type, defaultValue) {
-            let style = window.getComputedStyle(this.$refs.roller)
-
-            this.lineSpacing = parseFloat(style.height);
+            this.lineSpacing = this.lineSpacing = this.$refs.height.clientHeight;
             this.rotation = this.lineSpacing/2+2;
             // console.log(this.lineSpacing)
             defaultValue = defaultValue ? defaultValue : this.defaultValue;
@@ -224,7 +335,7 @@ export default {
     },
     
     mounted() {
-        this.lineSpacing = this.$refs.height.clientHeight;
+        this.lineSpacing = this.$refs.height.clientHeight; //每一行的高度
 
         this.$nextTick(() => {
             this.modifyStatus(true);

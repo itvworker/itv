@@ -26,7 +26,7 @@
                  <swiper   :loop="false" v-model="columnIndex" class="itv-swpier-height">
                      <swiper-item class="swiper-item">
                          <sliver  :bounceTop="false" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
-                            <div class="test-list" v-for="(item, index)  in list" :key="index">
+                            <div class="test-list" v-for="(item, index)  in list" :key="index" @click="casePush">
                                 sliver1{{item.title}} {{index}}
                             </div>
                         </sliver>
@@ -70,7 +70,6 @@ export default {
     },
     watch: {
         columnIndex(index, old) {
-           
             this.$refs['sliver'+index].sliverIndex();
         }
     },
@@ -93,6 +92,9 @@ export default {
                 this.$refs.sliver0.refresh()
                 this.$refs.sliver1.refresh()
            },2000)
+       },
+       casePush() {
+           alert('content')
        },
        pull(y) {
            console.log(y);

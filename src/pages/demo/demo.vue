@@ -9,7 +9,7 @@
                 </div>
             </section>
             <img :src="imageUrl" />
-
+            
             
         </itv-main>    
     </itv-container>

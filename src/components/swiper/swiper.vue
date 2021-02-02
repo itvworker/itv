@@ -136,7 +136,7 @@ export default {
         touchstart(e) {
             
             //判断动画是否在进行中, 进行中禁止滑动
-            // if (this.isAnimating) return
+            if (this.isAnimating) return
             this.elPositon = this.$el.getBoundingClientRect()
             this.isAnimating = false;
             this.touchstartTime= new Date().getTime()
@@ -295,7 +295,6 @@ export default {
                         this.coordinate = this.moveMax;
                         this.setPostion()
                         this.$emit('last') 
-                        
                         return
                     }
                     //快速滑过

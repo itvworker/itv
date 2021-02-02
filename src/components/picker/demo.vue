@@ -11,37 +11,7 @@
         @confirm="setChooseValue0"
       ></picker>
       <!-- demo 城市选择(联动)-->
-      <picker
-        :is-visible="isVisible"
-        title="请选择城市"
-        :list-data="listData"
-        :default-value-data="defaultValueData"
-        @close="switchPicker('isVisible')"
-        @confirm="setChooseValue"
-        @choose="updateChooseValue"
-        @close-update="closeUpdateChooseValue"
-      ></picker>
-      <!-- demo 年选择-->
-      <picker
-        :is-visible="isVisible1"
-        :default-value-data="defaultValueData1"
-        :list-data="listData1"
-        @close="switchPicker('isVisible1')"
-        @confirm="setYearValue"
-      ></picker>
-      <!-- demo 城市选择(联动) 自定义-->
-      <picker
-        :is-visible="isVisible2"
-        title="请选择城市"
-        :default-value-data="defaultValueData"
-        :list-data="custmerCityData"
-        :lastChange="true"
-        @close="switchPicker('isVisible2')"
-        @confirm="setChooseValueCustmer"
-        @choose="updateChooseValueCustmer"
-        @close-update="closeUpdateChooseValueCustmer"
-
-      ></picker>
+     
   </itv-main>
   </itv-container>
 
@@ -96,35 +66,11 @@ export default {
           "2012",
           "2013",
           "2014",
-          "2015",
-          "2016",
-          "2017",
-          "2018",
-          "2019",
-          "2020",
-          "2021",
-          "2022",
-          "2023",
-          "2024",
-          "2025",
-          "2026",
-          "2027",
-          "2028",
-          "2029",
-          "2030",
-          "2031",
-          "2032",
-          "2033",
-          "2034",
-          "2035",
-          "2036",
-          "2037",
-          "2038",
-          "2039"
+          
         ],
         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
       ],
-      defaultValueData0: ["2012", "2"],
+      defaultValueData0: ["2010", "2"],
       city: null,
       isVisible: false,
       data: {

@@ -107,6 +107,7 @@
                                     :list-data="hour24"
                                     @chooseItem="chooseItem"
                                     :key-index="0"
+                                    isLoop
 
                                 ></picker-slot>
                               <div class="itv-picker-list itv-picker-list-mark ">
@@ -122,6 +123,7 @@
                                     :list-data="minutes"
                                     @chooseItem="chooseItem"
                                     :key-index="1"
+                                    isLoop
                                 ></picker-slot>
                         </div>
                     </div>
