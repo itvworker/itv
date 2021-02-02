@@ -2,15 +2,13 @@
     <itv-container>
         <itv-header>ITV</itv-header>
         <itv-main>
-            <section class="demo-content">
-                <div class="dot-link" v-for="item in navs" @click.stop="topage(item)">
+            <section class="demo-content"  @tap="send">
+                <div class="dot-link" v-for="item in navs" @touchstart="sendEvent" @click.stop="topage(item)">
                     <i :class="item.icon"></i>
                     <div class="name">{{item.name}}</div>
                 </div>
             </section>
             <img :src="imageUrl" />
-            
-            
         </itv-main>    
     </itv-container>
 
@@ -40,10 +38,20 @@ export default {
             });
         },
         topage(item) {
+            
             this.$router.push({
                 name: item.routerName
             })
+        },
+        send(e) {
+            console.log(e);
+            console.log('----------');
+        },
+        sendEvent(e) {
+            var ev = new Event("tap", {"bubbles":true, "cancelable":false});
+            e.target.dispatchEvent(ev);
         }
+        
     },
     mounted() {
         html2img.getSvg(this.$el)
