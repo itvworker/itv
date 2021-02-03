@@ -205,7 +205,7 @@
             },
             rows: {
                 type: Number,
-                rows: 5
+                rows: 7
             }
         },
         watch: {
