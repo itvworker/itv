@@ -81,9 +81,7 @@ export default {
             // this.transformY = 0;
             // this.modifyStatus();
         },
-        transformY(n,o){
-            
-        },
+       
         listData(n,o) {
             if(this.lastChange){
                 let lineIndex = Math.abs(parseInt(this.scrollDistance/this.lineSpacing));
@@ -135,13 +133,14 @@ export default {
         },
 
         setTransform(translateY = 0, type, time = 1000, deg) {
+           
             let dom = this.$refs.list;
             if (type === 'end') { //手指结束滑动时走这里，给过渡动画加上时间
                 dom.style.webkitTransition = `transform ${time}ms cubic-bezier(0.19, 1, 0.22, 1)`;
-                
+               
             } else {
                dom.style.webkitTransition = '';
-              
+               
             }
             //给过dom加上滑动所要滑动的点
             if(this.isLoopScroll) {
@@ -160,9 +159,24 @@ export default {
          * 过渡动画结束
          */
         transitionEnd() {
-            this.calcOverScroll();
-            this.setTransform(this.transformY, null, null, 0);
-            this.setChooseValue(this.transformY);
+           
+            
+            let index = Math.round(-this.transformY / this.lineSpacing);
+            console.log('before:'+index);
+            if(index > this.listLength-1) {
+                let num = index - this.listLength;
+                this.transformY = -num * this.lineSpacing
+            }
+            if(index<0) {
+                let num = this.listLength+index;
+                this.transformY = num * this.lineSpacing
+            }
+            index = Math.round(-this.transformY / this.lineSpacing);
+            console.log('after:'+index);
+            console.log(this.listData[index]);
+
+            // this.setTransform(this.transformY, null, null, 0);
+            // this.setChooseValue(this.transformY);
         },
 
         setMove(move, type, time) {
@@ -171,51 +185,68 @@ export default {
            
             if (type === 'end') { //手指结束滑动走这里
                 // 限定滚动距离
-                this.calcOverScroll();
+                console.log('end:'+this.transformY);
+                // if(this.isLoopScroll) {
+                //     if(this.transformY > this.lineSpacing){
+                //         this.transformY = this.transformY-this.listData.length  * this.lineSpacing
+                //     } 
+
+                //     if (this.transformY < -this.listData.length  * this.lineSpacing) {
+                //         this.transformY = Math.abs(this.transformY) - this.listData.length * this.lineSpacing;
+                        
+                //     }
+                // }else{
+                //     this.calcOverScroll();
+                // }
+
+                if(!this.isLoopScroll) {
+                    this.calcOverScroll();
+                }
 
                 // 设置滚动距离为lineSpacing的倍数值
-                let endMove = Math.round(this.transformY / this.lineSpacing) * this.lineSpacing;
-                let deg = `${(Math.abs(Math.round(endMove / this.lineSpacing)) + 1) * this.rotation}deg`;
-                this.setTransform(endMove, type, time, deg);
+                
+                this.transformY = Math.round(this.transformY / this.lineSpacing) * this.lineSpacing;
+                let deg = `${(Math.abs(Math.round(this.transformY / this.lineSpacing)) + 1) * this.rotation}deg`;
+                this.setTransform(this.transformY, type, time, deg);
                 // this.timer = setTimeout(() => {
                 //     this.setChooseValue(endMove);
                 // }, time / 2);
                     
-                this.currIndex = (Math.abs(Math.round(endMove/ this.lineSpacing)) + 1);
+                this.currIndex = (Math.abs(Math.round(this.transformY/ this.lineSpacing)) + 1);
             } else {
-               
+                
                 let deg = '0deg';
                 if(this.isLoopScroll) {
-                    if(this.transformY>0){
-                        this.transformY = (this.transformY-(this.listData.length - 1) * this.lineSpacing)
+                    if(this.transformY > this.lineSpacing){
+                        this.transformY = this.transformY-this.listData.length  * this.lineSpacing
                     } 
 
-                    if (this.transformY < -(this.listData.length - 1) * this.lineSpacing) {
-                        this.transformY = -(this.listData.length - 1) * this.lineSpacing + (this.listData.length - 1) * this.lineSpacing;
+                    if (this.transformY < -this.listData.length  * this.lineSpacing) {
+                        this.transformY = Math.abs(this.transformY) - this.listData.length * this.lineSpacing;
+                        
                     }
                 }
-
-                
+            
+                console.log('begin:'+this.transformY);
                 this.setTransform(this.transformY, null, null, deg);
                 this.currIndex = (Math.abs(Math.round(this.transformY/this.lineSpacing)) + 1);
                
             }
         },
+       
         setLastValue(index) {
             this.setChooseValue(-this.lineSpacing*index)
         },
         setChooseValue(move) {
             if(this.isTouch) return;
-            let index = Math.round(-move / this.lineSpacing);
-            console.log(index); 
-            console.log(this.listData[index]);             
+            let index = Math.round(-this.transformY / this.lineSpacing);
             this.$emit('chooseItem', this.listData[index], this.keyIndex, index);
         },
         /**
          * 计算时否超出来滚距离
          */
-        calcOverScroll(){
-            if(this.isLoopScroll) {
+        calcOverScroll(touch){
+            if(this.isLoopScroll && !touch) {
                 if (this.transformY > this.maxLast) {
                     this.transformY = this.maxLast; 
                 }
@@ -232,7 +263,7 @@ export default {
                 }
             }
         },
-
+            
 	    touchStart(event) {
             this.isTouch = true
             event.preventDefault();
@@ -270,7 +301,7 @@ export default {
             this.touchParams.lastY = changedTouches.pageY;
             this.touchParams.lastTime = event.timestamp || Date.now();
             let moveTime = this.touchParams.lastTime - this.touchParams.startTime;
-            
+            this.setMove(move);
             this.moveArr.push({
                 y: changedTouches.pageY,
                 timestamp: event.timestamp || Date.now()
@@ -282,8 +313,16 @@ export default {
 
             let moveDis  = this.getDistance();   
             if (Math.abs(moveDis.disY)>= 50) {
-                move = moveDis.disY * 2;
-                moveTime = moveDis.timestamp + 500;
+                move = moveDis.disY;
+                if(Math.abs(move)>(this.listLength-1)*this.lineSpacing) {
+                    if(move>=0) {
+                        move = (this.listLength-1)*this.lineSpacing
+                    }else{
+                        move = -(this.listLength-1)*this.lineSpacing
+                    }
+                }
+
+                moveTime = moveDis.timestamp + 1000;
                 this.setMove(move, 'end', moveTime);
             } else {
                 this.setMove(move, 'end', 300);
