@@ -9,6 +9,9 @@
 
                 <itv-cell :isLink="true" @click="alert('html')" :showIcon="true" title="日历类型">
                 </itv-cell>
+
+                <itv-cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型">
+                </itv-cell>
             </section>
         </itv-main>
     </itv-container>
@@ -28,9 +31,9 @@ export default {
       },
       confirm(value) {
           this.$itv.calendarTime.show({
-               minDate: '2020-08-05 10:02',
+               minDate: '2020-08-05 10:56',
                value: '2020-09-12 10:15',
-               maxDate: '2300-09-18 10:15',
+               maxDate: '2020-09-18 10:15',
                style:"average"
           })
       },
@@ -38,6 +41,17 @@ export default {
             this.$itv.calendarTime.show({
                 value: '2020-09-12 10:15',
                 dateType: 'calendar'
+            })
+      },
+      openTime() {
+            this.$itv.calendarTime.show({
+                value: '10:12',
+                minDate: '10:05',
+                maxDate: '23:59',
+                dateType: 'time',
+                confirm:(msg) => {
+                    console.log(msg);
+                }
             })
       },
       page() {

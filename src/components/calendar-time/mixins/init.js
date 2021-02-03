@@ -21,6 +21,10 @@ export default {
         init(value) {
             let datetime = value || this.value    
             let arr = datetime.split(' ');
+            
+            if(!arr[1]) {
+                arr[1]='00:00'
+            }
             let timeArr = arr[1].split(':')
             let ymd = arr[0].split('-');     
             let year = parseInt(ymd[0]); //获取年份
@@ -31,8 +35,11 @@ export default {
             this.currentValue = arr[0];
             this.currentHour = timeArr[0];
             this.currentMin = timeArr[1]
-            let ymdnumber = parseInt(year + this.gt(month))
             
+            // let ymdnumber = parseInt(year + this.gt(month));
+            
+            this.initTime();
+       
         },
         
 

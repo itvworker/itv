@@ -1,9 +1,7 @@
 import render from '../libs/render'
 import { slideHeight } from '../libs/height'
 
-var dom
-var wdom
-var hdom
+
 export default {
     data() {
         return {

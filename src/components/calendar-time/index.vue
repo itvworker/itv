@@ -14,9 +14,19 @@
                              {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
                         </div> -->
                     </div>
+
+                    <div class="itv-calendar-top" v-if="dateType==='time'">
+                        <div class="itv-calendar-cancel-btn" @click="hideOnClick">
+                            {{cancelText}}
+                        </div>
+                        <div class="title">{{titleText}}</div>
+                        <div class="itv-calendar-sure-btn" @click="confrimSelect">
+                            {{confirmText}}
+                        </div>
+                    </div>
                       
-                    <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1}">
-                        <div class="week-bar">
+                    <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1 }">
+                        <div class="week-bar" v-if="dateType!=='time'">
                             <div class="week-item" v-for="(item, index) in weekTexts" :key="index">{{item}}</div>
                         </div> 
                         <swiper ref="swiper" :bounce="false"
@@ -25,6 +35,7 @@
                             :loop="false" 
                             v-model="columnIndex"
                             class="itv-swpier-calendar-time"
+                            :class="{'itv-calendar-only-time': dateType==='time'}"
                             :beginBounce="beginBounce"
                             :endBounce="endBounce"
                            >
@@ -99,7 +110,7 @@
                                 </div>
                             </swiper-item>
                         </swiper>
-                        <div class="itv-picker-slot-box" v-if="dateType==='calendar-time'">
+                        <div class="itv-picker-slot-box" :class="{'itv-calendar-only-time': dateType==='time'}" v-if="dateType==='calendar-time'||dateType==='time'">
                                 <picker-slot ref="picker-0"
                                     class="itv-calendar-picker"
                                     :default-value="currentHour"
@@ -107,11 +118,11 @@
                                     :list-data="hour24"
                                     @chooseItem="chooseItem"
                                     :key-index="0"
+                                    :rows="rows"
                                     isLoop
-
                                 ></picker-slot>
                               <div class="itv-picker-list itv-picker-list-mark ">
-                                     <div class="itv-picker-indicator itv-picker-mark">
+                                     <div class="itv-picker-indicator itv-picker-mark" :class="['itv-picker-row'+rows]">
                                         ：
                                     </div>
                                 </div>
@@ -124,6 +135,7 @@
                                     @chooseItem="chooseItem"
                                     :key-index="1"
                                     isLoop
+                                    :rows="rows"
                                 ></picker-slot>
                         </div>
                     </div>
@@ -176,6 +188,11 @@
                 type: String,
                 default:'请选择日期'
             },
+            cancelText:{
+                type: String,
+                default:'取消'
+            },
+        
             //日历滑动方向  column竖向， row横向
             calendarDir: {
                 type: String,
@@ -185,6 +202,10 @@
             style: {
                 type: String,
                 default: 'average'// note固定6行，空白时就空白 , average平均分
+            },
+            rows: {
+                type: Number,
+                rows: 5
             }
         },
         watch: {
@@ -205,12 +226,15 @@
                 
             },
             isVisible(n) {
-                if(!n && (this.dateType === 'calendar-time' || this.dateType === 'calendar')) {
+                // if(!n && (this.dateType === 'calendar-time' || this.dateType === 'calendar' || this.dateType === 'time')) {
+                //     setTimeout(()=>{
+                //         this.dataType = 0 
+                //     },300)
+                // }
+                if(!n) {
                     setTimeout(()=>{
                         this.dataType = 0 
                     },300)
-                }
-                if(!n) {
                     this.$emit('hide')
                 }
             },
@@ -303,14 +327,18 @@
                 this.month = item.month;
             },
             confrimSelect() {
-                this.$emit('confirm', this.currentValue+' ' + this.currentHour+':' +this.currentMin);
+                if(this.dateType ==='time') {
+                    this.$emit('confirm', this.currentHour+':' +this.currentMin);
+                }else{
+                    this.$emit('confirm', this.currentValue+' ' + this.currentHour+':' +this.currentMin);
+                }
+                
                 this.isVisible = false;   
             },
             /**
              * 选择日期
              */
             selectDay(index, item, select) {
-                 
                 //不在可选范围内不给选择
               
                if(item.ymdnumber > this.calcMaxYmd  || item.ymdnumber < this.calcMinYmd)  return

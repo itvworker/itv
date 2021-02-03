@@ -25,17 +25,41 @@
         border-bottom: @itv-border-color-base solid 1px;
         content: ' ';
         display: block;
-       font-size: 0px;
-        left: 0px;
-        right: 0px;
-        transform: scaleY(0.5);
+        font-size: 0px;
+        left: 0;
+        right: 0;
+        position: absolute;
+        bottom: 1px;
+        transform: scaleY(0.5) translateY(20%);
+        
+        
       }
       font-size: 16ipx;
       .title {
-        line-height: 40ipx;
-        height: 40ipx;
+        line-height: 44ipx;
+        height: 44ipx;
       }
       text-align: center;
+
+      .itv-calendar-cancel-btn{
+        position: absolute;
+        left: 0;
+        height: 100%;
+        top: 0;
+        line-height: 44ipx;
+        padding-left: 15ipx;
+        color:@itv-color-text-sub;
+      }
+      .itv-calendar-sure-btn{
+        position: absolute;
+        right: 0;
+        height: 100%;
+        top: 0;
+        line-height: 44ipx;
+        padding-right: 15ipx;
+        color:@itv-primary-color;
+        
+      }
   }
   >.itv-calendar-time-top{
       background-color:@itv-bg-color-light ;// #fff;
@@ -112,12 +136,15 @@
   width: 100%;
   flex: 0 0 auto;
   display: flex;
-  height: 220ipx;
+  height: 308ipx;
   background-color: #fff;
   .itv-calendar-picker{
      /deep/ .itv-picker-content{
        overflow: visible;
      }
+  }
+  &.itv-calendar-only-time {
+    height: 44*5ipx;
   }
  
 }
@@ -129,7 +156,10 @@
  
   box-sizing: border-box;
   overflow: hidden;
- 
+  &.itv-calendar-only-time {
+      height: 44*5ipx;
+      margin-top: 0ipx;
+  }
   .itv-swpier-calendar{
     height: 284ipx;
     display: flex;

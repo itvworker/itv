@@ -1,6 +1,6 @@
 <template>
    <itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
-                <div class="itv-calendar-time">
+                <div class="itv-calendar-time" :class="{'itv-calendar-only-time':dateType==='calendar-time'}">
                     <div class="itv-calendar-time-top" v-if="dateType==='calendar-time'">
                         <div class="date" :class="{'active':dataType===0}" @click="changeTab(0)">{{currentValue | formatDate('Y-M-D')}}</div>
                         <div class="time" :class="{'active':dataType===1}" @click="changeTab(1)">{{currentHour}}:{{currentMin}}</div>
@@ -9,17 +9,18 @@
 
                     <div class="itv-calendar-top" v-if="dateType==='calendar'">
                         <div class="title">{{titleText}}</div>
-                        <div class="year-month">
+                        <div data-v-4dcb302e="" class="icon iconfont icon-failure1"></div>
+                        <!-- <div class="year-month">
                              {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
-                        </div>
+                        </div> -->
                     </div>
                       
                     <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1}">
                         <div class="week-bar">
-                            <div class="week-item" v-for="(item, index) in weekText" :key="index">{{item}}</div>
+                            <div class="week-item" v-for="(item, index) in weekTexts" :key="index">{{item}}</div>
                         </div> 
                         <swiper ref="swiper" :bounce="false"
-                            direction="column" @change="change" 
+                            :direction="calendarDir" @change="change" 
                             @last="change(2)" @first="change(0)" 
                             :loop="false" 
                             v-model="columnIndex"
@@ -65,7 +66,6 @@
                                         {{nowMonth[15]?nowMonth[15].month:''}}
                                     </div>
                                     
-                                    
                                 </div>
                                 <div
                                     class="day-item"
@@ -107,9 +107,8 @@
                                     :list-data="hour24"
                                     @chooseItem="chooseItem"
                                     :key-index="0"
-
+                                    isLoop
                                 ></picker-slot>
-
                               <div class="itv-picker-list itv-picker-list-mark ">
                                      <div class="itv-picker-indicator itv-picker-mark">
                                         ：
@@ -123,6 +122,7 @@
                                     :list-data="minutes"
                                     @chooseItem="chooseItem"
                                     :key-index="1"
+                                    isLoop
                                 ></picker-slot>
                         </div>
                     </div>
@@ -164,8 +164,8 @@
                 default:'calendar-time'
             },
             weekText: { //星期的多语言数组
-                type: [Array, Object],
-                default:()=> ["日", "一", "二", "三", "四", "五", "六"]
+                type: Array,
+                default: () => []
             },
             confirmText: { //确定按钮文字，dateType === 'calendar-time' 生效
                 type: String,
@@ -174,12 +174,27 @@
             titleText: { //日期的多语言 dateType === 'calendar' 生效
                 type: String,
                 default:'请选择日期'
+            },
+            //日历滑动方向  column竖向， row横向
+            calendarDir: {
+                type: String,
+                default: 'column'
+            },
+            //style
+            style: {
+                type: String,
+                default: 'average'// note固定6行，空白时就空白 , average平均分
             }
         },
         watch: {
+            weekText(n) {
+                if(n.length===7) {
+                    this.weekTexts = n;
+                }
+                
+            },
             value(n) {
                 let arr = n.split(' ')
-                
                 this.currentValue = arr[0];
                 if(this.dateType === 'calendar-time') {
                     let time = arr[1].split(':');
@@ -198,7 +213,16 @@
                     this.$emit('hide')
                 }
             },
-           
+            //监听currentValue变化
+            currentValue(value, old) {
+                let current = new Date( value.replace(/-/ig, '/')+` ${this.currentHour}:${this.currentMin}`).getTime(); 
+                let min =  new Date(this.minDate.replace(/-/ig, '/')).getTime();
+                if(current <= min) {
+                    let arr = this.minDate.split(' ')[1].split(':');
+                    this.currentHour = arr[0]
+                    this.currentMin = arr[1]
+                }
+            }
         },
         data() {
             return {
@@ -210,10 +234,11 @@
                currentMin:"12", //当前选中的分
                year:0, //
                month:0,
-               weekTexts: this.weekText,
+               weekTexts: ["日", "一", "二", "三", "四", "五", "六"],
                dataType: 0 //数据类型，0显示日历 1显示选择器
             }
         },
+        
         methods: {
             changeTab(index) {
                 if(index === this.dataType) {
@@ -267,7 +292,6 @@
                let arr =  this.currentValue.split('-');
                let num = parseInt(arr[0]+''+arr[1]);
                
-           
                
            },
            selected(index, item) {
@@ -286,7 +310,9 @@
              */
             selectDay(index, item, select) {
                 //不在可选范围内不给选择
+              
                if(item.ymdnumber > this.calcMaxYmd  || item.ymdnumber < this.calcMinYmd)  return
+                if(item.type === 'prev' || item.type=== 'next') return
                 switch (item.type) {
                     case "prev":
                         this.isClickChange = true;
@@ -313,10 +339,13 @@
                         break;
                      
                 }
+
+                
                 if(select && this.dateType === 'calendar-time') {
                     this.dataType = 1;
                 }
                 
+              
                 if(select && this.dateType === 'calendar') {
                     this.isVisible = false;   
                     this.$emit('confirm', this.currentValue)
@@ -328,7 +357,7 @@
             //     this.$refs.swiper.scrollTo(1, false)
             // },5000)
 
-            console.log(this.weekText);
+            
         }
 
     };

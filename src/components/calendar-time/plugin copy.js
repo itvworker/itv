@@ -60,24 +60,6 @@ const plugin = {
                 $vm.dateType = 'calendar-time'
                 $vm.calendarDir = "column"
                 $vm.style = 'average'
-                
-                if(options.dateType === "time") {
-                    if(!options.minDate){
-                        options.minDate = "00:00"
-                    }
-                    if(!options.maxDate){
-                        options.maxDate = "23:59"
-                    }
-                    if(!options.value) {
-                        options.value = formatDate('', 'h:m')
-                    }
-                    options.value = formatDate('', 'Y-M-D ')+options.value;
-                    options.minDate = formatDate('', 'Y-M-D ')+options.minDate;
-                    options.maxDate = formatDate('', 'Y-M-D ')+options.maxDate;
-                    options.rows = 5;    
-                    $vm.dataType = 1;
-                }
-                     
 
                 if (typeof options === 'object') {
                     merge($vm, options)
@@ -94,6 +76,7 @@ const plugin = {
                 
                 $vm.$off('hide')
                 $vm.$off('confirm')
+
                 $vm.$on('confirm', (msg) => {
                     if(options.confirm) {
                         options.confirm(msg)

@@ -307,8 +307,7 @@ export default {
         },
         //计算下个月填充所有内容
         calcNextMonth(year, month, dayWeek, num) {
-            
-            if (num === 0 || this.style ==='average') return []
+            if (num === 0 ) return []
             let _year = year
             let _month = month + 1
             let _dayWeek = this.calcNextWeek(dayWeek)
