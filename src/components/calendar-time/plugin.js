@@ -74,7 +74,7 @@ const plugin = {
                     options.value = formatDate('', 'Y-M-D ')+options.value;
                     options.minDate = formatDate('', 'Y-M-D ')+options.minDate;
                     options.maxDate = formatDate('', 'Y-M-D ')+options.maxDate;
-                    options.rows = 5;    
+                    options.pickerRows = 5;    
                     $vm.dataType = 1;
                 }
                      

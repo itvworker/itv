@@ -7,13 +7,15 @@ module.exports = {
                 targets: {
                     chrome: '58',
                     ie: '11',
-                },
+                    node:'current'
+                }
             },
         ],
     ],
     plugins: [
         'babel-plugin-remove-vconsole',
         '@babel/plugin-syntax-dynamic-import',
+        '@babel/plugin-transform-modules-commonjs',
         [
             'babel-plugin-load-module',
             {

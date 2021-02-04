@@ -4,13 +4,14 @@
         <itv-main>
             <div class="h10"></div>
             <section>
-                <itv-cell :isLink="true" @click="confirm('html')" :showIcon="true" title="选择日期时间">
+                <itv-cell :isLink="true" subTitle="2020-08-05 10:56~2020-09-18 10:15" @click="confirm('html')" :showIcon="true" title="选择日期时间" :desc="calendarTime">
+                   
                 </itv-cell>
 
-                <itv-cell :isLink="true" @click="alert('html')" :showIcon="true" title="日历类型">
+                <itv-cell :isLink="true" @click="alert('html')" :showIcon="true" title="日历类型" :desc="calendar">
                 </itv-cell>
 
-                <itv-cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型">
+                <itv-cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
                 </itv-cell>
             </section>
         </itv-main>
@@ -22,7 +23,10 @@
 export default {
   data() {
     return {
-        show:false
+        show:false,
+        calendarTime:"2020-09-12 10:15",
+        calendar:"2020-09-12",
+        time:'10:15'
     };
   },
   methods: {
@@ -32,25 +36,31 @@ export default {
       confirm(value) {
           this.$itv.calendarTime.show({
                minDate: '2020-08-05 10:56',
-               value: '2020-09-12 10:15',
+               value: this.calendarTime,
                maxDate: '2020-09-18 10:15',
-               style:"average"
+               style:"average",
+               confirm:(res)=>{
+                   this.calendarTime = res;
+               }
           })
       },
       alert() {
             this.$itv.calendarTime.show({
-                value: '2020-09-12 10:15',
-                dateType: 'calendar'
+                value: this.calendar,
+                dateType: 'calendar',
+                confirm:(msg) => {
+                    this.calendar = msg
+                }
             })
       },
       openTime() {
             this.$itv.calendarTime.show({
-                value: '10:12',
+                value: this.time,
                 minDate: '10:05',
                 maxDate: '23:59',
                 dateType: 'time',
                 confirm:(msg) => {
-                    console.log(msg);
+                    this.time = msg
                 }
             })
       },

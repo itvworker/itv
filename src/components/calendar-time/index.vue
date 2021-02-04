@@ -1,145 +1,143 @@
 <template>
    <itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
-                <div class="itv-calendar-time">
-                    <div class="itv-calendar-time-top" v-if="dateType==='calendar-time'">
-                        <div class="date" :class="{'active':dataType===0}" @click="changeTab(0)">{{currentValue | formatDate('Y-M-D')}}</div>
-                        <div class="time" :class="{'active':dataType===1}" @click="changeTab(1)">{{currentHour}}:{{currentMin}}</div>
-                        <div class="btn-confirm" @click="confrimSelect">{{confirmText}}</div>
-                    </div>
+        <div class="itv-calendar-time" @click.stop="">
+            <div class="itv-calendar-time-top" v-if="dateType==='calendar-time'">
+                <div class="date" :class="{'active':dataType===0}" @click="changeTab(0)">{{currentValue | formatDate('Y-M-D')}}</div>
+                <div class="time" :class="{'active':dataType===1}" @click="changeTab(1)">{{currentHour}}:{{currentMin}}</div>
+                <div class="btn-confirm" @click="confrimSelect">{{confirmText}}</div>
+            </div>
 
-                    <div class="itv-calendar-top" v-if="dateType==='calendar'">
-                        <div class="title">{{titleText}}</div>
-                        <div data-v-4dcb302e="" class="icon iconfont icon-failure1"></div>
+            <div class="itv-calendar-top" v-if="dateType==='calendar'">
+                <div class="title">{{titleText}}</div>
+                <div data-v-4dcb302e="" class="icon iconfont icon-failure1"></div>
+                <!-- <div class="year-month">
+                        {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
+                </div> -->
+            </div>
+
+            <div class="itv-calendar-top" v-if="dateType==='time'">
+                <div class="itv-calendar-cancel-btn" @click="hideOnClick">
+                    {{cancelText}}
+                </div>
+                <div class="title">{{titleText}}</div>
+                <div class="itv-calendar-sure-btn" @click="confrimSelect">
+                    {{confirmText}}
+                </div>
+            </div>
+                
+            <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1 }">
+                <div class="week-bar" v-if="dateType!=='time'">
+                    <div class="week-item" v-for="(item, index) in weekTexts" :key="index">{{item}}</div>
+                </div> 
+                <swiper ref="swiper" :bounce="false"
+                    :direction="calendarDir" @change="change" 
+                    @last="change(2)" @first="change(0)" 
+                    :loop="false" 
+                    v-model="columnIndex"
+                    class="itv-swpier-calendar-time"
+                    :class="{'itv-calendar-only-time': dateType==='time'}"
+                    :beginBounce="beginBounce"
+                    :endBounce="endBounce"
+                    >
+                    <swiper-item class="itv-swpier-calendar">
+                        
+                        <div class="month-number" v-if="!beginBounce">
+                            <div class="year">
+                                {{prevMonth[15]?prevMonth[15].year:''}}
+                            </div>
+                            <div class="month">
+                                {{prevMonth[15]?prevMonth[15].month:''}}
+                            </div>
+                        </div>
+
+                        <div class="month-number">
+                            
+                        </div>
+                        <div v-if="!beginBounce"
+                            class="day-item"
+                            @click="selectDay(index, item)"
+                            :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                            v-for="(item, index) in prevMonth"
+                            :key="item.id"
+                        >
+                            <div class="active">{{item.day}}</div>
+                        </div>
+                    </swiper-item>
+                    <swiper-item class="itv-swpier-calendar">
                         <!-- <div class="year-month">
-                             {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
+                            {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
                         </div> -->
-                    </div>
-
-                    <div class="itv-calendar-top" v-if="dateType==='time'">
-                        <div class="itv-calendar-cancel-btn" @click="hideOnClick">
-                            {{cancelText}}
+                        <div class="month-number">
+                            <div class="year">
+                                {{nowMonth[15]?nowMonth[15].year:''}}
+                            </div>
+                            <div class="month">
+                                {{nowMonth[15]?nowMonth[15].month:''}}
+                            </div>
+                            
                         </div>
-                        <div class="title">{{titleText}}</div>
-                        <div class="itv-calendar-sure-btn" @click="confrimSelect">
-                            {{confirmText}}
+                        <div
+                            class="day-item"
+                            @click="selectDay(index, item, 'select')"
+                            v-for="(item, index) in nowMonth"
+                            :class="{'day-active':currentValue===item.msg, 'forbid': item.ymdnumber > calcMaxYmd  || item.ymdnumber < calcMinYmd , 'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                            :key="item.msg"
+                        >
+                            <div class="active">{{item.day}}</div>
                         </div>
-                    </div>
-                      
-                    <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1 }">
-                        <div class="week-bar" v-if="dateType!=='time'">
-                            <div class="week-item" v-for="(item, index) in weekTexts" :key="index">{{item}}</div>
-                        </div> 
-                        <swiper ref="swiper" :bounce="false"
-                            :direction="calendarDir" @change="change" 
-                            @last="change(2)" @first="change(0)" 
-                            :loop="false" 
-                            v-model="columnIndex"
-                            class="itv-swpier-calendar-time"
-                            :class="{'itv-calendar-only-time': dateType==='time'}"
-                            :beginBounce="beginBounce"
-                            :endBounce="endBounce"
-                           >
-                            <swiper-item class="itv-swpier-calendar">
-                               
-                                <div class="month-number" v-if="!beginBounce">
-                                    <div class="year">
-                                        {{prevMonth[15]?prevMonth[15].year:''}}
-                                    </div>
-                                    <div class="month">
-                                        {{prevMonth[15]?prevMonth[15].month:''}}
-                                    </div>
-                                </div>
-
-                                <div class="month-number">
-                                    
-                                    
-                                    
-                                </div>
-                                <div v-if="!beginBounce"
-                                    class="day-item"
-                                    @click="selectDay(index, item)"
-                                    :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
-                                    v-for="(item, index) in prevMonth"
-                                    :key="item.id"
-                                >
-                                    <div class="active">{{item.day}}</div>
-                                </div>
-                            </swiper-item>
-                            <swiper-item class="itv-swpier-calendar">
-                                <!-- <div class="year-month">
-                                    {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
-                                </div> -->
-                                <div class="month-number">
-                                    <div class="year">
-                                        {{nowMonth[15]?nowMonth[15].year:''}}
-                                    </div>
-                                    <div class="month">
-                                        {{nowMonth[15]?nowMonth[15].month:''}}
-                                    </div>
-                                    
-                                </div>
-                                <div
-                                    class="day-item"
-                                    @click="selectDay(index, item, 'select')"
-                                    v-for="(item, index) in nowMonth"
-                                    :class="{'day-active':currentValue===item.msg, 'forbid': item.ymdnumber > calcMaxYmd  || item.ymdnumber < calcMinYmd , 'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
-                                    :key="item.msg"
-                                >
-                                    <div class="active">{{item.day}}</div>
-                                </div>
-                            </swiper-item>
-                            <swiper-item class="itv-swpier-calendar">
-                                <div class="month-number" v-if="!endBounce">
-                                    <div class="year">
-                                        {{nextMonth[15]?nextMonth[15].year:''}}
-                                    </div>
-                                    <div class="month">
-                                        {{nextMonth[15]?nextMonth[15].month:''}}
-                                    </div>
-                                </div>
-                                <div v-if="!endBounce"
-                                    class="day-item"
-                                    @click="selectDay(index, item, 'select')"
-                                    :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
-                                    v-for="(item, index) in nextMonth"
-                                    :key="item.id"
-                                >
-                                    <div class="active">
-                                        {{item.day}}
-                                    </div>
-                                </div>
-                            </swiper-item>
-                        </swiper>
-                        <div class="itv-picker-slot-box" :class="{'itv-calendar-only-time': dateType==='time'}" v-if="dateType==='calendar-time'||dateType==='time'">
-                                <picker-slot ref="picker-0"
-                                    class="itv-calendar-picker"
-                                    :default-value="currentHour"
-                                    :is-update="false"
-                                    :list-data="hour24"
-                                    @chooseItem="chooseItem"
-                                    :key-index="0"
-                                    :rows="rows"
-                                    isLoop
-                                ></picker-slot>
-                              <div class="itv-picker-list itv-picker-list-mark ">
-                                     <div class="itv-picker-indicator itv-picker-mark" :class="['itv-picker-row'+rows]">
-                                        ：
-                                    </div>
-                                </div>
-                                <picker-slot 
-                                    ref="picker-1"
-                                     class="itv-calendar-picker"
-                                    :default-value="currentMin"
-                                    :is-update="false"
-                                    :list-data="minutes"
-                                    @chooseItem="chooseItem"
-                                    :key-index="1"
-                                    isLoop
-                                    :rows="rows"
-                                ></picker-slot>
+                    </swiper-item>
+                    <swiper-item class="itv-swpier-calendar">
+                        <div class="month-number" v-if="!endBounce">
+                            <div class="year">
+                                {{nextMonth[15]?nextMonth[15].year:''}}
+                            </div>
+                            <div class="month">
+                                {{nextMonth[15]?nextMonth[15].month:''}}
+                            </div>
+                        </div>
+                        <div v-if="!endBounce"
+                            class="day-item"
+                            @click="selectDay(index, item, 'select')"
+                            :class="{'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                            v-for="(item, index) in nextMonth"
+                            :key="item.id"
+                        >
+                            <div class="active">
+                                {{item.day}}
+                            </div>
+                        </div>
+                    </swiper-item>
+                </swiper>
+                <div class="itv-picker-slot-box" :class="{'itv-calendar-only-time': dateType==='time'}" v-if="dateType==='calendar-time'||dateType==='time'">
+                    <picker-slot ref="picker-0"
+                        class="itv-calendar-picker"
+                        :default-value="currentHour"
+                        :is-update="false"
+                        :list-data="hour24"
+                        @chooseItem="chooseItem"
+                        :key-index="0"
+                        :rows="pickerRows"
+                        isLoop
+                    ></picker-slot>
+                    <div class="itv-picker-list itv-picker-list-mark ">
+                            <div class="itv-picker-indicator itv-picker-mark" :class="['itv-picker-row'+pickerRows]">
+                            ：
                         </div>
                     </div>
-                </div>       
+                    <picker-slot 
+                        ref="picker-1"
+                            class="itv-calendar-picker"
+                        :default-value="currentMin"
+                        :is-update="false"
+                        :list-data="minutes"
+                        @chooseItem="chooseItem"
+                        :key-index="1"
+                        isLoop
+                        :rows="pickerRows"
+                    ></picker-slot>
+                </div>
+            </div>
+        </div>       
     </itv-dialog> 
 </template>
 <script>
@@ -203,9 +201,9 @@
                 type: String,
                 default: 'average'// note固定6行，空白时就空白 , average平均分
             },
-            rows: {
+            pickerRows: {
                 type: Number,
-                rows: 7
+                default: 7
             }
         },
         watch: {

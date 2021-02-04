@@ -1,4 +1,4 @@
-let Utils = {
+export default {
   /**
    * 是否为闫年
    * @return {Boolse} true|false
@@ -163,4 +163,3 @@ let Utils = {
   }
 };
 
-export default Utils;

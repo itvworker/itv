@@ -23,8 +23,11 @@ export function formatDate(arg="", format) {
     // console.log(typeof arg.toString());
    
 
-    if(typeof arg === "String") {
+    if(typeof arg === "string") {
         arg = arg.replace(/-/ig, '/');
+        if(arg.indexOf('/')<0) {
+            arg = parseInt(arg);
+        }
     }
     
     format = format || "Y/M/D h:m";
