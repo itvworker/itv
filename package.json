@@ -37,6 +37,7 @@
     "@vue/test-utils": "^1.1.2",
     "@vux/loader": "^2.0.0-rc4",
     "autoprefixer": "^9.7.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
     "babel-plugin-load-module": "^1.0.0",

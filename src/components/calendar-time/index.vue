@@ -381,11 +381,7 @@
             }   
         },
         mounted() {
-            // setTimeout(()=>{
-            //     this.$refs.swiper.scrollTo(1, false)
-            // },5000)
-
-            
+            console.log( this.$components);
         }
 
     };

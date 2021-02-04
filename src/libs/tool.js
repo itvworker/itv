@@ -57,3 +57,11 @@ export function formatDate(arg="", format) {
       .replace("m", minute)
       .replace("s", second);
   }
+  /**
+   * 压缩html字符串
+   */
+export function compressHtmlStr(value) {
+    return value.replace(/\n/g, '').replace(/(^\s*)|(\s*$)/g, "").replace(/(>)(\s*)(<)/g, function (match, p1, p2, p3, offset) {
+        return p1 + p3
+    });      　　 
+}

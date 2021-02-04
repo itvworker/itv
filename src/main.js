@@ -16,6 +16,9 @@ import './assets/css/index.less'
 
 // resources: [resolve('packages/assets/css/animate.less'), resolve('packages/assets/css/page.less'), resolve('packages/assets/css/theme.less')]
 
+
+
+
 Vue.prototype.hljs = function () {
     const preEl = document.querySelectorAll('pre')
     preEl.forEach((el) => {

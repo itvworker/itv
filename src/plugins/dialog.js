@@ -37,15 +37,12 @@ const plugin = {
         })
     
         if (!vue.prototype.$itv) {
-          vue.prototype.$itv = {
-            dialog
-          }
+            vue.prototype.$itv = {
+                dialog
+            }
         } else {
-          vue.prototype.$itv.dialog  = dialog
+            vue.prototype.$itv.dialog  = dialog
         }
-
-        
-
     }
 }
 
