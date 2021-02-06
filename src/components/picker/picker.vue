@@ -8,7 +8,8 @@
                 :key="index"
                 :key-index="index"
                 :lastChange="lastChange"
-              
+                :rows="rows"
+                :isLoop="isLoop"
             ></picker-slot>
     </div>
 </template>
@@ -38,6 +39,14 @@ export default {
             default: () => []
         },
         lastChange: {
+            type: Boolean,
+            default: false
+        },
+        rows: {
+            type: Number, 
+            default: 5
+        },
+        isLoop: {
             type: Boolean,
             default: false
         }
