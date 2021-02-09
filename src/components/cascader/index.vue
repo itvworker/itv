@@ -6,7 +6,7 @@
                 {{titleText}}
                 <div class="btn-confirm" @click="confirmBtn">{{confirmText}}</div>
             </div>
-            <itv-scroll ref="header"  :percent="0.8" pattern="horizontal" class="case-box">
+            <itv-scroll ref="header"  :percent="0.7" :speed="40"  pattern="horizontal" class="case-box">
                 <div class="level-select-bar">
                     <template v-for="(item,index) in currentItems">
                          <div class="select" :class="{'active': currentHeader===index||(isLast && index === currentItems.length-1 && currentHeader===null)}"  @click="changeNow(index)">
@@ -18,7 +18,7 @@
                    <div class="select placeholder" v-if="!isLast" :class="{'active': currentHeader===null}" @click="changeNow(null)">{{placehoder}}</div>
                 </div>
             </itv-scroll>
-            <itv-scroll ref="body" class="body-scroll"  :percent="0.9" pattern="vertical" >
+            <itv-scroll ref="body" class="body-scroll"  :percent="0.7" pattern="vertical" >
                 <div ref="item" class="level-item height-opt">
                     
                 </div>
@@ -95,7 +95,8 @@ export default {
             currentHeader:null,
             nowItems:[],
             isLast: false,
-            itemHeight: 0
+            itemHeight: 0,
+            cacheNumber:0
         }
     },
     computed: {
@@ -122,13 +123,14 @@ export default {
                 this.$emit("close");
             }
             if(a) {
-               this.init(true)
+               this.init(true);
+              
+               
             }
         },
         isVisible(n,o) {
             this.$emit('input', n)
         },
-      
         currentHeader(n,o) {
                 
             this.$nextTick(()=>{
@@ -144,9 +146,10 @@ export default {
             
         },
        
+       
     },
     mounted() {
-       
+        
     },
     methods: {
         init() {
@@ -154,11 +157,6 @@ export default {
             this.currentIndex = [];
             this.currentHeader = null;
             this.currentSelect = JSON.parse(JSON.stringify(this.selected));
-           
-            this.$nextTick(()=>{
-                this.calcHeight()
-            })
-            
             if(this.selected.length>0) {
                 this.selected.forEach((item, index)=>{
                     if(index===0) {
@@ -190,6 +188,11 @@ export default {
                 
             }
             this.calcNowItems(true)
+            this.$nextTick(()=>{
+                this.calcHeight();
+                this.$refs.body.calcMax();
+            })
+            
         },
 
 
@@ -198,7 +201,6 @@ export default {
         },
         changeNow(index) {
             this.currentHeader = index;
-            console.log(this.currentHeader);
             this.calcNowItems()
         },
         selectItem(index) {
@@ -262,7 +264,6 @@ export default {
      
 
                 this.items.forEach(element => {
-                    console.log(element[this.pidKey], id);
                     if(element[this.pidKey] == id ) {
                         data.push( JSON.parse(JSON.stringify(element)))
                     }   
@@ -303,8 +304,7 @@ export default {
                 
 
                 this.items.forEach(element => {
-                if(element[this.pidKey] == pid ) {
-                    console.log(element);
+                    if(element[this.pidKey] == pid ) {
                         data.push( JSON.parse(JSON.stringify(element)))
                     }   
                 });

@@ -1,4 +1,5 @@
 <template lang="html">
+
     <div class="itv-model" >
         <transition name="itv-fade">
             <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex}"></div>
@@ -77,7 +78,8 @@ export default {
     },
     data() {
         return {
-            content: ''
+            content: '',
+            cache: false
         }
     },
     watch: {
@@ -86,6 +88,11 @@ export default {
                 this.$emit('onHide');
                 return
             }
+            this.cache = true;
+            setTimeout(()=>{
+                this.cache = false;
+            },500)
+
             this.$emit('onShow')
         },
         html(a, b) {
@@ -110,7 +117,9 @@ export default {
     methods: {
         close() {
             if(!this.hideOnClick) return
+            if(this.cache)return;
             this.$emit('input', false);
+            
         },
         state() {
             return this.value

@@ -97,10 +97,10 @@ export default {
            alert('content')
        },
        pull(y) {
-           console.log(y);
+           
        },
        opend() {
-           console.log('-------');
+           
        }
     },
     created() {

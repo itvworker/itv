@@ -38,7 +38,7 @@ export default {
   },
   methods: {
       open() {
-          console.log('link----------');
+         
       }
   },
   mounted() {

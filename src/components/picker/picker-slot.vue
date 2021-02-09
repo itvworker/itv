@@ -1,7 +1,7 @@
 <template>
   <div class="itv-picker-list" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"  @touchcancel="touchEnd">
    
-    <div class="itv-picker-content" :class="['itv-picker-row'+rows]"  ref="height" @transitionEnd="transitionEnd"  @webkitTransitionEnd="transitionEnd" >
+    <div class="itv-picker-content" :class="['itv-picker-row'+rows]"    ref="height" @transitionEnd="transitionEnd"  @webkitTransitionEnd="transitionEnd" >
         <div class="itv-picker-list-panel"  ref="list">
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up' : index+'up'"
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="itv-picker-mask"  :class="['itv-picker-row'+rows]"></div>
-    <div class="itv-picker-indicator" :style="{top: lineSpacing*(rows-1)/2+'px'}"  :class="['itv-picker-row'+rows]"></div>
+    <div class="itv-picker-indicator"   :class="['itv-picker-row'+rows]"></div>
 </div>
 </template>
 <script>

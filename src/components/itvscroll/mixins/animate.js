@@ -90,7 +90,7 @@ export default {
             let continuing = true;
             if(this.isTouch || this.isMove) return;
                 
-            console.log('---------');
+          
             let scrollX = this.scrollX - this.stepX
             let scrollY = this.scrollY - this.stepY
             
@@ -207,7 +207,7 @@ export default {
             this.stepX = this.stepX * this.percent
             this.stepY = this.stepY * this.percent
             
-
+            
             if(Math.abs(this.stepX) <= this.stopStep) {
                 this.stepX = 0
             }

@@ -41,7 +41,6 @@ export default {
                     this.initHour()
                     break;
                 case 1:
-                    console.log(value);
                      this.currentMin = value
                     break;
             }

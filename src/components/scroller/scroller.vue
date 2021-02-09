@@ -262,7 +262,7 @@ export default {
             if(this.moveList.length<=0) return
             let timeStamp = e.timeStamp;
             let lastMoveTime =  this.moveList[this.moveList.length-1].timeStamp;
-            debugger
+         
             if(this.enableScrollX) {
                 if(this.x < 0) {
                     this.landscapeRender(0,0,1);

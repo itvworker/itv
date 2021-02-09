@@ -5,7 +5,7 @@ import doc from './doc.js'
 
 
 
-console.log(Router.prototype);
+
 
 Vue.use(Router);
 

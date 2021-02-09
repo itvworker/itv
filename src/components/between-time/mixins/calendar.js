@@ -41,7 +41,7 @@ export default {
                 let arr = this.min.split('/');
                 arr[1] = parseInt(arr[1])
                 let number = parseInt(arr[0]+''+arr[1]);   
-                console.log(number,this.prevMonth[14].number);
+              
                 if(number > this.prevMonth[14].number) {
                     return true
                 }   

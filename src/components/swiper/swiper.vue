@@ -159,7 +159,7 @@ export default {
             let self = e.targetTouches
             let x = self[0].pageX
             let y = self[0].pageY
-
+            e.preventDefault()
             let positon = this.elPositon
             if(x < positon.left || x > positon.right ||  y < positon.top ||  y > positon.bottom) {
                 this.touchend(e)

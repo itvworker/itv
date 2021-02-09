@@ -9,43 +9,43 @@ export default {
                 },{
                     icon:'itv-demo-icon-swiper',
                     routerName:"itv_swiper",
-                    name: 'itv-swiper'
+                    name: 'swiper'
                     
                 },
                 {
                     icon:'itv-demo-icon-toast',
                     routerName:"itv_toast",
-                    name: 'itv-toast'
+                    name: 'toast'
                 },
                 {
                     icon:'itv-demo-icon-dialog',
                     routerName:"itv_dialog",
-                    name: 'itv-dialog'
+                    name: 'dialog'
                 },
                 {
                     icon:'itv-demo-icon-popup',
                     routerName:"itv_popup",
-                    name: 'itv-popup'
+                    name: 'popup'
                 },
                 {
                     icon:'itv-demo-icon-circle',
                     routerName:"itv_circle",
-                    name: 'itv-circle'
+                    name: 'circle'
                 },
                 {
                     icon:'itv-demo-icon-slideout',
                     routerName:"itv_slideout",
-                    name: 'itv-slideout'
+                    name: 'slideout'
                 },
                 {
                     icon:'itv-demo-icon-elevator',
                     routerName:"itv_elevator",
-                    name: 'itv-elevator'
+                    name: 'elevator'
                 },    
                 {
                     icon:'itv-demo-icon-picker',
                     routerName:"itv_picker",
-                    name: 'itv-picker'
+                    name: 'picker'
                 },
                 {
                     icon:'itv-demo-icon-schedule-date',
@@ -55,7 +55,7 @@ export default {
                 {
                     icon:'itv-demo-icon-picker',
                     routerName:"itv_scroll",
-                    name: 'itv-scroll'
+                    name: 'scroll'
                 },
                 {
                     icon:'itv-demo-icon-schedule-date',
@@ -66,6 +66,21 @@ export default {
                     icon:'itv-demo-icon-schedule-date',
                     routerName:"itv_form",
                     name: "form"
+                },
+                {
+                    icon:'itv-demo-icon-schedule-date',
+                    routerName:"itv_calendar-time",
+                    name: "日历时间"
+                },
+                {
+                    icon:'itv-demo-icon-schedule-date',
+                    routerName:"itv_actionsheet",
+                    name: "actionsheet"
+                },
+                {
+                    icon:'itv-demo-icon-schedule-date',
+                    routerName:"itv_cascader",
+                    name: "cascader"
                 }
             ]
         }

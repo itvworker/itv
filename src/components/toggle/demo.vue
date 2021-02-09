@@ -81,7 +81,7 @@ export default {
             });
         },
         page() {
-            console.log("page------");
+           
         }
     },
     mounted() {}

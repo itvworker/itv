@@ -44,8 +44,7 @@ export default {
             })
         },
         send(e) {
-            console.log(e);
-            console.log('----------');
+          
         },
         sendEvent(e) {
             var ev = new Event("tap", {"bubbles":true, "cancelable":false});
