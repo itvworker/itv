@@ -3,27 +3,27 @@
    
     <div class="itv-picker-content" :class="['itv-picker-row'+rows]"  ref="height" @transitionEnd="transitionEnd"  @webkitTransitionEnd="transitionEnd" >
         <div class="itv-picker-list-panel"  ref="list">
-            <div class="itv-picker-item" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up' : index+'up'"
                 >{{(item.name || item.value || item) | formatWord(word)}}
             </div>
-            <div class="itv-picker-item" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up1' : index+'up1'"
                 >{{(item.name || item.value || item) | formatWord(word)}}
             </div>
-            <div class="itv-picker-item"  v-for="(item,index) in listData"
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}"  v-for="(item,index) in listData"
                 :key="item.label ? item.label : index">{{(item.name || item.value || item) | formatWord(word)}}
             </div>
-            <div class="itv-picker-item" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
                 :key="item.label ? item.label+'next' : index+'next'">{{(item.name || item.value || item) | formatWord(word)}}
             </div>
-            <div class="itv-picker-item" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
                 :key="item.label ? item.label+'next2' : index+'next2'">{{(item.name || item.value || item) | formatWord(word)}}
             </div>
         </div>
     </div>
-    <div class="itv-picker-mask" :class="['itv-picker-row'+rows]"></div>
-    <div class="itv-picker-indicator" :class="['itv-picker-row'+rows]"></div>
+    <div class="itv-picker-mask"  :class="['itv-picker-row'+rows]"></div>
+    <div class="itv-picker-indicator" :style="{top: lineSpacing*(rows-1)/2+'px'}"  :class="['itv-picker-row'+rows]"></div>
 </div>
 </template>
 <script>
@@ -65,6 +65,7 @@ export default {
     },
     data() {
         return {
+            itemHeight: null,
             touchParams: {
                 startY: 0,
                 endY: 0,
@@ -156,8 +157,6 @@ export default {
             }
             //给过dom加上滑动所要滑动的点
             dom.style.marginTop=`-${this.lineSpacing*this.listData.length*2}px`
-            
-            
             dom.style.webkitTransform = `translate3d(0, ${translateY}px, 0)`;
             this.scrollDistance = translateY;
             this.transformY =  translateY;
@@ -383,7 +382,7 @@ export default {
     },
     
     mounted() {
-        this.lineSpacing = this.$refs.height.clientHeight; //每一行的高度
+        this.lineSpacing = Math.round(this.$refs.height.clientHeight); //每一行的高度
 
         this.$nextTick(() => {
             this.modifyStatus(true);
