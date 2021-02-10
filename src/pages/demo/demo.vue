@@ -2,8 +2,8 @@
     <itv-container>
         <itv-header>ITV</itv-header>
         <itv-main>
-            <section class="demo-content"  @tap="send">
-                <div class="dot-link" v-for="item in navs" @touchstart="sendEvent" @click.stop="topage(item)">
+            <section class="demo-content"  >
+                <div class="dot-link" v-for="item in navs"  @click.stop="topage(item)">
                     <i :class="item.icon"></i>
                     <div class="name">{{item.name}}</div>
                 </div>
@@ -16,7 +16,7 @@
 
 <script>
 import layout from './layout'
-import html2img from  '../../tool/html2img.js'
+
 export default {
     mixins:[layout],
     data() {
@@ -43,13 +43,7 @@ export default {
                 name: item.routerName
             })
         },
-        send(e) {
-          
-        },
-        sendEvent(e) {
-            var ev = new Event("tap", {"bubbles":true, "cancelable":false});
-            e.target.dispatchEvent(ev);
-        }
+       
         
     },
     mounted() {
