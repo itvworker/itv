@@ -191,7 +191,7 @@ export default {
            
             if (this.isMove===1) {
                 e.preventDefault()
-                e.stopPropagation()
+                // e.stopPropagation()
             }
 
             if (obj.type > 0 && this.isMove===1) {

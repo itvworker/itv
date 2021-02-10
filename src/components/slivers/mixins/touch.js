@@ -4,7 +4,7 @@ export default {
         touchstart(e) {
             if(this.isRefresh || this.nowSliver.isRefresh) {
                 e.preventDefault()
-                e.stopPropagation()
+                // e.stopPropagation()
                 return
             }
             this.isTouch = true;
@@ -39,7 +39,7 @@ export default {
         touchmove(e) {
             if(this.isRefresh || this.nowSliver.isRefresh) {
                 e.preventDefault()
-                e.stopPropagation()
+                // e.stopPropagation()
                 return
             }
             
@@ -90,7 +90,7 @@ export default {
             //判断是否已经有滑动了
             if (!this.moveDirection) return
             e.preventDefault()
-            e.stopPropagation()
+            // e.stopPropagation()
 
             
             this.moveX = x
@@ -226,7 +226,7 @@ export default {
         touchend(e) {    
             if(this.isRefresh || this.nowSliver.isRefresh) {
                 e.preventDefault()
-                e.stopPropagation()
+                // e.stopPropagation()
                 return
             }
             let now = new Date().getTime()

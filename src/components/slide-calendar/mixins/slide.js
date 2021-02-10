@@ -85,7 +85,7 @@ export default {
           touchmove(e) {
 			if(this.aniStatus){
 				e.preventDefault();
-				e.stopPropagation();
+				// e.stopPropagation();
 				return;
 			} 
             if (!this.isTouch) {
@@ -118,7 +118,7 @@ export default {
   
             if(this.screenType === 'progress') {
                 e.preventDefault();
-                e.stopPropagation();
+                // e.stopPropagation();
             }
   
             if (obj.type > 0 && this.isMove) {
@@ -147,7 +147,7 @@ export default {
           touchend(e) {
 			if(this.aniStatus){
 				e.preventDefault();
-				e.stopPropagation();
+				// e.stopPropagation();
 				return;
 			} 
             this.end++;
@@ -159,7 +159,7 @@ export default {
             switch (screenType) {
                 case 'progress':
                     e.preventDefault();
-                    e.stopPropagation();
+                    // e.stopPropagation();
 					this.isAni = true;
 					this.aniStatus = true;
 					let x = this.x;

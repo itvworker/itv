@@ -13,7 +13,7 @@ export default {
         },2000)
        
         $(document).on('click','.doc-tab-group>.tab-item-btn', function(e){
-            e.stopPropagation();
+            // e.stopPropagation();
             let index = $(this).index();
             $(this).parent().find('.tab-item-btn').removeClass('active')
             $(this).addClass('active')

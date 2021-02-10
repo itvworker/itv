@@ -110,7 +110,7 @@ export default {
 
             if (this.screenType === "progress") {
                 e.preventDefault();
-                e.stopPropagation();
+                // e.stopPropagation();
             }
 
             if (obj.type > 0 && this.isMove) {

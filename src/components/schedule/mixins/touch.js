@@ -141,7 +141,7 @@ export default {
             
             if (this.aniStatus) {
                 e.preventDefault()
-                e.stopPropagation()
+                // e.stopPropagation()
                 return
             }
             if (!this.isTouch) {
@@ -199,7 +199,7 @@ export default {
             //判断是否已经有滑动了
             if (this.screenType) {
                 e.preventDefault()
-                e.stopPropagation()
+                // e.stopPropagation()
             }
 
 
@@ -288,7 +288,7 @@ export default {
         touchend(e) {
             if (this.aniStatus) {
                 e.preventDefault()
-                e.stopPropagation()
+                // e.stopPropagation()
                 return
             }
 
@@ -349,7 +349,7 @@ export default {
                     break
                 case 'progress':
                     e.preventDefault()
-                    e.stopPropagation()
+                    // e.stopPropagation()
                     this.isAni = true
                     this.aniStatus = true
                      //是否快速滑过

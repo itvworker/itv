@@ -31,6 +31,10 @@
             </div>
             <input type="">
 
+            <previewer ref="previewer" :list="previewerList" :options="options">
+            
+          </previewer>
+
         </itv-main>
         <transition name="itv-slide-top">
             <itv-container class="cliper-main-box" v-show="toggle">
@@ -61,9 +65,12 @@
 
 import ItvCliper from './cliper.vue'
 import img from '@/assets/img/header.jpeg';
+import Previewer from 'vux/src/components/previewer'
+import { setTimeout } from 'timers';
 export default {
     components: {
-        ItvCliper
+        ItvCliper,
+        Previewer
     },
     data() {
         return {
@@ -73,7 +80,13 @@ export default {
             h:200,
             width: 100,
             height:300,
-            toggle: false
+            toggle: false,
+            previewerList:[
+             {src:"https://preview.qiantucdn.com/58pic/38/17/17/42i58PICe58PIC5dzeQYhpGbJ_PIC2018.png!w1024_new_0",
+                w:895,
+                h:895
+             }
+            ]
         }
       },
 
@@ -113,6 +126,11 @@ export default {
             this.toggle = false;
 
         }
+    },
+    mounted() {
+      setTimeout(()=>{
+        this.$refs.previewer.show(0)
+      },2000)
     }
 }
 </script>

@@ -4,11 +4,11 @@ import watch from './modules/watch-router'
 import router from '@/router'
 import store from '@/store'
 import i18n from '@/lang'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
+// import hljs from 'highlight.js'
+// import 'highlight.js/styles/github.css'
 import 'lib-flexible'
 import './layout'
-import './components/index.js'
+// import './components/index.js'
 import './assets/css/index.less'
 
 // import VConsole from 'vconsole'
@@ -25,7 +25,7 @@ Vue.prototype.hljs = function () {
         hljs.highlightBlock(el)
     })
 }
-watch('itvtemp')
+// watch('itvtemp')
 new Vue({
     router,
     i18n,
