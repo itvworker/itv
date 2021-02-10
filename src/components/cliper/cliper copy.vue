@@ -1,6 +1,6 @@
 <template lang="html">
-<!--  @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart" @mousemove="touchmove"  -->
-    <div class="itv-cliper"  ref="clipic"   @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" >
+<!--  @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart" @mousemove="touchmove" -->
+    <div class="itv-cliper"  ref="clipic"  @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" v-show="toggle" >
         <div class="itv-cliper-clipic-frame" :class="{'itv-cliper-circle':clipType==='circle'}"  :style="{width:frame1Width+'px', height:frame1Height+'px'}" ref="frame1" id="clipicFrame1">
             <img ref="img1" :width="imgWidth" :height="imgHeight" 
              :src="src" /></div>
@@ -10,7 +10,7 @@
           ref="frame2"  >
           <img ref="img2"
           :width="imgWidth" :height="imgHeight"    :src="src" /></div>
-            
+
     </div>
 </template>
 
@@ -135,7 +135,7 @@ export default {
 
         },
         touchend(e) {
-        
+            console.log(e);
             this.distance = null
             this.angle = null
             this.moveX = null
@@ -157,24 +157,27 @@ export default {
             
         },
         touchmove(e) {
-            e.preventDefault();
+             e.preventDefault();
+             
+              console.log(e.targetTouches);
             if(e.type === 'mousemove'){
                 if(this.press){
                     this.setTranslate(e)
                     this.setImgTransform();
                     return
                 }
+                
             }
             
-            if (e.touches.length>2) {
-                this.setScale(e.touches[0], e.touches[1])
-                this.setRotate(e.touches[0], e.touches[1])
+            console.log(e.targetTouches.length);
+            if (e.targetTouches.length>2) {
+               
+                this.setScale(e.targetTouches[0], e.targetTouches[1])
+                this.setRotate(e.targetTouches[0], e.targetTouches[1])
                 this.setImgTransform();
                 return
             }
-
-            
-            this.setTranslate(e.touches[0])
+            this.setTranslate(e.targetTouches[0])
             this.setImgTransform();
         },
 
@@ -182,6 +185,8 @@ export default {
             const x = Math.abs(touches1.clientX - touches2.clientX)
             const y = Math.abs(touches1.clientY - touches2.clientY)
             const s = Math.sqrt(x * x + y * y)
+
+            
             if (this.distance) {
                 this.scale += (s - this.distance) / this.$refs.img2.clientWidth;
             }
@@ -203,7 +208,7 @@ export default {
             const x = touches.clientX
             const y = touches.clientY
 
-           
+            console.log(x);
             if (this.moveX) {
                 this.translateX += x - this.moveX
             }
@@ -315,9 +320,7 @@ export default {
     mounted() {
        
         window.addEventListener('mousewheel',this.handleScroll,false) || window.addEventListener("DOMMouseScroll",this.handleScroll,false)
-        // this.$refs.clipic.addEventListener('touchstart',this.touchstart, false)
-        //  this.$refs.clipic.addEventListener('touchmove',this.touchmove, false)
-        //   this.$refs.clipic.addEventListener('touchend',this.touchend, false)
+        
 
     },
     created() {

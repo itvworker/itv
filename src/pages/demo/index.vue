@@ -1,6 +1,6 @@
 <template>
-<transition :name="aniName">
-     <router-view />
+<transition :name="aniName" ref="name">
+    <router-view />
 </transition>
    
 </template>
@@ -10,6 +10,12 @@ export default {
         return {
             aniName:''
         }
+    },
+    mounted(){
+        console.log('demo-------');
+        console.log(this.$router);
+
+        
     },
     watch: {
         $route(to, from) {
