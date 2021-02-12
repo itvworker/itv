@@ -1,7 +1,7 @@
 <template lang="html">
     <itv-container class="seciton">
         <div class="itv-bar">
-            <div class="itv-logo">
+            <div class="itv-logo" @click="">
                 iTV
             </div>
             <div class="nav">

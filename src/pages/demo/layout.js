@@ -70,7 +70,7 @@ export default {
                 {
                     icon:'itv-demo-icon-schedule-date',
                     routerName:"itv_calendar-time",
-                    name: "日历时间"
+                    name: "calendarTime"
                 },
                 {
                     icon:'itv-demo-icon-schedule-date',

@@ -64,10 +64,10 @@ export default {
         },
         toastClass() {
             return {
-                "itvui-toast_forbidden": this.type === "warn",
-                "itvui-toast_cancel": this.type === "cancel",
-                "itvui-toast_success": this.type === "success",
-                "itvui-toast_text": this.type === "text",
+                "itvui-toast-forbidden": this.type === "warn",
+                "itvui-toast-cancel": this.type === "cancel",
+                "itvui-toast-success": this.type === "success",
+                "itvui-toast-text": this.type === "text",
                 "itv-toast-top": this.position === "top",
                 "itv-toast-bottom": this.position === "bottom",
                 "itv-toast-middle": this.position === "middle"
@@ -121,7 +121,7 @@ p {
     position: fixed;
     border-radius: 8ipx;
     background-color: rgba(0, 0, 0, 0.6);
-    padding: 0ipx 15ipx;
+    padding: 12ipx 15ipx;
     color: #fff;
     min-width: 80ipx;
     max-width: 100%;
@@ -129,7 +129,6 @@ p {
     font-size: 14ipx;
     line-height: 22ipx;
     z-index: 100;
-    padding: 15ipx;
 }
 .itv-toast.itv-toast-top {
     top: 60ipx;

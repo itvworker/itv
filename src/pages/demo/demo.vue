@@ -3,7 +3,7 @@
         <itv-header>ITV</itv-header>
         <itv-main>
             <section class="demo-content"  >
-                <div class="dot-link" v-for="item in navs"  @click.stop="topage(item)">
+                <div class="dot-link" v-for="(item, index) in navs" :key="index"  @click.stop="topage(item)">
                     <i :class="item.icon"></i>
                     <div class="name">{{item.name}}</div>
                 </div>
@@ -60,7 +60,7 @@ export default {
     .dot-link{
         height: 100ipx;
         flex: 0 0 auto;
-        width: 25%;
+        width: 33.3333333%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -75,7 +75,7 @@ export default {
         i{
             color:@itv-page-main;
         }
-        &:nth-child(4n) {
+        &:nth-child(3n) {
             border-right: #ddd solid 0px;
         }
     }

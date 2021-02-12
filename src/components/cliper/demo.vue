@@ -30,11 +30,6 @@
                 </div>
             </div>
             <input type="">
-
-            <previewer ref="previewer" :list="previewerList" :options="options">
-            
-          </previewer>
-
         </itv-main>
         <transition name="itv-slide-top">
             <itv-container class="cliper-main-box" v-show="toggle">
@@ -65,12 +60,10 @@
 
 import ItvCliper from './cliper.vue'
 import img from '@/assets/img/header.jpeg';
-import Previewer from 'vux/src/components/previewer'
 import { setTimeout } from 'timers';
 export default {
     components: {
-        ItvCliper,
-        Previewer
+        ItvCliper
     },
     data() {
         return {

@@ -18,7 +18,6 @@ test('src/libs/tool测试compressHtmlStr', () => {
             <div class="t1"> 125454 </div>
       </div>
     `
-
     expect(compressHtmlStr(str)).toBe('<div class="row-a5"><div class="t1"> 125454 </div></div>');
 });
 

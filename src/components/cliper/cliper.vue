@@ -1,6 +1,6 @@
 <template lang="html">
-<!--  @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart" @mousemove="touchmove"  -->
-    <div class="itv-cliper"  ref="clipic"   @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" >
+<!--    -->
+    <div class="itv-cliper"  ref="clipic" @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart" @mousemove="touchmove"   @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" >
         <div class="itv-cliper-clipic-frame" :class="{'itv-cliper-circle':clipType==='circle'}"  :style="{width:frame1Width+'px', height:frame1Height+'px'}" ref="frame1" id="clipicFrame1">
             <img ref="img1" :width="imgWidth" :height="imgHeight" 
              :src="src" /></div>
@@ -164,9 +164,8 @@ export default {
                     this.setImgTransform();
                     return
                 }
-            }
-            
-            if (e.touches.length>2) {
+            }   
+            if (e.touches.length>1) {
                 this.setScale(e.touches[0], e.touches[1])
                 this.setRotate(e.touches[0], e.touches[1])
                 this.setImgTransform();

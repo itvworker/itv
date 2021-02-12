@@ -6,7 +6,6 @@
         <transition  name="fade">
             <div class="itv-ui-bg" v-show="bg" @click="close"></div>
         </transition>
-
     </div>
 </template>
 
@@ -115,7 +114,7 @@
                     this.enableScrollX =  distanceX >= 3;
 
                     if(this.bg) {
-                        console.log('------------------------bg')
+                        
                         if(Math.abs(distanceX) >= Math.abs(distanceY) && currentTouchLeft - this.initialX<0) {
                             let x = this.x;
                             x+= currentTouchLeft - this.initialX;
