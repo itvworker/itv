@@ -8,7 +8,7 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import 'lib-flexible'
 import './layout'
-import './components/index.js'
+import './itv-components/index.js'
 import './assets/css/index.less'
 
 // import VConsole from 'vconsole'

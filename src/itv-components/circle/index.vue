@@ -2,7 +2,6 @@
 
     <div class="circle-box"  @touchstart="start" @touchmove="move" >
         <svg viewBox="0 0 100 100">
-
             <defs>
                 <linearGradient id="grad1">
                     <stop offset="0%" stop-color="red"/>
@@ -24,6 +23,7 @@
                 :d="path"
             ></path>
             <image
+            class="itv-circle-point"
                 :x="ax"
                 :y="ay"
                 @touchstart="touchstart($event,0)"
@@ -33,6 +33,7 @@
                 xlink:href="./imgs/apoint.jpeg"
             />
             <image
+                class="itv-circle-point"
                 :x="bx"
                 :y="by"
                 @touchstart="touchstart($event,1)"
