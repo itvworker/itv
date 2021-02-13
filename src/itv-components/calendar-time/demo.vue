@@ -4,15 +4,15 @@
         <itv-main>
             <div class="h10"></div>
             <section>
-                <itv-cell :isLink="true" subTitle="2020-08-05 10:56~2020-09-18 10:15" @click="confirm('html')" :showIcon="true" title="选择日期时间" :desc="calendarTime">
+                <cell :isLink="true" subTitle="2020-08-05 10:56~2020-09-18 10:15" @click="confirm('html')" :showIcon="true" title="选择日期时间" :desc="calendarTime">
                    
-                </itv-cell>
+                </cell>
 
-                <itv-cell :isLink="true" @click="alert('html')" :showIcon="true" title="日历类型" :desc="calendar">
-                </itv-cell>
+                <cell :isLink="true" @click="alert('html')" :showIcon="true" title="日历类型" :desc="calendar">
+                </cell>
 
-                <itv-cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
-                </itv-cell>
+                <cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
+                </cell>
             </section>
         </itv-main>
     </itv-container>

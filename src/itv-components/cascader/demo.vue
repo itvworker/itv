@@ -4,14 +4,14 @@
         <itv-main>
             <div class="h10"></div>
             <section>
-                <itv-cell
+                <cell
                     @click="open"
                     :showIcon="true"
                     title="地址"
                     desc="请选择地址"
                 >
-                </itv-cell>
-                <itv-cell
+                </cell>
+                <cell
                     :isLink="true"
                     @click="plugin('html')"
                     :showIcon="true"
@@ -19,8 +19,8 @@
                     title="插件方式调用"
                     :desc="plugin1Content"
                 >
-                </itv-cell>
-                <itv-cell
+                </cell>
+                <cell
                     :isLink="true"
                     @click="plugin2('html')"
                     :showIcon="true"
@@ -28,7 +28,7 @@
                     subTitle="有默认值"
                     :desc="plugin2Content"
                 >
-                </itv-cell>
+                </cell>
             </section>
 
            

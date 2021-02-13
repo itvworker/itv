@@ -4,12 +4,12 @@
         <itv-main>
             <div class="h10"></div>
           
-                <itv-cell
+                <cell
                     @click="open"
                     title="我是标题"
                     desc="描述文字"
                 >
-                </itv-cell>
+                </cell>
                 
         </itv-main>
         <itv-dialog

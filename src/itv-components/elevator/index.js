@@ -1,8 +1,5 @@
-import Elevator from './elevator.vue';
-import './elevator.less';
-
-Elevator.install = function(Vue) {
-  Vue.component(Elevator.name, Elevator);
+import Component from './index.vue';
+Component.install = function(Vue) {
+  Vue.component(Component.name, Component);
 };
-
-export default Elevator
+export default Component;

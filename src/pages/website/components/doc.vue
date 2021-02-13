@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import doc from '@/components/doc.js'
+import doc from '@/itv-components/doc.js'
 import html from '@/doc/doc.js'
 export default {
     computed:{

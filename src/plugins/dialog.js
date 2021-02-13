@@ -1,4 +1,4 @@
-import DialogComponent from '../components/dialog/index.vue';
+import DialogComponent from '../itv-components/dialoger/index.vue';
 import objectAssign from 'object-assign'
 import merge from '../libs/merge.js'
 
@@ -38,10 +38,10 @@ const plugin = {
     
         if (!vue.prototype.$itv) {
             vue.prototype.$itv = {
-                dialog
+                dialoger
             }
         } else {
-            vue.prototype.$itv.dialog  = dialog
+            vue.prototype.$itv.dialoger  = dialog
         }
     }
 }

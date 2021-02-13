@@ -1,4 +1,4 @@
-import PluginComponent from "../components/actionsheet/index.vue"
+import PluginComponent from "../itv-components/actionsheet/index.vue"
 import merge from '../libs/merge'
 
 let $vm

@@ -1,4 +1,4 @@
-import Component from '../components/cascader/index.vue'
+import Component from '../itv-components/cascader/index.vue'
 import merge from '../libs/merge.js'
 
 let $vm

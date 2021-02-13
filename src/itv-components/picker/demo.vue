@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import picker from './picker.vue';
+
 const APIData = [
   {
     label: 1,
@@ -54,9 +54,6 @@ const APIData = [
   }
 ];
 export default {
-  components: {
-      picker
-  },
   data() {
     return {
       date: null,
@@ -86,9 +83,6 @@ export default {
   }
 };
 </script>
-<style lang="less">
-@import './picker.less';
-</style>
 <style lang="less" scoped>
 .btn,.show-value {
   display: inline-block;

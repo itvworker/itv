@@ -1,5 +1,5 @@
-import Picker from './picker.vue';
-import './picker.scss';
+import Picker from './index.vue';
+
 
 Picker.install = function(Vue) {
   Vue.component(Picker.name, Picker);

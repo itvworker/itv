@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import ItvDialog from '../dialog/dialog';
-import ItvScroll from '../itvscroll/'
+import ItvDialog from '../dialoger/index.vue';
+import ItvScroll from '../scroller/index.vue'
 export default {
-    name: "itv-cascader",
+    name: "cascader",
     components: {
         ItvDialog,
         ItvScroll
@@ -337,5 +337,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import './index.less';
+@import './itv-cascader.less';
 </style>

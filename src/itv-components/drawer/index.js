@@ -1,9 +1,5 @@
-import Drawer from './drawer.vue';
-import './drawer.less';
-
-Drawer.install = function(Vue) {
-    Vue.component(Drawer.name, Drawer);
+import Component from './index.vue';
+Component.install = function(Vue) {
+  Vue.component(Component.name, Component);
 };
-
-
-export default Drawer
+export default Component;

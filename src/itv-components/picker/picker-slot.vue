@@ -405,5 +405,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import 'picker.less';
+@import 'itv-picker.less';
 </style>

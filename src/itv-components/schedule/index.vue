@@ -173,6 +173,7 @@ import {svgXml} from '../../libs/tool'
 
 
 export default {
+    name:'schedule',
     mixins: [
         touch,
         initCalendar,
@@ -304,5 +305,5 @@ export default {
 }
 </script>
 <style lang="less">
-@import './css/index.less';
+@import 'itv-schedule.less';
 </style>

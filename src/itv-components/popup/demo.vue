@@ -4,11 +4,11 @@
         <itv-main>
             <div class="h10"></div>
             <section>
-                <itv-cell :isLink="true" @click="confirm('html')" :showIcon="true" title="Confirm">
-                </itv-cell>
+                <cell :isLink="true" @click="confirm('html')" :showIcon="true" title="Confirm">
+                </cell>
 
-                <itv-cell :isLink="true" @click="alert('html')" :showIcon="true" title="Alert">
-                </itv-cell>
+                <cell :isLink="true" @click="alert('html')" :showIcon="true" title="Alert">
+                </cell>
             </section>
         </itv-main>
     </itv-container>

@@ -29,7 +29,7 @@
                 <div class="week-bar" v-if="dateType!=='time'">
                     <div class="week-item" v-for="(item, index) in weekTexts" :key="index">{{item}}</div>
                 </div> 
-                <swiper ref="swiper" :bounce="false"
+                <mini-swiper ref="swiper" :bounce="false"
                     :direction="calendarDir" @change="change" 
                     @last="change(2)" @first="change(0)" 
                     :loop="false" 
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                     </swiper-item>
-                </swiper>
+                </mini-swiper>
                 <div class="itv-picker-slot-box" :class="{'itv-calendar-only-time': dateType==='time'}" v-if="dateType==='calendar-time'||dateType==='time'">
                     <picker-slot ref="picker-0"
                         class="itv-calendar-picker"
@@ -141,18 +141,18 @@
     </itv-dialog> 
 </template>
 <script>
-    import swiper from '../swiper/swiper'
-    import swiperItem from '../swiper-item/swiper-item.vue'
+    import miniSwiper from '../mini-swiper/index.vue'
+    import swiperItem from '../swiper-item/index.vue'
     import pickerSlot from '../picker/picker-slot.vue'
-    import ItvDialog from '../dialog/dialog'
+    import ItvDialog from '../dialoger/index'
     import calendar from './mixins/calendar'
     import init from './mixins/init'
     import time from './mixins/time'
     export default {
-        name: 'calendarTime',
+        name: 'calendar-time',
         mixins:[calendar, init, time],
         components: {
-            swiper,
+            miniSwiper,
             swiperItem,
             pickerSlot,
             ItvDialog
@@ -388,7 +388,7 @@
 </script>
 
 <style lang="less" >
-@import './index.less';
+@import 'itv-calendar-time.less';
 </style>
 
 

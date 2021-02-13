@@ -4,51 +4,51 @@
     <itv-main>
         <h4>基本用法----</h4>
         <div>
-          <itv-cell>
+          <cell>
             <span slot="title">
               <itv-slider v-model="val1" :range="[0,10]"></itv-slider>
             </span>
-          </itv-cell>
-          <itv-cell>
+          </cell>
+          <cell>
             <span slot="title">Value： {{val1}}</span>
-          </itv-cell>
+          </cell>
         </div>
         <h4>拖动时展示标签</h4>
         <div>
-          <itv-cell>
+          <cell>
             <span slot="title">
               <itv-slider v-model="val2" :range="[0,100]" :showLabel="true"></itv-slider>
             </span>
-          </itv-cell>
-          <itv-cell>
+          </cell>
+          <cell>
             <span slot="title">Value： {{val2}}</span>
-          </itv-cell>
+          </cell>
         </div>
         <h4>一直展示标签</h4>
         <div>
-          <itv-cell>
+          <cell>
             <span slot="title">
               <itv-slider v-model="val3" :range="[0,100]" :showLabel="true" :showLabelAlways="true"></itv-slider>
             </span>
-          </itv-cell>
-          <itv-cell>
+          </cell>
+          <cell>
             <span slot="title">Value： {{val3}}</span>
-          </itv-cell>
+          </cell>
         </div>
         <h4>两端显式可选取范围</h4>
         <div>
-          <itv-cell>
+          <cell>
             <span slot="title">
               <itv-slider v-model="val4" :range="[-50,50]" :showLabel="true" :showRangeTxt="true"></itv-slider>
             </span>
-          </itv-cell>
-          <itv-cell>
+          </cell>
+          <cell>
             <span slot="title">Value： {{val4}}</span>
-          </itv-cell>
+          </cell>
         </div>
         <h4>设置分段数（stage=20）</h4>
         <div>
-          <itv-cell>
+          <cell>
             <span slot="title">
               <itv-slider
                 v-model="val5"
@@ -58,21 +58,21 @@
                 :stage="5"
               ></itv-slider>
             </span>
-          </itv-cell>
-          <itv-cell>
+          </cell>
+          <cell>
             <span slot="title">Value： {{val5}}</span>
-          </itv-cell>
+          </cell>
         </div>
         <h4>自定义Class</h4>
         <div>
-          <itv-cell>
+          <cell>
             <span slot="title">
               <itv-slider class="my-slider" v-model="val6" :range="[0,100]"></itv-slider>
             </span>
-          </itv-cell>
-          <itv-cell>
+          </cell>
+          <cell>
             <span slot="title">Value： {{val6}}</span>
-          </itv-cell>
+          </cell>
         </div>
     </itv-main>
 
@@ -96,8 +96,8 @@ export default {
 </script>
 
 <style lang="less">
-  .itv-cell:first-child {
-    .itv-cell-title {
+  .cell:first-child {
+    .cell-title {
       padding: 0 30px;
     }
   }

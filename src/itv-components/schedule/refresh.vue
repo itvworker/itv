@@ -77,55 +77,6 @@ export default {
     }
 }
 </script>
-<style lang="less" scoped>
-.refresh-content{
-    height: 60ipx;
-    position: relative;
-    .icon-refresh-bg, .icon-refresh-main{
-        width: 44ipx;
-        height: 44ipx;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 8ipx;
-        // transition: all 300ms ease-in;
-        z-index: 0;
-        img {
-            width: 44ipx;
-            height: 44ipx;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-        }
-    }
-    .icon-refresh-main {
-        z-index: 2;
-        height: 0ipx;
-        overflow: hidden;
-        height: 0ipx;
-    }
-    .animate-loading{
-        animation: refreshLoading 1s infinite 0s;
-    }
-}
-
-@keyframes refreshLoading
-{
-    from {
-        height: 0%;
-    }
-    to {
-        height: 100%;
-    }
-}
-
-@-webkit-keyframes refreshLoading
-{
-    from {
-        height: 0%;
-    }
-    to {
-        height: 100%;
-    }   
-}
+<style lang="less">
+@import 'itv-schedule.less';
 </style>

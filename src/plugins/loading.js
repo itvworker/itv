@@ -1,4 +1,4 @@
-import LoadingComponet from '../components/loading/index.vue';
+import LoadingComponet from '../itv-components/loading/index.vue';
 import merge from '../libs/merge.js'
 
 let $vm

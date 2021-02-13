@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-
+const ItvPlugin = require('../plugins/ItvPlugin');
 
 
 function resolve(dir) {
@@ -147,12 +147,14 @@ module.exports = {
         hash: true
     },
     plugins: [
+        
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'public/index.dev.html',
             inject: true
-        })
+        }),
+        new ItvPlugin(),
         // new CleanWebpackPlugin()
         // new CopyWebpackPlugin([
         //     {

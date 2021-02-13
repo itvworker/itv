@@ -17,7 +17,6 @@
 </template>
 <script>
 import picker from '../picker/picker.vue';
-import '../picker/picker.less';
 import Utils from '../../libs/date.js';
 
 export default {

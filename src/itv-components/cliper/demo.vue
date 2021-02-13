@@ -38,7 +38,7 @@
                   Cliper截图
                 </itv-header>
                 <itv-main>
-                    <itv-cliper :width="w" :height="h" ref="cliper" :clipType="clipType"></itv-cliper>
+                    <cliper :width="w" :height="h" ref="cliper" :clipType="clipType"></cliper>
                 </itv-main>
                 <itv-flex-row>
                     <div class="item" @click="reset">重置</div>
@@ -58,13 +58,10 @@
 
 <script>
 
-import ItvCliper from './cliper.vue'
+
 import img from '@/assets/img/header.jpeg';
 import { setTimeout } from 'timers';
 export default {
-    components: {
-        ItvCliper
-    },
     data() {
         return {
             clipType: 'orthogon',
@@ -129,7 +126,6 @@ export default {
 </script>
 
 <style lang="less">
-   @import 'cliper.less';
    .section-box {
      height: 120ipx;
      margin: 20ipx 0px;

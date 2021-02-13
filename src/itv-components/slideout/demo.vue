@@ -56,15 +56,8 @@
 </template>
 
 <script>
-import slideitem from "../slideitem/slideitem.vue";
-import slideout from "./slideout.vue";
-import slidebutton from "../slidebutton/slidebutton";
+
 export default {
-    components: {
-        slideout,
-        slideitem,
-        slidebutton
-    },
     data() {
         return {
             show: false

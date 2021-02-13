@@ -1,9 +1,5 @@
-import Cell from './cell.vue';
-import './cell.less';
-
-
-Cell.install = function(Vue) {
-  Vue.component(Cell.name, Cell);
+import Component from './index.vue';
+Component.install = function(Vue) {
+  Vue.component(Component.name, Component);
 };
-
-export default Cell;
+export default Component;

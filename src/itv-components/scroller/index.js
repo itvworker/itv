@@ -1,8 +1,5 @@
-import Scroller from './scroller.vue';
-import './scroller.less';
-
-Scroller.install = function(Vue) {
-  Vue.component(Scroller.name, Scroller);
+import Component from './index.vue';
+Component.install = function(Vue) {
+  Vue.component(Component.name, Component);
 };
-
-export default Scroller
+export default Component;
