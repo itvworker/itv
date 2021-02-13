@@ -12,18 +12,6 @@
                 </cell>
                 
         </itv-main>
-        <itv-dialog
-            v-model="show"
-            :hideOnClick="true"
-        >这是个什么鬼</itv-dialog>
-        <div
-            class="page-content"
-            ref="page"
-            @click="page"
-        >
-            我不想看见你
-        </div>
-
         
     </itv-container>
 

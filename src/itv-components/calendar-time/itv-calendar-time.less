@@ -97,6 +97,7 @@
          }
 
       }
+      
   }
 
   .week-bar{
@@ -246,3 +247,34 @@
   }
 }
 
+
+.itv-picker-list{
+  width: 20ipx;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  .itv-picker-indicator{
+    position: absolute;
+    top: 88ipx;
+    width: 100%;
+    height: 44ipx;
+    border-top: 1px solid @itv-border-color-base;
+    border-bottom: 1px solid @itv-border-color-base;
+    z-index: 3; 
+    box-sizing: border-box;
+    line-height: 0px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &.itv-picker-row5{
+        top: 88ipx;
+    }
+    &.itv-picker-row7{
+        top: 132ipx;
+    }
+  }
+
+}

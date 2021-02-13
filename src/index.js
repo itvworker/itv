@@ -106,7 +106,7 @@ let Components = [
     PulginToast,
 ]
 
-
+console.error('itv-全局安装时会看到这个，或者没引入ItvPlugin按需加载会出现打包过大');
 export default {
     install: function(Vue) {
         Components.forEach((item, index)=>{

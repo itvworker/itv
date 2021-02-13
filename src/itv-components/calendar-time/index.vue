@@ -119,10 +119,8 @@
                         :rows="pickerRows"
                         isLoop
                     ></picker-slot>
-                    <div class="itv-picker-list itv-picker-list-mark ">
-                            <div class="itv-picker-indicator itv-picker-mark" :class="['itv-picker-row'+pickerRows]">
-                            ：
-                        </div>
+                    <div class="itv-picker-list">
+                            <div class="itv-picker-indicator" :class="['itv-picker-row'+pickerRows]">:</div>
                     </div>
                     <picker-slot 
                         ref="picker-1"

@@ -4,7 +4,7 @@
         <itv-main>
            
             <sliver-container 
-            ref="sliver-container"
+            ref="sliver"
             :bounceTop="false"
             :headerMaxHeight="headerMaxHeight"  
             :headerMinHeight="headerMinHeight" 
@@ -23,22 +23,22 @@
                     </div>
                 </div>
                 
-                 <swiper   :loop="false" v-model="columnIndex" class="itv-swpier-height">
-                     <swiper-item class="swiper-item">
+                 <mini-swiper   :loop="false" v-model="columnIndex" class="itv-swpier-height">
+                     <mini-swiper-item class="mini-swiper-item">
                          <sliver  :bounceTop="false" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
                             <div class="test-list" v-for="(item, index)  in list" :key="index" @click="casePush">
                                 sliver1{{item.title}} {{index}}
                             </div>
                         </sliver>
-                     </swiper-item>
-                     <swiper-item class="swiper-item">
+                     </mini-swiper-item>
+                     <mini-swiper-item class="mini-swiper-item">
                          <sliver  :bounceTop="true" refreshLoad bounceBottom @refresh = refresh ref="sliver1" >
                             <div class="test-list" v-for="(item, index)  in list" :key="index">
                                 sliver2{{item.title}} {{index}}
                             </div>
                         </sliver>
-                     </swiper-item>
-                 </swiper>
+                     </mini-swiper-item>
+                 </mini-swiper>
             </sliver-container>
         </itv-main>
     </itv-container>
@@ -79,7 +79,7 @@ export default {
        refresh() {
            
            setTimeout(()=>{
-                this.$refs.sliver-container.refresh()
+                this.$refs.sliver.refresh()
                 this.$refs.sliver0.refresh()
                 this.$refs.sliver1.refresh()
            },2000)

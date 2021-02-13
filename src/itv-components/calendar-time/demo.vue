@@ -56,6 +56,7 @@ export default {
       openTime() {
             this.$itv.calendarTime.show({
                 value: this.time,
+                titleText:"请选择时间",
                 minDate: '10:05',
                 maxDate: '23:59',
                 dateType: 'time',

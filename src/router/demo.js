@@ -177,15 +177,7 @@ export default [
                 },
             },
            
-            {
-                path: '/demo/scroller',
-                name: 'itv_scroller',
-                component: () => import('@/itv-components/scroller/demo.vue'),
-                meta: {
-                    keepAlive: false,
-                    title: 'scroller',
-                },
-            },
+           
             {
                 path: '/demo/calendar-time',
                 name: 'itv_calendar-time',
