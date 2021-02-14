@@ -337,5 +337,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import './itv-cascader.less';
+@import '../../assets/css/itv-theme.less';
+@import 'itv-cascader.less';
 </style>

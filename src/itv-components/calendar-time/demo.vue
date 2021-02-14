@@ -14,19 +14,47 @@
                 <cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
                 </cell>
             </section>
+            <template v-if="show">
+                <dome-name :dome="demoName"></dome-name>
+            </template>
+            
         </itv-main>
     </itv-container>
 
 </template>
 
 <script>
+
+let com = {
+    name:"dome-name",
+    props:{
+        dome:{
+            type: Object,
+            default:()=>{}
+        }
+       
+    },
+    template:`
+        <div class="dome-name" @click="echo">{{dome.name}}</div>
+    `,
+    methods: {
+
+    }
+}
+import vue from 'vue';
+import { setTimeout } from 'timers';
 export default {
   data() {
     return {
         show:false,
         calendarTime:"2020-09-12 10:15",
         calendar:"2020-09-12",
-        time:'10:15'
+        time:'10:15',
+        demoName:{
+            name:"title",
+            number: 10
+        },
+        show: false,
     };
   },
   methods: {
@@ -67,11 +95,17 @@ export default {
       },
       page() {
          
+      },
+      echo() {
+          console.log(this.demoName);
+          this.demoName.name = '你是个标题'
       }
   },
   mounted() {
-    
-     
+    //   Vue.component(Component.name, Component);
+     com.methods.echo =this.echo.bind(this);
+     vue.component(com.name, com)
+     this.show = true;
       
   },
 };

@@ -325,6 +325,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-// itv-const.less
-@import "./itv-cliper.less";
+@import '../../assets/css/itv-theme.less';
+@import "itv-cliper.less";
 </style>

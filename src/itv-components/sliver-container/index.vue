@@ -170,5 +170,6 @@ export default {
 }
 </script>
 <style lang="less">
+@import '../../assets/css/itv-theme.less';
 @import 'itv-sliver-container.less';
 </style>

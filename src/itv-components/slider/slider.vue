@@ -157,6 +157,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
-@import './slider';
+<style lang="less" scoped>
+@import '../../assets/css/itv-theme.less';
+@import 'slider.less';
 </style>

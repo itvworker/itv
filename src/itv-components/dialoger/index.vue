@@ -126,6 +126,7 @@ export default {
 
 
 <style lang="less" scoped>
+@import '../../assets/css/itv-theme.less';
 @import '../../assets/css/animate.less';
-@import './itv-dialoger.less';
+@import 'itv-dialoger.less';
 </style>

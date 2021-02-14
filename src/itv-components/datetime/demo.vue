@@ -91,6 +91,7 @@ export default {
 </script>
 
 <style lang="less">
+@import '../../assets/css/itv-theme.less';
 @import './datetime.less';
 .itv-picker-list{
     flex: 1;

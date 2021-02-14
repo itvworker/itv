@@ -117,6 +117,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '../../assets/css/itv-theme.less';
 .test-list {
     padding:15ipx 15ipx;
     border-bottom: #ddd solid 1px;

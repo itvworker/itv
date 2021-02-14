@@ -71,7 +71,7 @@ module.exports = {
                     {
                         loader: 'sass-resources-loader',
                         options: {
-                            resources: [resolve('src/assets/css/animate.less'), resolve('src/assets/css/page.less'), resolve('src/assets/css/theme.less')]
+                            resources: [resolve('src/assets/css/animate.less'), resolve('src/assets/css/page.less')]
                         }
                     }
 

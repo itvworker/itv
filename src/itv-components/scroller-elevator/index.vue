@@ -67,5 +67,6 @@ export default {
 }
 </script>
 <style lang="less">
+@import '../../assets/css/itv-theme.less';
 @import 'itv-scroller-elevator.less';
 </style>

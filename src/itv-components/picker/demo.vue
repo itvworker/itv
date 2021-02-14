@@ -84,6 +84,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@import '../../assets/css/itv-theme.less';
 .btn,.show-value {
   display: inline-block;
   margin-left: 20px;

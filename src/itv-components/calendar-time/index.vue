@@ -39,7 +39,7 @@
                     :beginBounce="beginBounce"
                     :endBounce="endBounce"
                     >
-                    <swiper-item class="itv-swpier-calendar">
+                    <mini-swiper-item class="itv-swpier-calendar">
                         
                         <div class="month-number" v-if="!beginBounce">
                             <div class="year">
@@ -62,8 +62,8 @@
                         >
                             <div class="active">{{item.day}}</div>
                         </div>
-                    </swiper-item>
-                    <swiper-item class="itv-swpier-calendar">
+                    </mini-swiper-item>
+                    <mini-swiper-item class="itv-swpier-calendar">
                         <!-- <div class="year-month">
                             {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
                         </div> -->
@@ -85,8 +85,8 @@
                         >
                             <div class="active">{{item.day}}</div>
                         </div>
-                    </swiper-item>
-                    <swiper-item class="itv-swpier-calendar">
+                    </mini-swiper-item>
+                    <mini-swiper-item class="itv-swpier-calendar">
                         <div class="month-number" v-if="!endBounce">
                             <div class="year">
                                 {{nextMonth[15]?nextMonth[15].year:''}}
@@ -106,7 +106,7 @@
                                 {{item.day}}
                             </div>
                         </div>
-                    </swiper-item>
+                    </mini-swiper-item>
                 </mini-swiper>
                 <div class="itv-picker-slot-box" :class="{'itv-calendar-only-time': dateType==='time'}" v-if="dateType==='calendar-time'||dateType==='time'">
                     <picker-slot ref="picker-0"
@@ -140,7 +140,7 @@
 </template>
 <script>
     import miniSwiper from '../mini-swiper/index.vue'
-    import swiperItem from '../swiper-item/index.vue'
+    import miniSwiperItem from '../mini-swiper-item/index.vue'
     import pickerSlot from '../picker/picker-slot.vue'
     import ItvDialog from '../dialoger/index'
     import calendar from './mixins/calendar'
@@ -151,7 +151,7 @@
         mixins:[calendar, init, time],
         components: {
             miniSwiper,
-            swiperItem,
+            miniSwiperItem,
             pickerSlot,
             ItvDialog
         },
@@ -386,6 +386,7 @@
 </script>
 
 <style lang="less" >
+@import '../../assets/css/itv-theme.less';
 @import 'itv-calendar-time.less';
 </style>
 

@@ -78,5 +78,6 @@ export default {
 }
 </script>
 <style lang="less">
+@import '../../assets/css/itv-theme.less';
 @import 'itv-schedule.less';
 </style>

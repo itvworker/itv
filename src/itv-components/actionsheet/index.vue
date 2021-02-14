@@ -108,6 +108,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import './itv-actionsheet.less';
+@import '../../assets/css/itv-theme.less';
+@import 'itv-actionsheet.less';
 </style>
 

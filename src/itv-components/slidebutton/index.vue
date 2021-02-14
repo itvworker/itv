@@ -12,5 +12,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@import '../../assets/css/itv-theme.less';
 @import 'itv-slidebutton.less';
 </style>

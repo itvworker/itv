@@ -231,5 +231,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import './itv-circle.less';
+@import '../../assets/css/itv-theme.less';
+@import 'itv-touch-circle.less';
 </style>

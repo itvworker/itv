@@ -61,6 +61,9 @@
 
 import img from '@/assets/img/header.jpeg';
 import { setTimeout } from 'timers';
+
+
+
 export default {
     data() {
         return {
@@ -118,6 +121,7 @@ export default {
         }
     },
     mounted() {
+      
       setTimeout(()=>{
         this.$refs.previewer.show(0)
       },2000)

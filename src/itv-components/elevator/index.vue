@@ -184,5 +184,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import './itv-elevator.less';
+@import '../../assets/css/itv-theme.less';
+@import 'itv-elevator.less';
 </style>
