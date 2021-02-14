@@ -8,7 +8,7 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import 'lib-flexible'
 import './layout'
-import itv from './index.js'
+import itv from 'itv-ui'
 import './assets/css/index.less'
 
 // import VConsole from 'vconsole'
@@ -18,7 +18,7 @@ import './assets/css/index.less'
 
 
 
-Vue.use(itv);
+Vue.use(itv)
 Vue.prototype.hljs = function () {
     const preEl = document.querySelectorAll('pre')
     preEl.forEach((el) => {

@@ -76,7 +76,7 @@ module.exports = {
                     }
 
                 ],
-                include: [resolve('src')]
+                include: [resolve('src'),resolve('node_modules/itv-ui')]
             },
             {
                 test: /\.js$/,

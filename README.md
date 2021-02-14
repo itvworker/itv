@@ -1,13 +1,27 @@
-### ITV  VUE多动端组件库
+# ITV  VUE移动端组件库
+
+ 一个基于vue2.0的移动端多功能组件库
+
+## 安装
+
 ```
-A Vue 2.0 UI Toolkit for moblieWeb.
+npm install itv --save
 ```
 
-npm --registry https://registry.npm.taobao.org install node-red-contrib-composer@latest
-全局配置切换到淘宝源
- npm config set registry https://registry.npm.taobao.org
-全局配置切换到官方源
- npm config set registry http://www.npmjs.org
+### vue引入
+
+```js
+//全局安装
+import itv form "itv";
+vue.use(itv)
+
+//按需加载 
+import {scroller} from "itv"
+vue.use(scroller);
+
+```
+
+按需加载需要引入 [ItvPlugin](https://www.npmjs.com/package/itv-loader)， 否则会按需加载将失效
 
 
- 
+
