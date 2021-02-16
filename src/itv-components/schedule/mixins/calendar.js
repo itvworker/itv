@@ -122,6 +122,7 @@ export default {
          * @param {Object} item  选中的日历数组数据 
          */
         isBetween(item) {
+            
             if(this.maxMonthNumber && item.number > this.maxMonthNumber) {
                 return false
             }
@@ -285,7 +286,7 @@ export default {
                 let _month = date.getMonth() + 1
                 let _day = date.getDate()
                 let _dayWeek = date.getDay()
-                arr.push({
+                let item = {
                     day: _day,
                     week: _dayWeek,
                     year: _year,
@@ -295,9 +296,11 @@ export default {
                     msg: _year + '/' + _month + '/' + _day,
                     time: new Date(_year + '/' + _month + '/' + _day).getTime(),
                     id: this.getId(),
+                    overtop: false,
                     type: 'week',
-                   
-                })
+                }
+                item.overtop = this.isBetween(item)
+                arr.push(item)
                 nowTime = nowTime + ondays
             }
             return arr
@@ -324,7 +327,7 @@ export default {
             let prev = this.calcPrevMonth(year, month, dayWeek)
             let now = []
             for (let i = 1; i <= days; i++) {
-                now.push({
+                let item = {
                     day: i,
                     week: dayWeek,
                     year: year,
@@ -335,8 +338,11 @@ export default {
                     time: new Date(year + '/' + month + '/' + i).getTime(),
                     id: this.getId(),
                     type: 'now',
+                    overtop: false,
                     actualDutyHour: 0
-                })
+                };
+                item.overtop = this.isBetween(item)
+                now.push(item)
                 dayWeek = this.calcNextWeek(dayWeek)
             }
             prev = prev.concat(now)
@@ -383,7 +389,7 @@ export default {
             }
             let arr = []
             for (let i = dayWeek - 1; i >= 0; i--) {
-                arr.unshift({
+                let item = {
                     week: i,
                     year: _year,
                     month: _month,
@@ -395,39 +401,46 @@ export default {
                     time: new Date(_year + '/' + _month + '/' + lastDay).getTime(),
                     type: 'prev',
                     actualDutyHour: 0,
-                })
+                    overtop:false
+                }
+                item.overtop = this.isBetween(item)
+                arr.unshift(item)
+                
                 lastDay--
             }
             return arr
         },
         //计算下个月填充所有内容 将行数填充为6行
         calcNextMonth(year, month, dayWeek, num) {
-            return [];
-            // if (num === 0) return []
-            // let _year = year
-            // let _month = month + 1
-            // let _dayWeek = this.calcNextWeek(dayWeek)
-            // let arr = []
-            // if (month === 12) {
-            //     //如果是星期日直接返回空数组
-            //     _month = 1
-            //     _year = year + 1
-            // }
-            // for (let i = 1; i <= num; i++) {
-            //     arr.push({
-            //         day: i,
-            //         week: _dayWeek,
-            //         year: _year,
-            //         month: _month,
-            //         number:parseInt(_year+''+_month),
-            //         msg: _year + '/' + _month + '/' + i,
-            //         time: new Date(_year + '/' + _month + '/' + i).getTime(),
-            //         id: this.getId(),
-            //         type: 'next',
-            //     })
-            //     _dayWeek = this.calcNextWeek(_dayWeek)
-            // }
-            // return arr
+            
+            if (num === 0 || this.isKeepRows===false) return []
+            let _year = year
+            let _month = month + 1
+            let _dayWeek = this.calcNextWeek(dayWeek)
+            let arr = []
+            if (month === 12) {
+                //如果是星期日直接返回空数组
+                _month = 1
+                _year = year + 1
+            }
+            for (let i = 1; i <= num; i++) {
+                let item = {
+                    day: i,
+                    week: _dayWeek,
+                    year: _year,
+                    month: _month,
+                    number:parseInt(_year+''+(_month>=10?_month:'0'+_month)),
+                    msg: _year + '/' + _month + '/' + i,
+                    time: new Date(_year + '/' + _month + '/' + i).getTime(),
+                    id: this.getId(),
+                    type: 'next',
+                    overtop:false
+                }
+                item.overtop = this.isBetween(item)
+                arr.push(item)
+                _dayWeek = this.calcNextWeek(_dayWeek)
+            }
+            return arr
         },
         aniamteend() {
             this.isAni = false

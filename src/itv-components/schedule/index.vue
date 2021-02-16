@@ -42,7 +42,7 @@
                     <div class="week-item" :class="{'none-item':isWeekMin}">
                         <div
                             class="day-item"
-                            :class="{'day-today': today === item.key,'day-active':currentValue===item.time,'forbid':item.number > maxMonthNumber || item.number < minMonthNumber  }"
+                            :class="{'day-today': today === item.key, 'overtop':!item.overtop,'day-active':currentValue===item.time,'forbid':item.number > maxMonthNumber || item.number < minMonthNumber  }"
                             v-for="(item, index) in prevWeek"
                             :key="item.id"
                         >
@@ -55,7 +55,7 @@
                         <div
                             class="day-item"
                             @click="selected(index,item)"
-                            :class="{'day-today': today === item.key ,'day-active':currentValue===item.time  }"
+                            :class="{'day-today': today === item.key ,'overtop':!item.overtop, 'day-active':currentValue===item.time  }"
                             v-for="(item, index) in nowWeek"
                             :key="item.id"
                         >
@@ -70,7 +70,7 @@
                     <div class="week-item" :class="{'none-item':isWeekMax}">
                         <div
                             class="day-item"
-                            :class="{'day-today': today === item.key,'day-active':currentValue===item.time }"
+                            :class="{'day-today': today === item.key, 'overtop':!item.overtop, 'day-active':currentValue===item.time }"
                             v-for="(item, index) in nextWeek"
                             :key="item.id"
                         >
@@ -99,7 +99,7 @@
                         <div
                             class="day-item"
                             ref="day"
-                            :class="{'day-today': today === item.key,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                            :class="{'day-today': today === item.key, 'overtop':!item.overtop, 'opacity-day':(item.type==='prev'||item.type==='next') && !isShowPrevMonth, 'prev-month': item.type==='prev',  'next-month': item.type==='next'}"
                             v-for="(item, index) in prevMonth"
                             :key="item.id"
                         >
@@ -116,7 +116,7 @@
                         <div
                             class="day-item"
                             @click="selectDay(index, item)"
-                            :class="{ 'day-today': today === item.key ,'day-active':currentValue===item.time,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                            :class="{ 'day-today': today === item.key ,'overtop':!item.overtop,'day-active':currentValue===item.time, 'opacity-day':(item.type==='prev'||item.type==='next') && !isShowPrevMonth, 'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
                             v-for="(item, index) in nowMonth"
                             :key="item.id"
                         >
@@ -134,7 +134,7 @@
                         </div>
                         <div
                             class="day-item"
-                            :class="{'day-today': today === item.key, 'gray': !item.hasSchedule ,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
+                            :class="{'day-today': today === item.key, 'overtop':!item.overtop, 'opacity-day':(item.type==='prev'||item.type==='next') && !isShowPrevMonth,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
                             v-for="(item, index) in nextMonth"
                             :key="item.id"
                         >
@@ -146,7 +146,8 @@
                     
                 </div>
             </div>
-            <div class="icon-bar" @click="toggleCalendar">
+            <!--  @click="toggleCalendar" -->
+            <div class="icon-bar" >
                 <span class="icon iconfont icon-xiangshang" :class="{'rotate180': calendarStatus===1}"></span>
             </div>
             </div>
@@ -170,6 +171,7 @@ import animateScroller from './mixins/animate.scroller'
 import move from './mixins/move'
 import refreshIcon from './refresh'
 import {svgXml} from '../../libs/tool'
+
 
 
 export default {
@@ -243,6 +245,33 @@ export default {
         pullDis: {
             type: Number,
             default: 0
+        },
+        getAddtional: {
+            type: Function,
+            default: null
+        },
+        isChangeState: { //是否可以在周与月之间切换
+            type: Boolean,
+            default: true
+        },
+        initState: { //初始化的类型  
+            type: String,
+            default: 'month'
+        },
+        //日历是否保持6行
+        isKeepRows: {
+            type: Boolean,
+            default: false
+        },
+        //是否显显示上一个月月份
+        isShowPrevMonth: {
+            type: Boolean,
+            default: false
+        },
+        //是否只能点当前前月份的日历
+        isClickNowMonth:{
+            type: Boolean,
+            default: true
         }
     },
 

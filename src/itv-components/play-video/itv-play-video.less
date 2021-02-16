@@ -8,7 +8,7 @@
     src: url('./css/iconfont.ttf?t=1606102089878') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
     url('./css/iconfont.svg?t=1606102089878#iconfont') format('svg'); /* iOS 4.1- */
 }
-[class*='vuk-video-iconfont'] {
+[class*='itv-play-video-iconfont'] {
     font-family: 'vukVideo' !important;
     font-size: 16px;
     font-style: normal;
@@ -16,14 +16,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.iconfont,
-[class*='icon-'] {
-    font-family: 'iconfont';
-    font-size: 16ipx;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    
-}
+
 
 
 
@@ -32,20 +25,13 @@
 }
 
 
-body,
-html {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-}
-.vuk-video-indoor {
+
+.itv-play-video-indoor {
     position: relative;
     width: 100%;
     height: 100%;
 }
-.vuk-video {
+.itv-play-video {
     width: 100%;
     height: 100%;
     transform-origin: center;
@@ -94,7 +80,7 @@ html {
         height: 100%;
         top: 0;
 
-        .vuk-video-time-bar {
+        .itv-play-video-time-bar {
             font-size: 16px;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px 10px;
@@ -106,7 +92,7 @@ html {
             transform: translate(-50%, -50%);
             z-index: 10;
         }
-        .vuk-video-volume-brightness {
+        .itv-play-video-volume-brightness {
             background-color: rgba(0, 0, 0, 0.5);
             width: 120px;
             height: 60px;
@@ -118,13 +104,13 @@ html {
             top: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            .vuk-video-iconfont-volume {
+            .itv-play-video-iconfont-volume {
                 &::before {
                     content: '\e605';
                     color: #fff;
                     font-size: 20px;
                 }
-                &.vuk-video-nosound-icon {
+                &.itv-play-video-nosound-icon {
                     &::before {
                         content: '\e603';
                         color: #fff;
@@ -133,7 +119,7 @@ html {
                     margin-bottom: 4px;
                 }
             }
-            .vuk-video-measure-bar-out {
+            .itv-play-video-measure-bar-out {
                 margin: auto;
                 width: 80%;
                 height: 2px;
@@ -142,7 +128,7 @@ html {
                 margin-top: 10px;
                 overflow: hidden;
                 position: relative;
-                .vuk-video-measure-bar {
+                .itv-play-video-measure-bar {
                     background-color: @activeColor;
                     width: 20%;
                     height: 2px;
@@ -151,7 +137,7 @@ html {
         }
     }
 
-    .vuk-video-title-bar {
+    .itv-play-video-title-bar {
       
         position: absolute;
         left: 0;
@@ -170,7 +156,7 @@ html {
         &.iphonex-bar {
             padding-top: 44px;
         }
-        .vuk-video-iconfont-back {
+        .itv-play-video-iconfont-back {
             height: 44px;
             font-size: 20px;
             padding-left: 20px;
@@ -180,7 +166,7 @@ html {
             }
         }
         
-        .vuk-video-title-word {
+        .itv-play-video-title-word {
             font-size: 16px;
             .itv-ellipsis;
         }
@@ -236,26 +222,26 @@ html {
                 font-size: 26px;
                 padding: 4px 5px;
             }
-            .vuk-video-play-icon {
+            .itv-play-video-play-icon {
                 &::before {
                     content: '\e61c';
                 }
             }
 
-            .vuk-video-pause-icon {
+            .itv-play-video-pause-icon {
                 &::before {
                     content: '\e69d';
                 }
             }
 
-            .vuk-video-next {
+            .itv-play-video-next {
                 padding: 8px 5px 6px 5px;
                 font-size: 18px;
                 &::before {
                     content: '\e608';
                 }
             }
-            .vuk-video-time-bar {
+            .itv-play-video-time-bar {
                 padding: 8px 0;
                 margin-left: 30px;
             }
@@ -265,7 +251,7 @@ html {
             display: flex;
             align-items: center;
             justify-content: center;
-            .vuk-video-btn-word {
+            .itv-play-video-btn-word {
                 padding: 6px 8px;
                 font-size: 14px;
                 color: #fff;
@@ -351,7 +337,7 @@ html {
         &.vuk-viedo-show {
             transform: translateX(0%);
         }
-        .vuk-video-select-chapter-title {
+        .itv-play-video-select-chapter-title {
             height: 44px;
             text-align: left;
             padding-left: 10px;
@@ -372,7 +358,7 @@ html {
                 position: absolute;
             }
         }
-        .vuk-video-chapter-scroller {
+        .itv-play-video-chapter-scroller {
             flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
@@ -383,7 +369,7 @@ html {
                 padding: 0;
                 margin: 0;
             }
-            .vuk-video-select-dot {
+            .itv-play-video-select-dot {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -401,13 +387,13 @@ html {
                     &.active {
                         color: @activeColor;
                     }
-                    .vuk-video-chapter-name {
+                    .itv-play-video-chapter-name {
                         display: none;
                     }
                 }
             }
 
-            .vuk-video-select-list {
+            .itv-play-video-select-list {
                 padding: 5px 0;
 
                 li {
@@ -421,11 +407,11 @@ html {
                     &.active {
                         color: @activeColor;
                     }
-                    .vuk-video-chapter-name {
+                    .itv-play-video-chapter-name {
                     }
                 }
             }
-            .vuk-video-play-speed {
+            .itv-play-video-play-speed {
                 padding-top: 10px;
 
                 li {

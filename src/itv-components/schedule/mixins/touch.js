@@ -148,6 +148,9 @@ export default {
                 return false
             }
 
+            if(this.screenType === 'vertical' && this.isChangeState===false) {
+                return;
+            }
             let touches = e.touches;
             if (touches.length == null) {
                 throw new Error("Invalid touch list: " + touches);
@@ -188,7 +191,10 @@ export default {
             //判断是否滑动并判断滑动的类型
             if (obj.type > 0 && !this.isMove) {
                 if (obj.type === 1 || obj.type === 2) {
-                    this.screenType = 'vertical'
+                    this.screenType = 'vertical';
+                    if(this.screenType === 'vertical' && this.isChangeState===false) {
+                        return;
+                    }
                     // this.y = this.slideHeight
                 } else {
                     this.screenType = 'progress'

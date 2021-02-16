@@ -1,16 +1,16 @@
 
 <template lang="html">
 <!-- :style="{'transform':`rotate(${rotate}deg)`,'width':innerWidth+'px', 'height':innerHeight+'px','z-index':zIndex}" -->
-    <section class="vuk-video" ref="video"    >
-        <div class="vuk-video-indoor" >
+    <section class="itv-play-video" ref="video"    >
+        <div class="itv-play-video-indoor" >
             <div class="error-message"  v-if="isLoading && videoStatus===1" @click="reload">{{lang[langType].netWorkError}}</div>
             <div class="error-message" v-if="videoStatus===2">{{lang[langType].typeError}}</div>
             <!-- v-if="videoStatus===2 || (isLoading && videoStatus===1)" -->
-            <div class="vuk-video-title-bar vuk-viedo-show" v-if="videoStatus===2 || (isLoading && videoStatus===1)">
-                <div class="vuk-video-iconfont-back" @click="closeVideo"></div><div class="vuk-video-title-word">{{videos.length>0 ?videos[nowPlayIndex]['name']:''}}</div>
+            <div class="itv-play-video-title-bar vuk-viedo-show" v-if="videoStatus===2 || (isLoading && videoStatus===1)">
+                <div class="itv-play-video-iconfont-back" @click="closeVideo"></div><div class="itv-play-video-title-word">{{videos.length>0 ?videos[nowPlayIndex]['name']:''}}</div>
             </div>
-            <div class="vuk-video-title-bar" v-else :class="{'iphonex-bar': screenDir !== 'vertical','vuk-viedo-show':isShowNav && !isSelectShow}">
-                <div class="vuk-video-iconfont-back" @click="closeVideo"></div><div class="vuk-video-title-word">{{videos.length>0 ?videos[nowPlayIndex]['name']:''}}</div>
+            <div class="itv-play-video-title-bar" v-else :class="{'iphonex-bar': screenDir !== 'vertical','vuk-viedo-show':isShowNav && !isSelectShow}">
+                <div class="itv-play-video-iconfont-back" @click="closeVideo"></div><div class="itv-play-video-title-word">{{videos.length>0 ?videos[nowPlayIndex]['name']:''}}</div>
             </div>
             <img alt  class="cover" v-if="cover" :src="cover"  />
             <video  webkit-playsinline="webkit-playsinline" playsinline="playsinline"  
@@ -51,20 +51,20 @@
             <!-- 滑动条 -->
             <section class="touch-screen" @touchstart="screenTouchstart" @touchmove="screenTouchmove" @touchend="screenTouchend" ref="screen" @click = "toggleNav">
 
-                <div class="vuk-video-time-bar" v-show="screenType==='progress' && allTime!=='00:00'">
+                <div class="itv-play-video-time-bar" v-show="screenType==='progress' && allTime!=='00:00'">
                     {{forBackTime}}/{{allTime}}
                 </div>
 
-                <!-- <span class="vuk-video-time-bar" >
+                <!-- <span class="itv-play-video-time-bar" >
                     {{forBackTime}}/{{allTime}}
                 </span> -->
 
 
                 <load-icon v-if="isLoading && !videoStatus"></load-icon>
-                <div class="vuk-video-volume-brightness" v-show="screenType==='sound'">
-                    <em class="vuk-video-iconfont-volume" ></em> 
-                    <div class="vuk-video-measure-bar-out">
-                        <div class="vuk-video-measure-bar" :style="{width:volume*100+'%'}"></div>
+                <div class="itv-play-video-volume-brightness" v-show="screenType==='sound'">
+                    <em class="itv-play-video-iconfont-volume" ></em> 
+                    <div class="itv-play-video-measure-bar-out">
+                        <div class="itv-play-video-measure-bar" :style="{width:volume*100+'%'}"></div>
                     </div>
                 </div>
             </section>
@@ -95,35 +95,35 @@
                     </div>
                 </div>
                 <div class="click-bar-left">
-                    <div class="vuk-video-iconfont play-pause" @click.stop="toggle" :class="{'vuk-video-play-icon': isPause,'vuk-video-pause-icon': !isPause,}"></div>
-                    <div class="vuk-video-iconfont play-next vuk-video-next" v-if="videos.length>1 && nowPlayIndex!==videos.length-1 && !single" @click.stop="iosNext"></div>
-                    <div class="vuk-video-time-bar">
+                    <div class="itv-play-video-iconfont play-pause" @click.stop="toggle" :class="{'itv-play-video-play-icon': isPause,'itv-play-video-pause-icon': !isPause,}"></div>
+                    <div class="itv-play-video-iconfont play-next itv-play-video-next" v-if="videos.length>1 && nowPlayIndex!==videos.length-1 && !single" @click.stop="iosNext"></div>
+                    <div class="itv-play-video-time-bar">
                         {{currentTime}}/{{allTime}}
                     </div>
                 </div>
 
                 <div class="click-bar-right">
-                    <div class="vuk-video-iconfont moblie-icon" :class="screenDir" @click="$emit('screen',screenDir)" v-if="screenDir"></div>
-                    <div class="vuk-video-btn-word" @click="isSelectShow=true;selectType='speed'">{{selectSpeed}}</div>
-                    <div class="vuk-video-btn-word" @click="isSelectShow=true;selectType='chapter'" v-if="videos.length>=2 &&!single">章节</div>
+                    <div class="itv-play-video-iconfont moblie-icon" :class="screenDir" @click="$emit('screen',screenDir)" v-if="screenDir"></div>
+                    <div class="itv-play-video-btn-word" @click="isSelectShow=true;selectType='speed'">{{selectSpeed}}</div>
+                    <div class="itv-play-video-btn-word" @click="isSelectShow=true;selectType='chapter'" v-if="videos.length>=2 &&!single">章节</div>
                 </div>
             </div>
 
             <div class="vuk-viedo-select-chapter" :class="{'vuk-viedo-show': isSelectShow}">
-                <div class="vuk-video-select-chapter-title">
+                <div class="itv-play-video-select-chapter-title">
                     <span v-if="selectType==='chapter'">{{lang[langType].chapter}}</span>
                     <span v-else>{{lang[langType].speed}}</span>
                 </div>
-                <div class="vuk-video-chapter-scroller">
-                    <ul v-if="selectType==='chapter'"  :class="{'vuk-video-select-dot':chapterFormat==='dot','vuk-video-select-list':chapterFormat==='list'}">
+                <div class="itv-play-video-chapter-scroller">
+                    <ul v-if="selectType==='chapter'"  :class="{'itv-play-video-select-dot':chapterFormat==='dot','itv-play-video-select-list':chapterFormat==='list'}">
                         <li v-for="(item,index) in videos" @click="skipChapter(index)" :class="{'active':nowPlayIndex===index}">
                             <span>{{index+1}}</span>
-                            <span class="vuk-video-chapter-name">
+                            <span class="itv-play-video-chapter-name">
                                 {{item.name}}
                             </span>
                         </li>
                     </ul>
-                    <ul class="vuk-video-play-speed" v-if="selectType==='speed'">
+                    <ul class="itv-play-video-play-speed" v-if="selectType==='speed'">
                         <li :class="{'active': selectSpeed==='0.8X'}" @click="setPlaySpeed(0.8)">0.8X</li>
                         <li :class="{'active': selectSpeed==='1.0X'}"  @click="setPlaySpeed(1.0)">1.0X</li>
                         <li :class="{'active': selectSpeed==='1.25X'}" @click="setPlaySpeed(1.25)">1.25X</li>
@@ -270,7 +270,7 @@ export default {
         },
         rotate:{
             type: Number,
-            default: 270
+            default: 0
         },
         
     },
@@ -311,7 +311,7 @@ export default {
             screenType: false,
             isIos: false, //是否为ios,
             isIphonx: false,
-            isFullScreen: true
+            isFullScreen: false
         };
     },
 
@@ -342,6 +342,12 @@ export default {
         this.target = this.$refs.videoCenter;
         this.target.controls = false;
         this.setVideoStyle();
+
+         var el = document.documentElement;
+            var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;      
+                if(typeof rfs != "undefined" && rfs) {
+                    rfs.call(el);
+                };
     }
 };
 </script>

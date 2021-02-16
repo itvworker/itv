@@ -3,9 +3,11 @@
         <itv-header>schedule-date</itv-header>
         <itv-main>
            
-            <schedule-date class="calendar-demo" :isClickNowMonth="false" isKeepRows initState="week" :isChangeState="false" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull"  />
-             <schedule-date class="calendar-demo" :isShowPrevMonth="false" :isClickNowMonth="true" :isKeepRows="false"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" />
-           
+            <schedule-date  v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="true" @refresh="refresh" @pull="pull" ref="schedule">
+                <div class="test-list" v-for="(item, index)  in list">
+                    {{item.title}} {{index}}
+                </div>
+            </schedule-date>
         </itv-main>
     </itv-container>
 </template>
@@ -66,9 +68,6 @@ export default {
     padding:15ipx 15ipx;
     border-bottom: #ddd solid 1px;
    
-}
-.calendar-demo{
-    height: auto;
 }
 
 </style>

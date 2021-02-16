@@ -25,11 +25,13 @@ export default {
          * 点击选择内容
          */
         selectDay(index, item) {
-            if(item.type!=='now') return;
+            if(item.type!=='now' && this.isClickNowMonth) return;
+           
             if(!this.isBetween(item)) {
                 return
             }
-
+            
+            
             switch (item.type) {
                 case "prev":
                     this.isClickChange = true;

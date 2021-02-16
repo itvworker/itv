@@ -21,7 +21,6 @@ export default {
          * @param {String} value  年月日字符串
          */
         init(value) {
-            
             let date = new Date(value)
             let year = date.getFullYear(); //获取年份
             let month = date.getMonth()+1
@@ -38,7 +37,9 @@ export default {
                 this.findWeekRow(temp);
                 this.elHeight = this.$refs.day[0].clientHeight*6;
                 this.rowHeight =  this.elHeight /6;
-
+                if(this.initState==='week') {
+                    this.calendarStatus = 0;
+                }
                 if(this.calendarStatus===1) {
                     this.slideHeight = this.maxHeight;
                 }else{

@@ -69,7 +69,8 @@ export default {
         },
         changeProgessBar(x, type) {
             let progressWidth = this.$refs.progress.clientWidth
-            let left = this.$refs.video.offsetLeft
+            let left = this.$refs.video.offsetLeft;
+            let padding= 34;
             if(this.rotate===90 || this.rotate===270) {
                 left = 0;
             }
@@ -78,10 +79,10 @@ export default {
             if (this.isLandscape) {
                 if (x <= 10) {
                     this.propessed = 0
-                } else if (x >= width + left - 10) {
+                } else if (x >= width + left - padding) {
                     this.propessed = 100
                 } else {
-                    this.propessed = ((x - left - 10) / progressWidth) * 100
+                    this.propessed = ((x - left - padding) / progressWidth) * 100
                 }
                 this.decPx()
                 if (type === 'start') {
