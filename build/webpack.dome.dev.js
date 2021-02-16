@@ -37,7 +37,10 @@ module.exports = {
             {
                 test: /\.vue$/,
                 use: [
-                    {loader: 'vue-loader'}
+                    {loader: 'vue-loader'},
+                    {loader: "/loaders/itv-loader", options:{
+                        theme:resolve('src/assets/theme.less')
+                    }}
                 ]
 
             },

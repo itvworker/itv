@@ -21,6 +21,7 @@ import sliverContainer from './itv-components/sliver-container';
 import miniSwiper from './itv-components/mini-swiper';
 import miniSwiperItem from './itv-components/mini-swiper-item';
 import toast from './itv-components/toast';
+import playVideo from './itv-components/play-video'
 
 
 import PulginActionsheet from './plugins/actionsheet.js';
@@ -59,6 +60,7 @@ export {
     miniSwiper, 
     miniSwiperItem,
     toast,
+    playVideo,
 
     //插件
     PulginActionsheet,
@@ -95,6 +97,7 @@ let Components = [
     miniSwiper, 
     miniSwiperItem,
     toast,
+    playVideo,
 
     //插件
     PulginActionsheet,

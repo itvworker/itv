@@ -1,0 +1,13 @@
+{
+  "name": "vuk-video",
+  "version": "1.0.1",
+  "author": "itvwork",
+  "description": "视频插件",
+  "scripts": {},
+  "main": "dist/index.js",
+  "email":"xieke76@qq.com",
+  "files": [
+    "dist"
+   ],
+  "license": "MIT"
+}

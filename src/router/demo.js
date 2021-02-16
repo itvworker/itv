@@ -233,6 +233,15 @@ export default [
                     title: 'Cascader',
                 }
             },
+            {
+                path: '/demo/playVideo',
+                name: 'itv_playVideo',
+                component: () => import('@/itv-components/play-video/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'playVideo',
+                }
+            },
 
             
             
