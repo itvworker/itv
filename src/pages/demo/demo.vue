@@ -47,7 +47,6 @@ export default {
         
     },
     mounted() {
-        html2img.getSvg(this.$el)
         
     }
 };

@@ -1,77 +1,4 @@
-
-<script>
-import touch from "./mixins/touch";
-import initCalendar from "./mixins/init.calendar";
-import calendar from "./mixins/calendar.js";
-import methodsCalendar from './mixins/methods.calendar';
-import { formatDate } from "../../libs/tool";
-import calcScroll from './mixins/calc.scroll'
-import animateScroll from './mixins/animate.scroll'
-import animateScroller from './mixins/animate.scroller'
-import move from './mixins/move'
-import refreshIcon from './refresh'
-import {svgXml} from '../../libs/tool'
-import Vue from 'vue';
-
-let weekname= 'week-'+parseInt(Math.random()*10000 +Math.random()*10000+Math.random()*100)
-let monthname= 'month-'+parseInt(Math.random()*10000 +Math.random()*10000+Math.random()*100)
-let weekHtml = {
-    name:weekname,
-    props:{
-        item:{
-            type:Object,
-            default: ()=>{
-
-            }
-        },
-        index: {
-            type: Number,
-            default: 0
-        },
-         //星期的文字
-        weekText: {
-            type: Array,
-            default: () => []
-        },
-        monthText: {
-            type: Array,
-            default: () => []
-        },
-    },
-    methods: {
-
-    }
-
-}
-
-let monthHtml = {
-    name:monthname,
-    props:{
-        item:{
-            type:Object,
-            default: ()=>{
-
-            }
-        },
-        index: {
-            type: Number,
-            default: 0
-        },
-         //星期的文字
-        weekText: {
-            type: Array,
-            default: () => []
-        },
-        monthText: {
-            type: Array,
-            default: () => []
-        },
-    },
-    methods: {
-        
-    }
-}
-let template =`
+<template>
     <div class="itv-schedule-date" 
     @touchstart="touchstart"
     @touchmove="touchmove"
@@ -85,6 +12,8 @@ let template =`
             </slot>
               
         </div>
+
+        
         <slot name="top"></slot>
         <!-- 日历部份 -->
             <div class="itv-schedule-calendar">
@@ -117,14 +46,9 @@ let template =`
                             v-for="(item, index) in prevWeek"
                             :key="item.id"
                         >
-                            <template v-if="!weekHtml">
-                                <span class="month-name" v-if="item.day===1 || index === 0">{{monthText[item.month-1]}}</span>
-                                <div class="active">{{item.day}}</div>
-                            </template>
-                            <template v-if="weekHtml && finishDom">
-                                <${weekname} :item="item" :index="index" :weekText="weekText" :monthText="monthText" />
-                            </template>
-
+                            <span class="month-name" v-if="item.day===1 || index === 0">{{monthText[item.month-1]}}</span>
+                            <div class="active">{{item.day}}</div>
+                            
                         </div>
                     </div>
                     <div class="week-item">
@@ -135,13 +59,10 @@ let template =`
                             v-for="(item, index) in nowWeek"
                             :key="item.id"
                         >
-                           <template v-if="!weekHtml">
-                                <span class="month-name" v-if="item.day===1 || index === 0">{{monthText[item.month-1]}}</span>
-                                <div class="active">{{item.day}}</div>
-                            </template>
-                            <template v-if="weekHtml && finishDom">
-                                <${weekname} :item="item" :index="index" :weekText="weekText" :monthText="monthText" />
-                            </template>
+                            <span class="month-name" v-if="item.day===1 || index === 0">{{monthText[item.month-1]}}</span>
+                            <div class="active">
+                                {{item.day}}
+                            </div>
                         
                         </div>
                         
@@ -153,13 +74,8 @@ let template =`
                             v-for="(item, index) in nextWeek"
                             :key="item.id"
                         >
-                            <template v-if="!weekHtml">
-                                <span class="month-name" v-if="item.day===1 || index === 0">{{monthText[item.month-1]}}</span>
-                                <div class="active">{{item.day}}</div>
-                            </template>
-                            <template v-if="weekHtml && finishDom">
-                                <${weekname} :item="item" :index="index" :weekText="weekText" :monthText="monthText" />
-                            </template>
+                            <span class="month-name" v-if="item.day===1 || index === 0">{{monthText[item.month-1]}}</span>
+                            <div class="active">{{item.day}}</div>
                         </div>
                     </div>
                 </div>
@@ -187,12 +103,7 @@ let template =`
                             v-for="(item, index) in prevMonth"
                             :key="item.id"
                         >
-                            <template v-if="!monthHtml">
-                                <div class="active">{{item.day}}</div>
-                            </template>
-                            <template v-if="monthHtml&&finishDom">
-                                <${monthname} :item="item" :index="index" :weekText="weekText" :monthText="monthText" />
-                            </template>
+                            <div class="active">{{item.day}}</div>
                         </div>
                     </div>
                     <div class="month-item now-item-month" >
@@ -209,12 +120,7 @@ let template =`
                             v-for="(item, index) in nowMonth"
                             :key="item.id"
                         >
-                             <template v-if="!monthHtml">
-                                <div class="active">{{item.day}}</div>
-                            </template>
-                            <template v-if="monthHtml&&finishDom">
-                                <${monthname} :item="item" :index="index" :weekText="weekText" :monthText="monthText" />
-                            </template>
+                            <div class="active">{{item.day}}</div>
                             
                             
                         </div>
@@ -232,12 +138,7 @@ let template =`
                             v-for="(item, index) in nextMonth"
                             :key="item.id"
                         >
-                            <template v-if="!monthHtml">
-                                <div class="active">{{item.day}}</div>
-                            </template>
-                            <template v-if="monthHtml&&finishDom">
-                                <${monthname} :item="item" :index="index" :weekText="weekText" :monthText="monthText" />
-                            </template>
+                            <div class="active">{{item.day}}</div>
 
                         </div>
                     </div>
@@ -257,14 +158,24 @@ let template =`
             </div>
         </div>    
     </div>
-`
-
+</template>
+<script>
+import touch from "./mixins/touch";
+import initCalendar from "./mixins/init.calendar";
+import calendar from "./mixins/calendar.js";
+import methodsCalendar from './mixins/methods.calendar';
+import { formatDate } from "../../libs/tool";
+import calcScroll from './mixins/calc.scroll'
+import animateScroll from './mixins/animate.scroll'
+import animateScroller from './mixins/animate.scroller'
+import move from './mixins/move'
+import refreshIcon from './refresh'
+import {svgXml} from '../../libs/tool'
 
 
 
 export default {
     name:'schedule',
-    template: template,
     mixins: [
         touch,
         initCalendar,
@@ -335,6 +246,10 @@ export default {
             type: Number,
             default: 0
         },
+        getAddtional: {
+            type: Function,
+            default: null
+        },
         isChangeState: { //是否可以在周与月之间切换
             type: Boolean,
             default: true
@@ -357,14 +272,6 @@ export default {
         isClickNowMonth:{
             type: Boolean,
             default: true
-        },
-        monthHtml: {
-            type: String,
-            default:''
-        },
-        weekHtml: {
-            type: String,
-            default:''
         }
     },
 
@@ -391,23 +298,13 @@ export default {
             isAni: false,
             showTop: true,
             isRefresh: false,
-            pullHeight:0,
-            finishDom: false
+            pullHeight:0
         };
         
     },
 
     mounted() {
-        this.pullHeight = this.$refs.pull.clientHeight;
-        if(this.weekHtml) {
-            weekHtml.template = this.weekHtml;
-            Vue.component(weekHtml.name, weekHtml);
-        }
-        if(this.monthHtml) {
-            monthHtml.template = this.monthHtml;
-            Vue.component(monthHtml.name, monthHtml);
-        }
-        this.finishDom = true;
+        this.pullHeight = this.$refs.pull.clientHeight
         
     },
     methods: {
@@ -436,7 +333,7 @@ export default {
         
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import '../../assets/css/itv-theme.less';
 @import 'itv-schedule.less';
 </style>

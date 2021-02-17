@@ -3,8 +3,8 @@
         <itv-header>schedule-date</itv-header>
         <itv-main>
            
-            <schedule-date class="calendar-demo" :isClickNowMonth="false" isKeepRows initState="week" :isChangeState="false" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull"  />
-             <schedule-date class="calendar-demo" :isShowPrevMonth="false" :isClickNowMonth="true" :isKeepRows="false"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" />
+            <!-- <schedule-date class="calendar-demo" :isClickNowMonth="false" isKeepRows initState="week" :isChangeState="false" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull"  /> -->
+             <schedule-date class="calendar-demo" :weekHtml="weekHtml" :monthHtml="monthHtml" :isShowPrevMonth="false" :isClickNowMonth="true" :isKeepRows="false"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" />
            
         </itv-main>
     </itv-container>
@@ -21,7 +21,16 @@ export default {
             list:[],
             currentDate: '2020/10/10',
             minMonth:'2020/10',
-            maxMonth: '2021/12'
+            maxMonth: '2021/12',
+            weekHtml:`
+                <div class="itv-block">
+                    <span class="month-name" v-if="item.day===1 || index === 0" >{{monthText[item.month-1]}}</span>
+                    <div class="active">{{item.day}}</div>
+                </div>
+            `,
+            monthHtml:`
+                <div class="active">{{item.day}}</div>
+            `
         }
     },
     computed: {

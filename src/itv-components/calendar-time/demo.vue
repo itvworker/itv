@@ -14,9 +14,7 @@
                 <cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
                 </cell>
             </section>
-            <template v-if="show">
-                <dome-name :dome="demoName"></dome-name>
-            </template>
+          
             
         </itv-main>
     </itv-container>

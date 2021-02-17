@@ -265,7 +265,6 @@ export default {
                         
                         //当内容到顶部时
                         if(this.sy === 0 && this.py <=0) {
-                            console.log('----------------');
                             this.verticalMoveCalendar(obj.angy)
                         }
                         

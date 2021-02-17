@@ -137,6 +137,11 @@ export default {
             
            
         },
+        next() {
+            this.nowPlayIndex++
+            this.play()
+            this.setVideoCurrentTime(0)
+        },
         //跳转集数并跳转到指定的播放时间
         skipChapters(index, doc) {
             this.nowPlayIndex = index

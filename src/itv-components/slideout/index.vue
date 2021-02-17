@@ -6,7 +6,7 @@
 </template>
 <script>
 export default {
-    name: 'slide-out',
+    name: 'slideout',
     mounted() {
         document.addEventListener('touchstart',this.close, false)
     },

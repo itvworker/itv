@@ -96,7 +96,7 @@
                 </div>
                 <div class="click-bar-left">
                     <div class="itv-play-video-iconfont play-pause" @click.stop="toggle" :class="{'itv-play-video-play-icon': isPause,'itv-play-video-pause-icon': !isPause,}"></div>
-                    <div class="itv-play-video-iconfont play-next itv-play-video-next" v-if="videos.length>1 && nowPlayIndex!==videos.length-1 && !single" @click.stop="iosNext"></div>
+                    <div class="itv-play-video-iconfont play-next itv-play-video-next" v-if="videos.length>1 && nowPlayIndex!==videos.length-1 && !single" @click.stop="next"></div>
                     <div class="itv-play-video-time-bar">
                         {{currentTime}}/{{allTime}}
                     </div>

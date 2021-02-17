@@ -8,7 +8,7 @@
 </template>
 <script>
 export default {
-    name: "slideButton"
+    name: "slidebutton"
 };
 </script>
 <style lang="less" scoped>

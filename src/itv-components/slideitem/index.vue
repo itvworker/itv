@@ -22,7 +22,7 @@
 </template>
 <script>
 export default {
-    name: "slide-item",
+    name: "slideitem",
     props: {
         sensitivity: {
             type: Number,

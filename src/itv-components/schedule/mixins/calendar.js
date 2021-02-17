@@ -339,7 +339,6 @@ export default {
                     id: this.getId(),
                     type: 'now',
                     overtop: false,
-                    actualDutyHour: 0
                 };
                 item.overtop = this.isBetween(item)
                 now.push(item)
@@ -400,7 +399,6 @@ export default {
                     id: this.getId(),
                     time: new Date(_year + '/' + _month + '/' + lastDay).getTime(),
                     type: 'prev',
-                    actualDutyHour: 0,
                     overtop:false
                 }
                 item.overtop = this.isBetween(item)
