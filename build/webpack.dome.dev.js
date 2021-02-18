@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const ItvPlugin = require('../plugins/ItvPlugin');
+const ItvPlugin = require('../plugins/index.js');
 
 
 function resolve(dir) {
@@ -38,16 +38,17 @@ module.exports = {
                 test: /\.vue$/,
                 use: [
                     {loader: 'vue-loader'},
-                    {loader: "/loaders/itv-loader", options:{
-                        theme:resolve('src/assets/theme.less')
-                    }}
+                    // {loader: "/loaders/itv-loader", options:{
+                    //     theme:resolve('src/assets/theme.less'),
+                    //     calendarTime:resolve('src/assets/itv-calendar-time.less')
+                    // }}
                 ]
 
             },
             {
                 test: /\.css$/,
                 use: [
-                    'vue-style-loader',
+                 
                     'css-loader'
                 ]
 
@@ -89,9 +90,12 @@ module.exports = {
                         options: {
                             sourceMap: true,
                         }
-                    }
+                    },
+                    // {
+                    //     loader:"/loaders/itv-import-loader"
+                    // }
                 ],
-                include: [resolve('packages'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+                include: [resolve('packages'), resolve('test'),resolve('src'), resolve('node_modules/webpack-dev-server/client')]
             },
             {
                 test: /\.md$/,
@@ -157,7 +161,7 @@ module.exports = {
             template: 'public/index.dev.html',
             inject: true
         }),
-        new ItvPlugin(),
+        new ItvPlugin(),    
         // new CleanWebpackPlugin()
         // new CopyWebpackPlugin([
         //     {

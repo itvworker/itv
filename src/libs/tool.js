@@ -8,9 +8,9 @@ export function svgXml(content) {
 }
 
 
-export function slideHeight (content) {
+export function slideHeight (dom) {
     return function(height) {
-        content.style.height = height + 'px';
+        dom.style.height = height + 'px';
     };
 }
 
@@ -64,4 +64,30 @@ export function compressHtmlStr(value) {
     return value.replace(/\n/g, '').replace(/(^\s*)|(\s*$)/g, "").replace(/(>)(\s*)(<)/g, function (match, p1, p2, p3, offset) {
         return p1 + p3
     });      　　 
+}
+/**
+ * 驼峰命名转换为前-号命名
+ */
+export function humpToFront(name) {
+        let arr = [];
+        let nameArr = name.split('')
+        nameArr.forEach((item,index)=>{
+            if(/[A-Z]/.test(item) && index!==0) {
+                arr.push(index);
+            }
+        })
+        name = name.toLowerCase();
+        let newName = '';
+        arr.forEach((item,index)=>{
+            if(index===0) {
+                newName = name.substring(index, item);
+                console.log(newName);
+            }else{
+                newName += '-'+name.substring(arr[index-1], item);
+            }
+        });
+        if(arr.length>=1) {
+            newName += '-'+name.substring(arr[arr.length-1],name.length)
+        }
+        return newName;
 }

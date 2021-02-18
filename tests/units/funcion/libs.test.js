@@ -1,4 +1,4 @@
-import {formatDate, compressHtmlStr } from '../../../src/libs/tool.js';
+import {formatDate, compressHtmlStr, humpToFront } from '../../../src/libs/tool.js';
 
 
 
@@ -21,3 +21,8 @@ test('src/libs/tool测试compressHtmlStr', () => {
     expect(compressHtmlStr(str)).toBe('<div class="row-a5"><div class="t1"> 125454 </div></div>');
 });
 
+
+test('src/libs/tool测试humpToFront', () => {
+    
+    expect(humpToFront("ContextAlertPop")).toBe('context-alert-pop');
+});

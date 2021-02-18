@@ -95,10 +95,10 @@
         font-size: 14ipx;
         height: 22ipx;
         box-sizing: border-box;
-    
-        vertical-align: middle;
-    
-        box-sizing: border-box;
+        line-height: 40ipx;
+       
+        
+       
     }
    
 }

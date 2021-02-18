@@ -16,6 +16,7 @@
 
 <script>
 import layout from './layout'
+import { removeTypeDuplicates } from '@babel/types';
 
 export default {
     mixins:[layout],
@@ -43,11 +44,37 @@ export default {
                 name: item.routerName
             })
         },
-       
+        humpToFront(name) {
+            let arr = [];
+            let nameArr = name.split('')
+            nameArr.forEach((item,index)=>{
+                if(/[A-Z]/.test(item) && index!==0) {
+                    arr.push(index);
+                }
+            })
+            name = name.toLowerCase();
+            let newName = '';
+            arr.forEach((item,index)=>{
+                if(index===0) {
+                    newName = name.substring(index, item);
+                }else{
+                    newName += '-'+name.substring(arr[index-1], item);
+                }
+            });
+            if(arr.length>=1) {
+                newName += '-'+name.substring(arr[arr.length-1],name.length)
+            }
+
+            if(arr.length<=0) {
+                newName = name;
+            }
+            return newName;
+        }
         
     },
     mounted() {
         
+
     }
 };
 </script>

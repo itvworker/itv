@@ -104,6 +104,7 @@ export default {
      com.methods.echo =this.echo.bind(this);
      vue.component(com.name, com)
      this.show = true;
+     
       
   },
 };

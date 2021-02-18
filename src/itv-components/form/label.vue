@@ -57,8 +57,8 @@
         display: flex;
         width: 50ipx;   
         height: 22ipx;
-        align-items: center;
-        background-color: #aaa;
+        line-height: 22ipx;
+        // background-color: #aaa;
         
     }
     

@@ -1,9 +1,7 @@
-const { Compiler } = require("webpack");
 const RuleSet = require('webpack/lib/RuleSet');
 class ItvPlugin {
     constructor(content){
-      console.log('webpack');
-      console.log(content);
+      this.content = content;
     }
     // 将 `apply` 定义为其原型方法，此方法以 compiler 作为参数
     apply(compiler) {
@@ -14,7 +12,6 @@ class ItvPlugin {
       //查找对应该的规则
       let ruleIndex = rawRules.findIndex(this.createMatcher(`foo.vue`))
 
-      console.log();
       
       console.log('less-------');
       console.log(rules[ruleIndex].use);
