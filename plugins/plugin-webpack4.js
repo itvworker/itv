@@ -34,13 +34,15 @@ class ItvPlugin {
 
             if(babelLoader.test(str)) {
               item.use.push({
-                loader:'/loaders/itv-import-loader'
+                loader:'/loaders/itv-import-loader',
+                options: this.options
               })
             }
 
             if(tsLoader.test(str)) {
               item.use.push({
-                loader:'/loaders/itv-import-loader'
+                loader:'/loaders/itv-import-loader',
+                options: this.options
               })
             }
                         
