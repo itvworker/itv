@@ -8,17 +8,6 @@ class ItvPlugin {
     // 将 `apply` 定义为其原型方法，此方法以 compiler 作为参数
     apply(compiler) {
       let rawRules = compiler.options.module.rules;
-      // console.log(rawRules);
-      //标准化rules
-      // const { rules } = new RuleSet(rawRules);
-      //查找对应该的规则
-      // let ruleIndex = rawRules.findIndex(this.createMatcher(`foo.vue`));
-      // console.log(ruleIndex);
-      // let ruleJsIndex = rawRules.findIndex(this.createMatcher(`foo.js`))
-      // let ruleTsIndex = rawRules.findIndex(this.createMatcher(`foo.ts`))
-      // console.log('---------------+++ ==== ==== === ==++++======-----');
-      // console.log(ruleIndex);
-      // console.log(rules[ruleIndex].use);
       rawRules.forEach((item)=>{
         if(item&&item.resource && !item.resourceQuery) {
             let vueLoaderReg = /vue-loader/ig;
@@ -28,20 +17,20 @@ class ItvPlugin {
 
             if(vueLoaderReg.test(str)) {
               item.use.push({
-                loader:'/loaders/itv-loader'
+                loader:'itv-plugin/loaders/itv-loader'
               })
             }
 
             if(babelLoader.test(str)) {
               item.use.push({
-                loader:'/loaders/itv-import-loader',
+                loader:'itv-plugin/loaders/itv-import-loader',
                 options: this.options
               })
             }
 
             if(tsLoader.test(str)) {
               item.use.push({
-                loader:'/loaders/itv-import-loader',
+                loader:'itv-plugin/loaders/itv-import-loader',
                 options: this.options
               })
             }
