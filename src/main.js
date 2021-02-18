@@ -8,7 +8,8 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import 'lib-flexible'
 import './layout'
-import { cascader, cell, pluginCascader } from 'itv-ui';
+// import { cascader, cell, pluginCascader } from 'itv-ui';
+import itv from 'itv-ui';
 import './assets/css/index.less'
 
 // import VConsole from 'vconsole'
@@ -17,10 +18,10 @@ import './assets/css/index.less'
 // resources: [resolve('packages/assets/css/animate.less'), resolve('packages/assets/css/page.less'), resolve('packages/assets/css/theme.less')]
 
 
-
-Vue.use(cascader);
-Vue.use(cell);
-Vue.use(pluginCascader)
+Vue.use(itv)
+// Vue.use(cascader);
+// Vue.use(cell);
+// Vue.use(pluginCascader)
 Vue.prototype.hljs = function () {
     const preEl = document.querySelectorAll('pre')
     preEl.forEach((el) => {

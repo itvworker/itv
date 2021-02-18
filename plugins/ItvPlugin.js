@@ -13,8 +13,7 @@ class ItvPlugin {
       let ruleIndex = rawRules.findIndex(this.createMatcher(`foo.vue`))
 
       
-      console.log('less-------');
-      console.log(rules[ruleIndex].use);
+    
       // console.log(rulesIndex);
       // console.log(rules)
       // rules.forEach(element => {

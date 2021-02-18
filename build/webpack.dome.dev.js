@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const ItvPlugin = require('../plugins/index.js');
+const ItvPlugin = require('itv-plugin');
 
 
 function resolve(dir) {
@@ -161,7 +161,10 @@ module.exports = {
             template: 'public/index.dev.html',
             inject: true
         }),
-        new ItvPlugin(),    
+        new ItvPlugin({
+                theme:resolve('src/assets/theme.less'),
+                calendarTime:resolve('src/assets/itv-calendar-time.less')
+            }),    
         // new CleanWebpackPlugin()
         // new CopyWebpackPlugin([
         //     {

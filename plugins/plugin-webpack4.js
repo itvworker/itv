@@ -17,48 +17,27 @@ class ItvPlugin {
 
             if(vueLoaderReg.test(str)) {
               item.use.push({
-                loader:'itv-plugin/loaders/itv-loader'
+                loader:'itv-plugin/loaders/itv-loader',
+                options: this.options
               })
             }
 
             if(babelLoader.test(str)) {
               item.use.push({
-                loader:'itv-plugin/loaders/itv-import-loader',
-                options: this.options
+                loader:'itv-plugin/loaders/itv-import-loader'
               })
             }
 
             if(tsLoader.test(str)) {
               item.use.push({
-                loader:'itv-plugin/loaders/itv-import-loader',
-                options: this.options
+                loader:'itv-plugin/loaders/itv-import-loader'
               })
             }
                         
         }
       })
      
-      rawRules.forEach((item)=>{
-        console.log(item.use);
-      })
-
       
-      
-      
-    }
-    createMatcher (fakeFile) {
-      console.log(fakeFile);
-      return (rule, i) => {
-        //跳过include
-        const clone = Object.assign({}, rule)
-        delete clone.include //
-        const normalized = RuleSet.normalizeRule(clone, {}, '')
-        return (
-          !rule.enforce &&
-          normalized.resource &&
-          normalized.resource(fakeFile)
-        )
-      }
     }
     
   }
