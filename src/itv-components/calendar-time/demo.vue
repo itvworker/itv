@@ -4,19 +4,40 @@
         <itv-main>
             <div class="h10"></div>
             <section>
-                <cell :isLink="true" subTitle="2020-08-05 10:56~2020-09-18 10:15" @click="confirm('html')" :showIcon="true" title="选择日期时间" :desc="calendarTime">
+                <cell :isLink="true" subTitle="插件模式" @click="confirm('html')" :showIcon="true" title="选择日期时间" :desc="calendarTime">
                    
                 </cell>
 
-                <cell :isLink="true" @click="alert('html')" :showIcon="true" title="日历类型" :desc="calendar">
+                <cell :isLink="true" subTitle="插件模式" @click="alert('html')" :showIcon="true" title="日历类型" :desc="calendar">
                 </cell>
 
-                <cell :isLink="true" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
+                <cell :isLink="true" subTitle="插件模式" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
+                </cell>
+
+                <cell :isLink="true" subTitle="组件模式" @click="comCalendarTime" :showIcon="true" title="选择日期时间" :desc="calendarTime1">
+                   
+                </cell>
+                
+                <cell :isLink="true" subTitle="组件模式" @click="comCalendar" :showIcon="true" title="选择日期" :desc="calendar1">
+                   
+                </cell>
+
+                 <cell :isLink="true" subTitle="组件模式" @click="comTimes" :showIcon="true" title="选择时间" :desc="time1">
+                   
                 </cell>
             </section>
           
-            
+           
         </itv-main>
+        <calendar-time 
+            teleport
+            :isVisible="comTime.visible"
+            @hide="comTime.visible=false"
+            @confirm="confirmCom"
+            :dateType="comTime.dateType"
+            :value="comTime.value"
+          
+        />
     </itv-container>
 
 </template>
@@ -48,11 +69,22 @@ export default {
         calendarTime:"2020-09-12 10:15",
         calendar:"2020-09-12",
         time:'10:15',
+        calendarTime1: "2020-09-12 09:00",
+        calendar1:"2020-10-12",
+        time1:"20:10",
         demoName:{
             name:"title",
             number: 10
         },
         show: false,
+        comTime: {
+            visible: false,
+            value: "2020-09-12 23:15",
+            dateType:"calendar-time",
+            minDate:"2021-02-19 23:12",
+            maxDate:"2021-02-19 23:59"
+            
+        }
     };
   },
   methods: {
@@ -70,6 +102,7 @@ export default {
                }
           })
       },
+      
       alert() {
             this.$itv.calendarTime.show({
                 value: this.calendar,
@@ -90,6 +123,31 @@ export default {
                     this.time = msg
                 }
             })
+      },
+      confirmCom(value) {
+          this.comTime.visible = false;
+          if(this.comTime.dateType==='calendar') {
+              this.calendar1 = value;
+              return
+          }
+            this.calendarTime1 = value;
+            
+      },
+      comCalendarTime() {
+          this.comTime.value = this.calendarTime1;
+          this.comTime.dateType = "calendar-time"
+          this.comTime.visible = true;
+      },
+      comCalendar() {
+          this.comTime.value = this.calendar1;
+          this.comTime.dateType = "calendar"
+          this.comTime.visible = true;
+      },
+      comTimes() {
+          this.comTime.value ="2021-02-19 "+this.time1;
+          this.comTime.dateType = "time"
+          this.comTime.visible = true;
+          
       },
       page() {
          

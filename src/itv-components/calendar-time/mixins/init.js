@@ -1,8 +1,8 @@
 export default {
     
     mounted() {
-        this.init()
-        this.resize();
+        
+       
         
     },
     
@@ -19,11 +19,14 @@ export default {
             }
         },
         init(value) {
-            let datetime = value || this.value    
+            let datetime = value || this.value;
             let arr = datetime.split(' ');
             
             if(!arr[1]) {
                 arr[1]='00:00'
+            }
+            if(this.dateType==='time') {
+                this.dataType = 1;
             }
             let timeArr = arr[1].split(':')
             let ymd = arr[0].split('-');     
@@ -31,6 +34,7 @@ export default {
             let month = parseInt(ymd[1])
             this.year = year;
             this.month = month
+            
             this.calcInit(year, month);
             this.currentValue = arr[0];
             this.currentHour = timeArr[0];
@@ -38,7 +42,7 @@ export default {
             
             // let ymdnumber = parseInt(year + this.gt(month));
             
-            this.initTime();
+            this.initTime(this.currentHour, this.currentMin);
        
         },
         

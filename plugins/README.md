@@ -5,23 +5,9 @@
 ## 安装
 
 ```
-npm install itv --save
+npm install itv --save-dev
 ```
 
-### vue引入
-
-```js
-//全局安装
-import itv form "itv";
-vue.use(itv)
-
-//按需加载 
-import {scroller} from "itv"
-vue.use(scroller);
-
-```
-
-按需加载需要引入 [ItvPlugin](https://www.npmjs.com/package/itv-loader)， 否则会按需加载将失效
 
 
 

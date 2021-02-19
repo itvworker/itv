@@ -9,7 +9,7 @@ import 'highlight.js/styles/github.css'
 import 'lib-flexible'
 import './layout'
 // import { cascader, cell, pluginCascader } from 'itv-ui';
-import itv from 'itv-ui';
+import itv from './index.js';
 import './assets/css/index.less'
 
 // import VConsole from 'vconsole'

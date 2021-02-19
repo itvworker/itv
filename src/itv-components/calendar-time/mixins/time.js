@@ -22,12 +22,16 @@ export default {
             for(let i = this.startMin; i <= this.endMin; i++) {
                 arr.push(i>=10?i.toString():0+''+i)
             }
+           
             return arr;
         },
     },
     watch: {
         currentValue(n, o) {
-            this.initTime();
+            if(this.currentHour &&  this.currentMin) {
+                this.initTime(this.currentHour, this.currentMin);
+            }
+            
         }
     },
     mounted() {
@@ -77,7 +81,7 @@ export default {
                     }
                 }
             }  
-
+           
           
             this.$nextTick(()=>{
                 if(!this.isVisible) return
@@ -88,8 +92,9 @@ export default {
         /**
          * 
          */
-        initTime() {
-            
+        initTime(currentHour, currentMin) {
+          
+           
             if(this.dateType === 'calendar-time' || this.dateType === "time") {
                 let current = this.currentValue.split(' ');
                 let max = this.maxDate.split(' ')
@@ -102,8 +107,7 @@ export default {
                     let time = max[1].split(':');
                   
                     this.endHour= parseInt(time[0]);
-                    this.endMin = parseInt(time[1]);
-                    
+                    // this.endMin = parseInt(time[1]);
                     if(parseInt(this.currentHour) > this.endHour) {
                         this.currentHour = this.endHour;
                         if(parseInt(this.currentMin) > this.endMin) {
@@ -128,7 +132,7 @@ export default {
                         }
                     }
                 }
-                
+               
                 this.$nextTick(()=>{
                     if(!this.isVisible) return
                     this.$refs['picker-0'].updateTransform(this.currentHour.toString());

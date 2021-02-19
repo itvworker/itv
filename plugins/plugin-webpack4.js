@@ -20,6 +20,9 @@ class ItvPlugin {
                 loader:'itv-plugin/loaders/itv-loader',
                 options: this.options
               })
+              item.use.push({
+                loader:'itv-plugin/loaders/itv-import-loader'
+              })
             }
 
             if(babelLoader.test(str)) {

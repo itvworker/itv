@@ -1,5 +1,5 @@
 <template>
-   <itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
+   <itv-dialog v-model="visible" type="bottom" :hideOnClick="hideOnClick">
         <div class="itv-calendar-time" @click.stop="">
             <div class="itv-calendar-time-top" v-if="dateType==='calendar-time'">
                 <div class="date" :class="{'active':dataType===0}" @click="changeTab(0)">{{currentValue | formatDate('Y-M-D')}}</div>
@@ -16,7 +16,7 @@
             </div>
 
             <div class="itv-calendar-top" v-if="dateType==='time'">
-                <div class="itv-calendar-cancel-btn" @click="hideOnClick">
+                <div class="itv-calendar-cancel-btn"  @click="visible=false" >
                     {{cancelText}}
                 </div>
                 <div class="title">{{titleText}}</div>
@@ -162,7 +162,7 @@
             },
             minDate: { //最大选择日期时间的
                 type: String,
-                default: '2020-07-26 11:12'
+                default: '2020-07-26 00:00'
             },
             maxDate: { //最小选择日期时间的
                 type: String,
@@ -194,17 +194,32 @@
                 type: String,
                 default: 'column'
             },
-            //style
-            style: {
-                type: String,
-                default: 'average'// note固定6行，空白时就空白 , average平均分
+          
+            
+            isVisible:{
+                type: Boolean,
+                default: false
             },
-            pickerRows: {
-                type: Number,
-                default: 7
+            hideOnClick: {
+                type: Boolean,
+                default: true
+            },
+            teleport:{
+                type: Boolean,
+                default: false
             }
         },
         watch: {
+            dateType(n,o) {
+                if(n==='time') {
+                    this.dataType = 1
+                }
+
+                if(n==='calendar') {
+                    this.dataType = 0;
+                }
+            },
+
             weekText(n) {
                 if(n.length===7) {
                     this.weekTexts = n;
@@ -214,24 +229,46 @@
             value(n) {
                 let arr = n.split(' ')
                 this.currentValue = arr[0];
-                if(this.dateType === 'calendar-time') {
+                if(this.dateType === 'calendar-time' || this.dateType === 'time') {
                     let time = arr[1].split(':');
                     this.currentHour = time[0]
                     this.currentMin = time[1]
                 }
-                
+            },
+            visible(n) {
+                if(!n) {
+                    this.$emit('hide')
+                }
             },
             isVisible(n) {
-                // if(!n && (this.dateType === 'calendar-time' || this.dateType === 'calendar' || this.dateType === 'time')) {
-                //     setTimeout(()=>{
-                //         this.dataType = 0 
-                //     },300)
-                // }
+                this.visible = n;
                 if(!n) {
                     setTimeout(()=>{
-                        this.dataType = 0 
+                        this.dataType = 0;
                     },300)
-                    this.$emit('hide')
+                    if(this.teleport) {
+                        if(this.nextTarget) {
+                            this.parentTarget.insertBefore(this.$el, this.nextTarget)
+                        }else{
+                            this.parentTarget.appendChild(this.$el)
+                        }
+                     }
+                }
+                if(n) {
+                     if(this.dateType!=='time'){
+                        this.pickerRows = 7;
+                    }else{
+                        this.pickerRows = 5;
+                    }
+                     if(this.teleport) {
+                        document.body.appendChild(this.$el);
+                     }
+                    
+                     this.init();
+                     this.$nextTick(()=>{
+                        this.resize()
+                    })
+                    
                 }
             },
             //监听currentValue变化
@@ -247,8 +284,7 @@
         },
         data() {
             return {
-               isVisible: false, //显示或隐藏
-               hideOnClick: true, //是否点背景关闭
+               visible: false, //显示或隐藏
                columnIndex:1, //日历滑动的索引
                currentValue: '2020-08-26', //选中日期
                currentHour: '11', //当前小时
@@ -256,7 +292,10 @@
                year:0, //
                month:0,
                weekTexts: ["日", "一", "二", "三", "四", "五", "六"],
-               dataType: 0 //数据类型，0显示日历 1显示选择器
+               dataType: 0, //数据类型，0显示日历 1显示选择器
+               nextTarget:null,
+               parentTarget:null,
+               pickerRows: 7
             }
         },
         
@@ -329,7 +368,7 @@
                     this.$emit('confirm', this.currentValue+' ' + this.currentHour+':' +this.currentMin);
                 }
                 
-                this.isVisible = false;   
+                this.$emit('hide')  
             },
             /**
              * 选择日期
@@ -373,13 +412,18 @@
                 
               
                 if(select && this.dateType === 'calendar') {
-                    this.isVisible = false;   
+                       
                     this.$emit('confirm', this.currentValue)
+                    this.$emit('hide')
                 }
             }   
         },
         mounted() {
-            console.log( this.$components);
+            if(this.teleport) {
+                this.nextTarget = this.$el.nextSibling;
+                this.parentTarget = this.$el.parentNode;
+            }
+            
         }
 
     };

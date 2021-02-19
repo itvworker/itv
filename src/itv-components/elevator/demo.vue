@@ -1,7 +1,7 @@
 <template>
     <itv-container>
         <itv-header >Eelvator</itv-header>
-        <itv-elevator
+        <elevator
         :dataArray="dataList"
         :showIndicator="true"
         :navHeight="30"
@@ -10,7 +10,7 @@
         :hiddenTime='500'
         @clickNav="clickNav"
         @clickList="clickList"
-        ></itv-elevator>
+        ></elevator>
   </itv-container>
 </template>
 
@@ -218,47 +218,8 @@ export default {
                 {
                   name:'李小名',
                   id:'l5'
-                },
-                {
-                  name:'李小明',
-                  id:'l1'
-                },
-                {
-                  name:'李小龙',
-                  id:'l2'
-                },
-                {
-                  name:'李小野',
-                  id:'l3'
-                },
-                {
-                  name:'李小阳',
-                  id:'l4'
-                },
-                {
-                  name:'李小名',
-                  id:'l5'
-                },
-                {
-                  name:'李小明',
-                  id:'l1'
-                },
-                {
-                  name:'李小龙',
-                  id:'l2'
-                },
-                {
-                  name:'李小野',
-                  id:'l3'
-                },
-                {
-                  name:'李小阳',
-                  id:'l4'
-                },
-                {
-                  name:'李小名',
-                  id:'l5'
                 }
+               
               ]
             },
           ]

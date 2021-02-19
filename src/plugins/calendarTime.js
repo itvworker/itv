@@ -27,7 +27,7 @@ const plugin = {
                 $vm.maxDate ='2200-12-30 23:59'
                 $vm.dateType = 'calendar-time'
                 $vm.calendarDir = "column"
-                $vm.style = 'average'
+                options.dataType = 0;
                 if(options.dateType === "time") {
                     if(!options.minDate){
                         options.minDate = "00:00"
@@ -42,7 +42,8 @@ const plugin = {
                     options.minDate = formatDate('', 'Y-M-D ')+options.minDate;
                     options.maxDate = formatDate('', 'Y-M-D ')+options.maxDate;
                     options.pickerRows = 5;    
-                    $vm.dataType = 1;
+                    options.dataType = 1;
+                  
                 }
                      
 
@@ -63,6 +64,9 @@ const plugin = {
                     if(options.confirm) {
                         options.confirm(msg)
                     }
+                })
+                $vm.$on('hide', (msg) => {
+                    $vm.isVisible = false;
                 })
 
             },

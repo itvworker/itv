@@ -256,7 +256,7 @@ export default {
             prev = prev.concat(now)
 
             let newday = prev[prev.length - 1]
-
+            
             let last = this.calcNextMonth(newday.year, newday.month, newday.week, 42 - prev.length)
             return prev.concat(last)
             // return prev

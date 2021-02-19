@@ -113,8 +113,11 @@ export default {
     },
     methods: {
         close() {
+           
             if(!this.hideOnClick) return
+
             this.$emit('input', false);
+            this.$emit("hide", false);
         },
         state() {
             return this.value
