@@ -28,9 +28,7 @@ export default {
     },
     watch: {
         currentValue(n, o) {
-            if(this.currentHour &&  this.currentMin) {
-                this.initTime(this.currentHour, this.currentMin);
-            }
+            this.initTime(this.currentHour, this.currentMin);
             
         }
     },
@@ -39,13 +37,13 @@ export default {
     },
     methods: {
         chooseItem(value, index) {
+            if(!value) return;
             switch (index) {
                 case 0:
                     this.currentHour = value
                     this.initHour()
                     break;
                 case 1:
-                    console.log(value);
                      this.currentMin = value
                     break;
             }
@@ -93,8 +91,6 @@ export default {
          * 
          */
         initTime(currentHour, currentMin) {
-          
-           
             if(this.dateType === 'calendar-time' || this.dateType === "time") {
                 let current = this.currentValue.split(' ');
                 let max = this.maxDate.split(' ')
@@ -105,7 +101,6 @@ export default {
                 this.startHour = 0;
                 if(current[0] === max[0]) {
                     let time = max[1].split(':');
-                  
                     this.endHour= parseInt(time[0]);
                     // this.endMin = parseInt(time[1]);
                     if(parseInt(this.currentHour) > this.endHour) {

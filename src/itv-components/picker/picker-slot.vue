@@ -369,7 +369,7 @@ export default {
         },    
         modifyStatus (type, defaultValue) {
             this.lineSpacing = this.$refs.height.clientHeight;
-            // console.log(this.lineSpacing)
+           
             defaultValue = defaultValue ? defaultValue : this.defaultValue;
             let index = this.listData.indexOf(defaultValue);
             this.currIndex = index === -1 ? 1 : (index + 1);

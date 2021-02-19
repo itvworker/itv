@@ -22,7 +22,7 @@ const plugin = {
                 $vm.weekText =  ["日", "一", "二", "三", "四", "五", "六"];
                 $vm.confirmText = "确定"
                 $vm.titleText = '请选择日期'
-                $vm.value = formatDate('', 'Y-M-D h:m');
+                $vm.current = formatDate('', 'Y-M-D h:m');
                 $vm.minDate ="2020-08-01 00:00"
                 $vm.maxDate ='2200-12-30 23:59'
                 $vm.dateType = 'calendar-time'
@@ -35,10 +35,10 @@ const plugin = {
                     if(!options.maxDate){
                         options.maxDate = "23:59"
                     }
-                    if(!options.value) {
-                        options.value = formatDate('', 'h:m')
+                    if(!options.current) {
+                        options.current = formatDate('', 'h:m')
                     }
-                    options.value = formatDate('', 'Y-M-D ')+options.value;
+                    options.current = formatDate('', 'Y-M-D ')+options.current;
                     options.minDate = formatDate('', 'Y-M-D ')+options.minDate;
                     options.maxDate = formatDate('', 'Y-M-D ')+options.maxDate;
                     options.pickerRows = 5;    
@@ -51,7 +51,7 @@ const plugin = {
                     merge($vm, options)
                 }
                 
-                $vm.isVisible = true;
+                $vm.value = true;
                 $vm.init();
                 $vm.$nextTick(()=>{
                        
@@ -66,7 +66,7 @@ const plugin = {
                     }
                 })
                 $vm.$on('hide', (msg) => {
-                    $vm.isVisible = false;
+                    $vm.value = false;
                 })
 
             },

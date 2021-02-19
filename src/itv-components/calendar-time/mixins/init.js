@@ -14,12 +14,17 @@ export default {
             this.weekX = -this.elWidth
             this.x = -this.elWidth
             this.$refs.swiper.init();
+            if(this.$refs['picker-1']) {
+                this.$refs['picker-1'].modifyStatus(true);
+                this.$refs['picker-0'].modifyStatus(true);
+            }
+           
             if(this.dateType==='calendar-time') {
                 this.dataType = 0;
             }
         },
         init(value) {
-            let datetime = value || this.value;
+            let datetime = value || this.current;
             let arr = datetime.split(' ');
             
             if(!arr[1]) {
@@ -43,7 +48,9 @@ export default {
             // let ymdnumber = parseInt(year + this.gt(month));
             
             this.initTime(this.currentHour, this.currentMin);
-       
+            this.$nextTick(()=>{
+                this.resize()
+            })
         },
         
 

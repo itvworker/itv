@@ -6,6 +6,7 @@ export default function ($vm, options) {
         if (i !== 'value') {
             if( (typeof $vm.$options.props[i].default).toString() === 'function') {
                 defaults[i] = $vm.$options.props[i].default()
+               
             }else{
                 defaults[i] = $vm.$options.props[i].default
             }

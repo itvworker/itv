@@ -27,7 +27,7 @@
                 
             <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1 }">
                 <div class="week-bar" v-if="dateType!=='time'">
-                    <div class="week-item" v-for="(item, index) in weekTexts" :key="index">{{item}}</div>
+                    <div class="week-item" v-for="(item, index) in weekText" :key="index">{{item}}</div>
                 </div> 
                 <mini-swiper ref="swiper" :bounce="false"
                     :direction="calendarDir" @change="change" 
@@ -124,7 +124,7 @@
                     </div>
                     <picker-slot 
                         ref="picker-1"
-                            class="itv-calendar-picker"
+                        class="itv-calendar-picker"
                         :default-value="currentMin"
                         :is-update="false"
                         :list-data="minutes"
@@ -156,13 +156,17 @@
             ItvDialog
         },
         props: {
-            value: { //当前值
+            value:{
+                type: Boolean,
+                default: false
+            },
+            current: { //当前值
                 type: String,
                 default: '2020-08-26 11:12'
             },
             minDate: { //最大选择日期时间的
                 type: String,
-                default: '2020-07-26 00:00'
+                default: '2000-01-01 00:00'
             },
             maxDate: { //最小选择日期时间的
                 type: String,
@@ -174,7 +178,7 @@
             },
             weekText: { //星期的多语言数组
                 type: Array,
-                default: () => []
+                default: () => ["日", "一", "二", "三", "四", "五", "六"]
             },
             confirmText: { //确定按钮文字，dateType === 'calendar-time' 生效
                 type: String,
@@ -219,14 +223,7 @@
                     this.dataType = 0;
                 }
             },
-
-            weekText(n) {
-                if(n.length===7) {
-                    this.weekTexts = n;
-                }
-                
-            },
-            value(n) {
+            current(n) {
                 let arr = n.split(' ')
                 this.currentValue = arr[0];
                 if(this.dateType === 'calendar-time' || this.dateType === 'time') {
@@ -238,10 +235,12 @@
             visible(n) {
                 if(!n) {
                     this.$emit('hide')
+                    this.$emit('input',false);
                 }
             },
-            isVisible(n) {
+            value(n) {
                 this.visible = n;
+               
                 if(!n) {
                     setTimeout(()=>{
                         this.dataType = 0;
@@ -265,9 +264,7 @@
                      }
                     
                      this.init();
-                     this.$nextTick(()=>{
-                        this.resize()
-                    })
+                    
                     
                 }
             },
@@ -408,6 +405,10 @@
                 
                 if(select && this.dateType === 'calendar-time') {
                     this.dataType = 1;
+                    this.$nextTick(()=>{
+                        this.$refs['picker-1'].modifyStatus(true);
+                        this.$refs['picker-0'].modifyStatus(true);
+                    })
                 }
                 
               

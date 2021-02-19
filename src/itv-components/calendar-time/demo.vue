@@ -31,11 +31,10 @@
         </itv-main>
         <calendar-time 
             teleport
-            :isVisible="comTime.visible"
-            @hide="comTime.visible=false"
+            v-model="comTime.visible"
             @confirm="confirmCom"
             :dateType="comTime.dateType"
-            :value="comTime.value"
+            :current="comTime.value"
           
         />
     </itv-container>
@@ -94,7 +93,7 @@ export default {
       confirm(value) {
           this.$itv.calendarTime.show({
                minDate: '2020-08-05 10:56',
-               value: this.calendarTime,
+               current: this.calendarTime,
                maxDate: '2020-09-18 10:15',
                style:"average",
                confirm:(res)=>{
@@ -105,7 +104,7 @@ export default {
       
       alert() {
             this.$itv.calendarTime.show({
-                value: this.calendar,
+                current: this.calendar,
                 dateType: 'calendar',
                 confirm:(msg) => {
                     this.calendar = msg
@@ -114,7 +113,7 @@ export default {
       },
       openTime() {
             this.$itv.calendarTime.show({
-                value: this.time,
+                current: this.time,
                 titleText:"请选择时间",
                 minDate: '10:05',
                 maxDate: '23:59',
