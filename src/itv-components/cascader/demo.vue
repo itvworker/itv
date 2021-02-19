@@ -31,9 +31,6 @@
                 </cell>
             </section>
 
-           
-           
-
         </itv-main>
         <cascader v-model="show"
          :selected="selected"
