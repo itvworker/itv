@@ -61,12 +61,16 @@ const plugin = {
                 $vm.$off('hide')
                 $vm.$off('confirm')
                 $vm.$on('confirm', (msg) => {
-                    if(options.confirm) {
-                        options.confirm(msg)
+                    
+                    if(options.onConfirm) {
+                        options.onConfirm(msg)
                     }
                 })
                 $vm.$on('hide', (msg) => {
                     $vm.value = false;
+                    if(options.onHide) {
+                        options.onHide(msg)
+                    }
                 })
 
             },

@@ -6,12 +6,24 @@
           
                 <cell
                     @click="open"
-                    title="我是标题"
-                    desc="描述文字"
+                    title="插件模式"
+                    isLink
+                    :desc="text"
+                    showIcon
+                >
+                </cell>
+                <cell
+                    @click="open1"
+                    title="组件模式调用"
+                    isLink
+                    :desc="text1"
+                    showIcon
+                   
                 >
                 </cell>
                 
         </itv-main>
+        <actionsheet v-model="actionState" :items="items"  teleport @confirm="confirm" />
         
     </itv-container>
 
@@ -23,7 +35,22 @@
 export default {
     data() {
         return {
-            show: false
+            show: false,
+            actionState: false,
+            text:"选项一",
+            text1:"组件选项一",
+            items:[
+                    {
+                        text:'组件选项一'
+                    },
+                    {
+                        text:'组件选项二'
+                    },
+                    {
+                        text:"组件选项三"
+                    }
+                ]
+
         };
     },
     methods: {
@@ -35,20 +62,23 @@ export default {
                     },
                     {
                         text:'选项二'
+                    },
+                    {
+                        text:"选项三"
                     }
-                ]
+                ],
+                onConfirm:(item)=> {
+                    this.text =  item.text;
+                }
             })
         },
-        plugin(value) {
-            this.$itv.popup.confirm({
-                html: "weg",
-                hideOnClick: true,
-                text: ""
-            });
+        open1() {
+            this.actionState = true;
         },
-        page() {
-            console.log("page------");
+        confirm(item)  {
+            this.text1 = item.text;
         }
+        
     },
     mounted() {}
 };

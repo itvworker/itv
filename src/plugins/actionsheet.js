@@ -26,7 +26,7 @@ const plugin = {
                 }
 
                 $vm.$off('hide')
-                $vm.$off('show')
+               
                 $vm.$off('confirm')
 
                 $vm.$on('hide', (msg) => {
@@ -34,11 +34,10 @@ const plugin = {
                     $vm.value = false
                 })
 
-                $vm.$on('show', (msg) => {
-                    options && options.onShow && options.onShow(msg)
-                })
+                
                 $vm.$on('confirm', (msg) => {
-                    options && options.onConfirm && options.onConfirm(msg)
+                    options && options.onConfirm && options.onConfirm(msg);
+                    $vm.value = false
                 })
                 $vm.value = true
             },

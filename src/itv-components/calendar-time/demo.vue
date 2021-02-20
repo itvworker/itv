@@ -96,7 +96,7 @@ export default {
                current: this.calendarTime,
                maxDate: '2020-09-18 10:15',
                style:"average",
-               confirm:(res)=>{
+               onConfirm:(res)=>{
                    this.calendarTime = res;
                }
           })
@@ -106,7 +106,8 @@ export default {
             this.$itv.calendarTime.show({
                 current: this.calendar,
                 dateType: 'calendar',
-                confirm:(msg) => {
+                calendarDir:'row',
+                onConfirm:(msg) => {
                     this.calendar = msg
                 }
             })
@@ -118,7 +119,7 @@ export default {
                 minDate: '10:05',
                 maxDate: '23:59',
                 dateType: 'time',
-                confirm:(msg) => {
+                onConfirm:(msg) => {
                     this.time = msg
                 }
             })
@@ -129,7 +130,11 @@ export default {
               this.calendar1 = value;
               return
           }
-            this.calendarTime1 = value;
+          if(this.comTime.dateType==='time') {
+              this.time1 = value;
+              return
+          }
+           this.calendarTime1 = value;
             
       },
       comCalendarTime() {
@@ -147,20 +152,11 @@ export default {
           this.comTime.dateType = "time"
           this.comTime.visible = true;
           
-      },
-      page() {
-         
-      },
-      echo() {
-          console.log(this.demoName);
-          this.demoName.name = '你是个标题'
       }
+     
   },
   mounted() {
-    //   Vue.component(Component.name, Component);
-     com.methods.echo =this.echo.bind(this);
-     vue.component(com.name, com)
-     this.show = true;
+   
      
       
   },

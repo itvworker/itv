@@ -4,14 +4,13 @@
             <div class="itv-bg" @click.stop="close"  v-show="value"  :style="{'z-index':zIndex}"></div>
         </transition>
         <transition name="itv-slide-top" >
-            <div class="itv-acitonsheet" v-show="value" :style="{'z-index':zIndex+1}">
+            <div class="itv-acitonsheet" :class="{'ios-safe-area':iosSafeArea}"  v-show="value" :style="{'z-index':zIndex+1}">
                 <div class="itv-item" :class="{'itv-active': current === index}" v-for="(item, index) in items" :key="index" @click="confirm(item)">
                     {{item.text}}
                 </div>
                 <div class="itv-item itv-cancel" @click.stop="close" v-show="!hideBtnCancel">
                     {{cancelText}}
                 </div>
-                <div class="ios-screen" v-if="iosScreen"></div>
             </div>
         </transition>
     </div>
@@ -28,7 +27,7 @@ export default {
         },
         zIndex: {
             type: Number,
-            default: 99
+            default: 999
         },
         //是否显示
         value: {
@@ -38,7 +37,7 @@ export default {
         //点击遮罩层是否关闭
         hideOnClick: {
             type: Boolean,
-            default: false
+            default: true
         },
         //是否取显示取消按钮
         hideBtnCancel: {
@@ -49,35 +48,39 @@ export default {
             type: String,
             default: "取消"
         },
-        content: {
-            type: String,
-            default: ""
+        
+        iosSafeArea:{
+            type:Boolean,
+            default: false
         },
-        current: {
-            type: Number,
-            defualt:null
+        teleport:{
+            type: Boolean,
+            default: false
         }
     },
-    computed: {
-        iosScreen() {
-            let isNewIphone =
-                navigator.userAgent.indexOf("iPhone") > -1 &&
-                window.screen.height >= 812 &&
-                window.devicePixelRatio >= 2;
-            return isNewIphone;
-        }
-    },
+    
     data() {
         return {
-            status: false
+            status: false,
+            nextTarget:null,
+            parentTarget:null
         }
     },
     watch: {
         value(a, b) {
             if (!a) {
-                this.$emit("close");
+                if(this.teleport) {
+                    if(this.nextTarget) {
+                        this.parentTarget.insertBefore(this.$el, this.nextTarget)
+                    }else{
+                        this.parentTarget.appendChild(this.$el)
+                    }
+                }
             }else{
                 this.status = false;
+                if(this.teleport) {
+                    document.body.appendChild(this.$el);
+                }
             }
         }
     },
@@ -86,23 +89,28 @@ export default {
             if(!this.status) return
             this.$emit("hide");
             this.$emit("cancel");
+            this.$emit("input",false);
         },
         confirm(item) {
             if(!this.status) return
             this.$emit("hide");
             this.$emit("confirm", item);
+            this.$emit("input",false);
         },
         close() {
-            if(!this.status) return
+            if(!this.status) return;
+            if(!this.hideOnClick) return;
             this.$emit("hide");
-        },
-        closeBg(e) {
-            if(e.target.className.indexOf('itv')>-1) {
-                this.$emit('hide');
-            }
+            this.$emit("input",false);
         },
         clickStatus() {
            this.status = true;
+        }
+    },
+    mounted() {
+        if(this.teleport) {
+            this.nextTarget = this.$el.nextSibling;
+            this.parentTarget = this.$el.parentNode;
         }
     }
 };

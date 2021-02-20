@@ -41,7 +41,7 @@ this.$itv.calendarTime.show({
      value: '2020-08-05 10:15',
      maxDate: '2020-09-18 10:15',
      style:"average",
-     confirm:(res)=>{
+     onConfirm:(res)=>{
         this.calendarTime = res;
      }
 })

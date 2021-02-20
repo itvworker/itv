@@ -13,8 +13,6 @@
                 <slot></slot>
             </div>
         </transition>
-
-        
     </div>
 
 </template>
