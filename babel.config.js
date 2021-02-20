@@ -1,3 +1,7 @@
+
+console.log('babel-----------------------------------');
+console.log(process.env.NODE_ENV);
+
 module.exports = {
     presets: [
         [
@@ -13,6 +17,7 @@ module.exports = {
         ],
     ],
     plugins: [
+        
         'babel-plugin-remove-vconsole',
         '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-transform-modules-commonjs',

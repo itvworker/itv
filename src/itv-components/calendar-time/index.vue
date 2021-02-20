@@ -27,7 +27,7 @@
                 
             <div class="itv-calendar-time-change" :class="{'itv-select-time': dataType===1 }">
                 <div class="week-bar" v-if="dateType!=='time'">
-                    <div class="week-item" v-for="(item, index) in weekText" :key="index">{{item}}</div>
+                    <div class="week-item" v-for="(item, index) in weekTextArr" :key="index">{{item}}</div>
                 </div> 
                 <mini-swiper ref="swiper" :bounce="false"
                     :direction="calendarDir" @change="change" 
@@ -198,8 +198,6 @@
                 type: String,
                 default: 'column'
             },
-          
-            
             isVisible:{
                 type: Boolean,
                 default: false
@@ -211,6 +209,10 @@
             teleport:{
                 type: Boolean,
                 default: false
+            },
+            calendarFormat:{
+                type: Number,
+                default:0 
             }
         },
         watch: {
@@ -288,14 +290,22 @@
                currentMin:"12", //当前选中的分
                year:0, //
                month:0,
-               weekTexts: ["日", "一", "二", "三", "四", "五", "六"],
                dataType: 0, //数据类型，0显示日历 1显示选择器
                nextTarget:null,
                parentTarget:null,
                pickerRows: 7
             }
         },
-        
+        computed: {
+            weekTextArr() {
+                if(this.calendarFormat===0) {
+                    return this.weekText
+                }
+                let arr = [].concat(this.weekText);
+                arr.push(arr.splice(0,1)[0])
+                return arr;
+            }
+        },
         methods: {
             changeTab(index) {
                 if(index === this.dataType) {
@@ -374,7 +384,7 @@
                 //不在可选范围内不给选择
               
                if(item.ymdnumber > this.calcMaxYmd  || item.ymdnumber < this.calcMinYmd)  return
-                if(item.type === 'prev' || item.type=== 'next') return
+               if(item.type === 'prev' || item.type=== 'next') return
                 switch (item.type) {
                     case "prev":
                         this.isClickChange = true;
@@ -428,9 +438,10 @@
         }
 
     };
+    
 </script>
 
-<style lang="less" >
+<style lang="less" scoped>
 @import '../../assets/css/itv-theme.less';
 @import 'itv-calendar-time.less';
 </style>

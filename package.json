@@ -75,6 +75,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-u2u": "^1.0.0",
     "postcss-url": "^8.0.0",
+    "regenerator-runtime": "^0.13.7",
     "responsive-loader": "^1.2.0",
     "sass-resources-loader": "^2.0.1",
     "style-loader": "^1.1.2",

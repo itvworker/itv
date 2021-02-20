@@ -278,7 +278,15 @@ export default {
          */
         calcWeek(year, month, day, dayWeek) {
             let ondays = 3600 * 24 * 1000
-            let nowTime = new Date(year + '/' + month + '/' + day).getTime() - dayWeek * ondays
+            let nowTime = new Date(year + '/' + month + '/' + day).getTime() - dayWeek * ondays;
+            if(this.calendarFormat===1) {
+                let days = (dayWeek-1) * ondays;
+                if(dayWeek===0) {
+                    days = 6 * ondays;
+                }
+                
+                nowTime = new Date(year + '/' + month + '/' + day).getTime() - days;
+            }
             let arr = []
             for (let i = 0; i <= 6; i++) {
                 let date = new Date(nowTime)
@@ -303,6 +311,8 @@ export default {
                 arr.push(item)
                 nowTime = nowTime + ondays
             }
+            
+            
             return arr
         },
         getId() {
@@ -371,9 +381,17 @@ export default {
         calcPrevMonth(year, month, dayWeek) {
             let _year = year
             let _month = month - 1
-            if (dayWeek === 0) {
+               
+            if (dayWeek === 0 && this.calendarFormat===0) {
                 //如果是星期日直接返回空数组
                 return []
+            }
+            if (dayWeek === 1 && this.calendarFormat===1) {
+                //如果是星期日直接返回空数组
+                return []
+            }
+            if(dayWeek===0 && this.calendarFormat===1) {
+                dayWeek = 7;
             }
             //如果是一月份上一个月是上一年12月份
             if (month === 1) {
@@ -387,9 +405,16 @@ export default {
                 lastDay = 29
             }
             let arr = []
-            for (let i = dayWeek - 1; i >= 0; i--) {
+            for (let i = dayWeek-(1+this.calendarFormat); i >= 0; i--) {
+                let week = i;
+                if(this.calendarFormat===1) {   
+                    week =i+1;
+                    if(week===7) {
+                        week=0
+                    }
+                }
                 let item = {
-                    week: i,
+                    week: week,
                     year: _year,
                     month: _month,
                     day: lastDay,

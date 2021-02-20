@@ -65,8 +65,8 @@ export default {
   data() {
     return {
         show:false,
-        calendarTime:"2020-09-12 10:15",
-        calendar:"2020-09-12",
+        calendarTime:"2021-02-10 10:15",
+        calendar:"2021-02-10",
         time:'10:15',
         calendarTime1: "2020-09-12 09:00",
         calendar1:"2020-10-12",
@@ -94,10 +94,10 @@ export default {
           this.$itv.calendarTime.show({
                minDate: '2020-08-05 10:56',
                current: this.calendarTime,
-               maxDate: '2020-09-18 10:15',
+               maxDate: '2200-09-18 10:15',
                style:"average",
                onConfirm:(res)=>{
-                   this.calendarTime = res;
+                this.calendarTime = res;
                }
           })
       },
@@ -107,6 +107,7 @@ export default {
                 current: this.calendar,
                 dateType: 'calendar',
                 calendarDir:'row',
+                calendarFormat:1,
                 onConfirm:(msg) => {
                     this.calendar = msg
                 }
@@ -119,6 +120,7 @@ export default {
                 minDate: '10:05',
                 maxDate: '23:59',
                 dateType: 'time',
+                
                 onConfirm:(msg) => {
                     this.time = msg
                 }

@@ -92,7 +92,7 @@ let template =`
                 <div class="calendar-week-text">
                     <div
                         class="week-text-item"
-                        v-for="(item, index) in weekText"
+                        v-for="(item, index) in weekTextArr"
                         :key="index"
                     >{{item}}</div>
                 </div>
@@ -365,14 +365,28 @@ export default {
         weekHtml: {
             type: String,
             default:''
+        },
+        calendarFormat: {
+            type: Number,
+            default: 0
         }
     },
-
+    computed: {
+        weekTextArr() {
+            if(this.calendarFormat===0) {
+                return this.weekText
+            }
+            let arr = [].concat(this.weekText);
+            arr.push(arr.splice(0,1)[0])
+            return arr;
+        }
+    },
      data() {
         return {
             nowMonth: [], //当前月份数组
             prevMonth: [], //上月月份数组
             nextMonth: [], //下月月份数组
+            
             monthIndex: 1,
             today: formatDate('', 'YMD'),
             year: 0,

@@ -59,6 +59,7 @@ export default {
          * @param {String,Number}  dayWeek 星期几
          */
         initWeek(year, month, day, dayWeek) {
+            
             this.nowWeek = this.calcWeek(year, month, day, dayWeek);
             let oneday = 3600 * 24 *1000;
             //上一星期的计算
@@ -68,6 +69,7 @@ export default {
             let _pmonth = prevdate.getMonth()+1
             let _pday = prevdate.getDate()
             let _pdayWeek = prevdate.getDay();
+            
             this.prevWeek = this.calcWeek(_pyear, _pmonth, _pday, _pdayWeek)
             
             //下个星期的计算   

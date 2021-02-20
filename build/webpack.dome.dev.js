@@ -162,8 +162,8 @@ module.exports = {
             inject: true
         }),
         new ItvPlugin({
-                theme:resolve('src/assets/theme.less'),
-                calendarTime:resolve('src/assets/itv-calendar-time.less')
+                theme:resolve('src/assets/theme.less')
+               
             }),    
         // new CleanWebpackPlugin()
         // new CopyWebpackPlugin([
