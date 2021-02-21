@@ -123,18 +123,18 @@ export default {
                 this.$emit("close");
             }
             if(a) {
-               this.init(true);
-              
-               
+               this.init();
             }
         },
         isVisible(n,o) {
             this.$emit('input', n)
         },
         currentHeader(n,o) {
-                
+                console.log(n);
             this.$nextTick(()=>{
                this.$refs.body.calcMax();
+               this.$refs.header.calcMax();
+              
                if(n !== null) {
                     this.$refs.body.scrollToNow(0, this.currentIndex[this.currentHeader]*this.itemHeight)
                     return
@@ -145,6 +145,14 @@ export default {
             })
             
         },
+        currentItems(n,o) {
+            this.$nextTick(()=>{
+                let vm = this.$refs.header;
+                vm.calcMax();
+                vm.scrollToNow(vm.maxX, 0);
+              
+            })
+        }
        
        
     },
@@ -157,6 +165,7 @@ export default {
             this.currentIndex = [];
             this.currentHeader = null;
             this.currentSelect = JSON.parse(JSON.stringify(this.selected));
+            this.$refs.body.scrollToNow(0,0);
             if(this.selected.length>0) {
                 this.selected.forEach((item, index)=>{
                     if(index===0) {
@@ -259,10 +268,7 @@ export default {
 
             //debugger
             if(this.currentSelect.length > 0 && this.currentHeader === null) {
-               
                 let id = this.currentSelect[this.currentSelect.length-1];
-     
-
                 this.items.forEach(element => {
                     if(element[this.pidKey] == id ) {
                         data.push( JSON.parse(JSON.stringify(element)))
@@ -276,7 +282,6 @@ export default {
                     })
                 }else{
                     this.isLast = true;
-                   
                     let obj = this.currentItems[this.currentItems.length-1];
                     this.items.forEach(element => {
                             if(element[this.pidKey] == obj[this.pidKey] ) {
@@ -299,18 +304,13 @@ export default {
             }
 
             if(this.currentSelect.length > 0 && this.currentHeader !== null) {
-               
                 let pid = this.currentItems[this.currentHeader][this.pidKey] 
-                
-
                 this.items.forEach(element => {
                     if(element[this.pidKey] == pid ) {
                         data.push( JSON.parse(JSON.stringify(element)))
                     }   
                 });
                 this.nowItems = data
-
-                
                 this.$nextTick(()=>{
                     this.$refs.body.calcMax();
                 })

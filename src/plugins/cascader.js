@@ -24,20 +24,20 @@ const plugin = {
                 $vm.currentSelect = $vm.selected;
     
                 $vm.value = true;
-                $vm.init();
+               
                 $vm.$off('hide')
                 $vm.$off('confirm');
                 $vm.$off('select')
 
                 $vm.$on('select', (msg)=>{
-                    if(options.select) {
-                        options.select(msg)
+                    if(options.onSelect) {
+                        options.onSelect(msg)
                     }
                 })
 
                 $vm.$on('confirm', (msg) => {
-                    if(options.confirm) {
-                        options.confirm(msg)
+                    if(options.onConfirm) {
+                        options.onConfirm(msg)
                     }
                     $vm.value = false;
                 })

@@ -72,6 +72,8 @@ export default {
             let parentHeight = parent.clientHeight;
             let childWidth = child.clientWidth;
             let childHeight = child.clientHeight;
+
+            console.log(this.pattern);
             this.maxX = Math.max(0,childWidth - parentWidth);
             this.maxY = Math.max(0,childHeight - parentHeight);
             this.contentHeight = parentHeight;

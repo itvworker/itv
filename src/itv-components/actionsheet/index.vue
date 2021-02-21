@@ -48,7 +48,10 @@ export default {
             type: String,
             default: "取消"
         },
-        
+        current: {
+            type: Number,
+            default: null
+        },
         iosSafeArea:{
             type:Boolean,
             default: false

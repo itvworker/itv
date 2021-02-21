@@ -8,7 +8,7 @@
                     @click="open"
                     :showIcon="true"
                     title="地址"
-                    desc="请选择地址"
+                    :desc="comvalue"
                 >
                 </cell>
                 <cell
@@ -33,9 +33,9 @@
 
         </itv-main>
         <cascader v-model="show"
-         :selected="selected"
+         :selected="comSelected"
          :items="items"
-
+         @confirm="comConfirm"
             ></cascader>
     </itv-container>
 
@@ -57,6 +57,8 @@ export default {
             plugin1Content:"请选择地区",
             plugin2Selected:[420000,421100,421123],
             plugin2Content:"湖北省黄冈市罗田县",
+            comvalue:"请选择地区",
+            comSelected:[]
                 
         };
     },
@@ -65,11 +67,18 @@ export default {
             this.show = true;
             
         },
+        comConfirm(msg) {
+           this.comvalue="";
+           this.comSelected = msg.map(element => {
+               this.comvalue+=element.name;
+               return element.id
+           });
+        },
         plugin(value) {
             this.$itv.cascader.show({
                 items: this.items,
                 selected:this.plugin1Selected,
-                confirm:(res)=>{
+                onConfirm:(res)=>{
                     this.plugin1Content = ""
                     this.plugin1Selected=res.map((item)=>{
                         this.plugin1Content+=item.name
@@ -82,7 +91,7 @@ export default {
             this.$itv.cascader.show({
                 items: this.items,
                 selected:this.plugin2Selected,
-                confirm:(res)=>{
+                onConfirm:(res)=>{
                     this.plugin2Content = ""
                     this.plugin2Selected=res.map((item)=>{
                         this.plugin2Content+=item.name

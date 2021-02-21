@@ -39,6 +39,7 @@ export default {
             actionState: false,
             text:"选项一",
             text1:"组件选项一",
+           
             items:[
                     {
                         text:'组件选项一'
@@ -56,6 +57,7 @@ export default {
     methods: {
         open() {
             this.$itv.actionsheet.show({
+                 iosSafeArea: false,
                 items:[
                     {
                         text:'选项一'
@@ -68,6 +70,7 @@ export default {
                     }
                 ],
                 onConfirm:(item)=> {
+                    
                     this.text =  item.text;
                 }
             })
