@@ -27,23 +27,6 @@ export default {
             type: Number,
             default: 200
         },
-        styles: {
-            type: Object,
-            default:()=>{
-                return {
-                    title: '移动或缩放',
-                    cancelText:'取消',
-                    confirmText: '确定',
-                    titleTextColor: '#fff',
-                    cancelTextColor:'#fff',
-                    confirmTextColor: '#fff',
-                    headerBgColor: '#314558',
-                    cancalBtnColor: '#314558',
-                    confirmBtnColor: '#919CA3'
-                }
-            }
-        },
-
         outputFormat: {
             type: String,
             default: 'png'

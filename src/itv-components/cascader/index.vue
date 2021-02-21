@@ -4,7 +4,7 @@
             <div class="level-select-title">
                 <div class="btn-cancel"  @click="cancel">{{cancelText}}</div>    
                 {{titleText}}
-                <div class="btn-confirm" @click="confirmBtn">{{confirmText}}</div>
+                <div class="btn-confirm" :class="{'forbid-btn':isLastConfirm && !isLast}" @click="confirmBtn">{{confirmText}}</div>
             </div>
             <itv-scroll ref="header"  :percent="0.7" :speed="40"  pattern="horizontal" class="case-box">
                 <div class="level-select-bar">
@@ -83,6 +83,14 @@ export default {
         textKey: {
             type: String,
             default: 'name'
+        },
+        isLastConfirm: {
+            type: Boolean,
+            default: true
+        },
+        teleport:{
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -96,7 +104,9 @@ export default {
             nowItems:[],
             isLast: false,
             itemHeight: 0,
-            cacheNumber:0
+            cacheNumber:0,
+            nextTarget:null,
+            parentTarget:null,
         }
     },
     computed: {
@@ -121,9 +131,20 @@ export default {
             this.isVisible = a;
             if (!a) {
                 this.$emit("close");
+                this.$emit("hide");
+                if(this.teleport) {
+                        if(this.nextTarget) {
+                            this.parentTarget.insertBefore(this.$el, this.nextTarget)
+                        }else{
+                            this.parentTarget.appendChild(this.$el)
+                        }
+                    }
             }
             if(a) {
                this.init();
+               if(this.teleport) {
+                    document.body.appendChild(this.$el);
+                }
             }
         },
         isVisible(n,o) {
@@ -157,13 +178,17 @@ export default {
        
     },
     mounted() {
-        
+        if(this.teleport) {
+            this.nextTarget = this.$el.nextSibling;
+            this.parentTarget = this.$el.parentNode;
+        }
     },
     methods: {
         init() {
             this.currentItems = [];
             this.currentIndex = [];
             this.currentHeader = null;
+            this.isLast = false;
             this.currentSelect = JSON.parse(JSON.stringify(this.selected));
             this.$refs.body.scrollToNow(0,0);
             if(this.selected.length>0) {
@@ -324,6 +349,9 @@ export default {
         },
         
         confirmBtn() {
+            if(!this.isLast && this.isLastConfirm) {
+                return;
+            }
             this.$emit('input', false)
             this.$emit("hide");
             this.$emit("confirm", this.currentItems);

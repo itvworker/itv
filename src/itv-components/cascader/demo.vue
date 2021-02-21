@@ -1,6 +1,6 @@
 <template>
     <itv-container class="page-dialog">
-        <itv-header>dialog</itv-header>
+        <itv-header>Cascader</itv-header>
         <itv-main>
             <div class="h10"></div>
             <section>
@@ -9,6 +9,7 @@
                     :showIcon="true"
                     title="地址"
                     :desc="comvalue"
+                   
                 >
                 </cell>
                 <cell
@@ -36,6 +37,7 @@
          :selected="comSelected"
          :items="items"
          @confirm="comConfirm"
+         teleport
             ></cascader>
     </itv-container>
 

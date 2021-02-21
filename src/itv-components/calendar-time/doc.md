@@ -67,9 +67,8 @@ this.$itv.calendarTime.isVisible();
 | cancelText | 取消按钮文字 | <font color="#2caf4f">string</font> | 取消 |
 | titleText | 插件标题文字 | <font color="#2caf4f">string</font> | 请选择日期 |
 | calendarDir | 日历滑动方向 <font color="#e1251b">column</font>竖向滑动， <font color="#e1251b">row</font>横向滑动 | <font color="#2caf4f">string</font> | column |
-| isVisible | 否显示插件 | <font color="#2caf4f">Boolean</font> | false |
 | hideOnClick | 点击遮罩是否关闭组件 | <font color="#2caf4f">Boolean</font> | true |
-| value | 否显示插件 v-model | <font color="#2caf4f">Boolean</font> | false |
+| value | 是否显示插件 v-model | <font color="#2caf4f">Boolean</font> | false |
 | teleport | 是否挂载到body上，插件模式下无效 | <font color="#2caf4f">Boolean</font> | false |
 
 ## 事件
