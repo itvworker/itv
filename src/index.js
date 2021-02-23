@@ -24,13 +24,13 @@ import toast from './itv-components/toast';
 import playVideo from './itv-components/play-video'
 
 
-import PulginActionsheet from './plugins/actionsheet.js';
-import PulginCalendarTime from './plugins/calendarTime.js';
-import PulginCascader from './plugins/cascader.js';
-import PulginDialog from './plugins/dialog.js';
-import PulginLoading from './plugins/loading.js';
-import PulginPopup from './plugins/popup.js';
-import PulginToast from './plugins/toast.js';
+import pluginActionsheet from './plugins/actionsheet.js';
+import pluginCalendarTime from './plugins/calendarTime.js';
+import pluginCascader from './plugins/cascader.js';
+import pluginDialoger from './plugins/dialoger.js';
+import pluginLoading from './plugins/loading.js';
+import pluginPopup from './plugins/popup.js';
+import pluginToast from './plugins/toast.js';
 
 
 
@@ -63,13 +63,13 @@ export {
     playVideo,
 
     //插件
-    PulginActionsheet,
-    PulginCalendarTime,
-    PulginCascader,
-    PulginDialog,
-    PulginLoading,
-    PulginPopup,
-    PulginToast
+    pluginActionsheet,
+    pluginCalendarTime,
+    pluginCascader,
+    pluginDialoger,
+    pluginLoading,
+    pluginPopup,
+    pluginToast
 }
 
 let Components = [
@@ -100,16 +100,15 @@ let Components = [
     playVideo,
 
     //插件
-    PulginActionsheet,
-    PulginCalendarTime,
-    PulginCascader,
-    PulginDialog,
-    PulginLoading,
-    PulginPopup,
-    PulginToast,
+    pluginActionsheet,
+    pluginCalendarTime,
+    pluginCascader,
+    pluginDialoger,
+    pluginLoading,
+    pluginPopup,
+    pluginToast,
 ]
-
-console.error('itv-全局安装时会看到这个，或者没引入ItvPlugin按需加载会出现打包过大');
+console.error('itv-ui没有引入itvPlugin，可能会导致打包过大');
 export default {
     install: function(Vue) {
         Components.forEach((item, index)=>{

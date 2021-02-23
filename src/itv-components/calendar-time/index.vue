@@ -14,7 +14,7 @@
                         {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
                 </div> -->
             </div>
-
+            
             <div class="itv-calendar-top" v-if="dateType==='time'">
                 <div class="itv-calendar-cancel-btn"  @click="visible=false" >
                     {{cancelText}}
@@ -356,8 +356,8 @@
                     this.selectDay(obj.index, obj.item)
                     this.$refs.swiper.scrollTo(1, false)  
                }
-               let arr =  this.currentValue.split('-');
-               let num = parseInt(arr[0]+''+arr[1]);
+            //    let arr =  this.currentValue.split('-');
+            //    let num = parseInt(arr[0]+''+arr[1]);
                
                
            },

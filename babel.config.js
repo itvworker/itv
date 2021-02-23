@@ -21,6 +21,9 @@ module.exports = {
         'babel-plugin-remove-vconsole',
         '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-transform-modules-commonjs',
+        "@babel/plugin-transform-classes",
+        "@babel/plugin-proposal-class-static-block",
+        "@babel/plugin-proposal-class-properties",
         [
             'babel-plugin-load-module',
             {

@@ -27,8 +27,7 @@ function humpToFront(name) {
 }
 module.exports = function (source) {
     let reg = /import[ ]+\{[\w, ]+\}[ ]+from[ ]+["']+itv-ui["']+[ ]*[;]*/ig;
-
-   
+    source = source.replace("console.error('itv-ui没有引入itvPlugin，可能会导致打包过大');",'');    
     source = source.replace(reg, (str, index)=>{
       
             str = str.split('{')[1];

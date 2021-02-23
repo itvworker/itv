@@ -7,10 +7,19 @@ import $ from 'jquery'
 import Router from 'vue-router'
 export default {
     mounted() {
-        Router.$on('push go',this.changeRoute)
-        setTimeout(()=>{
-             Router.$off('push go',this.changeRoute)
-        },2000)
+        document.body.addEventListener("focusin", () => {
+            // 软键盘弹出的事件处理
+             if (
+                document.activeElement.tagName === "INPUT" ||
+                document.activeElement.tagName === "TEXTAREA"
+            ) {
+                setTimeout(() => {
+                    // document.activeElement.scrollIntoView();
+                    document.activeElement.scrollIntoViewIfNeeded(true);
+                }, 300);
+            }
+      
+        });
         
     },
     watch: {

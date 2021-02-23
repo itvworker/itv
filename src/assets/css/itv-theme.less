@@ -106,8 +106,17 @@ SimHei,
 @itv-stepperbar-width: 11px ;
 @itv-stepperbar-color: #333 ;
 
-.itv-cell-border {
-    background-image: linear-gradient(rgba(@itv-dark-color, .5), rgba(@itv-dark-color, .5));
-    background-size: 100% 1px;
-    background-repeat: no-repeat;
+.itv-ellipsis(@a:hidden) {
+    overflow: @a;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// 多行省略
+.itv-rows-ellipsis(@a:2) {
+    display: -webkit-box;
+    -webkit-line-clamp: @a;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
 }
