@@ -48,6 +48,10 @@ export default {
         },
         vaildataAll() {
             let arr = [];
+            //将组件上到上顺序排序
+            this.items = this.items.sort((a, b)=>{
+                return a.$el.offsetTop - b.$el.offsetTop;
+            })
             this.items.forEach(item=>{
                let res = this.vaildata(item.value, item.rule, item);
                if(res){

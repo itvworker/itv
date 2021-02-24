@@ -91,3 +91,11 @@ export function humpToFront(name) {
         }
         return newName;
 }
+
+/**
+ * @description 判断数据类型
+ * @param {any} value 
+ */
+export default function dataType(value) {
+    return Object.prototype.toString.call(value).slice(8,-1).toLowerCase()
+}

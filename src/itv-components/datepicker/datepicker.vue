@@ -11,15 +11,15 @@
             </div>
         </div>
         <picker ref="datepicker"
-		:is-visible="isVisible"
-		title="请选择日期"
-		:list-data="listData"
-		:default-value-data="defaultValueData"
-		:custom-class-name="`nut-datepicker`"
-		@confirm="setChooseValue"
-		@choose="updateChooseValue"
-		@close-update="closeUpdateChooseValue"
-	/>   
+          :is-visible="isVisible"
+          title="请选择日期"
+          :list-data="listData"
+          :default-value-data="defaultValueData"
+          :custom-class-name="`nut-datepicker`"
+          @confirm="setChooseValue"
+          @choose="updateChooseValue"
+          @close-update="closeUpdateChooseValue"
+        />   
     </div>
 	
  </itv-dialog>
@@ -145,7 +145,7 @@ export default {
         updateMonth: null,
         updateDay: null,
         updateHour: null,
-        isVisible: false,
+        isVisible: true,
         selected: null
        
     };

@@ -7,7 +7,6 @@
          
         </div>
         <div class="itv-label-content">
-           
             <slot />
         </div>
         <div class="right">
@@ -37,7 +36,6 @@
             }
            
         },
-        componentName:"itvForm",
         inject:['itvForm', 'formScroller'],
         provide() {
             return  {
@@ -67,17 +65,14 @@
                 let scroller =  this.formScroller.getPostion();
                 let y = this.$el.offsetTop;
                 this.formScroller.scrollTop(y-scroller.y)
+            },
 
-            } 
         },
         destroyed() {
             this.itvForm.delItem(this)
         },
         mounted() {
-            
             this.itvForm.addItem(this);
-            
-            
         }
     }
 </script>
@@ -91,7 +86,6 @@
     line-height: 1.6;
     font-size: 14ipx;
     align-items: center;
-    background-color: @itv-primary-color-bg ;
 
     .itv-label-content{
         flex: 1;

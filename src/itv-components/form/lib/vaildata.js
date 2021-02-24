@@ -4,6 +4,7 @@ export default function Vaildata(value, rules) {
     this.valueType = valueType;
     this.value = value;
     this.rules = rules;
+    
     if(valueType === 'number') {
         value = value.toString();
         this.valueType = 'string'
@@ -12,6 +13,12 @@ export default function Vaildata(value, rules) {
         this.value = '';
         this.valueType = 'string'
     }
+    
+    if(this.rulesType==='object') {
+        this.rules = [rules];
+        this.rulesType = 'array';
+    }
+    
         
 }
 
@@ -20,7 +27,7 @@ Vaildata.prototype = {
         return Object.prototype.toString.call(value).slice(8,-1).toLowerCase()
     },
     getResult() {
-       
+        
         switch (this.rulesType) {
             case 'function':
                 return rules(this.value);
@@ -56,6 +63,16 @@ Vaildata.prototype = {
             if(this.value) {
                 let name = this.rules[i].rule;
                 let ruleType = this.dataType(name);
+
+                if(ruleType=== 'regexp') {
+                    if(!name.test(this.value)) {
+                        return {
+                            type: 'regexp',
+                            message: this.rules[i].message
+                        }
+                    }
+                }
+
                 if(ruleType === 'function') {
                     if(this.rules[i].rule(this.value)) {
                         return {
@@ -64,10 +81,9 @@ Vaildata.prototype = {
                         }
                     }
                 }
-
+                 
                 if(ruleType==='string') {
                     name = name.replace(/\s/g, "");
-                    
                     if(this[name]()) {
                         return {
                             type: name,

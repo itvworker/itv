@@ -1,6 +1,5 @@
 <template>
   <div class="itv-picker-list" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"  @touchcancel="touchEnd">
-   
     <div class="itv-picker-content" :class="['itv-picker-row'+rows]"    ref="height" @transitionEnd="transitionEnd"  @webkitTransitionEnd="transitionEnd" >
         <div class="itv-picker-list-panel"  ref="list">
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
@@ -90,10 +89,10 @@ export default {
             this.modifyStatus();
         },
         'defaultValue': function() {
-            // this.transformY = 0;
-            // this.modifyStatus();
+            this.transformY = 0;
+            this.modifyStatus();
         },
-       
+
         listData(n,o) {
             if(this.lastChange){
                 let lineIndex = Math.abs(parseInt(this.scrollDistance/this.lineSpacing));
@@ -102,7 +101,8 @@ export default {
                 this.transformY = this.scrollDistance
                 this.modifyStatus()
             }
-        }
+        },
+        
     },
     computed: {
         listLength() {
@@ -119,7 +119,17 @@ export default {
          */
         isLoopScroll() {
             return this.isLoop && this.listLength >= parseInt(this.rows/2)+1;
+        },
+        listIndexs() {
+            return this.listData.map((item)=>{
+                let type = Object.prototype.toString.call(item).slice(8,-1).toLowerCase()
+                if(type==='object') {
+                    return item.value || item.id || item;
+                }
+                return item;
+            })
         }
+
     },
     methods: {
         updateTransform(value) {
@@ -234,7 +244,7 @@ export default {
                     }
                 }
             
-                console.log('begin:'+this.transformY);
+             
                 this.setTransform(this.transformY, null, null, deg);
                 this.currIndex = (Math.abs(Math.round(this.transformY/this.lineSpacing)) + 1);
                
@@ -247,7 +257,7 @@ export default {
         setChooseValue(move) {
             if(this.isTouch) return;
             let index = Math.round(-this.transformY / this.lineSpacing);
-            this.$emit('chooseItem', this.listData[index], this.keyIndex, index);
+            this.$emit('chooseItem', this, this.listData[index], this.keyIndex, index);
         },
         /**
          * 计算时否超出来滚距离
@@ -371,7 +381,8 @@ export default {
             this.lineSpacing = this.$refs.height.clientHeight;
            
             defaultValue = defaultValue ? defaultValue : this.defaultValue;
-            let index = this.listData.indexOf(defaultValue);
+            let index = this.listIndexs.indexOf(defaultValue);
+          
             this.currIndex = index === -1 ? 1 : (index + 1);
             let move = index === -1 ? 0 : (index * this.lineSpacing);
             this.transformY = -move
@@ -397,7 +408,6 @@ export default {
         formatWord(value, format) {
             
             if(!value) return ''
-           
            
             return format.replace('{value}',value)
         }

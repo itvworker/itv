@@ -1,5 +1,6 @@
 <template>
     <div class="itv-picker-panel">
+        <slot />
         <picker-slot v-for="(item, index) of listData" :ref="`picer-slot-${(index)}`"
             :default-value="chooseValueData[index]"
             :is-update="isUpdate"
@@ -18,18 +19,7 @@ import pickerSlot from "./picker-slot.vue";
 export default {
     name:'picker',
     props: {
-        isVisible: {
-            type: Boolean,
-            default: false
-        },
-        customClassName: {
-            type: String,
-            default: null
-        },
-        title: {
-            type: String,
-            default: ' '
-        },
+        
         listData: {
             type: Array,
             default: () => []
@@ -94,11 +84,9 @@ export default {
         },
 
         chooseItem(value, index) {
-
             if (this.cacheValueData[index] !== value) {
                 this.cacheValueData[index] = value;
-                this.$emit('choose', this, index, value, this.cacheValueData);
-                
+                this.$emit('choose', index, value, this.cacheValueData);
             }
         }
     },

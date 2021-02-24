@@ -12,7 +12,17 @@
         @choose="choose"
         isLoop
       ></picker>
-      <!-- demo 城市选择(联动)-->
+
+
+      <picker
+        :is-visible="isVisible0"
+        :list-data="classify"
+        title="请选择年月"
+        :default-value-data="defaultClassify"
+        @choose="chooseClassify"
+        
+      ></picker>
+      
      
   </itv-main>
   </itv-container>
@@ -20,67 +30,37 @@
 </template>
 
 <script>
-
-const APIData = [
-  {
-    label: 1,
-    array: [
-      {
-        label: 3,
-        value: "朝阳区"
-      },
-      {
-        label: 4,
-        value: "海淀区"
-      }
-    ]
-  },
-  {
-    label: 2,
-    array: [
-      {
-        label: 5,
-        value: "测试1"
-      },
-      {
-        label: 6,
-        value: "测试2"
-      },
-      {
-        label: 7,
-        value: "测试2"
-      }
-    ]
-  }
-];
+import date from './data/date.js';
+import classify from './data/classify.js'
 export default {
   data() {
-    return {
-      date: null,
-      isVisible0: true,
-      listData0: [
-        [
-          "2010",
-          "2011",
-          "2012",
-          "2013",
-          "2014",
-          
-        ],
-        ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-      ],
-      defaultValueData0: ["2010", "2"],
-     
-    };
-  },
-  created() {
-   
-  },
-  methods: {
-      choose(value,index) {
-          console.log(index);
-      }
-  }
+        return {
+            date: null,
+            isVisible0: true,
+            listData0: date,
+            classify: classify,
+            defaultClassify:[2, 6],
+            defaultValueData0: ["2010", "2"],
+        
+        };
+    },
+    created() {
+    
+    },
+    methods: {
+        choose(value,index) {
+            console.log(value);
+            console.log(index);
+        },
+        chooseClassify(value,index) {
+            console.log(value);
+            console.log(index);
+        }
+    },
+    mounted() {
+       
+        
+    }
 };
 </script>
 <style lang="less" scoped>

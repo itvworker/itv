@@ -3,15 +3,13 @@
         <itv-header>Form表单</itv-header>
         <itv-main>
             <form-scroller>
-                <div style="height:550px;"></div>
+               
                 <itv-form :rules="schema" ref="form">
-                <itv-label :label="item.name" rule="phone" :id="item.key" :key="item.key" v-for="(item, index) in inputList">
+                <itv-label :label="item.name" :rule="item.schema" :id="item.key" :key="item.key" v-for="(item, index) in inputList">
                     <itv-input placeholder="请输入你的名字" :type="item.type" v-model="model[item.key]" inputType="positive" />
                 </itv-label>
                 </itv-form>
-                <button @click="del">del</button>
-                <button @click="add">add</button>
-                <div style="height:550px;"></div>
+                
                
             </form-scroller>
            
@@ -28,7 +26,13 @@ import FormScroller from './form-scroller.vue';
         phone: [
             { required: true, rule:'phone', message: '请输入活动名称', trigger: 'blur' },
             
-        ]
+        ],
+        text:{
+            required: true, rule:/^[0-9]{6,16}$/, message:"请输入6-16位数字"
+        },
+        info:{
+             required: true, rule:/^[0-9]{6,16}$/, message:"请输入6-16位数字"
+        }
     }
     export default {
         components: {
@@ -47,25 +51,29 @@ import FormScroller from './form-scroller.vue';
                         id:1,
                         name: "手机号码",
                         type: "number",
-                        key:"phone"
+                        key:"phone",
+                        schema: "phone"
                     },
                     {   
                         id:2,
                         name: "名字",
                         type: "text",
-                        key:'name'
+                        key:'name',
+                        schema: "text"
                     },
                      {   
                         id:3,
                         name: "文字",
                         type: "text",
-                        key:'text'
+                        key:'text',
+                        schema: "text"
                     },
                      {   
                         id:4,
                         name: "简介",
                         type: "text",
-                        key:'info'
+                        key:'info',
+                        schema: "info"
                     }
                 ],
                 model:{
