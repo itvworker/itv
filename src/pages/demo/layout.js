@@ -81,6 +81,11 @@ export default {
                     icon:'itv-demo-icon-schedule-date',
                     routerName:"itv_cascader",
                     name: "cascader"
+                },
+                {
+                    icon:'itv-demo-icon-schedule-date',
+                    routerName:"itv_scrollerCalendar",
+                    name: "scrollerCalendar"
                 }
             ]
         }

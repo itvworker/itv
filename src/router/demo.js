@@ -242,6 +242,16 @@ export default [
                     title: 'playVideo',
                 }
             },
+            {
+                path: '/demo/scrollerCalendar',
+                name: 'itv_scrollerCalendar',
+                component: () => import('@/itv-components/scroller-calendar/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'scrollerCalendar',
+                }
+            },
+            
 
             
             

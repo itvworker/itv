@@ -111,9 +111,8 @@ export default {
             }
             let last = touchList.length-1;
             let first = 0;
-            let firstTouch
+           
 
-            console.log(this.speed);
             for(let i = last; i >= 0; i--) {
                 if(touchList[last].time-touchList[i].time > this.speed) {
                     first = i;

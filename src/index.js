@@ -22,6 +22,7 @@ import miniSwiper from './itv-components/mini-swiper';
 import miniSwiperItem from './itv-components/mini-swiper-item';
 import toast from './itv-components/toast';
 import playVideo from './itv-components/play-video'
+import scrollerCalendar from './itv-components/scroller-calendar'
 
 
 import pluginActionsheet from './plugins/actionsheet.js';
@@ -61,6 +62,7 @@ export {
     miniSwiperItem,
     toast,
     playVideo,
+    scrollerCalendar,
 
     //插件
     pluginActionsheet,
@@ -98,6 +100,7 @@ let Components = [
     miniSwiperItem,
     toast,
     playVideo,
+    scrollerCalendar,
 
     //插件
     pluginActionsheet,
