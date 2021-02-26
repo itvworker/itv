@@ -316,6 +316,10 @@
                     return
                 }
                 this.dataType = index;
+                if(this.$refs['picker-1']) {
+                    this.$refs['picker-1'].modifyStatus(true);
+                    this.$refs['picker-0'].modifyStatus(true);
+                }
             }, 
             change(index) {
                if(index===0) {

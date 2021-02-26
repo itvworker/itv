@@ -8,7 +8,7 @@
         title="请选择年月"
         :default-value-data="defaultValueData0"
         @close="switchPicker('isVisible0')"
-        @confirm="setChooseValue0"
+       
         @choose="choose"
         isLoop
       ></picker>

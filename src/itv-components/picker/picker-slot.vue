@@ -59,6 +59,10 @@ export default {
         rows: {
             type: Number,
             default: 5
+        },
+        pickerIndex:{
+            type: Number,
+            default: null
         }
         
     },
@@ -100,7 +104,10 @@ export default {
                 this.scrollDistance = -index*this.lineSpacing
                 this.transformY = this.scrollDistance
                 this.modifyStatus()
+                return;
             }
+
+            this.modifyStatus(true)
         },
         
     },
@@ -135,7 +142,6 @@ export default {
         updateTransform(value) {
             
             if (value) {
-               
                 this.transformY = 0;
                 this.timer = setTimeout(() => {
                     this.modifyStatus(null, value);
@@ -189,8 +195,7 @@ export default {
                 this.transformY = -num * this.lineSpacing
             }
             index = Math.round(-this.transformY / this.lineSpacing);
-            console.log('after:'+index);
-            console.log(this.listData[index]);
+          
 
             this.setTransform(this.transformY, null, null, 0);
             this.setChooseValue(this.transformY);
@@ -202,7 +207,6 @@ export default {
            
             if (type === 'end') { //手指结束滑动走这里
                 // 限定滚动距离
-                console.log('end:'+this.transformY);
                 // if(this.isLoopScroll) {
                 //     if(this.transformY > this.lineSpacing){
                 //         this.transformY = this.transformY-this.listData.length  * this.lineSpacing
@@ -257,7 +261,7 @@ export default {
         setChooseValue(move) {
             if(this.isTouch) return;
             let index = Math.round(-this.transformY / this.lineSpacing);
-            this.$emit('chooseItem', this, this.listData[index], this.keyIndex, index);
+            this.$emit('chooseItem',  this.listData[index], this.keyIndex, index);
         },
         /**
          * 计算时否超出来滚距离
@@ -378,8 +382,9 @@ export default {
             }
         },    
         modifyStatus (type, defaultValue) {
-            this.lineSpacing = this.$refs.height.clientHeight;
            
+            this.lineSpacing = this.$refs.height.clientHeight;
+            console.log(this.lineSpacing);
             defaultValue = defaultValue ? defaultValue : this.defaultValue;
             let index = this.listIndexs.indexOf(defaultValue);
           
