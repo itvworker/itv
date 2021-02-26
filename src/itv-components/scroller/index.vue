@@ -164,6 +164,10 @@ export default {
         refreshText: {
             type: String,
             default: '更新中'
+        },
+        maxSpeed:{
+            type: Number,
+            default: 50
         }
         
 

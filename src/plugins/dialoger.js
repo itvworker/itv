@@ -3,7 +3,6 @@ import objectAssign from 'object-assign'
 import merge from '../libs/merge.js'
 
 let $vm
-let watcher
 
 
 const plugin = {

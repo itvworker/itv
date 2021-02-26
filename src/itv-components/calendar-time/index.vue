@@ -1,5 +1,5 @@
 <template>
-   <itv-dialog v-model="visible" type="bottom" :hideOnClick="hideOnClick">
+   <itv-dialog v-model="visible" :type="closeAminate" :hideOnClick="hideOnClick">
         <div class="itv-calendar-time" @click.stop="">
             <div class="itv-calendar-time-top" v-if="dateType==='calendar-time'">
                 <div class="date" :class="{'active':dataType===0}" @click="changeTab(0)">{{currentValue | formatDate('Y-M-D')}}</div>
@@ -213,6 +213,10 @@
             calendarFormat:{
                 type: Number,
                 default:0 
+            },
+            closeAminate: {
+                type: String,
+                default: 'bottom'
             }
         },
         watch: {

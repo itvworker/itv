@@ -124,12 +124,30 @@ export default {
             let y = touchList[last].y-touchList[first].y
             
             if(Math.abs(x)<2) {
-                x= 0
+                x = 0
             }
             if(Math.abs(y)<2) {
-                y=0
+                y = 0
             }
-           
+
+            if(y>this.maxSpeed) {
+                y = this.maxSpeed
+            }
+
+            if(y <-this.maxSpeed) {
+                y = -this.maxSpeed
+            }
+
+            if(x>this.maxSpeed) {
+                x = this.maxSpeed
+            }
+
+            if(x <-this.maxSpeed) {
+                x = -this.maxSpeed
+            }
+
+
+            
             return {
                 x: x,
                 y: y

@@ -1,13 +1,23 @@
 <template>
 <div class="itv-input-box">
-    <input class="itv-input" ref="value" :type="type" 
+    <input v-if="type!=='textarea'" class="itv-input" ref="value" :type="type" 
            :maxlength="maxlength" :minlength="minlength"
            :placeholder="placeholder"
            @input="input" @change="change"  @blur="blur"
            @keydown="keydown"
            v-model="currentValue"
     />
-    <!-- <div class="input-placeholder" v-show="inputValue.toString().length<=0">{{placeholder}}</div> -->
+    <textarea v-if="type=='textarea'" class="itv-textarea" 
+        :maxlength="maxlength"
+        :minlength="minlength"
+        :placeholder="placeholder"
+        @input="input" @change="change"  @blur="blur"
+        @keydown="keydown"
+        v-model="currentValue"
+     ref="value"></textarea>
+    <div  v-if="type=='textarea'" class="itv-textarea itv-textarea-box" v-html="currentValue" >
+       
+    </div>
     
 </div>
     
@@ -53,6 +63,9 @@
                 this.itvFormItem.value = n;
 
             }
+        },
+        computed: {
+            
         },
         inject:['itvFormItem'],
         data(){
@@ -105,8 +118,6 @@
                         dom.type = this.type;
                     }
                 })
-                
-
             })
         }
     }
@@ -114,19 +125,41 @@
 
 <style lang="less">
 .itv-input-box {
-    display: flex;
+   
     position:relative;
     // overflow: hidden;
-    height: 100%;
+    height: auto;
     width: 100%;
+    min-height: 22ipx;
     .itv-input{
         line-height: normal;
         font-size: 14ipx;
         height: 22ipx;
         box-sizing: border-box;
-        line-height: 40ipx;
         width: 100%;
         background-color: rgba(0,0,0,0);
+    }
+    .itv-textarea{
+        min-height: 22ipx;
+        line-height: 22ipx;
+        height: 100%;
+        outline: none;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        padding: 0;
+        background-color: rgba(0,0,0,0);
+        border:none;
+        font-size: 14ipx;
+        resize: none;
+    }
+    .itv-textarea-box{
+        min-height: 22ipx;
+        line-height: 22ipx;
+        height: auto;
+        position: relative;
+        word-break: break-all;  
+        
     }
     .error-text {
         position: absolute;

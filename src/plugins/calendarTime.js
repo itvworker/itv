@@ -75,10 +75,14 @@ const plugin = {
 
             },
             hide () {
-                $vm.isVisible = false
+                $vm.value = false
             },
             isVisible () {
-                return $vm.isVisible
+                return $vm.value
+            },
+            close() {
+                $vm.closeAminate = 'none';
+                $vm.value = false;
             }
         }
 

@@ -5,12 +5,14 @@
             <form-scroller>
                
                 <itv-form :rules="schema" ref="form">
-                <itv-label :label="item.name" :rule="item.schema" :id="item.key" :key="item.key" v-for="(item, index) in inputList">
-                    <itv-input placeholder="请输入你的名字" :type="item.type" v-model="model[item.key]" inputType="positive" />
-                </itv-label>
+                    <itv-label :label="item.name" :rule="item.schema" :id="item.key" :key="item.key" v-for="(item, index) in inputList">
+                        <itv-input placeholder="请输入你的名字" :type="item.type" v-model="model[item.key]" inputType="positive" />
+                    </itv-label>
+
+                    <itv-label lable="身份证号码">
+                        <itv-input placeholder="请输入你的名字" type="textarea" v-model="model.id" inputType="positive" />
+                    </itv-label>
                 </itv-form>
-                
-               
             </form-scroller>
            
         </itv-main>
@@ -81,7 +83,8 @@ import FormScroller from './form-scroller.vue';
                     phone:null,
                     text:null,
                     info:null,
-                    sex:null
+                    sex:null,
+                    id: null
                 },
                 value:"11010119900307627x"
             }

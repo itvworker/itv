@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="itv-model" >
-        <transition name="itv-fade">
+        <transition :name="type==='none'?'none':'itv-fade'">
             <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex,'opacity': opacity }"></div>
         </transition>
         <transition :name="animate">
@@ -54,6 +54,8 @@ export default {
                     return 'itv-slide-top'
                 case 'top':
                     return 'itv-slide-bottom'
+                case 'none':
+                    return 'none';    
                 default:
                     return 'itv-dialog'
             }
