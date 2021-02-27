@@ -158,9 +158,7 @@ export default {
      
   },
   mounted() {
-      setTimeout(()=>{
-          this.$itv.calendarTime.close();
-      },3000)
+     
      
       
   },

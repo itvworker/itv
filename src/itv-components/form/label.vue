@@ -58,8 +58,11 @@
                 this.$emit('focus')
             },
             blur() {
-              let res =  this.itvForm.vaildata(this.value, this.rule, this);
-              console.log(res);
+              if(this.rule) {   
+                  let res =  this.itvForm.vaildata(this.value, this.rule, this);
+              }
+              
+             
             },
             scrollTop() {
                 let scroller =  this.formScroller.getPostion();
@@ -85,12 +88,12 @@
     padding: 10.5ipx 15ipx;
     line-height: 1.6;
     font-size: 14ipx;
-    align-items: center;
+   
 
     .itv-label-content{
         flex: 1;
         display: flex;
-        align-items: center;
+        
     }
     .itv-label-title{
         // margin-right: 10ipx;

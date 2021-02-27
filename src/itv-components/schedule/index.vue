@@ -369,6 +369,10 @@ export default {
         calendarFormat: {
             type: Number,
             default: 0
+        },
+        blockId: {
+            type: String,
+            default: 'block'
         }
     },
     computed: {
@@ -410,10 +414,9 @@ export default {
         };
         
     },
-
-    mounted() {
-        this.pullHeight = this.$refs.pull.clientHeight;
-        if(this.weekHtml) {
+   
+    created() {
+         if(this.weekHtml) {
             weekHtml.template = this.weekHtml;
             Vue.component(weekHtml.name, weekHtml);
         }
@@ -422,6 +425,9 @@ export default {
             Vue.component(monthHtml.name, monthHtml);
         }
         this.finishDom = true;
+    },
+    mounted() {
+        this.pullHeight = this.$refs.pull.clientHeight;
         
     },
     methods: {

@@ -9,7 +9,7 @@
                         <itv-input placeholder="请输入你的名字" :type="item.type" v-model="model[item.key]" inputType="positive" />
                     </itv-label>
 
-                    <itv-label lable="身份证号码">
+                    <itv-label label="身份证号码">
                         <itv-input placeholder="请输入你的名字" type="textarea" v-model="model.id" inputType="positive" />
                     </itv-label>
                 </itv-form>
@@ -34,6 +34,9 @@ import FormScroller from './form-scroller.vue';
         },
         info:{
              required: true, rule:/^[0-9]{6,16}$/, message:"请输入6-16位数字"
+        },
+        id: {
+            equired: true, rule:/^[0-9]{6,16}$/, message:"请输入正确的18位身份证号码"
         }
     }
     export default {
