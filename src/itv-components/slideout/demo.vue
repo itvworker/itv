@@ -3,7 +3,7 @@
         <itv-header>Slideout</itv-header>
         <itv-main>
             <slideout>
-                <slideitem class="message-outer">
+                <slideitem class="message-outer" @click="openDel">
                     <div class="message-item">
                         <div class="message-content">
                             <div class="left-status exam">
@@ -76,6 +76,9 @@ export default {
         },
         page() {
             console.log("page------");
+        },
+        openDel() {
+            console.log('dddd');
         }
     },
     mounted() {}

@@ -7,7 +7,8 @@
             @touchstart="touchstart"
             @touchmove="touchmove"
             @touchend="touchend"
-           
+            @click="sendEvent"
+            
         >
             <slot />
         </div>
@@ -16,7 +17,7 @@
             ref="btns"
         >
             <slot name="meun" />
-            <!--            <div class="btn" v-for="(item, index) in btns" @click="send(index)"  :style="{background: item.bgColor,  color: item.color}">{{item.name}}</div>-->
+           
         </div>
     </div>
 </template>
@@ -27,6 +28,11 @@ export default {
         sensitivity: {
             type: Number,
             default: 20
+        },
+        //是否只有收缩时点击才生效
+        clickStatus: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -43,7 +49,8 @@ export default {
             x: 0,
             y: 0,
             isMove: false,
-            screenType: ""
+            screenType: "",
+            isClick: false
         };
     },
     updated() {
@@ -72,6 +79,13 @@ export default {
             }
         },
         touchstart(e) {
+            if(Math.abs(this.x) < this.sensitivity) {
+                this.isClick = true;
+            }else{
+                this.isClick = false;
+            }
+
+
             let self = e.targetTouches;
             if (self.length <= 1) {
                 this.startX = self[0].pageX;
@@ -194,6 +208,15 @@ export default {
         //获得角度
         getAngle(angx, angy) {
             return (Math.atan2(angy, angx) * 180) / Math.PI;
+        },
+        sendEvent() {
+            if(this.clickStatus ) {
+                if(this.isClick) {
+                    this.$emit('click')
+                }
+                return 
+            }
+            this.$emit('click')
         }
     }
 };
