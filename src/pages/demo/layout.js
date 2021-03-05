@@ -86,6 +86,11 @@ export default {
                     icon:'itv-demo-icon-schedule-date',
                     routerName:"itv_scrollerCalendar",
                     name: "scrollerCalendar"
+                },
+                {
+                    icon:'itv-demo-icon-schedule-date',
+                    routerName:"itv_progressBar",
+                    name: "progressBar"
                 }
             ]
         }

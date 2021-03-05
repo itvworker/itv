@@ -23,7 +23,7 @@ import miniSwiperItem from './itv-components/mini-swiper-item';
 import toast from './itv-components/toast';
 import playVideo from './itv-components/play-video'
 import scrollerCalendar from './itv-components/scroller-calendar'
-
+import progressBar from './itv-components/progress-bar'
 
 import pluginActionsheet from './plugins/actionsheet.js';
 import pluginCalendarTime from './plugins/calendarTime.js';
@@ -63,6 +63,7 @@ export {
     toast,
     playVideo,
     scrollerCalendar,
+    progressBar,
 
     //插件
     pluginActionsheet,
@@ -71,7 +72,7 @@ export {
     pluginDialoger,
     pluginLoading,
     pluginPopup,
-    pluginToast
+    pluginToast,
 }
 
 let Components = [
@@ -101,6 +102,8 @@ let Components = [
     toast,
     playVideo,
     scrollerCalendar,
+    progressBar,
+
 
     //插件
     pluginActionsheet,

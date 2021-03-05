@@ -251,6 +251,15 @@ export default [
                     title: 'scrollerCalendar',
                 }
             },
+            {
+                path: '/demo/progressBar',
+                name: 'itv_progressBar',
+                component: () => import('@/itv-components/progress-bar/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'progress-bar',
+                }
+            },
             
 
             
