@@ -4,20 +4,23 @@
         <div class="itv-picker-list-panel"  ref="list">
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up' : index+'up'"
-                >{{(item.name || item.value || item) | formatWord(word)}}
+                >{{item | formatWord(word)}} 
+               
             </div>
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up1' : index+'up1'"
-                >{{(item.name || item.value || item) | formatWord(word)}}
+                >{{item | formatWord(word)}}
             </div>
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}"  v-for="(item,index) in listData"
-                :key="item.label ? item.label : index">{{(item.name || item.value || item) | formatWord(word)}}
+                :key="item.label ? item.label : index">{{item | formatWord(word)}}
+
+                
             </div>
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
-                :key="item.label ? item.label+'next' : index+'next'">{{(item.name || item.value || item) | formatWord(word)}}
+                :key="item.label ? item.label+'next' : index+'next'">{{item | formatWord(word)}}
             </div>
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
-                :key="item.label ? item.label+'next2' : index+'next2'">{{(item.name || item.value || item) | formatWord(word)}}
+                :key="item.label ? item.label+'next2' : index+'next2'">{{item | formatWord(word) }}
             </div>
         </div>
     </div>
@@ -131,7 +134,7 @@ export default {
             return this.listData.map((item)=>{
                 let type = Object.prototype.toString.call(item).slice(8,-1).toLowerCase()
                 if(type==='object') {
-                    return item.value || item.id || item;
+                    return item.value.toString() || item.id || item;
                 }
                 return item;
             })
@@ -185,7 +188,7 @@ export default {
            
             
             let index = Math.round(-this.transformY / this.lineSpacing);
-            console.log('before:'+index);
+           
             if(index > this.listLength-1) {
                 let num = index - this.listLength;
                 this.transformY = -num * this.lineSpacing
@@ -384,10 +387,8 @@ export default {
         modifyStatus (type, defaultValue) {
            
             this.lineSpacing = this.$refs.height.clientHeight;
-            console.log(this.lineSpacing);
             defaultValue = defaultValue ? defaultValue : this.defaultValue;
             let index = this.listIndexs.indexOf(defaultValue);
-          
             this.currIndex = index === -1 ? 1 : (index + 1);
             let move = index === -1 ? 0 : (index * this.lineSpacing);
             this.transformY = -move
@@ -411,10 +412,11 @@ export default {
     },
     filters: {
         formatWord(value, format) {
-            
+            if(typeof value === 'object'){
+                value = value.name || item.label
+            }
             if(!value) return ''
-           
-            return format.replace('{value}',value)
+            return format.replace('{value}', value)
         }
     }
 }

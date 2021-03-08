@@ -1,0 +1,39 @@
+.itv-flow {
+    display: flex;
+    .line-circle-box{
+        width: 14ipx;
+        position: relative;
+        &::before{
+            content: '';
+            width: 14ipx;
+            height: 14ipx;
+            display: block;
+            border:  @itv-border-color-dark solid 2ipx;
+            box-sizing: border-box;
+            border-radius: 7ipx;
+            background-color: @itv-bg-color-light;
+            position: relative;
+            z-index: 1;
+        }
+
+        &::after{
+            content: '';
+            width: 1ipx;
+            display: block;
+            background-color: @itv-border-color-base;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+        &.none::after{
+            display: none;
+        }
+    }
+    .flow-content{
+        flex: 1;
+        
+    }
+}

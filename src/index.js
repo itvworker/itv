@@ -24,6 +24,8 @@ import toast from './itv-components/toast';
 import playVideo from './itv-components/play-video'
 import scrollerCalendar from './itv-components/scroller-calendar'
 import progressBar from './itv-components/progress-bar'
+import flow from './itv-components/flow'
+import timepicker from './itv-components/timepicker'
 
 import pluginActionsheet from './plugins/actionsheet.js';
 import pluginCalendarTime from './plugins/calendarTime.js';
@@ -64,7 +66,8 @@ export {
     playVideo,
     scrollerCalendar,
     progressBar,
-
+    flow,
+    timepicker,
     //插件
     pluginActionsheet,
     pluginCalendarTime,
@@ -103,7 +106,8 @@ let Components = [
     playVideo,
     scrollerCalendar,
     progressBar,
-
+    flow,
+    timepicker,
 
     //插件
     pluginActionsheet,
