@@ -5,7 +5,7 @@
             <div class="h10"></div>
             <progress-bar class="progress" v-model="percent" strokeColor="rgba(255,15,16,1)"/>
 
-           
+            <progress-bar class="progress" v-model="percent" anticlockwise :bgPercent="90"  :strokeWidth="10" :bgStrokeWidth="50" strokeLinecap="butt"  strokeColor="rgba(255,15,16,1)"/>
         </itv-main>
     </itv-container>
 
@@ -15,7 +15,7 @@
 export default {
   data() {
     return {
-        percent: 50,
+        percent: 30,
         show:false
     };
   },
