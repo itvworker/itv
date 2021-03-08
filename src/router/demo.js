@@ -158,15 +158,7 @@ export default [
                     title: 'popup',
                 },
             },
-            {
-                path: '/demo/datetime',
-                name: 'itv_datetime',
-                component: () => import('@/itv-components/datetime/demo.vue'),
-                meta: {
-                    keepAlive: false,
-                    title: 'datetime',
-                },
-            },
+          
             {
                 path: '/demo/datepicker',
                 name: 'itv_datepicker',
@@ -260,6 +252,26 @@ export default [
                     title: 'progress-bar',
                 }
             },
+
+            {
+                path: '/demo/flow',
+                name: 'itv_flow',
+                component: () => import('@/itv-components/flow/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'flow',
+                }
+            },
+            {
+                path: '/demo/timepicker',
+                name: 'itv_timepicker',
+                component: () => import('@/itv-components/timepicker/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'timepicker',
+                }
+            },
+            
             
 
             
