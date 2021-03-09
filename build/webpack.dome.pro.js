@@ -23,10 +23,10 @@ module.exports = {
         app: ['@babel/polyfill', './src/main.js']
     },
     output: {
-        path: resolve('dist'),
+        path: resolve('website'),
         filename: '[name].[hash:4].js', // [name]打包后的文件名称,进入是什么名字出来也是
-        chunkFilename: '[name].[hash].js',
-        publicPath: './'
+        chunkFilename: './static/js/[name].[hash].js',
+        publicPath: ''
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
@@ -70,7 +70,12 @@ module.exports = {
             {
                 test: /\.(less|css)$/,
                 use: [ //loader从后向前执行，顺序不能乱，会不能编译
-                  
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../../',
+                        },
+                    },
                     {
                         loader: 'css-loader',
                     },
@@ -156,7 +161,9 @@ module.exports = {
         new ItvPlugin({
             theme:resolve('src/assets/theme.less')
         }),
-       
+        new MiniCssExtractPlugin({
+            filename: 'static/css/[id][hash:8].css',
+        }),
         new CopyWebpackPlugin([
             {
                 from: path.resolve(__dirname, '../static'),
