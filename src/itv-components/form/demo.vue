@@ -64,21 +64,21 @@ import FormScroller from './form-scroller.vue';
                         name: "名字",
                         type: "text",
                         key:'name',
-                        schema: "text"
+                        schema: "phone"
                     },
                      {   
                         id:3,
                         name: "文字",
                         type: "text",
                         key:'text',
-                        schema: "text"
+                        schema: "phone"
                     },
                      {   
                         id:4,
                         name: "简介",
                         type: "text",
                         key:'info',
-                        schema: "info"
+                        schema: "phone"
                     }
                 ],
                 model:{

@@ -4,26 +4,29 @@ const loader = require('./loader')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ItvPlugin = require('itv-plugin');
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { log } = require('console')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
 }
 
+console.log(resolve("dist"));
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     context: resolve(''),
+    target: 'web',
     entry: {
         app: ['@babel/polyfill', './src/main.js']
     },
     output: {
-        path: resolve('components'),
+        path: resolve('dist'),
         filename: '[name].[hash:4].js', // [name]打包后的文件名称,进入是什么名字出来也是
         chunkFilename: '[name].[hash].js',
-        publicPath: '/'
+        publicPath: './'
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
@@ -32,33 +35,42 @@ module.exports = {
             '@': resolve('src')
         }
     },
+    optimization: {
+        minimize: true,
+        splitChunks: {
+            cacheGroups: {
+                common: {
+                    chunks: 'initial',
+                    name: 'repeat', // 打包后的文件名
+                    minSize: 0,
+                    minChunks: 2, // 重复2次才能打包到此模块
+                },
+                vendor: {
+                    priority: 1, // 优先级配置，优先匹配优先级更高的规则，不设置的规则优先级默认为0
+                    test: /node_modules/, // 匹配对应文件
+                    chunks: 'initial',
+                    name: 'vendor',
+                    minSize: 0,
+                    minChunks: 1,
+                },
+            },
+        },
+    },
     module: {
         rules: [
             {
                 test: /\.vue$/,
                 use: [
                     {loader: 'vue-loader'},
-                    // {loader: "/loaders/itv-loader", options:{
-                    //     theme:resolve('src/assets/theme.less'),
-                    //     calendarTime:resolve('src/assets/itv-calendar-time.less')
-                    // }}
+                    
                 ]
 
             },
+           
             {
-                test: /\.css$/,
-                use: [
-                 
-                    'css-loader'
-                ]
-
-            },
-            {
-                test: /\.less$/,
+                test: /\.(less|css)$/,
                 use: [ //loader从后向前执行，顺序不能乱，会不能编译
-                    {
-                        loader: 'vue-style-loader'
-                    },
+                  
                     {
                         loader: 'css-loader',
                     },
@@ -79,23 +91,16 @@ module.exports = {
                         }
                     }
 
-                ],
-                include: [resolve('src'),resolve('node_modules/itv-ui')]
+                ]
+                // include: [resolve('src'),resolve('node_modules/itv-ui')]
             },
             {
                 test: /\.js$/,
                 use: [
                     {
-                        loader: 'babel-loader',
-                        options: {
-                            sourceMap: true,
-                        }
-                    },
-                    // {
-                    //     loader:"/loaders/itv-import-loader"
-                    // }
-                ],
-                include: [resolve('packages'), resolve('test'),resolve('src'), resolve('node_modules/webpack-dev-server/client')]
+                        loader: 'babel-loader'
+                    }
+                ]
             },
             {
                 test: /\.md$/,
@@ -114,7 +119,7 @@ module.exports = {
                 options: {
                     limit: 1000,
                     esModule: false,
-                    name: 'static/img/[name].[hash:7].[ext]'
+                    name: './static/img/[name].[hash:7].[ext]'
                 }
             },
             {
@@ -123,7 +128,7 @@ module.exports = {
                 options: {
                     esModule: false,
                     limit: 1000,
-                    name: 'static/media/[name].[hash:7].[ext]'
+                    name: './static/media/[name].[hash:7].[ext]'
                 }
             },
             {
@@ -132,46 +137,33 @@ module.exports = {
                 options: {
                     esModule: false,
                     limit: 1000,
-                    name: 'static/font/[name].[hash:7].[ext]'
+                    name: './static/font/[name].[hash:7].[ext]'
                 }
             }
         ]
 
     },
-    devServer: {
-        // 设置基本结构
-        contentBase: resolve('components'),
-        host: '0.0.0.0', // 服务器IP地址,可以是localhost
-        compress: true, // 服务端压缩是否开启
-        open: false, // 自动打开浏览器
-        hot: true, // 开启热更新
-        port: 8787
-    },
-    stats: {
-        children: false,
-        warnings: true,
-        source: true,
-        hash: true
-    },
+  
     plugins: [
-        
         new VueLoaderPlugin(),
+
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'public/index.dev.html',
             inject: true
         }),
+       
         new ItvPlugin({
-                theme:resolve('src/assets/theme.less')
-               
-            }),    
-        
-        // new CopyWebpackPlugin([
-        //     {
-        //         from: path.resolve(__dirname, '../public'),
-        //         to: '.',
-        //         ignore: ['.*'],
-        //     },
-        // ]),
+            theme:resolve('src/assets/theme.less')
+        }),
+       
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, '../static'),
+                to: './static',
+                ignore: ['.*'],
+            },
+        ]),
+        new CleanWebpackPlugin(),
     ]
 }

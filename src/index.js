@@ -118,7 +118,7 @@ let Components = [
     pluginPopup,
     pluginToast,
 ]
-console.error('itv-ui没有引入itvPlugin，可能会导致打包过大');
+
 export default {
     install: function(Vue) {
         Components.forEach((item, index)=>{

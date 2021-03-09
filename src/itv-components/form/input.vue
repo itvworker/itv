@@ -1,13 +1,16 @@
 <template>
-<div class="itv-input-box">
-    <input v-if="type!=='textarea'" class="itv-input" ref="value" :type="type" 
+<div class="itv-input-box" :style="{'height': height}">
+    <input v-if="type!=='textarea'" class="itv-input" ref="value" 
+            :type="type" 
            :maxlength="maxlength" :minlength="minlength"
            :placeholder="placeholder"
            @input="input" @change="change"  @blur="blur"
            @keydown="keydown"
            v-model="currentValue"
+           :style="{height:height}"
     />
     <textarea v-if="type=='textarea'" class="itv-textarea" 
+        :style="{'height': height}"
         :maxlength="maxlength"
         :minlength="minlength"
         :placeholder="placeholder"
@@ -16,9 +19,6 @@
         v-model="currentValue"
      ref="value"></textarea>
      <div class="number" v-if="number">{{currentLength}}</div>
-     
-    
-    
 </div>
     
 </template>
@@ -91,7 +91,8 @@
                 currentValue: this.value,
                 inputValue: this.value,
                 numberStr:'-e+.',
-                startHeight:null
+                startHeight:null,
+                height: null
             }
         },
         methods:{
@@ -118,17 +119,30 @@
             },
             change() {
 
+            },
+            init() {
+                let height = this.$el.clientHeight;
+                height = height%2?height+1:height;
+                if(this.type !== 'textarea') {
+                    return
+                }
+                setTimeout(() => {
+                     this.$refs.value.style.height = height+'px';
+                     debugger
+                }, 1000);
+               
+               
+                this.height=height+'px';
+                
             }
         },
         mounted() {
+            this.init()
             this.itvFormItem.$on('del', ()=>{
                 this.currentValue = null;
                 this.$emit('input', this.currentValue);
             })
             this.startHeight = this.$refs.value.scrollHeight;
-
-
-
             this.itvFormItem.$on('focus', ()=>{
                 let dom = this.$refs.value;
                 if(this.type ==='number') {
@@ -151,27 +165,30 @@
 <style lang="less">
 @import '../../assets/css/itv-theme.less';
 .itv-input-box {
-   
+    font-size: 0;
     position:relative;
     // overflow: hidden;
-    height: auto;
+    height: 100%;
     width: 100%;
-    min-height: 22ipx;
+    box-sizing: border-box;
+    height: 22ipx;
     font-size: 0px;
+
     .number{
         font-size: @itv-font-size-small;
     }
     .itv-input{
         line-height: normal;
         font-size: 14ipx;
-        height: 22ipx;
         box-sizing: border-box;
         width: 100%;
         background-color: rgba(0,0,0,0);
+        padding: 0;
+        margin: 0;
+        border-width: 0;
+        height: 22ipx;
     }
     .itv-textarea{
-        min-height: 22ipx;
-        line-height: 22ipx;
         height: 22ipx;
         outline: none;
         width: 100%;

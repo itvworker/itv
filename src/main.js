@@ -15,13 +15,8 @@ import './assets/css/index.less'
 // import VConsole from 'vconsole'
 // new VConsole()
 
-// resources: [resolve('packages/assets/css/animate.less'), resolve('packages/assets/css/page.less'), resolve('packages/assets/css/theme.less')]
-
-
 Vue.use(itv)
-// Vue.use(cascader);
-// Vue.use(cell);
-// Vue.use(pluginCascader)
+
 Vue.prototype.hljs = function () {
     const preEl = document.querySelectorAll('pre')
     preEl.forEach((el) => {

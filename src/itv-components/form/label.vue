@@ -4,7 +4,6 @@
          <slot name="left">
              *{{label}}
         </slot>   
-         
         </div>
         <div class="itv-label-content">
             <slot />
@@ -58,6 +57,7 @@
                 this.$emit('focus')
             },
             blur() {
+               
               if(this.rule) {   
                   let res =  this.itvForm.vaildata(this.value, this.rule, this);
               }
@@ -69,13 +69,23 @@
                 let y = this.$el.offsetTop;
                 this.formScroller.scrollTop(y-scroller.y)
             },
-
+            setMinHeight(value) {
+                this.$el.children[0].style.minHeight = value;
+                this.$el.children[1].style.minHeight = value;
+                this.$el.children[2].style.minHeight = value;
+                this.$el.style.lineHeight = value;
+            }
         },
+        
         destroyed() {
             this.itvForm.delItem(this)
         },
         mounted() {
             this.itvForm.addItem(this);
+            
+            
+           
+           
         }
     }
 </script>
@@ -93,7 +103,7 @@
     .itv-label-content{
         flex: 1;
         display: flex;
-        
+        font-size: 0;
     }
     .itv-label-title{
         // margin-right: 10ipx;

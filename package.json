@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --inspect-brk --config=build/webpack.dev.tool.js",
     "demo": "webpack-dev-server --inspect-brk --config=build/webpack.dome.dev.js",
+    "demo-build": "node ./build/demo.pro.js",
     "build": "node ./build/pro.js",
     "build:demo": "webpack --config ./build/webpack.dome.dev.js",
     "test": "jest"
@@ -101,7 +102,6 @@
     "axios": "^0.19.2",
     "highlight.js": "^9.18.1",
     "itv-ui": "^1.0.2",
-    "jquery": "^3.5.1",
     "lib-flexible": "^0.3.2",
     "qs": "^6.9.1",
     "vue": "^2.6.11",

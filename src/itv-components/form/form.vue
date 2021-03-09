@@ -39,6 +39,7 @@ export default {
          * @param obj {Objct} 组件对象
          */
         vaildata(value, rule, obj) {
+            if(!rule) return
             let res = new Vaildata(value, this.rules[rule]);
             let vail = res.getResult();
             if(vail) {
