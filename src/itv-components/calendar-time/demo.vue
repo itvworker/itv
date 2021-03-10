@@ -4,32 +4,32 @@
         <itv-main>
             <div class="h10"></div>
             <section>
-                <cell :isLink="true" subTitle="插件模式" @click="confirm('html')" :showIcon="true" title="选择日期时间" :desc="calendarTime">
+                <itv-cell :isLink="true" subTitle="插件模式" @click="confirm('html')" :showIcon="true" title="选择日期时间" :desc="calendarTime">
                    
-                </cell>
+                </itv-cell>
 
-                <cell :isLink="true" subTitle="插件模式" @click="alert('html')" :showIcon="true" title="日历类型" :desc="calendar">
-                </cell>
+                <itv-cell :isLink="true" subTitle="插件模式" @click="alert('html')" :showIcon="true" title="日历类型" :desc="calendar">
+                </itv-cell>
 
-                <cell :isLink="true" subTitle="插件模式" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
-                </cell>
+                <itv-cell :isLink="true" subTitle="插件模式" @click="openTime('html')" :showIcon="true" title="时间类型" :desc="time">
+                </itv-cell>
 
-                <cell :isLink="true" subTitle="组件模式" @click="comCalendarTime" :showIcon="true" title="选择日期时间" :desc="calendarTime1">
+                <itv-cell :isLink="true" subTitle="组件模式" @click="comCalendarTime" :showIcon="true" title="选择日期时间" :desc="calendarTime1">
                    
-                </cell>
+                </itv-cell>
                 
-                <cell :isLink="true" subTitle="组件模式" @click="comCalendar" :showIcon="true" title="选择日期" :desc="calendar1">
+                <itv-cell :isLink="true" subTitle="组件模式" @click="comCalendar" :showIcon="true" title="选择日期" :desc="calendar1">
                    
-                </cell>
+                </itv-cell>
 
-                 <cell :isLink="true" subTitle="组件模式" @click="comTimes" :showIcon="true" title="选择时间" :desc="time1">
+                 <itv-cell :isLink="true" subTitle="组件模式" @click="comTimes" :showIcon="true" title="选择时间" :desc="time1">
                    
-                </cell>
+                </itv-cell>
             </section>
           
            
         </itv-main>
-        <calendar-time 
+        <itv-calendar-time 
             teleport
             v-model="comTime.visible"
             @confirm="confirmCom"
@@ -59,8 +59,7 @@ let com = {
 
     }
 }
-import vue from 'vue';
-import { setTimeout } from 'timers';
+
 export default {
   data() {
     return {

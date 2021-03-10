@@ -20,7 +20,7 @@
 import pickerSlot from '../picker/picker-slot.vue'
 import time from '../../libs/time'
 export default {
-    name:"timepicker",
+    name:"itv-timepicker",
     components: { pickerSlot },
     props: {
         startTime: {

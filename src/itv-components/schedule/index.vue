@@ -263,7 +263,7 @@ let template =`
 
 
 export default {
-    name:'schedule',
+    name:'itv-schedule',
     template: template,
     mixins: [
         touch,

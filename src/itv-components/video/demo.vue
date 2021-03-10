@@ -2,7 +2,7 @@
   <itv-container>
         <itv-header>playVideo</itv-header>
         <itv-main>
-            <play-video :videos="videos" class="box-video" ref="center" width="" />
+            <itv-video :videos="videos" class="box-video" ref="center" width="" />
         </itv-main>
   </itv-container>
 </template>

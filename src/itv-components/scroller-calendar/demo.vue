@@ -3,7 +3,7 @@
         <itv-header>scroller-calender</itv-header>
         
         <itv-main>
-           <scroller-calendar pattern="flex" :weekType="1" />
+           <itv-scroller-calendar pattern="flex" :weekType="1" />
         </itv-main>
     </itv-container>
 </template>

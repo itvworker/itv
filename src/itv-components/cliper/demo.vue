@@ -38,7 +38,7 @@
                   Cliper截图
                 </itv-header>
                 <itv-main>
-                    <cliper :width="w" :height="h" ref="cliper" :clipType="clipType"></cliper>
+                    <itv-cliper :width="w" :height="h" ref="cliper" :clipType="clipType"></itv-cliper>
                 </itv-main>
                 <itv-flex-row>
                     <div class="item" @click="reset">重置</div>
@@ -60,10 +60,6 @@
 
 
 import img from '@/assets/img/header.jpeg';
-import { setTimeout } from 'timers';
-
-
-
 export default {
     data() {
         return {
@@ -122,9 +118,7 @@ export default {
     },
     mounted() {
       
-      setTimeout(()=>{
-        this.$refs.previewer.show(0)
-      },2000)
+     
     }
 }
 </script>

@@ -17,7 +17,7 @@
 <script>
 
 export default {
-    name: 'cliper',
+    name: 'itv-cliper',
     props: {
         width: {
             type: Number,

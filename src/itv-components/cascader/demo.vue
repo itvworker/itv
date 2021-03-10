@@ -4,15 +4,15 @@
         <itv-main>
             <div class="h10"></div>
             <section>
-                <cell
+                <itv-cell
                     @click="open"
                     :showIcon="true"
                     title="地址"
                     :desc="comvalue"
                    
                 >
-                </cell>
-                <cell
+                </itv-cell>
+                <itv-cell
                     :isLink="true"
                     @click="plugin('html')"
                     :showIcon="true"
@@ -20,8 +20,8 @@
                     title="插件方式调用"
                     :desc="plugin1Content"
                 >
-                </cell>
-                <cell
+                </itv-cell>
+                <itv-cell
                     :isLink="true"
                     @click="plugin2('html')"
                     :showIcon="true"
@@ -29,16 +29,16 @@
                     subTitle="有默认值"
                     :desc="plugin2Content"
                 >
-                </cell>
+                </itv-cell>
             </section>
 
         </itv-main>
-        <cascader v-model="show"
+        <itv-cascader v-model="show"
          :selected="comSelected"
          :items="items"
          @confirm="comConfirm"
          teleport
-            ></cascader>
+            />
     </itv-container>
 
 </template>

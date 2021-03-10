@@ -1,7 +1,7 @@
 <template>
     <itv-container>
         <itv-header >Eelvator</itv-header>
-        <elevator
+        <itv-elevator
         :dataArray="dataList"
         :showIndicator="true"
         :navHeight="30"
@@ -10,7 +10,7 @@
         :hiddenTime='500'
         @clickNav="clickNav"
         @clickList="clickList"
-        ></elevator>
+        ></itv-elevator>
   </itv-container>
 </template>
 

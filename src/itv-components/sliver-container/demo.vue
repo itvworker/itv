@@ -3,7 +3,7 @@
         <itv-header>sliver-container</itv-header>
         <itv-main>
            
-            <sliver-container 
+            <itv-sliver-container 
             ref="sliver"
             :bounceTop="false"
             :headerMaxHeight="headerMaxHeight"  
@@ -23,23 +23,23 @@
                     </div>
                 </div>
                 
-                 <mini-swiper   :loop="false" v-model="columnIndex" class="itv-swpier-height">
-                     <mini-swiper-item class="mini-swiper-item">
-                         <sliver  :bounceTop="false" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
+                 <itv-swiper   :loop="false" v-model="columnIndex" class="itv-swpier-height">
+                     <itv-swiper-item class="itv-swiper-item">
+                         <itv-sliver  :bounceTop="false" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
                             <div class="test-list" v-for="(item, index)  in list" :key="index" @click="casePush">
                                 sliver1{{item.title}} {{index}}
                             </div>
-                        </sliver>
-                     </mini-swiper-item>
-                     <mini-swiper-item class="mini-swiper-item">
-                         <sliver  :bounceTop="true" refreshLoad bounceBottom @refresh = refresh ref="sliver1" >
+                        </itv-sliver>
+                     </itv-swiper-item>
+                     <itv-swiper-item class="itv-swiper-item">
+                         <itv-sliver  :bounceTop="true" refreshLoad bounceBottom @refresh = refresh ref="sliver1" >
                             <div class="test-list" v-for="(item, index)  in list" :key="index">
                                 sliver2{{item.title}} {{index}}
                             </div>
-                        </sliver>
-                     </mini-swiper-item>
-                 </mini-swiper>
-            </sliver-container>
+                        </itv-sliver>
+                     </itv-swiper-item>
+                 </itv-swiper>
+            </itv-sliver-container>
         </itv-main>
     </itv-container>
 </template>
@@ -108,7 +108,7 @@ export default {
         this.$refs.sliver0.sliverIndex()
         this.headerMaxHeight = this.$refs.header.clientHeight;
         this.headerMinHeight = this.$refs.btns.clientHeight;
-        this.$refs.sliver-container.refresh()
+       
         
        
     }

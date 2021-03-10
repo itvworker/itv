@@ -17,7 +17,7 @@
 <script>
 import pickerSlot from "./picker-slot.vue";
 export default {
-    name:'picker',
+    name:'itv-picker',
     props: {
         
         listData: {

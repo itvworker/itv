@@ -34,7 +34,7 @@ import animate from './mixins/animate.scroller'
 import refreshBar from './refresh.vue'
 import sliverScroll from './mixins/animte.sliver'
 export default {
-    name:"sliver-container",
+    name:"itv-sliver-container",
     mixins: [
        touch,
        calcscroll,
@@ -42,6 +42,7 @@ export default {
        sliverScroll 
        
     ],
+    
     components: {
        refreshBar
     },
@@ -87,6 +88,12 @@ export default {
         id: {
             type: String,
             default:"slivers"
+        }
+    },
+    provide(){
+        return {
+            itvSliverContainer:this,
+           
         }
     },
     watch: {

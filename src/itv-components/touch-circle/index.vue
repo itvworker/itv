@@ -50,7 +50,7 @@
 
 <script>
 export default {
-    name:'touch-circle',
+    name:'itv-touch-circle',
     props: {
         strokeWidth: {
             type: Number,

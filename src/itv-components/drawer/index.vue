@@ -12,7 +12,7 @@
 <script>
     import render from './render'
     export default {
-        name: 'drawer',
+        name: 'itv-drawer',
         data() {
             return {
                 initialX: 0, //开始接触屏幕时的接触点

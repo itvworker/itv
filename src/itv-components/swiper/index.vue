@@ -15,7 +15,7 @@ import getDirection from '../../libs/touch'
 import judge from './mixins/judge'
 
 export default {
-    name: "mini-swiper",
+    name: "itv-swiper",
     mixins:[judge],
     props: {
         value: {

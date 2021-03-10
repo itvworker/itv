@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    name: "actionsheet",
+    name: "itv-actionsheet",
     props: {
         items: {
             type: Array,

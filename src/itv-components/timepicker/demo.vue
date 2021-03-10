@@ -2,7 +2,7 @@
     <itv-container>
         <itv-header>Datetime</itv-header>
         <itv-main>
-            <timepicker /> 
+            <itv-timepicker /> 
         </itv-main>
     </itv-container>
 </template>

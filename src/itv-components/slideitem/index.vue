@@ -23,7 +23,7 @@
 </template>
 <script>
 export default {
-    name: "slideitem",
+    name: "itv-slideitem",
     props: {
         sensitivity: {
             type: Number,

@@ -8,7 +8,7 @@
 </template>
 <script>
 export default {
-    name: "slidebutton"
+    name: "itv-slidebutton"
 };
 </script>
 <style lang="less" scoped>

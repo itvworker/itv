@@ -6,7 +6,7 @@
 </template>
 <script>
 export default {
-    name: 'slideout',
+    name: 'itv-slideout',
     mounted() {
         document.addEventListener('touchstart',this.close, false)
     },

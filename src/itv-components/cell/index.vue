@@ -14,7 +14,7 @@
 </template>
 <script>
 export default {
-  name: "cell",
+  name: "itv-cell",
   props: {
     title: {
       type: String,

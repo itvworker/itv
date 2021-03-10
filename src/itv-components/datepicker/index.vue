@@ -20,7 +20,7 @@ import picker from '../picker/picker.vue';
 import Utils from '../../libs/date.js';
 
 export default {
-  name: 'datepicker',
+  name: 'itv-datepicker',
   props: {
 	value: {
 		type: String,

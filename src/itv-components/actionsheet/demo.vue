@@ -4,15 +4,15 @@
         <itv-main>
             <div class="h10"></div>
           
-                <cell
+                <itv-cell
                     @click="open"
                     title="插件模式"
                     isLink
                     :desc="text"
                     showIcon
                 >
-                </cell>
-                <cell
+                </itv-cell>
+                <itv-cell
                     @click="open1"
                     title="组件模式调用"
                     isLink
@@ -20,7 +20,7 @@
                     showIcon
                    
                 >
-                </cell>
+                </itv-cell>
                 
         </itv-main>
         <actionsheet v-model="actionState" :items="items"  teleport @confirm="confirm" />

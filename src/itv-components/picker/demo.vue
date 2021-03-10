@@ -2,7 +2,7 @@
   <itv-container>
       <itv-header>Picker</itv-header>
       <itv-main>
-      <picker
+      <itv-picker
         :is-visible="isVisible0"
         :list-data="listData0"
         title="请选择年月"
@@ -11,17 +11,17 @@
        
         @choose="choose"
         isLoop
-      ></picker>
+      ></itv-picker>
 
 
-      <picker
+      <itv-picker
         :is-visible="isVisible0"
         :list-data="classify"
         title="请选择年月"
         :default-value-data="defaultClassify"
         @choose="chooseClassify"
         
-      ></picker>
+      ></itv-picker>
       
      
   </itv-main>

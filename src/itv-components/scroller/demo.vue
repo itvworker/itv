@@ -4,10 +4,10 @@
         <div class="flex-row-box">
             <div class="flex-row-item" :class="{active:tabIndex===0}" @click="changeTab(0)" >竖向滚动</div>
             <div class="flex-row-item" :class="{active:tabIndex===1}" @click="changeTab(1)" >自由滚动</div>
-            <div class="flex-row-item" :class="{active:tabIndex===2}" @click="changeTab(2)" >mini-swiper-scroll</div>
+            <div class="flex-row-item" :class="{active:tabIndex===2}" @click="changeTab(2)" >itv-swiper-scroll</div>
         </div>
         <itv-main>
-            <scroller 
+            <itv-scroller 
             v-if="tabIndex===0" 
             :key="0" ref="scrolle1" 
             :topBounce="true" 
@@ -20,19 +20,19 @@
             @scroll="scroll" 
             @stopscroll="stopscroll"
             @refersh="refersh">
-                <scroller v-if="tabIndex===0" ref="scroller2" :showScrollBar="true" :leftBounce="true"  :rightBounce="true"  :percent="0.9" pattern="horizontal" class="case-box">
+                <itv-scroller v-if="tabIndex===0" ref="scroller2" :showScrollBar="true" :leftBounce="true"  :rightBounce="true"  :percent="0.9" pattern="horizontal" class="case-box">
                     <div class="itv-case-box">
                         <div class="item-list-section" v-for="(item, index) in list" :key="index">
                             {{item.name}}{{index}}
                         </div>
                     </div>
-                </scroller>
-                 <scroller-elevator class="content-fix" v-for="(item, index) in fixList" :key="item.title+index" :title="item.title">
+                </itv-scroller>
+                 <itv-scroller-elevator class="content-fix" v-for="(item, index) in fixList" :key="item.title+index" :title="item.title">
                      <div class="l1" v-for="(subItem, subIndex) in item.list" :key="subIndex">
                          {{subItem}}{{subIndex}}
                      </div>
                      
-                 </scroller-elevator>
+                 </itv-scroller-elevator>
                  <fixed>
                      你需要夺
                 </fixed>
@@ -44,16 +44,16 @@
                         {{item.name}}{{index}}
                     </div>
                 </div> -->
-            </scroller>
+            </itv-scroller>
 
-            <scroller v-if="tabIndex===1" ref="scrolle4" pattern="freedom" :key="1"  :showScrollBar="true" >
+            <itv-scroller v-if="tabIndex===1" ref="scrolle4" pattern="freedom" :key="1"  :showScrollBar="true" >
                <div class="msg-word">
                     {{word}}
                </div>
-            </scroller>
-             <mini-swiper v-if="tabIndex===2"  :loop="false" v-model="columnIndex" class="itv-swpier-height">
-                <mini-swiper-item class="mini-swiper-item">
-                     <scroller 
+            </itv-scroller>
+             <itv-swiper v-if="tabIndex===2"  :loop="false" v-model="columnIndex" class="itv-swpier-height">
+                <itv-swiper-item class="itv-swiper-item">
+                     <itv-scroller 
                     class="swpier-scroller"
                     :key="4" ref="scrolle3" 
                     :topBounce="true" 
@@ -73,10 +73,10 @@
                                 {{item.name}}{{index}}
                             </div>
                         </div> -->
-                    </scroller>
-                </mini-swiper-item>
-                <mini-swiper-item>
-                    <scroller 
+                    </itv-scroller>
+                </itv-swiper-item>
+                <itv-swiper-item>
+                    <itv-scroller 
                     class="swpier-scroller"
                     :key="7" ref="scrolle4" 
                     :topBounce="true" 
@@ -96,10 +96,10 @@
                                 {{item.name}}{{index}}
                             </div>
                         </div> -->
-                    </scroller>
-                </mini-swiper-item>
-                <mini-swiper-item>
-                    <scroller 
+                    </itv-scroller>
+                </itv-swiper-item>
+                <itv-swiper-item>
+                    <itv-scroller 
                     class="swpier-scroller"
                     :key="5" ref="scrolle2" 
                     :topBounce="true" 
@@ -119,10 +119,10 @@
                                 {{item.name}}{{index}}
                             </div>
                         </div> -->
-                    </scroller>
-                </mini-swiper-item>
-                <mini-swiper-item>
-                    <scroller 
+                    </itv-scroller>
+                </itv-swiper-item>
+                <itv-swiper-item>
+                    <itv-scroller 
                     class="swpier-scroller"
                     :key="6" ref="scrolle2" 
                     :topBounce="true" 
@@ -142,21 +142,20 @@
                                 {{item.name}}{{index}}
                             </div>
                         </div> -->
-                    </scroller>
-                </mini-swiper-item>
-            </mini-swiper>
+                    </itv-scroller>
+                </itv-swiper-item>
+            </itv-swiper>
         </itv-main>
     </itv-container>
 </template>
 
 <script>
 import data from './data'
-import fixed from './fixed'
+
 import Fixed from './fixed.vue';
 export default {
     mixins:[data],
     components: {
-        fixed,
         Fixed
     },
     data() {

@@ -23,6 +23,5 @@ test('src/libs/tool测试compressHtmlStr', () => {
 
 
 test('src/libs/tool测试humpToFront', () => {
-    
     expect(humpToFront("ContextAlertPop")).toBe('context-alert-pop');
 });

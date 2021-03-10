@@ -4,7 +4,7 @@ import elevator from './elevator/doc.md'
 import slider from './slider/doc.md'
 import picker from './picker/doc.md'
 import slideout from './slideout/doc.md'
-import miniSwiper from './mini-swiper/doc.md'
+import miniSwiper from './swiper/doc.md'
 import schedule from './schedule/doc.md'
 export default {
     toast,

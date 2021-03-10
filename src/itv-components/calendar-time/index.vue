@@ -29,7 +29,7 @@
                 <div class="week-bar" v-if="dateType!=='time'">
                     <div class="week-item" v-for="(item, index) in weekTextArr" :key="index">{{item}}</div>
                 </div> 
-                <mini-swiper ref="swiper" :bounce="false"
+                <itv-swiper ref="swiper" :bounce="false"
                     :direction="calendarDir" @change="change" 
                     @last="change(2)" @first="change(0)" 
                     :loop="false" 
@@ -39,7 +39,7 @@
                     :beginBounce="beginBounce"
                     :endBounce="endBounce"
                     >
-                    <mini-swiper-item class="itv-swpier-calendar">
+                    <itv-swiper-item class="itv-swpier-calendar">
                         
                         <div class="month-number" v-if="!beginBounce">
                             <div class="year">
@@ -62,8 +62,8 @@
                         >
                             <div class="active">{{item.day}}</div>
                         </div>
-                    </mini-swiper-item>
-                    <mini-swiper-item class="itv-swpier-calendar">
+                    </itv-swiper-item>
+                    <itv-swiper-item class="itv-swpier-calendar">
                         <!-- <div class="year-month">
                             {{nowMonth[15]?nowMonth[15].msg.substring(0,7):''}}
                         </div> -->
@@ -85,8 +85,8 @@
                         >
                             <div class="active">{{item.day}}</div>
                         </div>
-                    </mini-swiper-item>
-                    <mini-swiper-item class="itv-swpier-calendar">
+                    </itv-swiper-item>
+                    <itv-swiper-item class="itv-swpier-calendar">
                         <div class="month-number" v-if="!endBounce">
                             <div class="year">
                                 {{nextMonth[15]?nextMonth[15].year:''}}
@@ -106,8 +106,8 @@
                                 {{item.day}}
                             </div>
                         </div>
-                    </mini-swiper-item>
-                </mini-swiper>
+                    </itv-swiper-item>
+                </itv-swiper>
                 <div class="itv-picker-slot-box" :class="{'itv-calendar-only-time': dateType==='time'}" v-if="dateType==='calendar-time'||dateType==='time'">
                     <picker-slot ref="picker-0"
                         class="itv-calendar-picker"
@@ -139,19 +139,19 @@
     </itv-dialog> 
 </template>
 <script>
-    import miniSwiper from '../mini-swiper/index.vue'
-    import miniSwiperItem from '../mini-swiper-item/index.vue'
+    import ItvSwiper from '../swiper/index.vue'
+    import ItvSwiperItem from '../swiper-item/index.vue'
     import pickerSlot from '../picker/picker-slot.vue'
     import ItvDialog from '../dialoger/index'
     import calendar from './mixins/calendar'
     import init from './mixins/init'
     import time from './mixins/time'
     export default {
-        name: 'calendar-time',
+        name: 'itv-calendar-time',
         mixins:[calendar, init, time],
         components: {
-            miniSwiper,
-            miniSwiperItem,
+            ItvSwiper,
+            ItvSwiperItem,
             pickerSlot,
             ItvDialog
         },

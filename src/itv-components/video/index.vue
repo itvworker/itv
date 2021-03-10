@@ -145,7 +145,7 @@ import control from "./mixins/control";
 import loadIcon from "./components/loading.vue";
 import ios from "./mixins/ios";
 export default {
-    name: "play-video",
+    name: "itv-video",
     mixins: [slide, common, slideBar, control, ios],
     components: {
         loadIcon

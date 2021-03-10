@@ -2,7 +2,7 @@
     <itv-container class="page-slideout">
         <itv-header>Circle</itv-header>
         <itv-main>
-            <touch-circle :strokeWidth="10" :radius="45"  />
+            <itv-touch-circle :strokeWidth="10" :radius="45"  />
         </itv-main>
     </itv-container>
 

@@ -5,35 +5,35 @@
             <div class="h10"></div>
             <section>
                 
-                <cell :showIcon="true" title="中间弹出" @click="show=true"  desc="中间弹出">
-                </cell>
+                <itv-cell :showIcon="true" title="中间弹出" @click="show=true"  desc="中间弹出">
+                </itv-cell>
 
-                <cell :showIcon="true" title="向下弹出" @click="bottomShow=true"  desc="向下弹出">
-                </cell>
+                <itv-cell :showIcon="true" title="向下弹出" @click="bottomShow=true"  desc="向下弹出">
+                </itv-cell>
 
-                <cell :showIcon="true" title="从上弹出" @click="topshow=true"  desc="从上弹出">
-                </cell>
+                <itv-cell :showIcon="true" title="从上弹出" @click="topshow=true"  desc="从上弹出">
+                </itv-cell>
             
             </section>
         </itv-main>
-        <dialoger v-model="show" :hideOnClick="true">
+        <itv-dialoger v-model="show" :hideOnClick="true">
             <div class="dialog-center">
                 中间弹出的内容
             </div>
             
-            </dialoger>
-        <dialoger v-model="bottomShow" type="bottom" :hideOnClick="true">
+            </itv-dialoger>
+        <itv-dialoger v-model="bottomShow" type="bottom" :hideOnClick="true">
             <div class="slide-bottom">
                 我是向下弹出来的内容
             </div>
            
-        </dialoger>
+        </itv-dialoger>
 
-        <dialoger v-model="topshow" type="top" :hideOnClick="true">
+        <itv-dialoger v-model="topshow" type="top" :hideOnClick="true">
             <div class="slide-bottom">
                 我是向上弹出来的内容
             </div>
-        </dialoger>
+        </itv-dialoger>
        
     </itv-container>
 

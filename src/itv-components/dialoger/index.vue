@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    name:'dialoger',
+    name:'itv-dialoger',
     props: {
         value: {
             type: Boolean,

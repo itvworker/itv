@@ -1,122 +1,115 @@
-import actionsheet from './itv-components/actionsheet';
-import calendarTime from './itv-components/calendar-time';
-import cascader from './itv-components/cascader';
-import cell from './itv-components/cell';
-import touchCircle from './itv-components/touch-circle';
-import cliper from './itv-components/cliper';
-import dialoger from './itv-components/dialoger';
-import drawer from './itv-components/drawer';
-import elevator from './itv-components/elevator'
-import loading from './itv-components/loading';
-import picker from './itv-components/picker';
-import popup from './itv-components/popup';
-import schedule from './itv-components/schedule';
-import srcoller from './itv-components/scroller';
-import srcollerElevator from './itv-components/scroller-elevator';
-import slidebutton from './itv-components/slidebutton';
-import slideitem from './itv-components/slideitem';
-import slideout from './itv-components/slideout';
-import sliver from './itv-components/sliver';
-import sliverContainer from './itv-components/sliver-container';
-import miniSwiper from './itv-components/mini-swiper';
-import miniSwiperItem from './itv-components/mini-swiper-item';
-import toast from './itv-components/toast';
-import playVideo from './itv-components/play-video'
-import scrollerCalendar from './itv-components/scroller-calendar'
-import progressBar from './itv-components/progress-bar'
-import flow from './itv-components/flow'
-import timepicker from './itv-components/timepicker'
+import Actionsheet from './itv-components/actionsheet';
+import CalendarTime from './itv-components/calendar-time';
+import Cascader from './itv-components/cascader';
+import Cell from './itv-components/cell';
+import TouchCircle from './itv-components/touch-circle';
+import Cliper from './itv-components/cliper';
+import Cialoger from './itv-components/dialoger';
+import Drawer from './itv-components/drawer';
+import Elevator from './itv-components/elevator'
+import Loading from './itv-components/loading';
+import Picker from './itv-components/picker';
+import Popup from './itv-components/popup';
+import Schedule from './itv-components/schedule';
+import Srcoller from './itv-components/scroller';
+import SrcollerElevator from './itv-components/scroller-elevator';
+import Slidebutton from './itv-components/slidebutton';
+import Slideitem from './itv-components/slideitem';
+import Slideout from './itv-components/slideout';
+import Sliver from './itv-components/sliver';
+import SliverContainer from './itv-components/sliver-container';
+import Swiper from './itv-components/swiper';
+import SwiperItem from './itv-components/swiper-item';
+import Toast from './itv-components/toast';
+import Video from './itv-components/video'
+import ScrollerCalendar from './itv-components/scroller-calendar'
+import Progress from './itv-components/progress'
+import Flow from './itv-components/flow'
+import Timepicker from './itv-components/timepicker'
 
-import pluginActionsheet from './plugins/actionsheet.js';
-import pluginCalendarTime from './plugins/calendarTime.js';
-import pluginCascader from './plugins/cascader.js';
-import pluginDialoger from './plugins/dialoger.js';
-import pluginLoading from './plugins/loading.js';
-import pluginPopup from './plugins/popup.js';
-import pluginToast from './plugins/toast.js';
-
-
-
-
+import PluginActionsheet from './plugins/actionsheet.js';
+import PluginCalendarTime from './plugins/calendarTime.js';
+import PluginCascader from './plugins/cascader.js';
+import PluginDialoger from './plugins/dialoger.js';
+import PluginLoading from './plugins/loading.js';
+import PluginPopup from './plugins/popup.js';
+import PluginToast from './plugins/toast.js';
 export {
-    //组件
-    actionsheet,
-    calendarTime,
-    cascader,
-    cell,
-    touchCircle, 
-    cliper,
-    dialoger,
-    drawer, 
-    elevator,
-    loading, 
-    picker,
-    popup, 
-    schedule,
-    srcoller,
-    srcollerElevator,
-    slidebutton,
-    slideitem,
-    slideout,
-    sliver,
-    sliverContainer,
-    miniSwiper, 
-    miniSwiperItem,
-    toast,
-    playVideo,
-    scrollerCalendar,
-    progressBar,
-    flow,
-    timepicker,
-    //插件
-    pluginActionsheet,
-    pluginCalendarTime,
-    pluginCascader,
-    pluginDialoger,
-    pluginLoading,
-    pluginPopup,
-    pluginToast,
+    Actionsheet,
+    CalendarTime,
+    Cascader,
+    Cell,
+    TouchCircle,
+    Cliper,
+    Cialoger,
+    Drawer,
+    Elevator,
+    Loading,
+    Picker,
+    Popup,
+    Schedule,
+    Srcoller,
+    SrcollerElevator,
+    Slidebutton,
+    Slideitem,
+    Slideout,
+    Sliver,
+    SliverContainer,
+    Swiper,
+    SwiperItem,
+    Toast,
+    Video,
+    ScrollerCalendar,
+    Progress,
+    Flow,
+    Timepicker,
+
+    PluginActionsheet,
+    PluginCalendarTime,
+    PluginCascader,
+    PluginDialoger,
+    PluginLoading,
+    PluginPopup,
+    PluginToast,
 }
 
 let Components = [
-    //组件
-    actionsheet,
-    calendarTime,
-    cascader,
-    cell,
-    touchCircle,
-    cliper,
-    dialoger,
-    drawer, 
-    elevator,
-    loading, 
-    picker,
-    popup, 
-    schedule,
-    srcoller,
-    srcollerElevator,
-    slidebutton,
-    slideitem,
-    slideout,
-    sliver,
-    sliverContainer,
-    miniSwiper, 
-    miniSwiperItem,
-    toast,
-    playVideo,
-    scrollerCalendar,
-    progressBar,
-    flow,
-    timepicker,
+    Actionsheet,
+    CalendarTime,
+    Cascader,
+    Cell,
+    TouchCircle,
+    Cliper,
+    Cialoger,
+    Drawer,
+    Elevator,
+    Loading,
+    Picker,
+    Popup,
+    Schedule,
+    Srcoller,
+    SrcollerElevator,
+    Slidebutton,
+    Slideitem,
+    Slideout,
+    Sliver,
+    SliverContainer,
+    Swiper,
+    SwiperItem,
+    Toast,
+    Video,
+    ScrollerCalendar,
+    Progress,
+    Flow,
+    Timepicker,
 
-    //插件
-    pluginActionsheet,
-    pluginCalendarTime,
-    pluginCascader,
-    pluginDialoger,
-    pluginLoading,
-    pluginPopup,
-    pluginToast,
+    PluginActionsheet,
+    PluginCalendarTime,
+    PluginCascader,
+    PluginDialoger,
+    PluginLoading,
+    PluginPopup,
+    PluginToast,
 ]
 
 export default {

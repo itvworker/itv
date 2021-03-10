@@ -51,7 +51,7 @@ import Spinner from "./Spinner.vue";
 import Arrow from "./Arrow.vue";
 
 export default {
-    name:'scroller',
+    name:'itv-scroller',
     mixins:[init, touch, calc, animate],
     components:{
         Spinner,

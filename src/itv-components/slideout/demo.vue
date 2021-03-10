@@ -2,8 +2,8 @@
     <itv-container class="page-slideout">
         <itv-header>Slideout</itv-header>
         <itv-main>
-            <slideout>
-                <slideitem class="message-outer" @click="openDel">
+            <itv-slideout>
+                <itv-slideitem class="message-outer" @click="openDel">
                     <div class="message-item">
                         <div class="message-content">
                             <div class="left-status exam">
@@ -21,11 +21,11 @@
                         </div>
                     </div>
                     <template slot="meun">
-                        <slidebutton class="btn btn-del">删除</slidebutton>
+                        <itv-slidebutton class="btn btn-del">删除</itv-slidebutton>
                     </template>
-                </slideitem>
+                </itv-slideitem>
 
-                <slideitem class="message-outer">
+                <itv-slideitem class="message-outer">
                     <div class="message-item">
                         <div class="message-content">
                             <div class="left-status exam">
@@ -43,12 +43,12 @@
                         </div>
                     </div>
                     <template slot="meun">
-                        <slidebutton class="btn btn-del">删除</slidebutton>
-                        <slidebutton class="btn btn-edit">编辑</slidebutton>
+                        <itv-slidebutton class="btn btn-del">删除</itv-slidebutton>
+                        <itv-slidebutton class="btn btn-edit">编辑</itv-slidebutton>
                     </template>
-                </slideitem>
+                </itv-slideitem>
 
-            </slideout>
+            </itv-slideout>
         </itv-main>
 
     </itv-container>

@@ -42,7 +42,7 @@
 </template>
 <script>
 export default {
-    name:'elevator',
+    name:'itv-elevator',
     props: {
         dataArray:{
             type:Array,

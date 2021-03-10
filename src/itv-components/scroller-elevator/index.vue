@@ -14,7 +14,7 @@
 <script>
 import render from '../../libs/render';
 export default {
-    name:'scroller-elevator',
+    name:'itv-scroller-elevator',
     props: {
         title: {
             type: String,

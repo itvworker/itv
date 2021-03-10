@@ -19,7 +19,7 @@
 <script>
 import icons from "./icon.js";
 export default {
-    name:"toast",
+    name:"itv-toast",
     props: {
         transition: String,
         itvclass: "itv-center",

@@ -34,7 +34,7 @@
 import ItvDialog from '../dialoger/index.vue';
 import ItvScroll from '../scroller/index.vue'
 export default {
-    name: "cascader",
+    name: "itv-cascader",
     components: {
         ItvDialog,
         ItvScroll

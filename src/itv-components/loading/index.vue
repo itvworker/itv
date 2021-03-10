@@ -80,7 +80,7 @@
 </template>
 <script>
 export default {
-    name:'loading',
+    name:'itv-loading',
     props: {
         iconType: {
             type: String,

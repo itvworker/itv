@@ -1,44 +1,44 @@
 <template>
     <itv-container>
-        <itv-header>itv-mini-swiper</itv-header>
+        <itv-header>itv-itv-swiper</itv-header>
         <itv-main>
 
             <h2>横向</h2>
-            <mini-swiper :loop="true" @change="row" v-model="rowIndex">
-                <mini-swiper-item>
+            <itv-swiper :loop="true" @change="row" v-model="rowIndex">
+                <itv-swiper-item>
                     <div class="demo-banner banner-1">1</div>
-                </mini-swiper-item>
-                <mini-swiper-item>
+                </itv-swiper-item>
+                <itv-swiper-item>
                     <div class="demo-banner banner-2">2</div>
-                </mini-swiper-item>
-                <mini-swiper-item>
+                </itv-swiper-item>
+                <itv-swiper-item>
                     <div class="demo-banner banner-1">3</div>
-                </mini-swiper-item>
-                <mini-swiper-item>
+                </itv-swiper-item>
+                <itv-swiper-item>
                     <div class="demo-banner banner-2">4</div>
-                </mini-swiper-item>
+                </itv-swiper-item>
                 <div slot="dot" class="dot-bar">
                     <div class="dot" :class="{'active': rowIndex===0}" @click="change(0)">1</div>
                     <div class="dot" :class="{'active': rowIndex===1}" @click="change(1)">2</div>
                     <div class="dot" :class="{'active': rowIndex===2}" @click="change(2)">3</div>
                     <div class="dot" :class="{'active': rowIndex===3}" @click="change(3)">4</div>
                 </div>
-            </mini-swiper>
+            </itv-swiper>
             <h2>纵向</h2>
-            <mini-swiper  direction="column" :loop="false" v-model="columnIndex" class="itv-swpier-height">
-                <mini-swiper-item>
+            <itv-swiper  direction="column" :loop="false" v-model="columnIndex" class="itv-swpier-height">
+                <itv-swiper-item>
                     <div class="demo-banner banner-1">1</div>
-                </mini-swiper-item>
-                <mini-swiper-item>
+                </itv-swiper-item>
+                <itv-swiper-item>
                     <div class="demo-banner banner-2">2</div>
-                </mini-swiper-item>
-                <mini-swiper-item>
+                </itv-swiper-item>
+                <itv-swiper-item>
                     <div class="demo-banner banner-1">3</div>
-                </mini-swiper-item>
-                <mini-swiper-item>
+                </itv-swiper-item>
+                <itv-swiper-item>
                     <div class="demo-banner banner-2">4</div>
-                </mini-swiper-item>
-            </mini-swiper>
+                </itv-swiper-item>
+            </itv-swiper>
         </itv-main>
     </itv-container>
 

@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name: "mini-swiper-item",
+    name: "itv-swiper-item",
     data() {
         return {
             name: 'itv-swpier-item'

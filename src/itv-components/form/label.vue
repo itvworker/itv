@@ -1,21 +1,21 @@
 <template>
-    <label class="itv-label">
-        <div class="itv-label-title">
+    <div class="itv-form-item">
+        <div class="itv-form-item-title">
          <slot name="left">
              *{{label}}
         </slot>   
         </div>
-        <div class="itv-label-content">
+        <div class="itv-form-item-content">
             <slot />
         </div>
         <div class="right">
             <button @click="$emit('del')">del</button>
         </div>
-    </label>
+    </div>
 </template>
 <script>
     export default {
-        name: 'itv-label',
+        name: 'itv-form-item',
         props: {
             label: {
                 type: String,
@@ -92,20 +92,18 @@
 
 <style lang="less" >
 @import '../../assets/css/itv-theme.less';
-.itv-label {
+.itv-form-item {
     display: flex;
     border-bottom: #eee solid 1px;
     padding: 10.5ipx 15ipx;
     line-height: 1.6;
     font-size: 14ipx;
-   
-
-    .itv-label-content{
+    .itv-form-item-content{
         flex: 1;
         display: flex;
         font-size: 0;
     }
-    .itv-label-title{
+    .itv-form-item-title{
         // margin-right: 10ipx;
         box-sizing: border-box;
         display: flex;

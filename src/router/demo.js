@@ -143,10 +143,10 @@ export default [
             {
                 path: '/demo/swiper',
                 name: 'itv_swiper',
-                component: () => import('@/itv-components/mini-swiper/demo.vue'),
+                component: () => import('@/itv-components/swiper/demo.vue'),
                 meta: {
                     keepAlive: false,
-                    title: 'mini-swiper',
+                    title: 'swiper',
                 },
             },
             {
@@ -226,9 +226,9 @@ export default [
                 }
             },
             {
-                path: '/demo/playVideo',
-                name: 'itv_playVideo',
-                component: () => import('@/itv-components/play-video/demo.vue'),
+                path: '/demo/video',
+                name: 'itv_video',
+                component: () => import('@/itv-components/video/demo.vue'),
                 meta: {
                     keepAlive: false,
                     title: 'playVideo',
@@ -244,12 +244,12 @@ export default [
                 }
             },
             {
-                path: '/demo/progressBar',
-                name: 'itv_progressBar',
-                component: () => import('@/itv-components/progress-bar/demo.vue'),
+                path: '/demo/progress',
+                name: 'itv_progress',
+                component: () => import('@/itv-components/progress/demo.vue'),
                 meta: {
                     keepAlive: false,
-                    title: 'progress-bar',
+                    title: 'progressBar',
                 }
             },
 

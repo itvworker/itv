@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    name: "progress-bar",
+    name: "itv-progress",
     props: {
         value: {
             type: Number || Boolean,

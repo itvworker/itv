@@ -24,7 +24,7 @@
 <script>
 import ItvDialog from "../dialoger/index.vue";
 export default {
-    name: "popup",
+    name: "itv-popup",
     props: {
         //是否显示
         value: {
