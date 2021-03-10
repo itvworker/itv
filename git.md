@@ -43,5 +43,3 @@ Specific git-branch actions:
 --sort <key>          field name to sort on
 --points-at <object>  print only branches of the object
 ```
-
-https://zhuanlan.zhihu.com/p/71163868
