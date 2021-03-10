@@ -4,6 +4,7 @@ nutui-2-dev/
 /dist/
 /source/
 /components/
+/website/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
