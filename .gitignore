@@ -1,13 +1,10 @@
 .DS_Store
 node_modules/
-nutui-2-dev/
 /dist/
-/source/
-/components/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+/.scannerwork/
 # Editor directories and files
 .idea
 *.zip
