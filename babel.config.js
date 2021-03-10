@@ -1,7 +1,3 @@
-
-console.log('babel-----------------------------------');
-console.log(process.env.NODE_ENV);
-
 module.exports = {
     presets: [
         [

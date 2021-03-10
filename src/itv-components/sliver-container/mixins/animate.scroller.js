@@ -1,4 +1,4 @@
-import { timers } from "jquery";
+
 
 export default {
     methods: {

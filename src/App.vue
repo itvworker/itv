@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
+
 import Router from 'vue-router'
 export default {
     mounted() {
