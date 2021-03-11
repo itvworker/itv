@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 
-                 <itv-swiper   :loop="false" v-model="columnIndex" class="itv-swpier-height">
+                 <itv-swiper  :loop="false" v-model="columnIndex" class="itv-swpier-height">
                      <itv-swiper-item class="itv-swiper-item">
                          <itv-sliver  :bounceTop="false" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
                             <div class="test-list" v-for="(item, index)  in list" :key="index" @click="casePush">
@@ -32,7 +32,7 @@
                         </itv-sliver>
                      </itv-swiper-item>
                      <itv-swiper-item class="itv-swiper-item">
-                         <itv-sliver  :bounceTop="true" refreshLoad bounceBottom @refresh = refresh ref="sliver1" >
+                         <itv-sliver  :bounceTop="true" refreshLoad bounceBottom @refresh = refreshTow @onInfinite="infiniteTow"  isMore ref="sliver1" >
                             <div class="test-list" v-for="(item, index)  in list" :key="index">
                                 sliver2{{item.title}} {{index}}
                             </div>
@@ -56,7 +56,8 @@ export default {
             sliverIndex: 0,
             columnIndex:0,
             headerMinHeight: 44,
-            headerMaxHeight: 200
+            headerMaxHeight: 200,
+            list:[]
         }
     },
     watch: {
@@ -64,25 +65,15 @@ export default {
             this.$refs['sliver'+index].sliverIndex();
         }
     },
-    computed: {
-       list() {
-            let arr = [];
-            for(let i = 0; i < 100; i++) {
-                arr.push({
-                    title: '测试内容'
-                })
-            }
-            return arr;
-       } 
-    },
+   
     methods: {
        refresh() {
            
-           setTimeout(()=>{
-                this.$refs.sliver.refresh()
-                this.$refs.sliver0.refresh()
-                this.$refs.sliver1.refresh()
-           },2000)
+        //    setTimeout(()=>{
+        //         this.$refs.sliver.refresh()
+        //         this.$refs.sliver0.refresh()
+        //         this.$refs.sliver1.refresh()
+        //    },2000)
        },
        casePush() {
            alert('content')
@@ -92,10 +83,52 @@ export default {
        },
        opend() {
            
-       }
+       },
+       refreshTow() {
+           setTimeout(()=>{
+               this.refreshInit();
+               this.$refs.sliver1.refresh();
+           },3000)
+           
+       },
+       infiniteTow() {
+           setTimeout(()=>{
+               for(let i = 0; i < 20; i++) {
+                    this.list.push({
+                        title: '加载的更多数据'
+                    })
+                }
+                if(this.list.length > 100) {
+                     this.$refs.sliver1.infinite(true);
+                }else{
+                     this.$refs.sliver1.infinite();
+                }
+           },300)
+          
+            
+       },
+       init() {
+            let arr = [];
+            for(let i = 0; i < 50; i++) {
+                arr.push({
+                    title: '初始化数据'
+                })
+            }
+            this.list =arr
+    
+       },
+       refreshInit() {
+            let arr = [];
+            for(let i = 0; i < 20; i++) {
+                arr.push({
+                    title: '下拉刷新的数据'
+                })
+            }
+            this.list =arr
+       },
     },
     created() {
-        
+        this.init();
     },
     mounted() {
         // setInterval(()=>{
@@ -108,7 +141,7 @@ export default {
         this.$refs.sliver0.sliverIndex()
         this.headerMaxHeight = this.$refs.header.clientHeight;
         this.headerMinHeight = this.$refs.btns.clientHeight;
-       
+
         
        
     }

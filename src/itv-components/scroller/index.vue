@@ -37,7 +37,13 @@
                         </div>
                     </slot>
                 </div>   
-                <slot/>   
+                <slot/> 
+
+                <div class="itv-scroller-more" ref="more" v-show='isMore && moreStatus!=="loadingStop"'>
+                    <spinner v-show="moreStatus !== 'none'" class="itv-scroller-more-icon" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}" />
+                    <span v-show="moreStatus === 'none'">{{noDataText}}</span>
+                    <span v-show="moreStatus !== 'none'">{{loadingText}}</span>
+                </div>  
             </div>
         </div>    
     </div>
@@ -165,12 +171,23 @@ export default {
             type: String,
             default: '更新中'
         },
+        loadingText: {
+            type:String,
+            default: "加载中…"
+        },
+        noDataText:{
+            type:String,
+            default: "没有更多数据"
+        },
         maxSpeed:{
             type: Number,
             default: 50
+        },
+        isMore: {
+            type: Boolean,
+            default: false
         }
         
-
     },
     watch: {
         scrollY(n) {
@@ -179,7 +196,6 @@ export default {
                 return
             }
             if(this.isTouch && n < this.pullDownPoint) {
-
                 this.text = this.loseenText
                 this.status = 1
                 return
@@ -190,7 +206,10 @@ export default {
                 this.status = 0
                 return
             }
+            
+            this.loadingData(n);
         }
+        
     },
     data() {
         return {
@@ -232,8 +251,8 @@ export default {
             cacheScrollbarX:0, //缓存用，滚动条y的真实位置
             hideBarY: true, //不可视化滚动动条
             scrollBarTimeout: '',
-
-            elPostion:{} //位置滑动区所在的位置
+            elPostion:{}, //位置滑动区所在的位置
+            moreStatus: 'loadingStop', // loading加载中, loadingStop 加载完成，等待下次加载， none //没有更多数据 
         }
     },
     

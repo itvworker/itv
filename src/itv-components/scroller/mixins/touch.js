@@ -39,9 +39,10 @@ export default {
                 y: this.moveY,
                 time: new Date().getTime()
             })
-            
 
         },
+
+
         touchmove(e, self) {
             //启用自定义调用事件
             e.preventDefault();
@@ -101,8 +102,6 @@ export default {
              * horizontal横向滚动
             */
            
-
-           
           
             if(this.isVertcialMove || this.pattern === 'freedom') {
                 let scrollY = this.scrollY - res.angy;
@@ -138,7 +137,6 @@ export default {
                 //允许弹动时
                 if((scrollX < 0 && this.leftBounce) || (scrollX > this.maxX && this.rightBounce)) {
                     if((this.scrollX < 0 && res.angx > 0) || (this.scrollX > this.maxX && res.angx < 0) ) {
-                        
                         scrollX = this.scrollX - (res.angx*0.5)
                     }
                 }
@@ -185,6 +183,10 @@ export default {
                 y: this.scrollY
             })
 
+            
+            this.loadingData(this.scrollY)
+            
+             
 
 
         },
@@ -223,6 +225,7 @@ export default {
                         if(!this.isTriggerPullDown && this.scrollY < this.pullDownPoint) {
                             this.isTriggerPullDown = true
                             this.$emit('refresh');
+                            this.$emit('onRefresh');
                             this.scrollTo(this.scrollX, this.pullDownPoint, 1.5)
                             return
                         }

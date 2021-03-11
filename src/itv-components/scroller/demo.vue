@@ -63,7 +63,10 @@
                     :showScrollBar="true"
                     @scroll="scroll" 
                     @stopscroll="stopscroll"
-                    @refersh="refersh">
+                    :isMore="true"
+                    @refresh="refershone"
+                    @infinite="infiniteone"
+                    >
                         
                     <div class="item-list" v-for="(item, index) in list" :key="index">
                         {{item.name}}one{{index}}
@@ -89,7 +92,7 @@
                     @refersh="refersh">
                         
                     <div class="item-list" v-for="(item, index) in list" :key="index">
-                        {{item.name}}one{{index}}
+                        {{item.name}}tow{{index}}
                     </div>
                     <!-- <div class="itv-case-box">
                             <div class="item-list-section" v-for="(item, index) in list" :key="index">
@@ -101,7 +104,7 @@
                 <itv-swiper-item>
                     <itv-scroller 
                     class="swpier-scroller"
-                    :key="5" ref="scrolle2" 
+                    :key="5" ref="scrolle5" 
                     :topBounce="true" 
                     :bottomBounce="true" 
                     :pullDown="true" 
@@ -109,10 +112,11 @@
                     :showScrollBar="true"
                     @scroll="scroll" 
                     @stopscroll="stopscroll"
+                    
                     @refersh="refersh">
                         
                     <div class="item-list" v-for="(item, index) in list" :key="index">
-                        {{item.name}}one{{index}}
+                        {{item.name}}three{{index}}
                     </div>
                     <!-- <div class="itv-case-box">
                             <div class="item-list-section" v-for="(item, index) in list" :key="index">
@@ -124,7 +128,7 @@
                 <itv-swiper-item>
                     <itv-scroller 
                     class="swpier-scroller"
-                    :key="6" ref="scrolle2" 
+                    :key="6" ref="scrolle6" 
                     :topBounce="true" 
                     :bottomBounce="true" 
                     :pullDown="true" 
@@ -135,7 +139,7 @@
                     @refersh="refersh">
                         
                     <div class="item-list" v-for="(item, index) in list" :key="index">
-                        {{item.name}}one{{index}}
+                        {{item.name}}four{{index}}
                     </div>
                     <!-- <div class="itv-case-box">
                             <div class="item-list-section" v-for="(item, index) in list" :key="index">
@@ -192,6 +196,34 @@ export default {
             //        this.$refs.scroller.refresh()
             //    },3000)
         },
+        refershone() {
+         
+            setTimeout(()=>{
+                let arr = []; //
+                 for(let i=0; i < 30; i++) {
+                    arr.push({
+                        name:"重新加载数据"
+                    })
+                }
+                this.list = arr;
+                
+                this.$refs.scrolle3.refresh()
+            },1000)
+        },
+        infiniteone(){
+            setTimeout(()=>{
+                for(let i=0; i < 20; i++) {
+                    this.list.push({
+                        name:"加载更多的数据"
+                    })
+                }
+                if(this.list.length>=100) {
+                    this.$refs.scrolle3.infinite(true)
+                    return
+                }
+                this.$refs.scrolle3.infinite()
+            },3000)
+        },
         changeTab(index) {
             if(this.tabIndex === index) return
             let name = this.$route.name;
@@ -201,7 +233,8 @@ export default {
                     index: index
                 }
             })
-        } 
+        },
+         
     },
     created() {
         this.changeList(50,1)

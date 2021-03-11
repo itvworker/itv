@@ -258,6 +258,7 @@ export default {
                             this.bounceAnimate(speed);
                             this.isRefresh = true;
                             this.$emit('refresh')
+                            this.$emit('onRefresh')
                             return
                         }
                     }
@@ -281,7 +282,7 @@ export default {
                             this.nowSliver.bounceAnimate(speed);
                             this.nowSliver.isRefresh = true;
                             this.nowSliver.bounceStatus = 0;
-                            this.$emit('refresh', 'sliver')
+                            this.nowSliver.emitRefresh()
                             return
                         }
                     }
@@ -292,11 +293,9 @@ export default {
                         this.nowSliver.bounceY = this.nowSliver.maxY;
                         this.nowSliver.bounceStatus = 1;
                         this.nowSliver.bounceAnimate(-speed);
-                       
                     }
                     this.nowSliver.calcMax()
                     let speed = this.calcMoveSpeed();
-                    
                     this.animate(speed)
                     
                    

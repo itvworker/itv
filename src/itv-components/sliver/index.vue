@@ -3,20 +3,27 @@
         <div class="itv-sliver-scroller" ref="scroller">
             <div class="itv-sliver-refresh" ref="pull" v-if="refreshLoad">
                 <slot name="pull">
-                    <refresh-bar v-model="isRefresh" :top="domY" :triggerDir="refreshHeight"></refresh-bar>
+                    <refresh-bar :pullDownText="pullDownText" :loadingText="refreshingText" :letgoText="letgoText"    v-model="isRefresh" :top="domY" :triggerDir="refreshHeight"></refresh-bar>
                 </slot>
              </div>
             <slot></slot>
+            <div class="itv-sliver-more" ref="more" v-show='isMore && moreStatus!=="loadingStop"'>
+                <spinner v-show="moreStatus !== 'none'" class="itv-sliver-more-icon" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}" />
+                <span v-show="moreStatus === 'none'">{{noDataText}}</span>
+                <span v-show="moreStatus !== 'none'">{{loadingText}}</span>
+            </div>  
         </div>
     </div>
 </template>
 <script>
 import render from '../../libs/render'
 import refreshBar from './refresh.vue'
+import Spinner from "./Spinner.vue";
 export default {
     name: 'itv-sliver',
     components: {
-        refreshBar
+        refreshBar,
+        Spinner
     },
     props: {
         index: {
@@ -33,12 +40,24 @@ export default {
             type: Boolean,
             default: false,
         },
-        //触发下拉刷新高度
-        refreshHeight: {
-            type: Number,
-            default: 60
+        pullDownText: {
+            type: String,
+            default:'下拉刷新'
         },
-         percent: {
+        refreshingText: {
+            type: String,
+            default:'更新中'
+        },
+        letgoText: {
+            type: String,
+            default:'松开刷新'
+        },
+        // //触发下拉刷新高度
+        // refreshHeight: {
+        //     type: Number,
+        //     default: 60
+        // },
+        percent: {
             type: Number,
             default: 0.95
         },
@@ -49,7 +68,31 @@ export default {
         pid: {
             type: String,
             default:"slivers"
-        }
+        },
+        isMore: {
+            type: Boolean,
+            default: false
+        },
+        loadingText: {
+            type: String,
+            default:"加载中…"
+        },
+        noDataText: {
+            type: String,
+            default:"没有更多数据"
+        },
+         refreshLayerColor: {
+            type: String,
+            default: "#AAA"
+        },
+
+        loadingLayerColor: {
+            type: String,
+            default: "#AAA"
+        },
+        
+        
+        
     },
     data() {
         return {
@@ -63,19 +106,30 @@ export default {
             bounceY:0,
             stepY:0,
             stopStep: 0.5,
-            bounceStatus: 0 //0 下拉， 1 上拉
+            bounceStatus: 0, //0 下拉， 1 上拉
+            moreStatus: 'loadingStop',
+            refreshHeight: 60
         }
     },
     inject:['itvSliverContainer'],
+    watch: {
+        domY(value) {
+            console.log(value);
+            this.loadingData(value)
+        }
+    },
     methods:{
-        
         refresh() {
             this.isRefresh = false;
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
-       
+            this.refreshHeight = this.$refs.pull.clientHeight;
             
+            if(this.isMore) {
+                this.moreStatus = 'loadingStop';
+            }
+
             this.maxY = Math.max(ph - parent.clientHeight,0);
             if(this.domY < 0) {
                 let speed = this.calcStep(this.domY, 1.2);
@@ -86,6 +140,13 @@ export default {
                 this.scrollDom(0, this.maxY, 1) 
                 this.y = - this.maxY
             }
+            this.$nextTick(()=>{
+                this.calcMax();
+            })
+        },
+        emitRefresh() {
+            this.$emit('refresh')
+            this.$emit('onRefresh')
         },
         /**
          * 计算最大滚动值
@@ -100,6 +161,7 @@ export default {
             this.vy = this.y;
         },
         setPosition() {
+            console.log(this.domY);
             this.scrollDom(0, this.domY, 1)
         },
     
@@ -190,16 +252,39 @@ export default {
             
                 return 
             }
+         
             window.requestAnimationFrame(this.srollStep);
         },
       
        
         sliverIndex() {
             this.itvSliverContainer.nowSliver = this;
+        },
+
+        //是否触发上拉加载
+        loadingData(value) {
+            if(this.isRefresh) return;
+            if(this.isMore && value >= this.maxY && this.moreStatus ==='loadingStop') {
+                this.moreStatus = 'loading';
+                this.$emit('infinite')
+                this.$emit('onInfinite')
+                this.$nextTick(()=>{
+                    this.calcMax()
+                })
+            }
+        },
+        infinite(value) {
+            if(value) {
+                this.moreStatus = 'none';
+            }else{
+                this.moreStatus = 'loadingStop'; 
+            }
+            this.$nextTick(()=>{
+                this.calcMax()
+            })  
         }
     },
     mounted() {
-   
         this.scrollDom = render(this.$refs.scroller)
         this.refresh();
     }

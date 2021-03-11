@@ -17,7 +17,6 @@ export default {
             }
 
             indexNum++
-            
             window.requestAnimationFrame(this.srollStep);
         },
         //滚动动画
@@ -38,7 +37,7 @@ export default {
             //向上滚动
             if(this.stepY < 0) {
                 let y = this.stepY;
-                  
+               
                 if(this.headerDomHeight > this.headerMinHeight) {
                     this.headerDomHeight += this.stepY;
                     if(this.headerDomHeight < this.headerMinHeight) {
@@ -46,24 +45,38 @@ export default {
                         this.headerDomHeight= this.headerMinHeight;
                         this.nowSliver.calcMax()
                     }
-                   
+                    
                     this.headerDom(this.headerDomHeight)
                     
                 }
                 
-                
-                if(this.nowSliver.domY < this.nowSliver.maxY) {
-                    
+                if(this.nowSliver.domY >= this.nowSliver.maxY) {
+                    this.stepY *= 0.5;
+                    this.nowSliver.domY-= this.stepY;
+                    if(this.nowSliver.domY > this.nowSliver.maxY+100) {
+                        this.nowSliver.domY = this.nowSliver.maxY+100;
+                        this.stepY = 0
+                    }
+                    this.nowSliver.setPosition();
+
+                    if(this.stepY <=1) {
+                        this.$nextTick(()=>{
+                            let dis = this.nowSliver.domY - this.nowSliver.maxY;
+                            let speed = this.calcStep(dis, 0.5);
+                            this.nowSliver.bounceY = this.nowSliver.maxY;
+                            this.nowSliver.bounceStatus = 1;
+                            this.nowSliver.bounceAnimate(-speed);
+                        })
+                    }
+                }else {
                     this.nowSliver.domY-= this.stepY;
                     if(this.nowSliver.domY > this.nowSliver.maxY) {
                         this.nowSliver.domY = this.nowSliver.maxY;
-                        this.stepY =0;
                     }
-                    this.nowSliver.setPosition()
-
-                    console.log('------- d');
-                    
+                    this.nowSliver.setPosition();
                 }
+
+                
                 
             }
             //向下滚动
@@ -90,18 +103,12 @@ export default {
                         }
                         
                         this.headerDom(this.headerDomHeight)
-
-                       
                     }
                     
                 }
-    
-    
-                
                 // this.headerDom(this.headerDomHeight)
             }
     
-           
             this.stepY *= this.percent;
             window.requestAnimationFrame(this.srollStep)
         }
