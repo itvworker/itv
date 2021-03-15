@@ -96,14 +96,7 @@ export default {
            
         }
     },
-    watch: {
-        headerMaxHeight(n,o) {
-            this.headerHeight = n;
-            this.headerDom = slideHeight(this.$refs.header, this.$refs.group, this.headerMaxHeight)
-            this.scrollerDom = render(this.$refs.scroller);
-            this.contentHeight = this.$el.clientHeight - this.headerMinHeight
-        }
-    },
+    
     data() {
         return {
             //头部高度，改此值将触发，vue刷新
@@ -148,9 +141,7 @@ export default {
 
     mounted() {     
         //初始化
-        this.headerDom = slideHeight(this.$refs.header, this.$refs.group, this.headerMaxHeight)
-        this.scrollerDom = render(this.$refs.scroller);
-        this.contentHeight = this.$el.clientHeight - this.headerMinHeight
+        this.init()
 
 
     },
@@ -170,6 +161,20 @@ export default {
          */
         setHeaderHeight(value) {
             this.headerDom(value);
+        },
+        init() {
+           
+            this.headerDom = slideHeight(this.$refs.header, this.$refs.group, this.headerMaxHeight)
+            this.scrollerDom = render(this.$refs.scroller);
+            this.contentHeight = this.$el.clientHeight - this.headerMinHeight
+             //头部高度，改此值将触发，vue刷新
+            this.headerHeight = this.headerMaxHeight
+            //头部高度，改变此不会触发vue更新dom,此值只用于dom操作
+            this.headerDomHeight = this.headerMaxHeight
+
+           
+           
+            
         }
         
     },

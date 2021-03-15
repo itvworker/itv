@@ -141,6 +141,10 @@ export default {
         this.$refs.sliver0.sliverIndex()
         this.headerMaxHeight = this.$refs.header.clientHeight;
         this.headerMinHeight = this.$refs.btns.clientHeight;
+        this.$nextTick(()=>{
+            this.$refs.sliver.init();
+        })
+        
 
         
        

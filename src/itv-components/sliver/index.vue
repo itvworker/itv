@@ -1,7 +1,8 @@
 <template>
     <div class="itv-sliver" >
+         <slot name="outer"></slot>
         <div class="itv-sliver-scroller" ref="scroller">
-            <div class="itv-sliver-refresh" ref="pull" v-if="refreshLoad">
+            <div class="itv-sliver-refresh" ref="pull" v-show="refreshLoad">
                 <slot name="pull">
                     <refresh-bar :pullDownText="pullDownText" :loadingText="refreshingText" :letgoText="letgoText"    v-model="isRefresh" :top="domY" :triggerDir="refreshHeight"></refresh-bar>
                 </slot>
@@ -124,7 +125,9 @@ export default {
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
-            this.refreshHeight = this.$refs.pull.clientHeight;
+            if(this.refreshLoad) {
+                this.refreshHeight = this.$refs.pull.clientHeight;
+            }
             
             if(this.isMore) {
                 this.moreStatus = 'loadingStop';

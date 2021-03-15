@@ -50,7 +50,7 @@ export default {
                     
                 }
                 
-                if(this.nowSliver.domY >= this.nowSliver.maxY) {
+                if(this.nowSliver.domY >= this.nowSliver.maxY && this.nowSliver.bounceBottom) {
                     this.stepY *= 0.5;
                     this.nowSliver.domY-= this.stepY;
                     if(this.nowSliver.domY > this.nowSliver.maxY+100) {

@@ -42,7 +42,7 @@ export default {
                 // e.stopPropagation()
                 return
             }
-            
+            e.preventDefault();
             let touches = e.touches;
             if (touches.length == null) {
                 throw new Error("Invalid touch list: " + touches);
@@ -102,7 +102,7 @@ export default {
 
                         //当向上滚动时，并且还未处最小收缩度
                         //是否收缩头部
-
+                       
                         if(obj.type===1) {
                             //header处在最大值
                             if(this.headerDomHeight === this.headerMaxHeight) {
