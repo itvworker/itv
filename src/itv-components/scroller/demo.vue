@@ -322,7 +322,6 @@ export default {
 }
 .itv-swpier-height {
     height:100%;
-   
 }
 .swpier-scroller{
     height: 100%;
