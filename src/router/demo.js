@@ -105,6 +105,15 @@ export default [
                 },
             },
             {
+                path: '/demo/scroller/parent',
+                name: 'itv_scroller_parent',
+                component: () => import('@/itv-components/scroller/parent.demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'scroller',
+                },
+            },
+            {
                 path: '/demo/slideout',
                 name: 'itv_slideout',
                 component: () => import('@/itv-components/slideout/demo.vue'),
