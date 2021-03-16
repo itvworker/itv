@@ -10,13 +10,7 @@ export default {
     },
     inject:['itvScroller'],
     mounted() {
-        setTimeout(()=>{
-            console.log(this.itvScroller);
-        },1000)
         this.$emit('input', this.itvScroller)
-    },
-    methods: {
-        
     }
 }
 </script>

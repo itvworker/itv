@@ -200,7 +200,8 @@ export default {
         testKey: {
             type: Boolean,
             default: false
-        }
+        },
+        
         
     },
     watch: {
@@ -222,6 +223,8 @@ export default {
             }
             
             this.loadingData(n);
+            
+            
         }
         
     },
@@ -231,6 +234,11 @@ export default {
         }
         return {
             itvScroller: this
+        }
+    },
+    methods: {
+        setChild() {
+            this.parentScroller.childScroller = this;
         }
     },
     data() {
@@ -276,7 +284,8 @@ export default {
             elPostion:{}, //位置滑动区所在的位置
             moreStatus: 'loadingStop', // loading加载中, loadingStop 加载完成，等待下次加载， none //没有更多数据 
 
-            parentScroller: null
+            parentScroller: null,
+            childScroller: null
         }
     },
     

@@ -42,7 +42,7 @@ export default {
 
         },
 
-
+        
         touchmove(e, self) {
             //启用自定义调用事件
             e.preventDefault();

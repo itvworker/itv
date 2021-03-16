@@ -3,9 +3,33 @@
         <itv-header>scroller</itv-header>
         
         <itv-main>
-            <itv-scroller isProvide>
-                <itv-scroller testKey isInject>
+            
+            <itv-scroller isProvide
+             ref="scrolle1" 
+            :topBounce="true" 
+            :bottomBounce="true" 
+            :pullDown="true" 
+            pattern="vertical" 
+            :percent="0.95"
+            :speed="50" 
+            tier="parent"
 
+
+            >
+            <img  class="image-header" width="100%" height="200" src="~@/assets/img/github.png" /> 
+                 <itv-scroller testKey isInject
+                    ref="scrolle2" 
+                    :topBounce="true" 
+                    :bottomBounce="true" 
+                    :pullDown="true" 
+                    pattern="vertical" 
+                    :percent="0.95"
+                    :speed="50" 
+                    touchType="custom"
+                    tier="child"
+                    
+                >
+                    
 
                 
                 </itv-scroller>
