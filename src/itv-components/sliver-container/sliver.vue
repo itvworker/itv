@@ -1,5 +1,6 @@
 <template>
     <div class="itv-sliver" >
+        <slot name="outer"></slot>
         <div class="itv-sliver-scroller" ref="scroller">
             <div class="itv-sliver-refresh" ref="pull" v-if="refreshLoad">
                 <slot name="pull">

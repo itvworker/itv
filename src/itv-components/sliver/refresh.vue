@@ -9,7 +9,7 @@
 
         <arrow class="arrow" :class="{'active': -triggerDir > top}"  v-if="!value"  :fillColor="refreshLayerColor"/>
         <spinner v-show="value" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}"/>
-
+            
 
         <div class="text" v-if="value">
             {{loadingText}}
@@ -114,5 +114,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@import '../../assets/css/itv-theme.less';
 @import 'itv-sliver.less';
 </style>

@@ -11,9 +11,7 @@
 <script>
 import render  from  '../../libs/render'
 import getDirection from '../../libs/touch'
-
 import judge from './mixins/judge'
-
 export default {
     name: "itv-swiper",
     mixins:[judge],
@@ -258,9 +256,6 @@ export default {
         },
         touchend(e) {
             this.$emit('touchend')
-           
-          
-
             this.isTouch = false
             this.isMove = 0
             let screenType = this.screenType
@@ -443,5 +438,5 @@ export default {
 </script>
 <style lang="less" scoped>
 @import '../../assets/css/itv-theme.less';
-@import 'itv-mini-swiper.less';
+@import 'itv-swiper.less';
 </style>

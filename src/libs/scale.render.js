@@ -1,6 +1,10 @@
 export default function (content, group, maxHeight) {
+       
+    if(!maxHeight){
+        return
+    }
     var global = window;
-
+   
     var docStyle = document.documentElement.style;
 
     var engine;
@@ -28,16 +32,15 @@ export default function (content, group, maxHeight) {
     var transformProperty = vendorPrefix + "Transform";
 
     if (helperElem.style[perspectiveProperty] !== undef) {
-
+       
         return function(height) {
-
             content.style[transformProperty] = 'translate3d(0,0,0) scaleY(' + height/maxHeight + ')';
             content.children[0].style[transformProperty] = 'translate3d(0,0,0) scaleY(' + maxHeight/height + ')'
             group.style[transformProperty] = 'translate3d(0,'+(height-maxHeight)+'px,0)';
         };
 
     } else if (helperElem.style[transformProperty] !== undef) {
-
+        
         return function(left, top, zoom) {
             content.style[transformProperty] = 'translate(0,0） scale(' + height/maxHeight + ')';
             content.children[0].style[transformProperty] = 'translate(0,0) scaleY(' + maxHeight/height + ')'
@@ -46,7 +49,7 @@ export default function (content, group, maxHeight) {
         };
 
     } else {
-
+       
         return function(left, top, zoom) {
             content.style.marginLeft = left ? (-left/zoom) + 'px' : '';
             content.style.marginTop = top ? (-top/zoom) + 'px' : '';

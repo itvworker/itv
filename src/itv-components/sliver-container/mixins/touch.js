@@ -42,7 +42,7 @@ export default {
                 // e.stopPropagation()
                 return
             }
-            
+            e.preventDefault();
             let touches = e.touches;
             if (touches.length == null) {
                 throw new Error("Invalid touch list: " + touches);
@@ -102,7 +102,7 @@ export default {
 
                         //当向上滚动时，并且还未处最小收缩度
                         //是否收缩头部
-
+                       
                         if(obj.type===1) {
                             //header处在最大值
                             if(this.headerDomHeight === this.headerMaxHeight) {
@@ -258,6 +258,7 @@ export default {
                             this.bounceAnimate(speed);
                             this.isRefresh = true;
                             this.$emit('refresh')
+                            this.$emit('onRefresh')
                             return
                         }
                     }
@@ -281,7 +282,7 @@ export default {
                             this.nowSliver.bounceAnimate(speed);
                             this.nowSliver.isRefresh = true;
                             this.nowSliver.bounceStatus = 0;
-                            this.$emit('refresh', 'sliver')
+                            this.nowSliver.emitRefresh()
                             return
                         }
                     }
@@ -292,11 +293,9 @@ export default {
                         this.nowSliver.bounceY = this.nowSliver.maxY;
                         this.nowSliver.bounceStatus = 1;
                         this.nowSliver.bounceAnimate(-speed);
-                       
                     }
                     this.nowSliver.calcMax()
                     let speed = this.calcMoveSpeed();
-                    
                     this.animate(speed)
                     
                    

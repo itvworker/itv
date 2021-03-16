@@ -21,18 +21,46 @@ export default {
         }
         this.calcMax()
     },
-    
+  
     methods: {
         
         //下拉加载复位
         refresh() {
             if(this.scrollY < 0) {
-               
                 this.scrollTo(this.scrollX, 0, 1.5);
             }
             this.isTriggerPullDown = false
-            this.calcMax()
-            this.$emit("content")
+            this.$nextTick(()=>{
+                this.calcMax()
+                if(this.isMore) {
+                    this.moreStatus = 'loadingStop'; 
+                }
+            })  
+            this.$emit("content");
+          
+        },
+        //是否触发上拉加载
+        loadingData(value) {
+            if(this.isMore && value >= this.maxY && this.moreStatus ==='loadingStop') {
+                this.moreStatus = 'loading';
+                this.$emit('infinite')
+                this.$emit('onInfinite')
+                this.$nextTick(()=>{
+                    this.calcMax()
+                })
+            }
+        },
+        infinite(value) {
+            if(value) {
+                this.moreStatus = 'none';
+            }else{
+                this.moreStatus = 'loadingStop'; 
+            }
+            
+            this.$nextTick(()=>{
+                this.calcMax()
+            })  
         }
+        
     }
 }

@@ -155,9 +155,8 @@ module.exports = {
             inject: true
         }),
         new ItvPlugin({
-                theme:resolve('src/assets/theme.less')
-               
-            }),    
+            theme:resolve('src/assets/theme.less')
+        }),    
         
         // new CopyWebpackPlugin([
         //     {
