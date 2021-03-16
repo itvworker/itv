@@ -1,6 +1,6 @@
 <template lang="html">
     <itv-container class="doc-page">
-        <div v-html="doc"></div>
+        <div v-html="doc" style="width:100%"></div>
         <div class="phone-show"  >
             <!-- <iframe :src="url"></iframe> -->
         </div>
@@ -35,5 +35,6 @@ export default {
 <style lang="css" scoped>
 .doc-page{
     flex-direction: row;
+    flex: 1;
 }
 </style>
