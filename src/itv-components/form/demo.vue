@@ -21,7 +21,7 @@
 </template>
 <script>
 import ItvForm from './form';
-import ItvLabel from './label';
+import ItvLabel from './form-item';
 import ItvInput from './input'
 import FormScroller from './form-scroller.vue';
     let schema = {

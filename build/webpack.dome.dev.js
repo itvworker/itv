@@ -145,7 +145,7 @@ module.exports = {
         compress: true, // 服务端压缩是否开启
         open: false, // 自动打开浏览器
         hot: true, // 开启热更新
-        port: 8787
+        port: 8888
     },
     stats: {
         children: false,

@@ -1,5 +1,5 @@
 <template>
-<div class="itv-input-box" :style="{'height': height}">
+<div class="itv-input-box" :style="{'height': height+'px'}">
     <input v-if="type!=='textarea'" class="itv-input" ref="value" 
             :type="type" 
            :maxlength="maxlength" :minlength="minlength"
@@ -7,17 +7,17 @@
            @input="input" @change="change"  @blur="blur"
            @keydown="keydown"
            v-model="currentValue"
-           :style="{height:height}"
+           :style="{height:height+'px','font-size': fs+'px'}"
     />
     <textarea v-if="type=='textarea'" class="itv-textarea" 
-        :style="{'height': height}"
+        :style="{'height':startHeight+'px','line-height': startHeight+'px','font-size': fs+'px'}"
         :maxlength="maxlength"
         :minlength="minlength"
         :placeholder="placeholder"
         @input="input" @change="change"  @blur="blur"
         @keydown="keydown"
         v-model="currentValue"
-     ref="value"></textarea>
+     ref="value" ></textarea>
      <div class="number" v-if="number">{{currentLength}}</div>
 </div>
     
@@ -60,12 +60,19 @@
                 default: false
             }
         },
-
+        
         watch: {
             value(n,o) {
                 this.currentValue = n;
                 this.itvFormItem.value = n;
 
+            },
+            height(n) {
+                this.itvFormItem.lineHeight = n
+            },
+            fs(n) {
+                this.itvFormItem.fs = n
+             
             }
         },
         computed: {
@@ -92,7 +99,8 @@
                 inputValue: this.value,
                 numberStr:'-e+.',
                 startHeight:null,
-                height: null
+                height: null,
+                fs: null
             }
         },
         methods:{
@@ -123,16 +131,16 @@
             init() {
                 let height = this.$el.clientHeight;
                 height = height%2?height+1:height;
+                let fs = window.getComputedStyle(this.$refs.value).fontSize;
+                let size = Math.round(parseFloat(fs))
+                this.fs = size;
                 if(this.type !== 'textarea') {
+                    this.height = height;
                     return
                 }
-                setTimeout(() => {
-                     this.$refs.value.style.height = height+'px';
-                     debugger
-                }, 1000);
+                this.startHeight = height;
+                
                
-               
-                this.height=height+'px';
                 
             }
         },
@@ -143,6 +151,8 @@
                 this.$emit('input', this.currentValue);
             })
             this.startHeight = this.$refs.value.scrollHeight;
+           
+
             this.itvFormItem.$on('focus', ()=>{
                 let dom = this.$refs.value;
                 if(this.type ==='number') {
@@ -187,6 +197,8 @@
         margin: 0;
         border-width: 0;
         height: 22ipx;
+        font-size: 14ipx;
+            font-family: Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
     }
     .itv-textarea{
         height: 22ipx;
@@ -199,6 +211,7 @@
         font-size: 14ipx;
         resize: none;
         margin: 0;
+            font-family: Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
     }
    
     .error-text {

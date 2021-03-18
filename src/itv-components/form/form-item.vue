@@ -1,15 +1,15 @@
 <template>
     <div class="itv-label">
-        <div class="itv-label-title">
+        <div class="itv-label-title" :style="{'font-size':fs+'px','height': lineHeight+'px','line-height': lineHeight+'px'}">
          <slot name="left">
-             *{{label}}
+             <span>*</span>{{label}}
         </slot>   
         </div>
         <div class="itv-label-content">
             <slot />
         </div>
         <div class="right">
-            <button @click="$emit('del')">del</button>
+            <slot name="right" />
         </div>
     </div>
 </template>
@@ -46,7 +46,9 @@
             return {
                
                 value:null,
-                random:null   
+                random:null,
+                lineHeight:null,
+                fs:null   
             }
         },
         methods:{
@@ -83,8 +85,6 @@
         mounted() {
             this.itvForm.addItem(this);
             
-            
-           
            
         }
     }
@@ -112,6 +112,9 @@
         height: 22ipx;
         line-height: 22ipx;
         padding-right: 10ipx;
+        align-items: center;
+        justify-content: center;
+        font-size: 14ipx;
         // background-color: #aaa;
         
     }
