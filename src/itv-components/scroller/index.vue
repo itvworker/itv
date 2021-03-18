@@ -1,6 +1,7 @@
 <template>
     <div class="itv-scroll" @touchstart="touchstart($event,true)" @touchmove="touchmove($event,true)" @touchend="touchend($event,true)" @touchcancel="touchend($event,true)" >
         <!-- 跟随x轴滚动 -->
+        <inject-value v-model="parentScroller" v-if="isInject"/>
         <div class="itv-scroll-x-touch" v-if="scrollXel" ref="x" :style="{'transform':`translate3d(-${x},0,0)`,'WebkitTransform':`translate3d(-${x},0,0)`}">
             <slot name="x"/>
         </div>
@@ -53,15 +54,16 @@ import init from './mixins/init.js'
 import touch from './mixins/touch.js'
 import calc from './mixins/calc.js'
 import animate from './mixins/animate.js'
-import Spinner from "./Spinner.vue";
-import Arrow from "./Arrow.vue";
-
+import Spinner from "./com/Spinner.vue";
+import Arrow from "./com/Arrow.vue";
+import InjectValue from './com/inject.vue';
 export default {
     name:'itv-scroller',
     mixins:[init, touch, calc, animate],
     components:{
         Spinner,
-        Arrow
+        Arrow,
+        InjectValue
     },
     props: {
         topBounce: { //顶部是否弹起
@@ -186,7 +188,20 @@ export default {
         isMore: {
             type: Boolean,
             default: false
-        }
+        },
+        isProvide: {
+            type: Boolean,
+            default: false
+        },
+        isInject: {
+            type: Boolean,
+            default: false
+        },
+        testKey: {
+            type: Boolean,
+            default: false
+        },
+        
         
     },
     watch: {
@@ -208,8 +223,23 @@ export default {
             }
             
             this.loadingData(n);
+            
+            
         }
         
+    },
+    provide() {
+        if(!this.isProvide){
+            return {}
+        }
+        return {
+            itvScroller: this
+        }
+    },
+    methods: {
+        setChild() {
+            this.parentScroller.childScroller = this;
+        }
     },
     data() {
         return {
@@ -253,6 +283,9 @@ export default {
             scrollBarTimeout: '',
             elPostion:{}, //位置滑动区所在的位置
             moreStatus: 'loadingStop', // loading加载中, loadingStop 加载完成，等待下次加载， none //没有更多数据 
+
+            parentScroller: null,
+            childScroller: null
         }
     },
     

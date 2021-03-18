@@ -45,16 +45,9 @@ module.exports = {
                 ]
 
             },
+         
             {
-                test: /\.css$/,
-                use: [
-                 
-                    'css-loader'
-                ]
-
-            },
-            {
-                test: /\.less$/,
+                test: /\.(less|css)$/,
                 use: [ //loader从后向前执行，顺序不能乱，会不能编译
                     {
                         loader: 'vue-style-loader'
@@ -80,7 +73,7 @@ module.exports = {
                     }
 
                 ],
-                include: [resolve('src'),resolve('node_modules/itv-ui')]
+                
             },
             {
                 test: /\.js$/,
