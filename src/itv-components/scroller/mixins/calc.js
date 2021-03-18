@@ -103,8 +103,8 @@ export default {
         calcMoveSpeed() {
             let touchList = this.touchMoveList;
 
-           
-            this.touchMoveList = [];
+            
+            // this.touchMoveList = [];
             let num = touchList.length
             if(num > 20) {
                 touchList = touchList.slice(num-20, num)

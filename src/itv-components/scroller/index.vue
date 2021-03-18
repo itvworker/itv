@@ -238,6 +238,7 @@ export default {
     },
     methods: {
         setChild() {
+         
             this.parentScroller.childScroller = this;
         }
     },

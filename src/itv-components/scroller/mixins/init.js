@@ -13,7 +13,6 @@ export default {
         
             if(this.pattern === 'horizontal' || this.pattern==='freedom' || this.pattern==='auto')  {
                 this.scrollBarXRender = render(this.$refs.barX);
-                
             }
             if(this.pattern === 'vertical' || this.pattern==='freedom' || this.pattern==='auto') {
                 this.scrollBarYRender = render(this.$refs.barY);

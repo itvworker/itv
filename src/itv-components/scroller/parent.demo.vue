@@ -17,7 +17,8 @@
 
             >
             <img  class="image-header" width="100%" height="200" src="~@/assets/img/github.png" /> 
-                 <itv-scroller testKey isInject
+                 <itv-scroller testKey isInject 
+                    class="child-scroller"
                     ref="scrolle2" 
                     :topBounce="true" 
                     :bottomBounce="true" 
@@ -30,9 +31,12 @@
                     
                 >
                     
-
+                 <div class="item-list" v-for="(item, index) in list" :key="index">
+                        {{item.name}}four{{index}}
+                    </div>   
                 
                 </itv-scroller>
+
             </itv-scroller>
         </itv-main>
     </itv-container>
@@ -125,7 +129,7 @@ export default {
         this.changeList(50,1)
     },
     mounted() {
-       
+       this.$refs.scrolle2.setChild();
     }
 
 };
@@ -223,6 +227,10 @@ export default {
         line-height: 44ipx;
         padding-left: 15ipx;
     }
+}
+.child-scroller{
+    height: 500pt;
+    
 }
 </style>
 

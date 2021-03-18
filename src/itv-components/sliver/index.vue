@@ -163,8 +163,12 @@ export default {
         cache() {
             this.vy = this.y;
         },
-        setPosition() {
-            console.log(this.domY);
+        setPosition(value) {
+            if(typeof value === 'number') {
+                this.domY = value;
+                this.y = value;
+            }
+           
             this.scrollDom(0, this.domY, 1)
         },
     

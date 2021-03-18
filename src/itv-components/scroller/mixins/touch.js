@@ -13,7 +13,11 @@ export default {
             this.scrollToX = null;
             this.scrollToY = null;
             let touches = e.touches;
-            this.touchMoveList =[];
+            if(this.tier === 'parent') {
+                
+                this.childScroller.touchMoveList = this.touchMoveList;
+            }
+            this.touchMoveList.splice(0, this.touchMoveList.length)
             //检查手指数量
             if (touches.length == null) {
                 throw new Error("Invalid touch list: " + touches);
@@ -33,7 +37,7 @@ export default {
             this.startX = this.moveX 
             this.startY = this.moveY
 
-          
+            
             this.touchMoveList.push({
                 x: this.moveX,
                 y: this.moveY,
@@ -65,7 +69,10 @@ export default {
                 moveX = Math.abs(touches[0].pageX + touches[1].pageX) / 2;
                 moveY = Math.abs(touches[0].pageY + touches[1].pageY) / 2;
             }
-
+            
+            let upxy = this.touchMoveList[this.touchMoveList.length-1];
+            this.moveX = upxy.x;
+            this.moveY = upxy.y;
             let positon = this.elPositon
             if(moveX  < positon.left || moveX  > positon.right ||  moveY < positon.top ||  moveY > positon.bottom) {
                 this.touchend(e)
@@ -76,6 +83,8 @@ export default {
             let res = getDirection(this.moveX, this.moveY, moveX, moveY, this.direction)
             //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
             if(!res) return
+            
+            
             if((res.type===1 || res.type === 2) && !this.direction) {
                 this.direction = 'vertical'
                 this.cacheDirection = 'vertical'
@@ -87,11 +96,11 @@ export default {
             if(!this.direction) return
 
            
-            this.moveX = moveX;
-            this.moveY = moveY;
+            // this.moveX = moveX;
+            // this.moveY = moveY;
             this.touchMoveList.push({
-                x: this.moveX,
-                y: this.moveY,
+                x: moveX,
+                y: moveY,
                 time: new Date().getTime()
             })
             /**
