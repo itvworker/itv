@@ -47,6 +47,7 @@ export default {
                     }
                     
                     this.headerDom(this.headerDomHeight)
+                    this.$emit('onHeader', this.headerDomHeight)
                     
                 }
                 
@@ -103,6 +104,7 @@ export default {
                         }
                         
                         this.headerDom(this.headerDomHeight)
+                        this.$emit('onHeader', this.headerDomHeight)
                     }
                     
                 }

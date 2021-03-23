@@ -135,6 +135,7 @@ export default {
                                         this.headerDomHeight = this.headerMinHeight;
                                     }
                                     this.headerDom(this.headerDomHeight);
+                                    this.$emit('onHeader', this.headerDomHeight)
                                
                             }
                             //头部在过度之间 
@@ -145,6 +146,7 @@ export default {
                                     this.headerDomHeight = this.headerMinHeight;
                                 }
                                 this.headerDom(this.headerDomHeight);
+                                this.$emit('onHeader', this.headerDomHeight)
                                 return
                             }
                             
@@ -200,6 +202,7 @@ export default {
                                 if(this.nowSliver.domY===0) {
                                     this.headerDomHeight += obj.angy;
                                     this.headerDom(this.headerDomHeight);
+                                    this.$emit('onHeader', this.headerDomHeight)
                                     return
                                 }
                             }
@@ -211,6 +214,7 @@ export default {
                                     this.headerDomHeight = this.headerMaxHeight;
                                 }
                                 this.headerDom(this.headerDomHeight);
+                                this.$emit('onHeader', this.headerDomHeight)
                             }
 
                             return

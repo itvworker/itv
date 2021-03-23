@@ -161,6 +161,7 @@ export default {
          */
         setHeaderHeight(value) {
             this.headerDom(value);
+             this.$emit('onHeader', this.headerDomHeight)
         },
         init() {
            

@@ -174,7 +174,6 @@ export default {
     
         //父元素回弹动画
         bounceAnimate(speed) {
-           
             this.stepY = speed;
             window.requestAnimationFrame(this.bounceStep);     
         },
