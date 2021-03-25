@@ -7,6 +7,7 @@ export default {
                 // e.stopPropagation()
                 return
             }
+            this.nowSliver.calcMax();
             this.isTouch = true;
             this.startTime = new Date().getTime()
             this.touchDirection = 0; //重置touch滑动方向

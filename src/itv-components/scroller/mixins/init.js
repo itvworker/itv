@@ -20,7 +20,7 @@ export default {
         }
         this.calcMax()
     },
-  
+    
     methods: {
         
         //下拉加载复位

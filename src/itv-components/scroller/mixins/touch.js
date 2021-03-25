@@ -3,6 +3,7 @@ export default {
     methods: {
         touchstart(e, self) {
             //启用自定义调用事件
+            this.calcMax();
             this.elPositon = this.$el.getBoundingClientRect()
             if(this.touchType === 'custom' && self) return
             if (e.target.tagName.match(/input|textarea|select/i)) {
