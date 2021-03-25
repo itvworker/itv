@@ -5,7 +5,6 @@
         </transition>
         <transition :name="animate">
             <div ref="content" :class="className"   v-show="value && html" :style="{'z-index':zIndex+1}">
-                
             </div>
         </transition>
         <transition :name="animate"  >
@@ -56,6 +55,10 @@ export default {
                     return 'itv-slide-bottom'
                 case 'none':
                     return 'none';    
+                case 'left':
+                    return 'itv-slide-left';
+                case 'right':
+                    return 'itv-slide-right';        
                 default:
                     return 'itv-dialog'
             }
@@ -67,8 +70,13 @@ export default {
                 case 'bottom':
                     return 'itv-dialog-bottom'
                 case 'top':
-                    return 'itv-dialog-top'    
+                    return 'itv-dialog-top' 
+                case 'left':
+                    return 'itv-dialog-left' 
+                 case 'right':
+                    return 'itv-dialog-right'             
                 default:
+                    return 'itv-dialog'
                     break;
             }
         },

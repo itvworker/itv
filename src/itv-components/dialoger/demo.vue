@@ -13,10 +13,15 @@
 
                 <itv-cell :showIcon="true" title="从上弹出" @click="topshow=true"  desc="从上弹出">
                 </itv-cell>
+
+                <itv-cell :showIcon="true" title="从左弹出" @click="leftshow=true"  desc="从左弹出">
+                </itv-cell>
+                <itv-cell :showIcon="true" title="从右弹出" @click="rightshow=true"  desc="从右弹出">
+                </itv-cell>
             
             </section>
         </itv-main>
-        <itv-dialoger v-model="show" :hideOnClick="true">
+        <itv-dialoger v-model="show" :type="type" :hideOnClick="true">
             <div class="dialog-center">
                 中间弹出的内容
             </div>
@@ -34,6 +39,18 @@
                 我是向上弹出来的内容
             </div>
         </itv-dialoger>
+
+        <itv-dialoger v-model="leftshow" type="left" :hideOnClick="true">
+            <div class="slide-left">
+                我是向左弹出来的内容
+            </div>
+        </itv-dialoger>
+
+        <itv-dialoger v-model="rightshow" type="right" :hideOnClick="true">
+            <div class="slide-right">
+                我是向上弹出来的内容
+            </div>
+        </itv-dialoger>
        
     </itv-container>
 
@@ -45,7 +62,10 @@ export default {
     return {
         show:false,
         bottomShow: false,
-        topshow: false
+        topshow: false,
+        leftshow:false,
+        rightshow: false
+        
     };
   },
   methods: {
@@ -91,6 +111,18 @@ h4 {
     background-color: #fff;
     height: 400ipx;
     width: 100%;
+}
+
+.slide-left{
+    background-color: #fff;
+    height: 100%;
+    width: 150pt;
+}
+
+.slide-right{
+    background-color: #fff;
+    height: 100%;
+    width: 150pt;
 }
 .dialog-center{
     width: 200ipx;

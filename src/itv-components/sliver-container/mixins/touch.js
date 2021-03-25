@@ -214,9 +214,8 @@ export default {
                                     this.headerDomHeight = this.headerMaxHeight;
                                 }
                                 this.headerDom(this.headerDomHeight);
-                                this.$emit('onHeader', this.headerDomHeight)
+                                this.$emit('onHeader', this.headerDomHeight);
                             }
-
                             return
                         }
                         break;
