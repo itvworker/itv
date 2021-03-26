@@ -1,5 +1,5 @@
 <template>
-    <div class="itv-sliver" >
+    <div class="itv-sliver" :style="{'height':sliverHeight+'px'}" >
          <slot name="outer"></slot>
         <div class="itv-sliver-scroller" ref="scroller">
             <div class="itv-sliver-refresh" ref="pull" v-show="refreshLoad">
@@ -27,6 +27,10 @@ export default {
         Spinner
     },
     props: {
+        sliverHeight:{
+            type: Number,
+            default: null
+        },  
         index: {
             type: Number,
             default: 0
