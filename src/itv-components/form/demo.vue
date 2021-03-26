@@ -9,7 +9,7 @@
                         <itv-input placeholder="请输入你的名字" :type="item.type" v-model="model[item.key]" inputType="positive" />
                     </itv-label>
 
-                    <itv-label label="身份证号码">
+                    <itv-label label="身份证号码" flexDirection>
                         <itv-input placeholder="请输入你的名字" type="textarea" v-model="model.id" inputType="positive" />
                     </itv-label>
                 </itv-form>
