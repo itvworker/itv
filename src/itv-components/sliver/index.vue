@@ -1,5 +1,5 @@
 <template>
-    <div class="itv-sliver" >
+    <div class="itv-sliver" :style="{'height':sliverHeight+'px'}" >
          <slot name="outer"></slot>
         <div class="itv-sliver-scroller" ref="scroller">
             <div class="itv-sliver-refresh" ref="pull" v-show="refreshLoad">
@@ -27,6 +27,10 @@ export default {
         Spinner
     },
     props: {
+        sliverHeight:{
+            type: Number,
+            default: null
+        },  
         index: {
             type: Number,
             default: 0
@@ -157,6 +161,7 @@ export default {
         calcMax() {
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
+         
             let ph = dom.clientHeight;
             this.maxY = Math.max(ph - parent.clientHeight,0);
         },
@@ -174,7 +179,6 @@ export default {
     
         //父元素回弹动画
         bounceAnimate(speed) {
-           
             this.stepY = speed;
             window.requestAnimationFrame(this.bounceStep);     
         },

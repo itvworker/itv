@@ -1,5 +1,5 @@
 <template>
-    <div class='itv-swpier' @resize="resize" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend" @touchcancel="touchend" >
+    <div class='itv-swpier' :style="{'height': swiperHeight+'px'}" @resize="resize" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend" @touchcancel="touchend" >
         <div class="itv-swpier-touch" @transitionend="aniamteend"   ref="box" :class="['itv-swpier-flex-'+direction, {'itv-swpier-animating':isAnimating, 'itv-move-anmiating':isMove===1} ]" >
             <div class="itv-swpier-item" v-if="number >=2 && loop === true" v-html="lastOne"></div>    
             <slot></slot>
@@ -41,7 +41,10 @@ export default {
             type: Boolean,
             default: false
         },
-
+        swiperHeight: {
+            type: Number,
+            default: null
+        },
         /**
          * 向上或向左滑动是否弹，此属只在0-max,最大张数间有数，例如有1234这个属性只在23中有效
          */

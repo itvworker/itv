@@ -4,7 +4,6 @@
 
 <script>
 
-import Router from 'vue-router'
 export default {
     mounted() {
         document.body.addEventListener("focusin", () => {
@@ -29,7 +28,7 @@ export default {
     },
     methods: {
         changeRoute(value, content) {
-          
+            
         },
         IsPC() {
             var userAgentInfo = navigator.userAgent;

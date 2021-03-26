@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 
-                 <itv-swiper  :loop="false" v-model="columnIndex" class="itv-swpier-height">
+                 <itv-swiper :swiperHeight="sliverHeight"  :loop="false" v-model="columnIndex" class="itv-swpier-height">
                      <itv-swiper-item class="itv-swiper-item">
                          <itv-sliver  :bounceTop="false" refreshLoad bounceBottom @refresh = refresh ref="sliver0" >
                             <div class="test-list" v-for="(item, index)  in list" :key="index" @click="casePush">
@@ -57,6 +57,7 @@ export default {
             columnIndex:0,
             headerMinHeight: 44,
             headerMaxHeight: 200,
+            sliverHeight:null,
             list:[]
         }
     },
@@ -141,6 +142,7 @@ export default {
         this.$refs.sliver0.sliverIndex()
         this.headerMaxHeight = this.$refs.header.clientHeight;
         this.headerMinHeight = this.$refs.btns.clientHeight;
+        this.sliverHeight = this.$refs.sliver.$el.clientHeight -this.headerMinHeight;
         this.$nextTick(()=>{
             this.$refs.sliver.init();
         })

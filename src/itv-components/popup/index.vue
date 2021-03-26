@@ -10,10 +10,10 @@
                 </slot>
             </div>
             <div class="itv-group-btn">
-                <div @click="cancel" v-show="!hideBtnCancel" class="itv-popup-cancel">
+                <div @click="cancel" :style="{'color': this.cancelTextColor}" v-show="!hideBtnCancel" class="itv-popup-cancel">
                     {{cancelText}}
                 </div>
-                <div @click="confirm" class="itv-popup-confirm">
+                <div @click="confirm" :style="{'color': this.confirmTextColor}" class="itv-popup-confirm">
                     {{confirmText}}
                 </div>
             </div>
@@ -45,9 +45,17 @@ export default {
             type: String,
             default: "确认"
         },
+        confirmTextColor: {
+            type: String,
+            default: "#333"
+        },
         cancelText: {
             type: String,
             default: "取消"
+        },
+        cancelTextColor: {
+            type: String,
+            default: "#999"
         },
         title: {
             type: String,

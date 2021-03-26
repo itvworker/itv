@@ -7,7 +7,8 @@
     .itv-sliver-top{
        
         transform-origin:0 0;
-       
+       position: relative;
+       z-index: 1;
         transition: all 0ms ease 0s;
         .itv-sliver-top-content{
             transform-origin:100% 100%;
@@ -29,7 +30,8 @@
         }
         .itv-slivers-group{
            flex:0 0 auto;
-           
+           position: relative;
+           z-index: 0;
             overflow: hidden;
             flex-wrap: wrap;
            

@@ -213,6 +213,7 @@ export default {
                         this.headerDomHeight= this.headerMinHeight;
                     }
                     this.headerDom(this.headerDomHeight)
+                    this.$emit('onHeader', this.headerDomHeight)
                 }
                 
                 this.nowSliver.touchmove(-y)

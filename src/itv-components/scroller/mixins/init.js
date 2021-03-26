@@ -20,7 +20,7 @@ export default {
         }
         this.calcMax()
     },
-  
+    
     methods: {
         
         //下拉加载复位
@@ -59,6 +59,10 @@ export default {
             this.$nextTick(()=>{
                 this.calcMax()
             })  
+        },
+        setCache() {
+            this.x - this.scrollX;
+            this.y = this.scrollY;
         }
         
     }
