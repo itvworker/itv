@@ -258,6 +258,11 @@ export default {
                 } 
             }
             let speed = this.calcMoveSpeed();
+            speed.x = speed.x*0.5
+            speed.x = speed.y*0.5
+            console.log(speed);
+            
+            
             this.animate(speed);          
         }
     }
