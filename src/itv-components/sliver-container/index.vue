@@ -18,7 +18,7 @@
                 
             </div>
         </div>
-        <div class="itv-slivers-group" :style="{height:contentHeight+'px'}"  @touchstart="touchType='group'" ref="group">
+        <div class="itv-slivers-group" :style="{height:sliverHeight+'px'}"  @touchstart="touchType='group'" ref="group">
             <slot></slot>
         </div>
     </div>    
@@ -88,6 +88,10 @@ export default {
         id: {
             type: String,
             default:"slivers"
+        },
+        sliverHeight:{
+            type: Number,
+            default: null
         }
     },
     provide(){
@@ -133,8 +137,7 @@ export default {
             childrenSlivers:[],
             stopStep: 0.5, //当sStepX,sStepY绝对值小于0.5停止滚动
             nowSliver:'', //当前所处的子元素
-            touchType: '',
-            contentHeight: 0
+            touchType: ''
         };
         
     },
@@ -154,7 +157,6 @@ export default {
                 // this.isRefresh = false;
                 this.bounceAnimate(speed);
             }
-            this.contentHeight = this.$el.clientHeight - this.headerMinHeight
         },
         /**
          * 设置header的高度
@@ -167,15 +169,12 @@ export default {
            
             this.headerDom = slideHeight(this.$refs.header, this.$refs.group, this.headerMaxHeight)
             this.scrollerDom = render(this.$refs.scroller);
-            this.contentHeight = this.$el.clientHeight - this.headerMinHeight
+          
              //头部高度，改此值将触发，vue刷新
             this.headerHeight = this.headerMaxHeight
             //头部高度，改变此不会触发vue更新dom,此值只用于dom操作
             this.headerDomHeight = this.headerMaxHeight
 
-           
-           
-            
         }
         
     },

@@ -59,6 +59,10 @@ export default {
             this.$nextTick(()=>{
                 this.calcMax()
             })  
+        },
+        setCache() {
+            this.x - this.scrollX;
+            this.y = this.scrollY;
         }
         
     }

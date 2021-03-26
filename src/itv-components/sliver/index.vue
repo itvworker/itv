@@ -161,6 +161,7 @@ export default {
         calcMax() {
             let dom = this.$refs.scroller;
             let parent = dom.parentNode;
+         
             let ph = dom.clientHeight;
             this.maxY = Math.max(ph - parent.clientHeight,0);
         },
