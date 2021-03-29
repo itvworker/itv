@@ -177,7 +177,6 @@ export default {
                 this.scrollBarYRender(0,-this.cacheScrollBarY,1)
             }
             if(this.scrollBarXRender) {
-             
                 let percent = parseInt(this.scrollX / this.maxX * 100)/100;
                 this.cacheScrollBarX = this.scrollBarOuterWidth*percent;
                 this.scrollBarXRender( -this.cacheScrollBarX,0,1)

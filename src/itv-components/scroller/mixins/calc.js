@@ -89,6 +89,7 @@ export default {
             if(this.scrollY > this.maxY) {
                 this.scrollY =  this.maxY;
                 this.y =  this.maxY
+                console.log('------------++++++');
             }
             this.scrollRender(this.scrollX , this.scrollY, 1);
        
