@@ -1,5 +1,5 @@
 <template>
-    <div class="itv-label">
+    <div class="itv-label" :class="{'itv-label-cloume':flexDirection}">
         <div class="itv-label-title" :style="{'font-size':fs+'px','height': lineHeight+'px','line-height': lineHeight+'px'}">
          <slot name="left">
              <span>*</span>{{label}}
@@ -32,6 +32,10 @@
             rule: {
                 type: String,
                 default: null
+            },
+            flexDirection:{
+                type: Boolean,
+                default: false
             }
            
         },
@@ -98,7 +102,7 @@
     padding: 10.5ipx 15ipx;
     line-height: 1.6;
     font-size: 14ipx;
-   
+    
 
     .itv-label-content{
         flex: 1;
@@ -117,6 +121,12 @@
         font-size: 14ipx;
         // background-color: #aaa;
         
+    }
+    &.itv-label-cloume{
+        flex-direction: column;
+        .itv-label-title{
+            justify-content:start;
+        }
     }
     
 }

@@ -300,6 +300,8 @@ export default {
                     }
                     this.nowSliver.calcMax()
                     let speed = this.calcMoveSpeed();
+                    speed.x = speed.x*0.4
+                    speed.x = speed.y*0.4
                     this.animate(speed)
                     
                    

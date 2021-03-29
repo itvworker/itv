@@ -19,7 +19,7 @@ export default {
                 throw new Error("Invalid touch list: " + touches);
             }
             
-
+            
             // 两只手指滑动处理中心点
             
             let isSingleTouch = touches.length === 1;
