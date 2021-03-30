@@ -47,7 +47,7 @@ export default {
         },
         confirmTextColor: {
             type: String,
-            default: "#333"
+            default: null
         },
         cancelText: {
             type: String,
@@ -55,7 +55,7 @@ export default {
         },
         cancelTextColor: {
             type: String,
-            default: "#999"
+            default: null
         },
         title: {
             type: String,
