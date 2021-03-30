@@ -1,25 +1,25 @@
 <template lang="html">
-    <div class="itv-ui" @touchstart="clickStatus">
-         <transition name="itv-fade">
-            <div class="itv-bg" @click.stop="close"  v-show="value"  :style="{'z-index':zIndex}"></div>
-        </transition>
-        <transition name="itv-slide-top" >
-            <div class="itv-acitonsheet" :class="{'ios-safe-area':iosSafeArea}"  v-show="value" :style="{'z-index':zIndex+1}">
-                <div class="itv-item" :class="{'itv-active': current === index}" v-for="(item, index) in items" :key="index" @click="confirm(item)">
-                    {{item.text}}
-                </div>
-                <div class="itv-item itv-cancel" @click.stop="close" v-show="!hideBtnCancel">
-                    {{cancelText}}
-                </div>
+    <itv-dialog v-model="currentValue" :hideOnClick="hideOnClick" type='bottom'>
+        <div class="itv-acitonsheet" :class="{'ios-safe-area':iosSafeArea}"   :style="{'z-index':zIndex+1}">
+            <div class="itv-item" :class="{'itv-active': current === index}" v-for="(item, index) in items" :key="index" @click="confirm(item)">
+                {{item.text}}
             </div>
-        </transition>
+            <div class="itv-item itv-cancel" @click.stop="close" v-show="!hideBtnCancel">
+                {{cancelText}}
+            </div>
+        </div>
     </div>
+    </itv-dialog>
    
 </template>
 
 <script>
+import ItvDialog from "../dialoger/index.vue";
 export default {
     name: "itv-actionsheet",
+    components: {
+        ItvDialog
+    },
     props: {
         items: {
             type: Array,
@@ -65,12 +65,14 @@ export default {
     data() {
         return {
             status: false,
+            currentValue: this.value,
             nextTarget:null,
             parentTarget:null
         }
     },
     watch: {
         value(a, b) {
+          
             if (!a) {
                 if(this.teleport) {
                     if(this.nextTarget) {
@@ -79,36 +81,48 @@ export default {
                         this.parentTarget.appendChild(this.$el)
                     }
                 }
+             
             }else{
                 this.status = false;
                 if(this.teleport) {
                     document.body.appendChild(this.$el);
                 }
+                this.currentValue = true; 
+                 
+            }
+            
+            
+        },
+        currentValue(n) {
+            if(!n) {
+                this.$emit("hide");
+                this.$emit("input", false);
             }
         }
     },
     methods: {
         cancel() {
-            if(!this.status) return
-            this.$emit("hide");
-            this.$emit("cancel");
+           
+            this.$emit("onHide");
+            this.$emit("onCancel");
             this.$emit("input",false);
+            this.currentValue = false;
         },
         confirm(item) {
-            if(!this.status) return
-            this.$emit("hide");
-            this.$emit("confirm", item);
+            
+            this.$emit("onHide");
+            this.$emit("onConfirm", item);
             this.$emit("input",false);
+            this.currentValue = false;
         },
         close() {
-            if(!this.status) return;
+           
             if(!this.hideOnClick) return;
-            this.$emit("hide");
+            this.$emit("onHide");
             this.$emit("input",false);
+            this.currentValue = false;
         },
-        clickStatus() {
-           this.status = true;
-        }
+     
     },
     mounted() {
         if(this.teleport) {

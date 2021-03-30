@@ -82,7 +82,6 @@ export default {
             this.$emit("hide");
         },
         confirm() {
-           
             this.$emit("confirm");
             this.$emit("hide");
         }
