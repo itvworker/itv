@@ -95,7 +95,7 @@ export default {
         },
         currentValue(n) {
             if(!n) {
-                this.$emit("hide");
+                this.$emit("onHide");
                 this.$emit("input", false);
             }
         }
