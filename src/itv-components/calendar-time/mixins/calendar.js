@@ -1,6 +1,3 @@
-import { parse } from "qs";
-
-
 export default {
     created() {},
 
