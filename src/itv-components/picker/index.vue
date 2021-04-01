@@ -1,25 +1,42 @@
 <template>
-    <div class="itv-picker-panel">
-        <slot />
-        <picker-slot v-for="(item, index) of listData" :ref="`picer-slot-${(index)}`"
-            :default-value="chooseValueData[index]"
-            :is-update="isUpdate"
-            :list-data="item"
-            @chooseItem="chooseItem"
-            :key="index"
-            :key-index="index"
-            :lastChange="lastChange"
-            :rows="rows"
-            :isLoop="isLoop"
-        ></picker-slot>
+<itv-dialog v-model="currentValue" :hideOnClick="hideOnClick" type="bottom">
+  
+    <div class="itv-picker-ui" :slot="soltName"> 
+        <div class="title-bar" v-if="titleBar">
+            <div class="left-btn" @click="closePicker">{{cancelText}}</div>
+            {{title}}
+            <div class="right-btn" @click="confirm">{{confrimText}}</div>
+        </div>
+        <div class="itv-picker-panel">
+            <picker-slot v-for="(item, index) of listData" :ref="`picer-slot-${(index)}`"
+                :default-value="chooseValueData[index]"
+                :is-update="isUpdate"
+                :list-data="item"
+                @chooseItem="chooseItem"
+                :key="index"
+                :key-index="index"
+                :lastChange="lastChange"
+                :rows="rows"
+                :isLoop="isLoop"
+            ></picker-slot>
+        </div>
     </div>
+</itv-dialog>    
 </template>
 <script>
 import pickerSlot from "./picker-slot.vue";
+import ItvDialog from "../dialoger/index.vue";
 export default {
     name:'itv-picker',
     props: {
-        
+        value: {
+            type: Boolean,
+            default: false,
+        },
+        hideOnClick:{
+            type: Boolean,
+            default: true
+        },
         listData: {
             type: Array,
             default: () => []
@@ -39,23 +56,63 @@ export default {
         isLoop: {
             type: Boolean,
             default: false
+        },
+        titleBar: {
+            type: Boolean,
+            default: true
+        },
+        cancelText: {
+            type: String,
+            default: "取消"
+        },
+        confrimText: {
+            type: String,
+            default: "确认"
+        },
+        title: {
+            type: String,
+            default:"请选择"
+        },
+        soltName: {
+            type:String,
+            default:"outer"
         }
     },
     components: {
-        pickerSlot
+        pickerSlot,
+        ItvDialog
+    },
+    computed: {
+        list() {
+            
+            return JSON.parse(JSON.stringify(this.listData))
+        }
     },
     data() {
         return {
             chooseValueData: [],
             cacheValueData: [],
-            isUpdate: false
+            isUpdate: false,
+            currentValue: this.value
         };
     },
     watch: {
         'defaultValueData': function() {
             this.chooseValueData = [...this.defaultValueData];
             this.cacheValueData = [...this.defaultValueData];
-            this.$emit('confirm', this.cacheValueData);
+            // this.$emit('onConfirm', this.cacheValueData);
+        },
+        value(n, o) {
+          
+            this.currentValue = n;
+        },
+        currentValue(n) {
+          
+            if(!n) {
+                this.$emit('input', false);
+                this.$emit('onCancel');
+            }
+            
         }
     },
     mounted() {
@@ -63,6 +120,9 @@ export default {
 
     },
     methods: {
+        closePicker() {
+            this.$emit('onCancel')
+        },
         updateChooseValue(self, index, value) {
             self.cacheValueData.splice(index, 1, value);
             let ref = `picer-slot-${index}`;
@@ -73,20 +133,20 @@ export default {
         closeActionSheet() {
             this.isUpdate = !this.isUpdate;
             this.cacheValueData = [...this.chooseValueData];
-            this.$emit('close');
-            this.$emit('close-update', this, this.chooseValueData);
+            this.$emit('onCancel');
+            this.$emit('onCancelUpdate', this, this.chooseValueData);
         },
 
         confirm() {
-            this.$emit('confirm', this.cacheValueData);
+            this.$emit('onConfirm', this.cacheValueData);
             this.chooseValueData = [...this.cacheValueData];
-            this.$emit('close');
+            this.$emit('onCancel');
         },
 
         chooseItem(value, index) {
             if (this.cacheValueData[index] !== value) {
                 this.cacheValueData[index] = value;
-                this.$emit('choose', index, value, this.cacheValueData);
+                this.$emit('onChoose', index, value, this.cacheValueData);
             }
         }
     },
@@ -95,7 +155,7 @@ export default {
             this.chooseValueData = [...this.defaultValueData];
         } else {
             let defaultValueData = [];
-            this.listData.map((item, index) => {
+            this.listData.forEach((item, index) => {
                 defaultValueData.push(item[0]);
             });
             this.chooseValueData = [...defaultValueData];

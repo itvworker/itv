@@ -72,18 +72,18 @@ export default {
     watch: {
         value(a, b) {
             if (!a) {
-                this.$emit("hide");
+                this.$emit("onHide");
             }
         }
     },
     methods: {
         cancel() {
-            this.$emit("cancel");
-            this.$emit("hide");
+            this.$emit("onCancel");
+            this.$emit("onHide");
         },
         confirm() {
-            this.$emit("confirm");
-            this.$emit("hide");
+            this.$emit("onConfirm");
+            this.$emit("onHide");
         }
     }
 };

@@ -1,29 +1,19 @@
 <template>
   <itv-container>
-      <itv-header>Picker</itv-header>
-      <itv-main>
-      <itv-picker
-        :is-visible="isVisible0"
-        :list-data="listData0"
-        title="请选择年月"
-        :default-value-data="defaultValueData0"
-        @close="switchPicker('isVisible0')"
-       
-        @choose="choose"
-        isLoop
-      ></itv-picker>
+        <itv-header>Picker</itv-header>
+        <itv-main>
+        <itv-cell :isLink="true"  desc="请选择内容" @click="open" :showIcon="true" title="插件模式">
+                    </itv-cell>
+        <itv-picker
+            :list-data="listData0"
+            title="请选择年月"
+            :default-value-data="defaultValueData0"
+            @close="switchPicker('isVisible0')"
+            @choose="choose"
+            isLoop
+        ></itv-picker>
 
 
-      <itv-picker
-        :is-visible="isVisible0"
-        :list-data="classify"
-        title="请选择年月"
-        :default-value-data="defaultClassify"
-        @choose="chooseClassify"
-        
-      ></itv-picker>
-      
-     
   </itv-main>
   </itv-container>
 
@@ -41,7 +31,8 @@ export default {
             classify: classify,
             defaultClassify:[2, 6],
             defaultValueData0: ["2010", "2"],
-        
+            show:true
+
         };
     },
     created() {
@@ -55,6 +46,28 @@ export default {
         chooseClassify(value,index) {
             console.log(value);
             console.log(index);
+        },
+        switchPicker(value) {
+           console.log(value);
+        },
+        open() {
+            this.$itv.picker.show({
+                listData: this.listData0,
+                onConfirm: (index, value, cache)=>{
+                    console.log(index);
+                    console.log(value);
+                    console.log(cache)
+                    l
+                },
+                onChoose: (index, value, cache)=>{
+                    console.log(index);
+                    console.log(value);
+                    console.log(cache);
+                    if(index===0 && value == 2013) {
+                        this.$set(this.listData0, 1, ["A","B","C","D"])
+                    }
+                }
+            })
         }
     },
     mounted() {
