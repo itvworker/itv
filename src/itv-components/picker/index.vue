@@ -1,14 +1,14 @@
 <template>
 <itv-dialog v-model="currentValue" :hideOnClick="hideOnClick" type="bottom">
   
-    <div class="itv-picker-ui" :slot="soltName"> 
+    <div class="itv-picker-ui" :class="className" :slot="soltName"> 
         <div class="title-bar" v-if="titleBar">
             <div class="left-btn" @click="closePicker">{{cancelText}}</div>
             {{title}}
             <div class="right-btn" @click="confirm">{{confrimText}}</div>
         </div>
         <div class="itv-picker-panel">
-            <picker-slot v-for="(item, index) of listData" :ref="`picer-slot-${(index)}`"
+            <picker-slot :class="pickerClassName"  v-for="(item, index) of listData" :ref="`picer-slot-${(index)}`"
                 :default-value="chooseValueData[index]"
                 :is-update="isUpdate"
                 :list-data="item"
@@ -76,6 +76,14 @@ export default {
         soltName: {
             type:String,
             default:"outer"
+        },
+        className: {
+            type: String,
+            default: ''
+        },
+        pickerClassName: {
+            type: String,
+            default: ''
         }
     },
     components: {
