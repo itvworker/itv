@@ -12,7 +12,7 @@ export default {
             type: Boolean,
             default: true
         }
-    },
+    }, 
     methods: {
         back() {
             this.$router.go(-1);
