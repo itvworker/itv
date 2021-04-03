@@ -29,15 +29,9 @@ const plugin = {
                 merge($vm, options) 
                 $vm.value = true
                 $vm.hideBtnCancel = true
-                $vm.$on('cancel', () => {
-                    $vm.value = false
-                    if (options.onHide) {
-                        options.onHide()
-                    }
-                })
+               
 
                 $vm.$on('confirm', () => {
-
                     $vm.value = false
                     if (options.onConfirm) {
                         options.onConfirm()
@@ -60,8 +54,8 @@ const plugin = {
                 $vm.hideBtnCancel = false
                 $vm.$on('cancel', () => {
                     $vm.value = false
-                    if (options.onHide) {
-                        options.onHide()
+                    if (options.onCancel) {
+                        options.onCancel()
                     }
                 })
 

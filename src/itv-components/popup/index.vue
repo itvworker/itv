@@ -47,7 +47,7 @@ export default {
         },
         confirmTextColor: {
             type: String,
-            default: "#333"
+            default: null
         },
         cancelText: {
             type: String,
@@ -55,7 +55,7 @@ export default {
         },
         cancelTextColor: {
             type: String,
-            default: "#999"
+            default: null
         },
         title: {
             type: String,
@@ -72,19 +72,18 @@ export default {
     watch: {
         value(a, b) {
             if (!a) {
-                this.$emit("hide");
+                this.$emit("onHide");
             }
         }
     },
     methods: {
         cancel() {
-            this.$emit("cancel");
-            this.$emit("hide");
+            this.$emit("onCancel");
+            this.$emit("onHide");
         },
         confirm() {
-           
-            this.$emit("confirm");
-            this.$emit("hide");
+            this.$emit("onConfirm");
+            this.$emit("onHide");
         }
     }
 };

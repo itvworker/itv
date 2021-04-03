@@ -25,17 +25,17 @@ const plugin = {
                     merge($vm, options)
                 }
 
-                $vm.$off('hide')
-               
-                $vm.$off('confirm')
+                $vm.$off('onHide')
+                $vm.$off('onConfirm')
+                $vm.$off('onCancel')
 
-                $vm.$on('hide', (msg) => {
+                $vm.$on('onHide', (msg) => {
                     options && options.onHide && options.onHide(msg)
                     $vm.value = false
                 })
 
                 
-                $vm.$on('confirm', (msg) => {
+                $vm.$on('onConfirm', (msg) => {
                     options && options.onConfirm && options.onConfirm(msg);
                     $vm.value = false
                 })

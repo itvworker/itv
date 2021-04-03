@@ -109,7 +109,6 @@ export default {
                 this.modifyStatus()
                 return;
             }
-
             this.modifyStatus(true)
         },
         
@@ -405,6 +404,9 @@ export default {
             this.modifyStatus(true);
           
         });
+        setTimeout(()=>{
+            console.log(this.listData);
+        },8000)
      
     },
     beforeDestroy() {

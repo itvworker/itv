@@ -23,7 +23,7 @@
                 </itv-cell>
                 
         </itv-main>
-        <actionsheet v-model="actionState" :items="items"  teleport @confirm="confirm" />
+        <itv-actionsheet v-model="actionState" :items="items"  teleport @confirm="confirm" />
         
     </itv-container>
 
@@ -57,7 +57,7 @@ export default {
     methods: {
         open() {
             this.$itv.actionsheet.show({
-                 iosSafeArea: false,
+             
                 items:[
                     {
                         text:'选项一'

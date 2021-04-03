@@ -2,6 +2,51 @@
     background-color: #FFF;
     width: 100%;
 }
+.itv-picker-ui {
+    width: 100%;
+    .title-bar {
+        height: 44ipx;
+        text-align: center;
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        font-size: @itv-font-size-large;
+        position: relative;
+        background-color: #fff;
+        &::after{
+            content: '';
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border-bottom: @itv-border-color-base solid 1px;
+            transform: scaleY(0.5);
+            position: absolute;
+        }
+        .left-btn, .right-btn {
+            height: 44pt;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: @itv-font-size-base;
+
+        }
+        .left-btn {
+            left: 0;
+            color: @itv-color-text-sub;
+            padding-left: 16pt;
+        }
+        .right-btn{
+            right: 0;
+            color: @itv-primary-color;
+            padding-right: 16pt;
+            
+        }
+        
+
+    }
+}
 .itv-picker-control{
     display: flex;
     height: 44ipx;
@@ -25,6 +70,7 @@
     height: 220ipx;
     display: flex;
     width: 100%;
+    background-color: #fff;
 }
 
 .itv-picker-list{
@@ -64,6 +110,7 @@
         border-bottom: 1px solid @itv-border-color-base;
         z-index: 3; 
         box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.04);
 
         &.itv-picker-row5{
             top: 88ipx;

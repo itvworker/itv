@@ -61,8 +61,21 @@ export default {
             })  
         },
         setCache() {
-            this.x - this.scrollX;
+            this.x = this.scrollX;
             this.y = this.scrollY;
+        },
+        setPosition(x, y) {
+            this.x = x;
+            this.y = y;
+            this.scrollX =x;
+            this.scrollY = y;
+            this.scrollTo(this.scrollX, this.scrollY, 0)
+        },
+        getPosition() {
+            return {
+                x: this.scrollX,
+                y: this.scrollY
+            }
         }
         
     }
