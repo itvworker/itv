@@ -46,12 +46,21 @@ export default {
             }
             let last = touchList.length-1;
             let first = 0;
+            let a = 0;
             for(let i = last; i >= 0; i--) {
                 if(touchList[last].time-touchList[i].time > this.speed) {
                     first = i+1;
                     break
                 }
                 first = i;
+                a++;
+            }
+
+            if(a<3) {
+                return {
+                    x: 0,
+                    y: 0
+                }
             }
             let x = touchList[last].x-touchList[first].x 
             let y = touchList[last].y-touchList[first].y

@@ -280,10 +280,15 @@ export default [
                     title: 'timepicker',
                 }
             },
-            
-            
-
-            
+            {
+                path: '/demo/dragbar',
+                name: 'itv_dragbar',
+                component: () => import('@/itv-components/drag-bar/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'dragbar',
+                }
+            }
             
 
         ]

@@ -82,7 +82,7 @@ export default {
     },
     computed: {
         height() {
-             if(this.value) {
+            if(this.value) {
                 return '100%'
             }
             let top = this.top>this.triggerDir?this.triggerDir: this.top;

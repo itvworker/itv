@@ -11,10 +11,9 @@ const plugin = {
                 soltName:"default"
             })
             document.body.appendChild($vm.$el)
-            console.log($vm.el);
-            
-            
-        }
+            $vm.soltName = 'default';
+         
+        }   
         
         const picker = {
             show(options= {}) {

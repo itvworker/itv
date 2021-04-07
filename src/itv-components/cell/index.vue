@@ -42,7 +42,7 @@ export default {
     },
     bgColor: {
       type: String,
-      default: "#FFFFFF"
+      default: null
     }
   },
   data() {
