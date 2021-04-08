@@ -54,6 +54,7 @@ export default {
             if(this.touchType === 'custom' && self) return
             if(this.isTouch ===false) return
             
+            
             let touches = e.touches;
             //检查手指数量
             if (touches.length == null) {
@@ -195,7 +196,7 @@ export default {
             
             this.loadingData(this.scrollY)
             
-             
+            
 
 
         },
@@ -257,6 +258,7 @@ export default {
                 } 
             }
             let speed = this.calcMoveSpeed();
+            console.log(speed);
             speed.x = speed.x*0.5
             speed.x = speed.y*0.5
             console.log(speed);

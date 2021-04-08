@@ -73,7 +73,7 @@ export default {
             let childWidth = child.clientWidth;
             let childHeight = child.clientHeight;
 
-            console.log(this.pattern);
+          
             this.maxX = Math.max(0,childWidth - parentWidth);
             this.maxY = Math.max(0,childHeight - parentHeight);
             this.contentHeight = parentHeight;
@@ -89,7 +89,7 @@ export default {
             if(this.scrollY > this.maxY) {
                 this.scrollY =  this.maxY;
                 this.y =  this.maxY
-                console.log('------------++++++');
+                
             }
             this.scrollRender(this.scrollX , this.scrollY, 1);
        
@@ -113,14 +113,23 @@ export default {
             let last = touchList.length-1;
             let first = 0;
            
-
+            let a = 0;
             for(let i = last; i >= 0; i--) {
                 if(touchList[last].time-touchList[i].time > this.speed) {
                     first = i;
                     break
                 }
                 first = i;
+                a++;
             }
+            
+            if(a < 3) {
+                return {
+                    x: 0,
+                    y: 0
+                }
+            }
+
             let x = touchList[last].x-touchList[first].x 
             let y = touchList[last].y-touchList[first].y
             
@@ -146,7 +155,8 @@ export default {
             if(x <-this.maxSpeed) {
                 x = -this.maxSpeed
             }
-
+            
+            
 
             
             return {
