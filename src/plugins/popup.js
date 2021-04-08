@@ -31,18 +31,18 @@ const plugin = {
                 $vm.hideBtnCancel = true
                
 
-                $vm.$on('confirm', () => {
+                $vm.$on('onConfirm', () => {
                     $vm.value = false
                     if (options.onConfirm) {
                         options.onConfirm()
                     }
                 })
 
-                $vm.$on('hide', () => {
+                $vm.$on('onHide', () => {
                     if (options.onHide) {
                         options.onHide()
                     }
-                    $vm.$off('cancel')
+                    $vm.$off('onCancel')
                     $vm.$off('confirm')
                     $vm.$off('hide')
                 })
@@ -52,14 +52,14 @@ const plugin = {
                 merge($vm, options) 
                 $vm.value = true
                 $vm.hideBtnCancel = false
-                $vm.$on('cancel', () => {
+                $vm.$on('onCancel', () => {
                     $vm.value = false
                     if (options.onCancel) {
                         options.onCancel()
                     }
                 })
 
-                $vm.$on('confirm', () => {
+                $vm.$on('onConfirm', () => {
                     $vm.value = false
                     if (options.onConfirm) {
                         options.onConfirm()
@@ -67,13 +67,13 @@ const plugin = {
                 })
                 
 
-                $vm.$on('hide', () => {
+                $vm.$on('onHide', () => {
                     if (options.onHide) {
                         options.onHide()
                     }
-                    $vm.$off('cancel')
-                    $vm.$off('confirm')
-                    $vm.$off('hide')
+                    $vm.$off('onCancel')
+                    $vm.$off('onConfirm')
+                    $vm.$off('onHide')
                 })
             },
             hide () {
