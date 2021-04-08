@@ -79,7 +79,7 @@ const plugin = {
             hide () {
                 $vm.value = false
             },
-            state () {
+            isVisible () {
                 return $vm.value
             }
         }
