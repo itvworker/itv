@@ -64,10 +64,10 @@ const plugin = {
                     }
                 })
 
-                $vm.$on('onConfirm', () => {
+                $vm.$on('onConfirm', (value) => {
                     $vm.value = false
                     if (options.onConfirm) {
-                        options.onConfirm()
+                        options.onConfirm(value)
                     }
                 })
                 

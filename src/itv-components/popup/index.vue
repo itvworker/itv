@@ -3,11 +3,15 @@
         <div class="itv-popup">
             <div class="itv-popup-content">
                 <slot>
+                   
                     <h2 v-html="title" v-show="title"></h2>
                     <div class="itv-popup-msg" v-html="content" v-show="content">
                         {{content}}
                     </div>
+                    <input type="text" v-model="inputValue" ref="input" :placeholder="placeholder"  class="itv-popup-input" />
+                  
                 </slot>
+                
             </div>
             <div class="itv-group-btn">
                 <div @click="cancel" :class="{'forbid-click': this.closeType === 'click' && this.sec > 0}" :style="{'color': this.cancelTextColor}" v-show="!hideBtnCancel" class="itv-popup-cancel">
@@ -76,6 +80,14 @@ export default {
         isTop: {
             type: Boolean,
             default: false
+        },
+        placeholder: {
+            type: String,
+            default:"请输入"
+        },
+        showInput: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
@@ -84,7 +96,8 @@ export default {
     data() {
         return {
             sec: 0,
-            timeinter: null
+            timeinter: null,
+            inputValue:null
         }
     },
     watch: {
@@ -98,6 +111,13 @@ export default {
                
             }else{
                 this.sec = this.seconds;
+                this.inputValue = null;
+              
+                if(this.showInput) {
+                    setTimeout(()=>{
+                         this.$refs.input.focus()
+                    },100)
+                }
                 if(this.closeType !== 'none') {
                    this.timeinter = setInterval(() => {
                         if(this.sec>0) {
@@ -127,7 +147,7 @@ export default {
             if(this.closeType === 'click' && this.sec > 0) {
                 return
             }
-            this.$emit("onConfirm");
+            this.$emit("onConfirm", this.inputValue);
             this.$emit("onHide");
         }
     }

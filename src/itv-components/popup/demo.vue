@@ -12,6 +12,7 @@
 
                 <itv-cell :isLink="true" @click="alertShow()" :showIcon="true" title="定时关闭">
                 </itv-cell>
+                <input type="text" placeholder="dadsa" />
             </section>
         </itv-main>
     </itv-container>
@@ -70,22 +71,22 @@ export default {
       }
   },
   mounted() {
-      this.alertShow();
-      setTimeout(()=>{
-           this.$itv.popup.alert({
-                title:"你是谁",
-                content:"我是人类",
-                hideOnClick: false,
-                closeType: 'click',   
-                isTop: true, 
-                onHide() {
-                    console.log('hide---');
+      this.$itv.popup.confirm({
+                // 组件除show外的属性
+                showInput: true,
+                hideOnBlur: true,
+                closeOnConfirm: false,
+                title: "请填写原因",
+                placeholder: "请输入内容",
+                
+                onCancel() {
+                    
                 },
-                onConfirm() {
-                    console.log('confirm---');
+                onConfirm(value) {
+                   debugger
+                    
                 }
-            })
-      }, 3000)
+            });
   }
 };
 </script>

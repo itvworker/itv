@@ -1,7 +1,7 @@
 .itv-popup {
     background-color: #fff;
-    border-radius: 4ipx;
-    width: 260ipx;
+    border-radius: 8ipx;
+    width: 280ipx;
 }
 .itv-group-btn {
     display: flex;
@@ -53,17 +53,32 @@
 }
 .itv-popup-content {
     padding: 10ipx;
+    min-height: 80ipx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     h2 {
         font-weight: normal;
         text-align: center;
-        padding: 10ipx 0px;
+        padding-top: 10ipx;
         margin: 0px;
         font-weight: 400;
     }
     .itv-popup-msg {
         text-align: center;
         font-size: 14ipx;
-        padding-bottom: 10ipx;
+        padding: 10ipx 0px;
         color: #666;
+    }
+    .itv-popup-input{
+        height: 32ipx;
+        box-sizing:border-box;
+        border: @itv-border-color-base solid 1px; 
+        margin-left: 10ipx;
+        margin-right: 10ipx;
+        padding-left: 8ipx;
+        padding-right: 8ipx;
+        border-radius: 4ipx;
+        margin-top: 5ipx;
     }
 }

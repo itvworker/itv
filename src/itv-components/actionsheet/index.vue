@@ -1,7 +1,7 @@
 <template lang="html">
     <itv-dialog v-model="currentValue" :hideOnClick="hideOnClick" type='bottom'>
         <div class="itv-acitonsheet" :class="{'ios-safe-area':iosSafeArea}"   :style="{'z-index':zIndex+1}">
-            <div class="itv-item" :class="{'itv-active': current === index}" v-for="(item, index) in items" :key="index" @click="confirm(item)">
+            <div class="itv-item" :class="{'itv-active': current === index}" v-for="(item, index) in items" v-show="!item.hideMeun" :key="index" @click="confirm(item)">
                 {{item.text}}
             </div>
             <div class="itv-item itv-cancel" @click.stop="close" v-show="!hideBtnCancel">
