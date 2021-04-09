@@ -25,6 +25,11 @@ const plugin = {
         }
         const popup = {
             alert (options = {}) {
+                if($vm.value && $vm.isTop) {
+                    return
+                }
+          
+
                 init()
                 merge($vm, options) 
                 $vm.value = true

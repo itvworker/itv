@@ -10,11 +10,11 @@
                 </slot>
             </div>
             <div class="itv-group-btn">
-                <div @click="cancel" :style="{'color': this.cancelTextColor}" v-show="!hideBtnCancel" class="itv-popup-cancel">
+                <div @click="cancel" :class="{'forbid-click': this.closeType === 'click' && this.sec > 0}" :style="{'color': this.cancelTextColor}" v-show="!hideBtnCancel" class="itv-popup-cancel">
                     {{cancelText}}
                 </div>
-                <div @click="confirm" :style="{'color': this.confirmTextColor}" class="itv-popup-confirm">
-                    {{confirmText}}
+                <div @click="confirm" :class="{'forbid-click': this.closeType === 'click' && this.sec > 0}" :style="{'color': this.confirmTextColor}" class="itv-popup-confirm">
+                    {{confirmText}}<span v-if="closeType!=='none'&& sec >0">({{sec}}s)</span>
                 </div>
             </div>
         </div>
@@ -64,24 +64,69 @@ export default {
         content: {
             type: String,
             default: ""
+        },
+        seconds:{
+            type: Number,
+            default: 3
+        },
+        closeType: {
+            type: String,
+            default: 'none' //click关闭  auto自动关闭
+        },
+        isTop: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
         ItvDialog
     },
+    data() {
+        return {
+            sec: 0,
+            timeinter: null
+        }
+    },
     watch: {
         value(a, b) {
+            if(this.timeinter) {
+                clearInterval(this.timeinter)
+            }
             if (!a) {
                 this.$emit("onHide");
+                this.sec = 0;
+               
+            }else{
+                this.sec = this.seconds;
+                if(this.closeType !== 'none') {
+                   this.timeinter = setInterval(() => {
+                        if(this.sec>0) {
+                            this.sec--;
+                        }
+                        if(this.sec===0) {
+                            clearInterval(this.timeinter)
+                            if(this.closeType === 'auto') {
+                                this.$emit('onHide')
+                            }
+                        }
+                    }, 1000);
+                }
             }
         }
     },
     methods: {
         cancel() {
+            if(this.closeType === 'click' && this.sec > 0) {
+                return
+            }
             this.$emit("onCancel");
             this.$emit("onHide");
+
         },
         confirm() {
+            if(this.closeType === 'click' && this.sec > 0) {
+                return
+            }
             this.$emit("onConfirm");
             this.$emit("onHide");
         }

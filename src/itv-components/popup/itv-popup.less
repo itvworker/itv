@@ -27,10 +27,19 @@
     }
     .itv-popup-confirm {
         color: @itv-primary-color;
+        
+        -webkit-tap-highlight-color: transparent; 
+        &.forbid-click {
+            color: @itv-disabled-bg !important;
+        }
     }
     .itv-popup-cancel {
         color: #aaa;
         position: relative;
+        -webkit-tap-highlight-color: transparent; 
+        &.forbid-click {
+            color: @itv-disabled-bg !important;
+        }
         &::after {
             position: absolute;
             content: " ";
