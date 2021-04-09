@@ -8,7 +8,7 @@
                     <div class="itv-popup-msg" v-html="content" v-show="content">
                         {{content}}
                     </div>
-                    <input type="text" v-model="inputValue" ref="input" :placeholder="placeholder"  class="itv-popup-input" />
+                    <input type="text" v-show="showInput" v-model="inputValue" ref="input" :placeholder="placeholder"  class="itv-popup-input" />
                   
                 </slot>
                 
