@@ -7,6 +7,7 @@
 import render from '../../libs/render';
 import getDirection from '../../libs/touch'
 export default {
+    name:"itv-drag-bar",
     props: {
         id: {
             type: [String, Number],
@@ -75,7 +76,6 @@ export default {
                 this.$emit('onFinish', this.index, this.id);
             }
             this.letgo = false
-            
         })
 
          this.itvDrag.$on('start', (obj)=>{
@@ -206,7 +206,7 @@ export default {
             }
            
             this.isDrag = false;
-            this.itvDrag.$emit('end');
+            this.itvDrag.$emit('onEnd');
             clearTimeout(this.timeout);
         }
     }

@@ -5,6 +5,7 @@
 </template>
 <script>
 export default {
+    name:"itv-drag-outer",
     data() {
         return {
 
