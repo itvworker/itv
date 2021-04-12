@@ -12,7 +12,7 @@
           >
                 <drag-outer  ref="drag">
                     <transition-group name="flip-list" tag="p">
-                        <dragbar pattern="vertical"  class="dragbar-bottom" @onStart="record" @onFinish="finish"  v-for="(item, index) in list" :index="index" :key="item.id" :id="item.id">
+                        <dragbar pattern="vertical" :triggerDisY="50"  class="dragbar-bottom" @onStart="record" @onFinish="finish"  v-for="(item, index) in list" :index="index" :key="item.id" :id="item.id">
                             <itv-cell :showIcon="true" :title="'中间弹出'+item.id" @click="show=true"  desc="中间弹出" />
                         </dragbar>
                     </transition-group>
@@ -96,7 +96,18 @@ export default {
 
 <style lang="less" scoped>
 
-
+.dragbar-bottom {
+    &.itv-drag-moved{
+        background-color:fade(@itv-page-main, 10%);
+    }
+    &.itv-drag-active {
+        background-color: #fff;
+        box-shadow: rgba(0,0,0,0.6) 0 0 16ipx;
+    }
+    &.itv-drag-letgo{
+        background-color: #ddd;
+    }
+}
 .page-dialog {
     .page-content{
         display: none;

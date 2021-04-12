@@ -29,7 +29,16 @@ export default {
         pattern: { 
             type: String,
             default: 'freedom' 
+        },
+        triggerDisY: {
+            type: Number,
+            default: null
+        },
+        triggerDisX: {
+            type: Number,
+            default: null
         }
+        
     },
     data() {
         return {
@@ -52,6 +61,7 @@ export default {
             letgo: false,
             isMove: false,
             timeEnd: false
+            
         }
     },
     inject:["itvDrag"],
@@ -65,6 +75,7 @@ export default {
                 this.$emit('onFinish', this.index, this.id);
             }
             this.letgo = false
+            
         })
 
          this.itvDrag.$on('start', (obj)=>{
@@ -81,12 +92,13 @@ export default {
         },
         drag(obj) {
             if(this.isDrag) return;
-            let isX = Math.abs(this.left - obj.x) < obj.width/2;
-            let isY = Math.abs(this.top - obj.y) < obj.height/2;
+            let disY = this.triggerDisY|| obj.height/2-1
+            let disX = this.triggerDisX|| obj.width/2-1
+            let isX = Math.abs(this.left - obj.x) < disX;
+            let isY = Math.abs(this.top - obj.y) < disY;
             if(this.id === 10) {
                 console.log(isX, isY);
             }
-            
             
             if(isX && isY) {
                 this.letgo = true;
@@ -182,10 +194,6 @@ export default {
             }else{
                 this.x = this.left;
             }
-
-           
-            
-
 
             this.render(-this.x, -this.y, 1);
             this.itvDrag.$emit("onDrag", {x:this.x, y:this.y, width: this.elWidth, height: this.elHeight});  

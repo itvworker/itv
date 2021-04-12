@@ -43,7 +43,7 @@
                     return
                 }
 
-
+                
 
                 let touches = e.touches;
                 let timeStamp = e.timeStamp;
