@@ -1,0 +1,28 @@
+.itv-expansion-tile{
+    .itv-expansion-bar{
+        height: 44ipx;
+        display: flex;
+        padding: 0 16pt;
+        .left-title  {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            
+        }
+        .right-title{
+            display: flex;
+            align-items: center;
+            .icon-arrow-up{
+                transition: transform 300ms;
+                transform: rotate(0deg);
+                &.rotate-icon{
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+    .itv-expansion-tile-toggle{
+        overflow: hidden;
+        transition: height 300ms;
+    }
+}

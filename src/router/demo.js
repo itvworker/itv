@@ -288,6 +288,16 @@ export default [
                     keepAlive: false,
                     title: 'dragbar',
                 }
+            },
+            {
+                path: '/demo/expansionTile',
+                name: 'itv_expansionTile',
+                component: () => import('@/itv-components/expansion-tile/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'ExpansionTile',
+                }
+                
             }
             
 

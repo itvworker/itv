@@ -80,12 +80,17 @@ export default {
             this.letgo = false
         })
 
-        this.itvDrag.$on("onStart", (x,y)=>{
+        
+
+        this.itvDrag.$on("trigger", ()=>{
             if(this.isDrag === null) {
-                
                 this.isDrag = false;
             } 
         })
+
+        this.itvDrag.$on("onTouchend",()=>{
+            this.isDrag = null;
+        });
 
         /**
          * 重新计算drag-bar的位置，  更新是要调用
@@ -149,7 +154,9 @@ export default {
             this.y = this.top;
             this.render( -this.x, -this.y, 1);
             dom.className +=' itv-drag-active' 
-         
+            this.isDrag = true;
+            this.itvDrag.$emit("trigger");
+
             
         },
         touchstart(e) {
