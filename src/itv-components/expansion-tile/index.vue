@@ -56,6 +56,9 @@ export default {
         },
         value(n) {
             this.currentValue = n;
+            if(n) {
+                this.height = this.$refs.content.clientHeight;
+            }
         }
     },
     data() {
