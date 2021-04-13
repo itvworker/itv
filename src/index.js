@@ -26,6 +26,8 @@ import ScrollerCalendar from './itv-components/scroller-calendar'
 import Progress from './itv-components/progress'
 import Flow from './itv-components/flow'
 import Timepicker from './itv-components/timepicker'
+import DragBar from './itv-components/drag-bar';
+import DragOuter from './itv-components/drag-outer'
 
 import PluginActionsheet from './plugins/actionsheet.js';
 import PluginCalendarTime from './plugins/calendarTime.js';
@@ -64,6 +66,8 @@ export {
     Progress,
     Flow,
     Timepicker,
+    DragOuter,
+    DragBar,
 
     PluginActionsheet,
     PluginCalendarTime,
@@ -104,7 +108,9 @@ let Components = [
     Progress,
     Flow,
     Timepicker,
-
+    DragOuter,
+    DragBar,
+    
     PluginActionsheet,
     PluginCalendarTime,
     PluginCascader,

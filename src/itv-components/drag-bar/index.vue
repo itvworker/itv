@@ -1,5 +1,5 @@
 <template>
-    <div class="itv-drag-bar"   :class="{'itv-drag-moved': isDrag , 'itv-drag-letgo': letgo}" @touchstart="touchstart" @touchmove="touchmove"  @touchend="touchend">
+    <div class="itv-drag-bar"   :class="{'itv-drag-moved': isDrag , 'itv-none-moved': isDrag === false,  'itv-drag-letgo': letgo}" @touchstart="touchstart" @touchmove="touchmove"  @touchend="touchend">
         <slot></slot>
     </div>
 </template>
@@ -53,7 +53,7 @@ export default {
             parentTop:0,
             left: 0,
             top: 0,
-            isDrag: false,
+            isDrag: null,
             timeout: null,
             moveY: 0,
             moveX: 0,
@@ -62,23 +62,35 @@ export default {
             letgo: false,
             isMove: false,
             timeEnd: false
-            
         }
     },
     inject:["itvDrag"],
     mounted() {
         this.init();
+
+
         this.itvDrag.$on('onDrag', (obj)=>{
             this.drag(obj);
         })
-        this.itvDrag.$on('end', (x,y)=>{
+
+        this.itvDrag.$on('endDrag', (x,y)=>{
             if(this.letgo) {
-                this.$emit('onFinish', this.index, this.id);
+               this.itvDrag.$emit('onEnd', this.index, this.id);
             }
             this.letgo = false
         })
 
-         this.itvDrag.$on('start', (obj)=>{
+        this.itvDrag.$on("onStart", (x,y)=>{
+            if(this.isDrag === null) {
+                
+                this.isDrag = false;
+            } 
+        })
+
+        /**
+         * 重新计算drag-bar的位置，  更新是要调用
+         */
+        this.itvDrag.$on('onRestart', (obj)=>{
             this.init();
         })
     },
@@ -92,13 +104,26 @@ export default {
         },
         drag(obj) {
             if(this.isDrag) return;
-            let disY = this.triggerDisY|| obj.height/2-1
-            let disX = this.triggerDisX|| obj.width/2-1
-            let isX = Math.abs(this.left - obj.x) < disX;
-            let isY = Math.abs(this.top - obj.y) < disY;
-            if(this.id === 10) {
-                console.log(isX, isY);
-            }
+            let dragBarCenterX = obj.x + obj.width/2;
+            let dragBarCenterY = obj.y + obj.height/2;
+            
+            let nearBarCenterX = this.left + this.elWidth/2;
+            let nearBarCenterY = this.top + this.elHeight/2;
+            
+            
+            let disY = this.triggerDisY|| obj.height/2;
+            let disX = this.triggerDisX|| obj.width/2;
+
+
+            let isX = Math.abs(dragBarCenterX - nearBarCenterX) < disX;
+            let isY = Math.abs(dragBarCenterY - nearBarCenterY) < disY;
+
+            
+            // if(this.id === 0) {
+            //     console.log('----------------------------');
+            //     console.log(dragBarCenterX, dragBarCenterY);
+            //     console.log(nearBarCenterX, nearBarCenterY);
+            // }
             
             if(isX && isY) {
                 this.letgo = true;
@@ -129,7 +154,7 @@ export default {
         },
         touchstart(e) {
             this.timeEnd = false;
-            this.$emit('onStart', this.index, this.id);
+            this.itvDrag.$emit('onStart', this.index, this.id);
             let touches = e.touches;
             //检查手指数量
             if (touches.length == null) {
@@ -204,9 +229,9 @@ export default {
                 this.itvDrag.$el.removeChild(this.dom);
                 this.dom = null;
             }
-           
-            this.isDrag = false;
-            this.itvDrag.$emit('onEnd');
+            this.isDrag = null;
+            this.itvDrag.$emit('endDrag');
+            this.itvDrag.$emit("onTouchend");
             clearTimeout(this.timeout);
         }
     }

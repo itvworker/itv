@@ -18,7 +18,7 @@ export default {
     },
     methods: {
         restart() {
-            this.$emit("start");
+            this.$emit("onRestart");
         },
         drag(x, y) {
             this.$emit('onDrag', x, y)

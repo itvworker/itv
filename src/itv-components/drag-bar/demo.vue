@@ -10,13 +10,13 @@
             :speed="50" 
             :showScrollBar="true"
           >
-                <drag-outer  ref="drag">
+                <itv-drag-outer  ref="drag" @onStart="record" @onEnd="finish" @onTouchend="touchend">
                     <transition-group name="flip-list" tag="p">
-                        <dragbar pattern="vertical" :triggerDisY="50"  class="dragbar-bottom" @onStart="record" @onFinish="finish"  v-for="(item, index) in list" :index="index" :key="item.id" :id="item.id">
+                        <itv-drag-bar pattern="vertical"   class="dragbar-bottom"   v-for="(item, index) in list" :index="index" :key="item.id" :id="item.id">
                             <itv-cell :showIcon="true" :title="'中间弹出'+item.id" @click="show=true"  desc="中间弹出" />
-                        </dragbar>
+                        </itv-drag-bar>
                     </transition-group>
-                </drag-outer>
+                </itv-drag-outer>
             </itv-scroller>
         </itv-main>
     </itv-container>
@@ -24,13 +24,9 @@
 </template>
 
 <script>
-import DragOuter from './dragouter';
-import Dragbar from './index'; 
+
 export default {
-    components:{
-        DragOuter,
-        Dragbar,
-    },
+  
     data() {
         return {
             show:false,
@@ -68,6 +64,9 @@ export default {
             this.$nextTick(()=>{
                 this.$refs.drag.restart();
             })
+        },
+        touchend() {
+            console.log('touchend');
         },
         open() {
             this.show = true
