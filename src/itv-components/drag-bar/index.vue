@@ -38,6 +38,10 @@ export default {
         triggerDisX: {
             type: Number,
             default: null
+        },
+        isCanDrag: {
+            type: Boolean,
+            default: true
         }
         
     },
@@ -161,6 +165,7 @@ export default {
         },
         touchstart(e) {
             this.timeEnd = false;
+            if(!this.isCanDrag) return;
             this.itvDrag.$emit('onStart', this.index, this.id);
             let touches = e.touches;
             //检查手指数量
@@ -192,6 +197,7 @@ export default {
             },this.tapTime)
         },
         touchmove(e) {
+            if(!this.isCanDrag) return;
             let touches = e.touches;
             let moveX, moveY
             let isSingleTouch = touches.length === 1;
@@ -232,6 +238,7 @@ export default {
             
         },
         touchend(){
+            if(!this.isCanDrag) return;
             if(this.dom) {
                 this.itvDrag.$el.removeChild(this.dom);
                 this.dom = null;
