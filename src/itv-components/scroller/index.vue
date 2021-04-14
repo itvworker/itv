@@ -37,8 +37,11 @@
                             ></span>
                         </div>
                     </slot>
-                </div>   
-                <slot/> 
+                </div> 
+                <div class="itv-scroller-msg">
+                    <slot/>
+                </div>  
+                 
 
                 <div class="itv-scroller-more" ref="more" v-show='isMore && moreStatus!=="loadingStop"'>
                     <spinner v-show="moreStatus !== 'none'" class="itv-scroller-more-icon" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}" />
