@@ -11,7 +11,7 @@ import Loading from './itv-components/loading';
 import Picker from './itv-components/picker';
 import Popup from './itv-components/popup';
 import Schedule from './itv-components/schedule';
-import Srcoller from './itv-components/scroller';
+import Scroller from './itv-components/scroller';
 import SrcollerElevator from './itv-components/scroller-elevator';
 import Slidebutton from './itv-components/slidebutton';
 import Slideitem from './itv-components/slideitem';
@@ -52,7 +52,7 @@ export {
     Picker,
     Popup,
     Schedule,
-    Srcoller,
+    Scroller,
     SrcollerElevator,
     Slidebutton,
     Slideitem,
@@ -94,8 +94,8 @@ let Components = [
     Picker,
     Popup,
     Schedule,
-    Srcoller,
-    SrcollerElevator,
+    Scroller,
+    ScrcollerElevator,
     Slidebutton,
     Slideitem,
     Slideout,
