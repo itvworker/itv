@@ -135,7 +135,7 @@ export default {
         },
         speed: {
             type: Number,
-            default: 60
+            default: 30
         },
         //是否黒示滚动条
         showScrollBar: {
@@ -186,7 +186,7 @@ export default {
         },
         maxSpeed:{
             type: Number,
-            default: 50
+            default: 30
         },
         isMore: {
             type: Boolean,
