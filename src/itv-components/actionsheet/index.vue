@@ -102,7 +102,7 @@ export default {
     },
     methods: {
         cancel() {
-           
+            //不过目前不支持阿拉
             this.$emit("onHide");
             this.$emit("onCancel");
             this.$emit("input",false);

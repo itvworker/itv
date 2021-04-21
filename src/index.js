@@ -12,7 +12,7 @@ import Picker from './itv-components/picker';
 import Popup from './itv-components/popup';
 import Schedule from './itv-components/schedule';
 import Scroller from './itv-components/scroller';
-import SrcollerElevator from './itv-components/scroller-elevator';
+import ScrcollerElevator from './itv-components/scroller-elevator';
 import Slidebutton from './itv-components/slidebutton';
 import Slideitem from './itv-components/slideitem';
 import Slideout from './itv-components/slideout';
@@ -53,7 +53,7 @@ export {
     Popup,
     Schedule,
     Scroller,
-    SrcollerElevator,
+    ScrcollerElevator,
     Slidebutton,
     Slideitem,
     Slideout,

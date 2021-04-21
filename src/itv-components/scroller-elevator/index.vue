@@ -19,6 +19,10 @@ export default {
         title: {
             type: String,
             default:""
+        },
+        isFixed: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -34,6 +38,7 @@ export default {
     mounted() {
        this.init();
        this.$parent.$on('scroll', (res)=>{
+           if(!this.isFixed) return;
            if(res.y > this.top ) {
                let y =res.y-this.top;
                if(y>this.maxY) {
@@ -47,7 +52,7 @@ export default {
            }
            
        })
-
+    
        this.$parent.$on('content', (res)=>{
            this.init();
        })

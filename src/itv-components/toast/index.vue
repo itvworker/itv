@@ -5,10 +5,9 @@
 
         </div>
         <transition :name="currentTransition">
-            <div class="itv-toast" :class="toastClass" v-show="show">
+            <div class="itv-toast" :class="toastClass"  v-show="show" v-html="html">
                 <!-- <i></i> -->
                 <img class="icon" v-show="type!=='text'" :src="icon">
-
                 <p v-if="text">{{text}}</p>
             </div>
         </transition>
@@ -37,6 +36,10 @@ export default {
         time: {
             type: Number,
             default: 2000
+        },
+        html:{
+            type: Number, 
+            default: null
         }
     },
     data() {
