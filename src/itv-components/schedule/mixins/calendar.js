@@ -360,14 +360,14 @@ export default {
             let lastNum =  42 - prev.length;
           
             if(this.endType === 'end') {
-                lastNum = prev.length % 7;
+                lastNum = 7-prev.length % 7;
+                
             }
       
             if(this.endType === null) {
                 lastNum = 0
             }
 
-            debugger
             let last = this.calcNextMonth(newday.year, newday.month, newday.week, lastNum)
             return prev.concat(last)
         },
