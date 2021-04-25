@@ -71,16 +71,17 @@
 .itv-fade-leave-to {
     opacity: 0;
 }
+
 .itv-dialog-enter-active {
-    animation: itv-dialog-in 0.5s;
+    animation: itv-dialog-in 0.5s ease-out;
 }
 .itv-dialog-leave-active {
-    animation: itv-dialog-out @itv-sec;
+    animation: itv-dialog-out @itv-sec ease-in;
 }
 @keyframes itv-dialog-in {
     0% {
         transform-origin: center;
-        transform: translate(-50%, -50%) scale(1.185);
+        transform: translate3d(-50%, -50%) scale(1.185);
         opacity: 0;
     }
     100% {
@@ -107,5 +108,7 @@
 }
 .itv-mask-leave-active,
 .itv-mask-enter-active {
-    transition: opacity 300ms;
+    transition: opacity 300ms ease-in;
 }
+
+
