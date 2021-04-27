@@ -31,9 +31,9 @@ export default {
             this.isTriggerPullDown = false
             this.$nextTick(()=>{
                 this.calcMax()
-                if(this.isMore) {
-                    this.moreStatus = 'loadingStop'; 
-                }
+                // if(this.isMore) {
+                //     this.moreStatus = 'loadingStop'; 
+                // }
             })  
             this.$emit("content");
           

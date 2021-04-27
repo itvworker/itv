@@ -135,7 +135,7 @@ export default {
         },
         speed: {
             type: Number,
-            default: 30
+            default: 100
         },
         //是否黒示滚动条
         showScrollBar: {
@@ -153,8 +153,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        
-
         refreshLayerColor: {
             type: String,
             default: "#AAA"
@@ -187,6 +185,11 @@ export default {
         maxSpeed:{
             type: Number,
             default: 30
+        },
+        /**除数，控制计算速度 */
+        divisor:{
+            type: Number,
+            default: 5
         },
         isMore: {
             type: Boolean,
