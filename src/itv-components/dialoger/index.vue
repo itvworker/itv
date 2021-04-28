@@ -2,7 +2,7 @@
     <div class="itv-model" >
         <slot name="outer"></slot>
         <transition :name="type==='none'?'none':'itv-fade'">
-            <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex,'opacity': opacity }"></div>
+            <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex }"></div>
         </transition>
         <transition :name="animate">
             <div ref="content" :class="className"   v-show="value && html" :style="{'z-index':zIndex+1}">
