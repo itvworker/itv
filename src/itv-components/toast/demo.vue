@@ -23,6 +23,10 @@
                 success
             </div>
 
+            <div class="itv-demo-btn btn-content" @click="successHtml('html')" >
+                success
+            </div>
+
         </itv-main>
 
     </itv-container>
@@ -68,6 +72,9 @@ export default {
                 type:'success',
                 position:'middle'
             })
+        },
+        successHtml() {
+            this.$itv.toast.html("<div class='style' style='font-size:40px'>hmtl</div>")
         }
     }
 }
