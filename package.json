@@ -4,7 +4,7 @@
   "description": "Mobile Project Initial chemical tool ",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inspect-brk --config=build/webpack.dev.tool.js",
+    "start": "webpack-dev-server --inspect-brk --config=build/webpack.dev.js",
     "demo": "webpack-dev-server --inspect-brk --config=build/webpack.dome.dev.js",
     "demo-build": "node ./build/demo.pro.js",
     "build": "node ./build/pro.js",
@@ -35,7 +35,9 @@
     "@babel/preset-stage-3": "^7.0.0-rc.3",
     "@babel/runtime": "^7.7.7",
     "@testing-library/vue": "^5.6.1",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
     "@vue/babel-plugin-transform-vue-jsx": "^1.1.2",
+    "@vue/babel-preset-jsx": "^1.2.4",
     "@vue/cli-plugin-unit-jest": "^4.5.11",
     "@vue/test-utils": "^1.1.2",
     "@vux/loader": "^2.0.0-rc4",
@@ -98,7 +100,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
-    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "axios": "^0.19.2",
     "highlight.js": "^9.18.1",
     "itv-ui": "^1.0.52",

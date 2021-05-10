@@ -13,6 +13,7 @@ module.exports = {
         ],
     ],
     plugins: [
+        '@vue/babel-plugin-transform-vue-jsx',
         'babel-plugin-remove-vconsole',
         '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-transform-modules-commonjs',
