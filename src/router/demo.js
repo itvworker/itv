@@ -299,16 +299,16 @@ export default [
                 }
                 
             },
-            // {
-            //     path: '/demo/jsx',
-            //     name: 'itv_jsx',
-            //     component: () => import('@/itv-components/jsx/demo.vue'),
-            //     meta: {
-            //         keepAlive: false,
-            //         title: 'jsx',
-            //     }
+            {
+                path: '/demo/jsx',
+                name: 'itv_jsx',
+                component: () => import('@/itv-components/jsx/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'jsx',
+                }
                 
-            // }
+            }
             
 
         ]

@@ -50,11 +50,6 @@ export default {
     },
     mounted() {
        
-        
-    
-
-        
-        
     },
     methods: {
         topage(item) {

@@ -78,12 +78,8 @@ module.exports = {
                     {
                         loader: 'babel-loader',
                        
-                    },
-                    // {
-                    //     loader:"/loaders/itv-import-loader"
-                    // }
-                ],
-                // include: [ resolve('test'), resolve('src'),  resolve('node_modules/itv-ui'), resolve('node_modules/webpack-dev-server/client')]
+                    }
+                ]
             },
             {
                 test: /\.md$/,
