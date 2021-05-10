@@ -19,8 +19,6 @@ VueLoaderPlugins.prototype.apply = function(compiler) {
             }else{
               item.include=[item.include, resolve('node_modules/itv-ui')]
             }
-        }else{
-           item.include = [resolve('node_modules/itv-ui')]
         }
       }
   });
