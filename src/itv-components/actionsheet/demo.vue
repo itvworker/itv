@@ -57,7 +57,6 @@ export default {
     methods: {
         open() {
             this.$itv.actionsheet.show({
-             
                 items:[
                     {
                         text:'选项一'
@@ -70,7 +69,6 @@ export default {
                     }
                 ],
                 onConfirm:(item)=> {
-                    
                     this.text =  item.text;
                 }
             })

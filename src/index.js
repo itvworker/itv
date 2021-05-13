@@ -29,6 +29,7 @@ import Timepicker from './itv-components/timepicker'
 import DragBar from './itv-components/drag-bar';
 import DragOuter from './itv-components/drag-outer'
 import ExpansionTile from './itv-components/expansion-tile'
+import Datepicker from './itv-components/datepicker';
 
 import PluginActionsheet from './plugins/actionsheet.js';
 import PluginCalendarTime from './plugins/calendarTime.js';
@@ -69,7 +70,9 @@ export {
     Timepicker,
     DragOuter,
     DragBar,
+    Datepicker,
     ExpansionTile,
+    
     PluginActionsheet,
     PluginCalendarTime,
     PluginCascader,
@@ -112,6 +115,7 @@ let Components = [
     DragOuter,
     DragBar,
     ExpansionTile,
+    Datepicker,
     
     PluginActionsheet,
     PluginCalendarTime,

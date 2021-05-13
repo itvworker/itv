@@ -9,7 +9,7 @@ import i18n from '@/lang'
 import 'lib-flexible'
 import './layout'
 // import { cascader, cell, pluginCascader } from 'itv-ui';
-import itv from 'itv-ui';
+import itv from './index.js';
 import './assets/css/index.less'
 
 // import VConsole from 'vconsole'
