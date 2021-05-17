@@ -151,7 +151,6 @@ export default {
             this.$emit('input', n)
         },
         currentHeader(n,o) {
-                console.log(n);
             this.$nextTick(()=>{
                this.$refs.body.calcMax();
                this.$refs.header.calcMax();

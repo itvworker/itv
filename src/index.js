@@ -39,6 +39,7 @@ import PluginLoading from './plugins/loading.js';
 import PluginPopup from './plugins/popup.js';
 import PluginToast from './plugins/toast.js';
 import PluginPicker from './plugins/picker.js';
+import PluginDatepicker from './plugins/datepicker.js'
 export {
     Actionsheet,
     CalendarTime,
@@ -80,7 +81,8 @@ export {
     PluginLoading,
     PluginPopup,
     PluginToast,
-    PluginPicker
+    PluginPicker,
+    PluginDatepicker
 }
 
 let Components = [
@@ -124,7 +126,8 @@ let Components = [
     PluginLoading,
     PluginPopup,
     PluginToast,
-    PluginPicker
+    PluginPicker,
+    PluginDatepicker
 ]
 
 export default {

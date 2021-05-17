@@ -1,4 +1,5 @@
 export default {
+    monthDaysNumber: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     /**
      * 是否为闫年
      * @return {Boolse} true|false
@@ -147,33 +148,60 @@ export default {
      * @returns {Array}
      */
     getMonthArr(start, end, now) {
+        start = start.map(item=>parseInt(item));
+        end = end.map(item=>parseInt(item));
+        now = now.map(item=>parseInt(item));
         let arr = []
         //当前选中年份等于结束年份时
         if(end[0] === now[0] && start[0]!==end[0]) {
             for(let i = 1; i <=parseInt(end[1]); i++) {
                 arr.push(this.getNumTwoBit(i));
             }
+            return arr;
         }
         //当前选中年份等于结束年份时
         if(start[0] === now[0] && start[0]!==end[0]) {
             for(let i = parseInt(now[1]); i <=12; i++) {
                 arr.push(this.getNumTwoBit(i));
             }
+            return arr;
         }
         //其它都显示12个月份
         if(end[0] !== now[0] && start[0] !== now[0] && start[0]!==end[0]) {
             for(let i = 1; i <=12; i++) {
                 arr.push(this.getNumTwoBit(i));
             }
+            return arr;
         }
         //结束年与开始年相等
         if(start[0]===end[0]) {
             for(let i = parseInt(start[1]); i <=parseInt(end[1]); i++) {
                 arr.push(this.getNumTwoBit(i));
             }
+            return arr;
         }
-        return arr;
+        
     },
+    /**
+     * @description 返回一个月当中有多少天
+     * @param {String} year 
+     * @param {Number} month 
+     * @returns 
+     */
+    getMonthDays(year, month) {
+        let isLeapYear = this.isLeapYear(year);
+        let days = this.monthDaysNumber[parseInt(month)-1]
+        if(isLeapYear && parseInt(month)===2) {
+            days = 29;
+        }
+        
+        let arr = [];
+        for(let i = 1; i <= days; i++) {
+            arr.push(this.getNumTwoBit(i))
+        }
+        return arr;    
+    },
+    
     /**
      * 
      * @param {Array} start 开始年月
@@ -182,7 +210,116 @@ export default {
      * @returns {Array}
      */
     getDayArr(start, end, now) {
+        start = start.map(item=>parseInt(item));
+        end = end.map(item=>parseInt(item));
+        now = now.map(item=>parseInt(item));
+        let arr = [];
+        //结束年份月份相等时
+        if(start[0] === end[0] && start[1]=== end[1]) {
+            for(let i = start[2], l = end[2]; i <= l; i++) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
+        //开始月份与选中是同一月份，同一年
+        if(start[0] === now[0] && start[1] === now[1] ) {
+            for(let i = start[2], l = now[2]; i <= l; i++) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
+
+        //结束月份与选中是同一月份，同一年
+        if(end[0] === now[0] && end[1] === now[1] ) {
+            for(let i = 1, l = end[2]; i <= l; i++) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
+
+        return this.getMonthDays(now[0], now[1])
+    },
+
+    getHourArr(start, end, now) {
+        start = start.map(item=>parseInt(item));
+        end = end.map(item=>parseInt(item));
+        now = now.map(item=>parseInt(item));
+        let arr = [];
+        //结束年份月份相等时
+        if(start[0] === end[0] && start[1]=== end[1] && start[2]===end[2]) {
+            for(let i = start[3], l = end[3]; i <= l; i++) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
+        //开始月份与选中是同一月份，同一年
+        if(start[0] === now[0] && start[1] === now[1] && start[2] === now[2] ) {
+            for(let i = start[3], l = now[3]; i <= l; i++) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
+
+        //开始月份与选中是同一月份，同一年
+        if(end[0] === now[0] && end[1] === now[1] && end[2] === now[2] ) {
+            for(let i = 0, l = end[3]; i <= l; i++) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
         
+        for(let i = 0; i <= 23; i++) {
+            arr.push(this.getNumTwoBit(i))
+        }
+
+        return arr;
+    },
+    getMinuteArr(start, end, now, step) {
+        let arr = [];
+        start = start.map(item=>parseInt(item));
+        end = end.map(item=>parseInt(item));
+        now = now.map(item=>parseInt(item));
+        //结束年份月份相等时
+        if(start[0] === end[0] && start[1]=== end[1] && start[2]===end[2] && start[3]===end[3]) {
+            for(let i = start[4], l = end[4]; i <= l; i+=step) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
+        //开始月份与选中是同一月份，同一年
+        if(start[0] === now[0] && start[1] === now[1] && start[2] === now[2] && start[3] === now[3] ) {
+          
+            for(let i = start[4];i <= 59; i+=step) {
+                console.log(i);
+                arr.push(this.getNumTwoBit(i))
+            }
+           
+            return arr;
+        }
+
+        //开始月份与选中是同一月份，同一年
+        if(end[0] === now[0] && end[1] === now[1] && end[2] === now[2] && end[3] === now[3] ) {
+            for(let i = 0, l = end[4]; i <= l; i+=step) {
+                arr.push(this.getNumTwoBit(i))
+            }
+            return arr;
+        }
+        
+        for(let i = 0; i <= 59; i+=step) {
+            arr.push(this.getNumTwoBit(i))
+        }
+        return arr;
+    },
+    /**
+     * @description 判断两个数组是否相等 简单的数组，只判断里面的值相不相等
+     * @param {String} arr1 
+     * @param {String} arr2 
+     */
+    isArrayEquality(arr1, arr2) {
+        if(!arr1 || !arr2) {
+            return false;
+        }
+        return JSON.stringify(arr1) === JSON.stringify(arr2)
     }
     
 };

@@ -8,7 +8,7 @@
         </div>
         <div class="itv-picker-panel">
             <picker-slot :class="pickerClassName"  v-for="(item, index) of items" :ref="`picer-slot-${(index)}`"
-                :default-value="selectValue[index]"
+                :default-value="selectValue[index+timeIndex]"
                 :is-update="isUpdate"
                 :list-data="item"
                 @chooseItem="onChooseItem"
@@ -81,6 +81,10 @@ export default {
         rows:{
             type: Number,
             default: 5
+        },
+        step: {
+            type: Number,
+            default: 1
         }
 
     },
@@ -90,7 +94,6 @@ export default {
     },
     computed: {
         list() {
-            
             return JSON.parse(JSON.stringify(this.listData))
         }
     },
@@ -103,7 +106,8 @@ export default {
             selectValue:[], //默认项目
             items:[], //选项
             startTimeArr:[], //开始时间数组
-            endTimeArr:[] //结速时间数
+            endTimeArr:[], //结速时间数
+            timeIndex: 0,
         };
     },
     watch: {
@@ -129,33 +133,147 @@ export default {
     },
     methods: {
         init() {
+            this.items = [];
+            this.timeIndex = 0;
             switch (this.type) {
+                case 'time':
+                    let start = '2020-01-01 ' + this.startTime;
+                    let end = '2020-01-01 ' + this.endTime;
+                    let now =  '2020-01-01 ' +this.defaultValue;
+                    this.startTimeArr = formatDate(start,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.endTimeArr = formatDate(end, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.selectValue = formatDate(now, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.timeIndex = 3;
+                    let hour = util.getHourArr(this.startTimeArr , this.endTimeArr, this.selectValue)
+                    this.$set(this.items, 0, hour);
+                    this.setTime(0);
+                    break;
                 case 'date':
+                    this.startTimeArr = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
                     
+                    this.items = [];
+                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0]);
+                    this.setDate(0)
+                    break;
+                case 'ym':
+                    this.startTimeArr = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.items = [];
+                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0]);
+                    this.setYm(0)
                     break;
             
                 default:
-                    let startTime = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
-                    let endTime = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
-                    this.selectValue = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.startTimeArr = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
                     this.items = [];
-                    this.items[0] = util.getBeignEndArr(startTime[0], endTime[0]);
-                    this.items[1] = util.getMonthArr(startTime, endTime, this.selectValue)
-                    
+                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0]);
+                    this.setDatatime(0);
                     break;
+            }
+        },
+        setTime(index) {
+            
+            let minute = util.getMinuteArr(this.startTimeArr, this.endTimeArr, this.selectValue, this.step);
+            if(!util.isArrayEquality(this.items[1], minute) && index <=0) {
+                this.$set(this.items, 1, minute)
+            }
+        },
+        /**
+         * 年月日的变更
+         */
+        setDate(index) {
+            let month =  util.getMonthArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+            if(!util.isArrayEquality(this.items[1], month) &&  index>=0) { 
+                this.$set(this.items, 1, month)
+            }
+           
+            let day = util.getDayArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+            if(!util.isArrayEquality(this.items[2], day) && index <=1) {
+                this.$set(this.items, 2, day)
+            }
+        },
+        /**
+         * @param {Number} index 当type==='datetime' picker的索引
+         */
+        setYm(index) {
+            let month =  util.getMonthArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+            if(!util.isArrayEquality(this.items[1], month) &&  index>=0) { 
+                this.$set(this.items, 1, month)
+            }
+        },
+        /**
+         * @param {Number} index 当type==='datetime' picker的索引
+         */
+        setDatatime(index) {
+            let month =  util.getMonthArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+            if(!util.isArrayEquality(this.items[1], month) &&  index>=0) { 
+                this.$set(this.items, 1, month)
+            }
+           
+            let day = util.getDayArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+            if(!util.isArrayEquality(this.items[2], day) && index <=1) {
+                this.$set(this.items, 2, day)
+            }
+
+            let hour = util.getHourArr(this.startTimeArr , this.endTimeArr, this.selectValue)
+            if(!util.isArrayEquality(this.items[3], hour) && index <=2) {
+                this.$set(this.items, 3, hour)
+            }
+
+            let minute = util.getMinuteArr(this.startTimeArr, this.endTimeArr, this.selectValue, this.step)
+            if(!util.isArrayEquality(this.items[4], minute) && index <=3) {
+                this.$set(this.items, 4, minute)
             }
         },
         //点击确认
         onConfirm() {
-
+            switch (this.type) {
+                case 'time':
+                    this.$emit('onConfirm', this.selectValue[3]+':'+this.selectValue[4])
+                    break;
+                case 'date':
+                    this.$emit('onConfirm', this.selectValue[0]+'-'+this.selectValue[1]+'-'+this.selectValue[2])
+                   
+                    break;
+                case 'ym':
+                    this.$emit('onConfirm', this.selectValue[0]+'-'+this.selectValue[1])
+                   
+                    break;
+                default:
+                    this.$emit('onConfirm', this.selectValue[0]+'-'+this.selectValue[1]+'-'+this.selectValue[2]+' '+this.selectValue[3]+':'+this.selectValue[4])
+                    break;
+            } 
+            this.$emit('input', false)
         },
         //关闭
         onClose() {
-
+            this.$emit('input', false)
         },
         //变更项
-        onChooseItem() {
-
+        onChooseItem(item, index) {
+            switch (this.type) {
+                case 'time':
+                    this.selectValue[index+this.timeIndex] = item;
+                    this.setTime(index);
+                    break;
+                case 'date':
+                    this.selectValue[index] = item;
+                    this.setDate(index);
+                    break;
+                case 'ym':
+                    this.selectValue[index] = item;
+                    this.setYm(index);
+                    break;
+                default:
+                     this.selectValue[index] = item;
+                    this.setDatatime(index);
+                    break;
+            }
         }
 
     },
