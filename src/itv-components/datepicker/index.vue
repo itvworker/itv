@@ -120,7 +120,6 @@ export default {
             this.currentValue = n;
         },
         currentValue(n) {
-            
             if(!n) {
                 this.$emit('input', false);
                 this.$emit('onCancel');

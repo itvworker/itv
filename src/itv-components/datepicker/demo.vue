@@ -29,9 +29,17 @@ export default {
     methods:{
         openDate() {
             this.$itv.datepicker.show({
-            type:'date',
-            onConfirm:(msg)=> {
-                    
+                type:'date',
+                defaultValue: '1987-07-08',
+                title:"请选择出生日期",
+                confirmText:"选中",
+                cancelText:"关闭",
+                onConfirm:(msg)=> {
+                    console.log(msg);
+                
+                },
+                onCancel:(msg)=>{
+
                 }
             })
         }

@@ -19,6 +19,11 @@ const plugin = {
         const opts = {
             show (options) {
                 $vm.value = true;
+                let conform = options.onConfirm;
+                let cancel = options.onCancel;
+                let hide = options.onHide;
+                delete options.onConfirm;
+                delete options.onCancel;
                 if (typeof options === 'object') {
                     merge($vm, options)
                 }
@@ -26,14 +31,22 @@ const plugin = {
                 $vm.$off('onHide')
                 $vm.$off('onConfirm')
                 $vm.$off('onCancel')
+                $vm.$off('input')
+                $vm.$on('input',(msg)=>{
+                    $vm.value = msg;
+                })
                 $vm.$on('onHide', (msg) => {
-                    options && options.onHide && options.onHide(msg)
-                    $vm.value = false
+                    hide && hide(msg)
                 })
 
                 $vm.$on('onConfirm', (msg) => {
-                    options && options.onConfirm && options.onConfirm(msg);
-                    $vm.value = false
+                    conform && conform(msg);
+                    $vm.value = false;
+                })
+
+                $vm.$on('onCancel', (msg) => {
+                    cancel && cancel(msg);
+                    $vm.value = false;
                 })
 
             },
