@@ -82,9 +82,15 @@ export default {
             type: Number,
             default: 5
         },
+        //分钟步数
         step: {
             type: Number,
             default: 1
+        },
+        //至今
+        toNow: {
+            type: String,
+            default:null
         }
 
     },
@@ -151,17 +157,23 @@ export default {
                     this.startTimeArr = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
                     this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
                     this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
-                    
+                    if(this.toNow  === this.defaultValue) {
+                        this.selectValue = [this.toNow,this.toNow,this.toNow]
+                    }
                     this.items = [];
-                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0]);
+                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0],this.toNow);
                     this.setDate(0)
                     break;
                 case 'ym':
                     this.startTimeArr = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
                     this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
                     this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    if(this.toNow  === this.defaultValue) {
+                        this.selectValue = [this.toNow,this.toNow]
+                    }
                     this.items = [];
-                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0]);
+                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0],this.toNow);
+                    
                     this.setYm(0)
                     break;
             
@@ -170,7 +182,7 @@ export default {
                     this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
                     this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
                     this.items = [];
-                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0]);
+                    this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0], this.toNow);
                     this.setDatatime(0);
                     break;
             }
@@ -185,13 +197,21 @@ export default {
         /**
          * 年月日的变更
          */
-        setDate(index) {
+        setDate(index, isToNow) {
+           
+
             let month =  util.getMonthArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+            if(isToNow) {
+                month = [this.toNow]
+            }
             if(!util.isArrayEquality(this.items[1], month) &&  index>=0) { 
                 this.$set(this.items, 1, month)
             }
            
             let day = util.getDayArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+            if(isToNow) {
+                day = [this.toNow]
+            }
             if(!util.isArrayEquality(this.items[2], day) && index <=1) {
                 this.$set(this.items, 2, day)
             }
@@ -199,8 +219,11 @@ export default {
         /**
          * @param {Number} index 当type==='datetime' picker的索引
          */
-        setYm(index) {
+        setYm(index, isToNow) {
             let month =  util.getMonthArr(this.startTimeArr , this.endTimeArr, this.selectValue);
+             if(isToNow) {
+                month = [this.toNow]
+            }
             if(!util.isArrayEquality(this.items[1], month) &&  index>=0) { 
                 this.$set(this.items, 1, month)
             }
@@ -262,11 +285,11 @@ export default {
                     break;
                 case 'date':
                     this.selectValue[index] = item;
-                    this.setDate(index);
+                    this.setDate(index, item === this.toNow);
                     break;
                 case 'ym':
                     this.selectValue[index] = item;
-                    this.setYm(index);
+                    this.setYm(index,  item === this.toNow);
                     break;
                 default:
                      this.selectValue[index] = item;

@@ -2,7 +2,10 @@
     <itv-container>
         <itv-header>Datetime</itv-header>
         <itv-main>
-           <itv-cell :showIcon="true" title="日期选择" subTitle="去除显示的格式"  @click="openDate" >
+           <itv-cell :showIcon="true" title="日期选择" subTitle="去除显示的格式"  @click="onDate" >
+            </itv-cell>
+
+            <itv-cell :showIcon="true" title="日月选择" subTitle="去除显示的格式"  @click="onYm" >
             </itv-cell>
             
         </itv-main>
@@ -27,16 +30,34 @@ export default {
        
     },
     methods:{
-        openDate() {
+        onDate() {
             this.$itv.datepicker.show({
                 type:'date',
-                defaultValue: '1987-07-08',
+                defaultValue: '至今',
                 title:"请选择出生日期",
                 confirmText:"选中",
                 cancelText:"关闭",
+                toNow:"至今",
                 onConfirm:(msg)=> {
                     console.log(msg);
-                
+
+                },
+                onCancel:(msg)=>{
+
+                }
+            })
+        },
+        onYm() {
+            this.$itv.datepicker.show({
+                type:'ym',
+                defaultValue: '至今',
+                title:"请选择出生日期",
+                confirmText:"选中",
+                cancelText:"关闭",
+                toNow:"至今",
+                onConfirm:(msg)=> {
+                    console.log(msg);
+
                 },
                 onCancel:(msg)=>{
 

@@ -133,10 +133,13 @@ export default {
      * @param {Number} end 结束数
      * @returns 
      */
-    getBeignEndArr(start, end) {
+    getBeignEndArr(start, end, toNow) {
         let arr = [];
         for(let i = start; i<=end; i++) {
             arr.push(i.toString());
+        }
+        if(toNow) {
+            arr.push(toNow)
         }
         return arr;
     },
