@@ -77,18 +77,9 @@ module.exports = {
                 use: [
                     {
                         loader: 'babel-loader',
-<<<<<<< HEAD
-                        options: {
-                            sourceMap: true,
-                        }
-                    }
-                ],
-                include: [resolve('packages'), resolve('test'), resolve('src'), resolve('node_modules/webpack-dev-server/client')]
-=======
                        
                     }
                 ]
->>>>>>> c9290f3e2a2b2164dcb99a0d140b5eab81abd026
             },
             {
                 test: /\.md$/,
