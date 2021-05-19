@@ -74,14 +74,17 @@ export default {
             type: String,
             default: formatDate(null,'Y-M-D h:m')
         },
+        //是否循环滑动
         isLoop: {
             type: Boolean,
             default: false
         },
+        //行数，只能是5行7行
         rows:{
             type: Number,
             default: 5
         },
+        //分钟的步数
         step: {
             type: Number,
             default: 1
