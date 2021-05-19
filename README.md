@@ -20,7 +20,7 @@ import {scroller} from "itv"
 vue.use(scroller);
 
 ```
-
+ "webpack-dev-server": "^3.11.2",
 按需加载需要引入 [ItvPlugin](https://www.npmjs.com/package/itv-loader)， 否则会按需加载将失效
 
 

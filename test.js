@@ -1,186 +1,151 @@
-let arr = [
-    {
-        test: /\.vue$/,
-        use: [
-            {loader: 'vue-loader'}
-        ]
-
+export default{
+    mode: 'development',
+    context: '/Users/ning/Documents/project/itv',
+    entry: { app: [ '@babel/polyfill', './src/main.js' ] },
+    output: {
+      path: '/Users/ning/Documents/project/itv/components',
+      filename: '[name].[hash:4].js',
+      chunkFilename: '[name].[hash].js',
+      publicPath: '/',
+      webassemblyModuleFilename: '[modulehash].module.wasm',
+      library: '',
+      hotUpdateFunction: 'webpackHotUpdate',
+      jsonpFunction: 'webpackJsonp',
+      chunkCallbackName: 'webpackChunk',
+      globalObject: 'window',
+      devtoolNamespace: '',
+      libraryTarget: 'var',
+      pathinfo: true,
+      sourceMapFilename: '[file].map[query]',
+      hotUpdateChunkFilename: '[id].[hash].hot-update.js',
+      hotUpdateMainFilename: '[hash].hot-update.json',
+      crossOriginLoading: false,
+      jsonpScriptType: false,
+      chunkLoadTimeout: 120000,
+      hashFunction: 'md4',
+      hashDigest: 'hex',
+      hashDigestLength: 20,
+      devtoolLineToLine: false,
+      strictModuleExceptionHandling: false
     },
-    {
-        test: /\.css$/,
-        use: [
-            'vue-style-loader',
-            'css-loader'
-        ]
-
+    resolve: {
+      extensions: [ '.js', '.vue', '.json' ],
+      alias: {
+        'vue$': 'vue/dist/vue.esm.js',
+        '@': '/Users/ning/Documents/project/itv/src'
+      },
+      unsafeCache: true,
+      modules: [ 'node_modules' ],
+      mainFiles: [ 'index' ],
+      aliasFields: [ 'browser' ],
+      mainFields: [ 'browser', 'module', 'main' ],
+      cacheWithContext: false
     },
-    {
-        test: /\.less$/,
-        use: [ //loader从后向前执行，顺序不能乱，会不能编译
-            {
-                loader: 'vue-style-loader'
-            },
-            {
-                loader: 'css-loader',
-            },
-            {
-                loader: 'postcss-loader'
-            },
-            {
-                loader: 'less-loader',
-                options: {
-                    importLoaders: 5,
-                    javascriptEnabled: true
-                }
-            },
-            {
-                loader: 'sass-resources-loader'
-            }
-
-        ],
-        include: [resolve('src')]
+    module: {
+      rules: [
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object]
+      ],
+      unknownContextRequest: '.',
+      unknownContextRegExp: false,
+      unknownContextRecursive: true,
+      unknownContextCritical: true,
+      exprContextRequest: '.',
+      exprContextRegExp: false,
+      exprContextRecursive: true,
+      exprContextCritical: true,
+      wrappedContextRegExp: /.*/,
+      wrappedContextRecursive: true,
+      wrappedContextCritical: false,
+      strictExportPresence: false,
+      strictThisContextOnImports: false,
+      unsafeCache: true,
+      defaultRules: [ [Object], [Object], [Object], [Object] ]
     },
-    {
-        test: /\.js$/,
-        use: [
-            {
-                loader: 'babel-loader',
-                options: {
-                    sourceMap: true,
-                }
-            }
-        ]
+    devServer: {
+      contentBase: '/Users/ning/Documents/project/itv/components',
+      host: '0.0.0.0',
+      compress: true,
+      open: false,
+      hot: true,
+      port: 8888,
+      publicPath: '/',
+      filename: '[name].[hash:4].js',
+      hotOnly: undefined,
+      clientLogLevel: 'info',
+      stats: {
+        children: false,
+        warnings: true,
+        source: true,
+        hash: true,
+        colors: [Object]
+      }
     },
-    {
-        test: /\.md$/,
-        use: [
-            {
-                loader: 'html-loader'
-            },
-            {
-                loader: "markdown-loader"
-            }
-        ]
+    stats: { children: false, warnings: true, source: true, hash: true },
+    plugins: [
+      VueLoaderPlugin {},
+      HtmlWebpackPlugin { options: [Object] },
+      ItvPlugin { options: [Object] }
+    ],
+    devtool: 'eval',
+    cache: true,
+    target: 'web',
+    node: {
+      console: false,
+      process: true,
+      global: true,
+      Buffer: true,
+      setImmediate: true,
+      __filename: 'mock',
+      __dirname: 'mock'
     },
-    {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-            limit: 1000,
-            esModule: false,
-            name: 'static/img/[name].[hash:7].[ext]'
-        }
+    performance: false,
+    optimization: {
+      removeAvailableModules: false,
+      removeEmptyChunks: true,
+      mergeDuplicateChunks: true,
+      flagIncludedChunks: false,
+      occurrenceOrder: false,
+      sideEffects: false,
+      providedExports: true,
+      usedExports: false,
+      concatenateModules: false,
+      splitChunks: {
+        hidePathInfo: false,
+        chunks: 'async',
+        minSize: 10000,
+        minChunks: 1,
+        maxAsyncRequests: Infinity,
+        automaticNameDelimiter: '~',
+        automaticNameMaxLength: 109,
+        maxInitialRequests: Infinity,
+        name: true,
+        cacheGroups: [Object]
+      },
+      runtimeChunk: undefined,
+      noEmitOnErrors: false,
+      checkWasmTypes: false,
+      mangleWasmImports: false,
+      namedModules: true,
+      hashedModuleIds: false,
+      namedChunks: true,
+      portableRecords: false,
+      minimize: false,
+      minimizer: [ [Object] ],
+      nodeEnv: 'development'
     },
-    {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-            esModule: false,
-            limit: 1000,
-            name: 'static/media/[name].[hash:7].[ext]'
-        }
+    resolveLoader: {
+      unsafeCache: true,
+      mainFields: [ 'loader', 'main' ],
+      extensions: [ '.js', '.json' ],
+      mainFiles: [ 'index' ],
+      roots: [ '/Users/ning/Documents/project/itv' ],
+      cacheWithContext: false
     },
-    {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-            esModule: false,
-            limit: 1000,
-            name: 'static/font/[name].[hash:7].[ext]'
-        }
-    }
-]
-[
-    {
-        test: /\.vue$/,
-        use: [
-            {loader: 'vue-loader'}
-        ]
-
-    },
-    {
-        test: /\.css$/,
-        use: [
-            'vue-style-loader',
-            'css-loader'
-        ]
-
-    },
-    {
-        test: /\.less$/,
-        use: [ //loader从后向前执行，顺序不能乱，会不能编译
-            {
-                loader: 'vue-style-loader'
-            },
-            {
-                loader: 'css-loader',
-            },
-            {
-                loader: 'postcss-loader'
-            },
-            {
-                loader: 'less-loader',
-                options: {
-                    importLoaders: 5,
-                    javascriptEnabled: true
-                }
-            },
-            {
-                loader: 'sass-resources-loader',
-                options: {
-                    resources: []
-                }
-            }
-
-        ]
-    },
-    {
-        test: /\.js$/,
-        use: [
-            {
-                loader: 'babel-loader',
-                options: {
-                    sourceMap: true,
-                }
-            }
-        ]
-    },
-    {
-        test: /\.md$/,
-        use: [
-            {
-                loader: 'html-loader'
-            },
-            {
-                loader: "markdown-loader"
-            }
-        ]
-    },
-    {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-            limit: 1000,
-            esModule: false,
-            name: 'static/img/[name].[hash:7].[ext]'
-        }
-    },
-    {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-            esModule: false,
-            limit: 1000,
-            name: 'static/media/[name].[hash:7].[ext]'
-        }
-    },
-    {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-            esModule: false,
-            limit: 1000,
-            name: 'static/font/[name].[hash:7].[ext]'
-        }
-    }
-]
+    infrastructureLogging: { level: 'info', debug: false }
+  }

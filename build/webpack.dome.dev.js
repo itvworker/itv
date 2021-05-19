@@ -83,12 +83,9 @@ module.exports = {
                         options: {
                             sourceMap: true,
                         }
-                    },
-                    // {
-                    //     loader:"/loaders/itv-import-loader"
-                    // }
+                    }
                 ],
-                include: [resolve('packages'), resolve('test'),resolve('src'), resolve('node_modules/webpack-dev-server/client')]
+                include: [resolve('packages'), resolve('test'), resolve('src'), resolve('node_modules/webpack-dev-server/client')]
             },
             {
                 test: /\.md$/,
