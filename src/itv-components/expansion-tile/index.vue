@@ -5,7 +5,7 @@
                 <div class="left-title" v-html="title">
                     
                 </div>
-                <div class="right-title"  @click.stop="toggle('icon')">
+                <div class="right-title" :value="true"   @click.stop="toggle('icon')">
                     <span v-show="!currentValue">{{unfoldText}}</span>
                     <span v-show="currentValue">{{shrinkText}}</span>
                   
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </slot>
-        <div class="itv-expansion-tile-toggle" :style="{height: currentValue? height+'px':'0px'}">
+        <div class="itv-expansion-tile-toggle" :style="{height: currentValue? height+'px':minHeight+'px'}">
             <div class="itv-expansion-height" ref="content">
                 <slot></slot>
             </div>
@@ -47,6 +47,10 @@ export default {
         iconClassName: {
             type: String,
             default: 'icon-arrow-up'
+        },
+        minHeight: {
+            type: Number,
+            default: 0
         }
             
     },

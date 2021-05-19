@@ -89,8 +89,6 @@ export default {
                 x = 0
             }
 
-            console.log('last:'+last+'first:'+first);
-            console.log(y);
             if(this.screenType === 'vertical') {
                 x = 0;
             }

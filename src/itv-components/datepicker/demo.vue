@@ -2,57 +2,50 @@
     <itv-container>
         <itv-header>Datetime</itv-header>
         <itv-main>
-            <!-- <itv-cell :showIcon="true" title="日期选择" subTitle="去除显示的格式" :desc="date || placeholder" @click="openDate" >
+           <itv-cell :showIcon="true" title="日期选择" subTitle="去除显示的格式"  @click="openDate" >
             </itv-cell>
-            <itv-cell :showIcon="true" title="日期时间选择器" subTitle="限制开始结束日期" :desc="datetime || placeholder" @click="openDatetime" >
-            </itv-cell>
-            <itv-cell :showIcon="true" title="时间选择" subTitle="限制开始结束日期" :desc="time || placeholder" @click="openTime" >
-            </itv-cell> -->
+            
         </itv-main>
+        
+        <!-- <itv-datepicker  v-model="detepicker" type="datetime" slotName="default" /> -->
+        <!-- <itv-datepicker  v-model="detepicker" type="ym" slotName="default" /> -->
+        <!-- <itv-datepicker  v-model="detepicker" type="date" defaultValue="2020-01-05" slotName="default" /> -->
+        <!-- <itv-datepicker  v-model="detepicker" type="time" slotName="default" startTime="08:30" endTime="18:30"  defaultValue="12:00" /> -->
     </itv-container>
 </template>
 <script>
 
+
 export default {
-    components: {
-    
-        
-    },
     props: {
         
     },
     data(){
         return{
-           
-                    value: true,
-                    datetime: '',
-                    placeholder:'请选择',
-                    date:'',
-                    time:''
-                    
-           }
+            detepicker: true,
+        }
        
     },
     methods:{
-        openDatetime() {
-            
-            
-        },
+        openDate() {
+            this.$itv.datepicker.show({
+                type:'date',
+                defaultValue: '1987-07-08',
+                title:"请选择出生日期",
+                confirmText:"选中",
+                cancelText:"关闭",
+                onConfirm:(msg)=> {
+                    console.log(msg);
+                
+                },
+                onCancel:(msg)=>{
 
-        openDate(value, keyIndex, index) {
-           
-        },
-
-        openTime() {
-           
-        },
-
-        
-        add() {
-            this.inputList.push({
-                name:'内容'
+                }
             })
         }
+    },
+    mounted() {
+        
     }
 }
 </script>

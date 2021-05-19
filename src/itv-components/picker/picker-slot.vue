@@ -404,9 +404,7 @@ export default {
             this.modifyStatus(true);
           
         });
-        setTimeout(()=>{
-            console.log(this.listData);
-        },8000)
+      
      
     },
     beforeDestroy() {

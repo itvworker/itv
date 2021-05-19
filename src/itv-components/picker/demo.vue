@@ -2,8 +2,8 @@
   <itv-container>
         <itv-header>Picker</itv-header>
         <itv-main>
-        <itv-cell :isLink="true"  desc="请选择内容" @click="open" :showIcon="true" title="插件模式">
-                    </itv-cell>
+        <itv-cell :isLink="true"  desc="请选择内容" @click="open" :showIcon="true" title="插件模式" />
+                   
         <itv-picker
             :list-data="listData0"
             title="请选择年月"
@@ -12,8 +12,6 @@
             @choose="choose"
             isLoop
         ></itv-picker>
-
-
   </itv-main>
   </itv-container>
 

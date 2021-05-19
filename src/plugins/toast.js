@@ -48,6 +48,14 @@ const plugin = {
           text
         })
       },
+      html(text, position = 'middle') {
+        this.show({
+          type: 'text',
+          width: 'auto',
+          position,
+          html: text
+        })
+      },
       hide () {
         $vm.show = false
       },

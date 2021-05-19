@@ -130,8 +130,8 @@ export default {
                 }
             }
 
-            let x = touchList[last].x-touchList[first].x 
-            let y = touchList[last].y-touchList[first].y
+            let x = (touchList[last].x-touchList[first].x)/this.divisor 
+            let y = (touchList[last].y-touchList[first].y)/this.divisor 
             
             if(Math.abs(x)<2) {
                 x = 0
@@ -155,10 +155,6 @@ export default {
             if(x <-this.maxSpeed) {
                 x = -this.maxSpeed
             }
-            
-            
-
-            
             return {
                 x: x,
                 y: y

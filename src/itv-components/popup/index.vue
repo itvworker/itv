@@ -5,9 +5,7 @@
                 <slot>
                    
                     <h2 v-html="title" v-show="title"></h2>
-                    <div class="itv-popup-msg" v-html="content" v-show="content">
-                        {{content}}
-                    </div>
+                    <div class="itv-popup-msg" v-html="content" v-show="content"></div>
                     <input type="text" v-show="showInput" v-model="inputValue" ref="input" :placeholder="placeholder"  class="itv-popup-input" />
                   
                 </slot>

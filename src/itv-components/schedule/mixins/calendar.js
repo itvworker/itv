@@ -357,8 +357,18 @@ export default {
             prev = prev.concat(now)
 
             let newday = prev[prev.length - 1]
+            let lastNum =  42 - prev.length;
+          
+            if(this.endType === 'end') {
+                lastNum = 7-prev.length % 7;
+                
+            }
+      
+            if(this.endType === null) {
+                lastNum = 0
+            }
 
-            let last = this.calcNextMonth(newday.year, newday.month, newday.week, 42 - prev.length)
+            let last = this.calcNextMonth(newday.year, newday.month, newday.week, lastNum)
             return prev.concat(last)
         },
         
@@ -435,8 +445,10 @@ export default {
         },
         //计算下个月填充所有内容 将行数填充为6行
         calcNextMonth(year, month, dayWeek, num) {
+          
+            if (num === 0 || this.typeEnd===null) return [];
             
-            if (num === 0 || this.isKeepRows===false) return []
+           
             let _year = year
             let _month = month + 1
             let _dayWeek = this.calcNextWeek(dayWeek)
@@ -475,9 +487,7 @@ export default {
                 if (this.calendarStatus === 0) {
                     this.prevWeek = this.nowWeek
                     this.nowWeek = this.nextWeek
-
-                    this.currentIndexWeek = this.calcWeekCurrentBetween(this.nowWeek[this.currentIndexWeek], this.currentIndexWeek);
-                        
+                    this.currentIndexWeek = this.calcWeekCurrentBetween(this.nowWeek[this.currentIndexWeek], this.currentIndexWeek);                        
                     this.currentValue = this.nowWeek[this.currentIndexWeek].time
                     this.selected(this.currentIndexWeek, this.nowWeek[this.currentIndexWeek])
                     let oneday = 3600 * 24 * 1000

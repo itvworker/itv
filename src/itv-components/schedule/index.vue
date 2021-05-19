@@ -246,9 +246,12 @@ let template =`
                 </div>
             </div>
             <!--  @click="toggleCalendar" -->
-            <div class="icon-bar" >
-                <span class="icon iconfont icon-xiangshang" :class="{'rotate180': calendarStatus===1}"></span>
-            </div>
+            <slot name="bottom">
+                <div class="icon-bar" >
+                    <span class="icon iconfont icon-xiangshang" :class="{'rotate180': calendarStatus===1}"></span>
+                </div>
+            </slot>
+           
             </div>
             <div class="itv-schedule-scroll">
                 <div class="scroll-content" ref="scroll" @resize="refresh">
@@ -343,11 +346,12 @@ export default {
             type: String,
             default: 'month'
         },
-        //日历是否保持6行
-        isKeepRows: {
-            type: Boolean,
-            default: false
+        //end补尾，尾部缺多少补多少， all保持日历6行
+        endType: {
+            type: String,
+            default: null
         },
+    
         //是否显显示上一个月月份
         isShowPrevMonth: {
             type: Boolean,

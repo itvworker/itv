@@ -10,6 +10,7 @@ import PluginDatepicker from './datepicker/plugin.js'
 import PluginCalendarTime from './calendar-time/plugin.js'
 import PluginActionsheet from '../plugins/actionsheet'
 import PluginCascader from '../plugins/cascader.js'
+import PluginDatepicker from '../plugins/cascader.js'
 
 
 // import './cell/cell.less'
@@ -24,3 +25,4 @@ Vue.use(ItvSlider);
 Vue.use(ItvDialog)
 Vue.use(PluginDialog);
 Vue.use(PluginPopup);
+Vue.use(PluginDatepicker);

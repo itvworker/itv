@@ -298,6 +298,16 @@ export default [
                     title: 'ExpansionTile',
                 }
                 
+            },
+            {
+                path: '/demo/jsx',
+                name: 'itv_jsx',
+                component: () => import('@/itv-components/jsx/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'jsx',
+                }
+                
             }
             
 

@@ -20,7 +20,7 @@ export default {
             this.currentIndexWeek = index;
             this.findWeekRow(item.time);
         },
-
+        
         /**
          * 点击选择内容
          */

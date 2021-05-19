@@ -135,7 +135,6 @@ export default {
 
         },
         touchend(e) {
-            console.log(e);
             this.distance = null
             this.angle = null
             this.moveX = null
@@ -159,7 +158,6 @@ export default {
         touchmove(e) {
              e.preventDefault();
              
-              console.log(e.targetTouches);
             if(e.type === 'mousemove'){
                 if(this.press){
                     this.setTranslate(e)
@@ -169,7 +167,6 @@ export default {
                 
             }
             
-            console.log(e.targetTouches.length);
             if (e.targetTouches.length>2) {
                
                 this.setScale(e.targetTouches[0], e.targetTouches[1])
@@ -208,7 +205,6 @@ export default {
             const x = touches.clientX
             const y = touches.clientY
 
-            console.log(x);
             if (this.moveX) {
                 this.translateX += x - this.moveX
             }

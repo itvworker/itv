@@ -37,8 +37,11 @@
                             ></span>
                         </div>
                     </slot>
-                </div>   
-                <slot/> 
+                </div> 
+                <div class="itv-scroller-msg">
+                    <slot/>
+                </div>  
+                 
 
                 <div class="itv-scroller-more" ref="more" v-show='isMore && moreStatus!=="loadingStop"'>
                     <spinner v-show="moreStatus !== 'none'" class="itv-scroller-more-icon" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}" />
@@ -132,7 +135,7 @@ export default {
         },
         speed: {
             type: Number,
-            default: 30
+            default: 100
         },
         //是否黒示滚动条
         showScrollBar: {
@@ -150,8 +153,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        
-
         refreshLayerColor: {
             type: String,
             default: "#AAA"
@@ -184,6 +185,11 @@ export default {
         maxSpeed:{
             type: Number,
             default: 30
+        },
+        /**除数，控制计算速度 */
+        divisor:{
+            type: Number,
+            default: 5
         },
         isMore: {
             type: Boolean,

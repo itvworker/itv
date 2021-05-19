@@ -258,10 +258,10 @@ export default {
             type: String,
             default: 'month'
         },
-        //日历是否保持6行
+        //end为补尾，all
         isKeepRows: {
-            type: Boolean,
-            default: false
+            type: String,
+            default: null,
         },
         //是否显显示上一个月月份
         isShowPrevMonth: {

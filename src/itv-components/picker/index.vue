@@ -1,6 +1,5 @@
 <template>
 <itv-dialog v-model="currentValue" :hideOnClick="hideOnClick" type="bottom">
-  
     <div class="itv-picker-ui" :class="className" :slot="soltName"> 
         <div class="title-bar" v-if="titleBar">
             <div class="left-btn" @click="closePicker">{{cancelText}}</div>

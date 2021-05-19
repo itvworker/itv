@@ -4,8 +4,18 @@
         <itv-main>
            
             <!-- <itv-scheduleclass="calendar-demo" :isClickNowMonth="false" isKeepRows initState="week" :isChangeState="false" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull"  /> -->
-            <itv-schedule class="calendar-demo" :calendarFormat="0" :weekHtml="weekHtml" :monthHtml="monthHtml" :isShowPrevMonth="false" :isClickNowMonth="true" :isKeepRows="false"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" />
-            <itv-schedule class="calendar-demo" :calendarFormat="1" :weekHtml="weekHtml" :monthHtml="monthHtml" :isShowPrevMonth="false" :isClickNowMonth="true" :isKeepRows="false"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" />
+            <!-- <itv-schedule class="calendar-demo" :calendarFormat="0" :weekHtml="weekHtml" :monthHtml="monthHtml" :isShowPrevMonth="false" :isClickNowMonth="true" endType="end"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" /> -->
+            <itv-schedule class="calendar-demo" endType="end" :calendarFormat="1" :weekHtml="weekHtml" :monthHtml="monthHtml" :isShowPrevMonth="false" :isClickNowMonth="true" :isKeepRows="false"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" >
+                <div class="bottom" slot="bottom">
+                        bgIconColor
+                </div>
+                <div class="max-height">
+                    有村大埼 
+                </div>    
+                <div class="max-height">
+                    有村大埼 
+                </div>    
+            </itv-schedule>
         </itv-main>
     </itv-container>
 </template>
@@ -61,7 +71,8 @@ export default {
                 title: '测试内容'
             })
         },500)
-       
+
+        
     }
 
 };
@@ -75,9 +86,13 @@ export default {
    
 }
 .calendar-demo{
-    height: auto;
+    height:100%;
 }
-
+.max-height{
+    height:500ipx;
+    margin-bottom:10ipx;
+    background:#ddd;
+}
 </style>
 
 

@@ -96,6 +96,38 @@ export function humpToFront(name) {
  * @description 判断数据类型
  * @param {any} value 
  */
-export default function dataType(value) {
+export function dataType(value) {
     return Object.prototype.toString.call(value).slice(8,-1).toLowerCase()
 }
+/**
+ * @description 去除前后两边空格
+ * @param {String} value 
+ */
+export function tirmRL(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+/**
+ * @description 删除左边的空格
+ * @param {String} value 
+ */
+export function tirmL(str) {
+    return str.replace(/(^\s*)/g,"");
+}
+
+/**
+ * @description 删除右边的空格
+ * @param {String} value 
+ */
+export function tirmR(str) {
+    return str.replace(/(\s*$)/g,"");
+}
+
+/**
+ * @description 删除所有空格
+ * @param {String} value 
+ */
+ export function tirm(str) {
+    return str.replace(/\s/g,"");
+}
+

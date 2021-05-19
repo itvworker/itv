@@ -15,12 +15,13 @@ function resolve(dir) {
 
 module.exports = {
     mode: 'development',
+    devtool: 'source-map',
     context: resolve(''),
     entry: {
         app: ['@babel/polyfill', './src/main.js']
     },
     output: {
-        path: resolve('components'),
+        path: resolve('dist'),
         filename: '[name].[hash:4].js', // [name]打包后的文件名称,进入是什么名字出来也是
         chunkFilename: '[name].[hash].js',
         publicPath: '/'
@@ -37,11 +38,7 @@ module.exports = {
             {
                 test: /\.vue$/,
                 use: [
-                    {loader: 'vue-loader'},
-                    // {loader: "/loaders/itv-loader", options:{
-                    //     theme:resolve('src/assets/theme.less'),
-                    //     calendarTime:resolve('src/assets/itv-calendar-time.less')
-                    // }}
+                    {loader: 'vue-loader'}
                 ]
 
             },
@@ -80,12 +77,18 @@ module.exports = {
                 use: [
                     {
                         loader: 'babel-loader',
+<<<<<<< HEAD
                         options: {
                             sourceMap: true,
                         }
                     }
                 ],
                 include: [resolve('packages'), resolve('test'), resolve('src'), resolve('node_modules/webpack-dev-server/client')]
+=======
+                       
+                    }
+                ]
+>>>>>>> c9290f3e2a2b2164dcb99a0d140b5eab81abd026
             },
             {
                 test: /\.md$/,
@@ -130,7 +133,7 @@ module.exports = {
     },
     devServer: {
         // 设置基本结构
-        contentBase: resolve('components'),
+        contentBase: resolve('dist'),
         host: '0.0.0.0', // 服务器IP地址,可以是localhost
         compress: true, // 服务端压缩是否开启
         open: false, // 自动打开浏览器
@@ -151,9 +154,9 @@ module.exports = {
             template: 'public/index.dev.html',
             inject: true
         }),
-        new ItvPlugin({
-            theme:resolve('src/assets/theme.less')
-        }),    
+        // new ItvPlugin({
+        //     theme:resolve('src/assets/theme.less')
+        // }),    
         
         // new CopyWebpackPlugin([
         //     {

@@ -11,8 +11,8 @@ import Loading from './itv-components/loading';
 import Picker from './itv-components/picker';
 import Popup from './itv-components/popup';
 import Schedule from './itv-components/schedule';
-import Srcoller from './itv-components/scroller';
-import SrcollerElevator from './itv-components/scroller-elevator';
+import Scroller from './itv-components/scroller';
+import ScrcollerElevator from './itv-components/scroller-elevator';
 import Slidebutton from './itv-components/slidebutton';
 import Slideitem from './itv-components/slideitem';
 import Slideout from './itv-components/slideout';
@@ -29,6 +29,7 @@ import Timepicker from './itv-components/timepicker'
 import DragBar from './itv-components/drag-bar';
 import DragOuter from './itv-components/drag-outer'
 import ExpansionTile from './itv-components/expansion-tile'
+import Datepicker from './itv-components/datepicker';
 
 import PluginActionsheet from './plugins/actionsheet.js';
 import PluginCalendarTime from './plugins/calendarTime.js';
@@ -38,6 +39,7 @@ import PluginLoading from './plugins/loading.js';
 import PluginPopup from './plugins/popup.js';
 import PluginToast from './plugins/toast.js';
 import PluginPicker from './plugins/picker.js';
+import PluginDatepicker from './plugins/datepicker.js'
 export {
     Actionsheet,
     CalendarTime,
@@ -52,8 +54,8 @@ export {
     Picker,
     Popup,
     Schedule,
-    Srcoller,
-    SrcollerElevator,
+    Scroller,
+    ScrcollerElevator,
     Slidebutton,
     Slideitem,
     Slideout,
@@ -69,7 +71,9 @@ export {
     Timepicker,
     DragOuter,
     DragBar,
+    Datepicker,
     ExpansionTile,
+    
     PluginActionsheet,
     PluginCalendarTime,
     PluginCascader,
@@ -77,7 +81,8 @@ export {
     PluginLoading,
     PluginPopup,
     PluginToast,
-    PluginPicker
+    PluginPicker,
+    PluginDatepicker
 }
 
 let Components = [
@@ -94,8 +99,8 @@ let Components = [
     Picker,
     Popup,
     Schedule,
-    Srcoller,
-    SrcollerElevator,
+    Scroller,
+    ScrcollerElevator,
     Slidebutton,
     Slideitem,
     Slideout,
@@ -112,6 +117,7 @@ let Components = [
     DragOuter,
     DragBar,
     ExpansionTile,
+    Datepicker,
     
     PluginActionsheet,
     PluginCalendarTime,
@@ -120,7 +126,8 @@ let Components = [
     PluginLoading,
     PluginPopup,
     PluginToast,
-    PluginPicker
+    PluginPicker,
+    PluginDatepicker
 ]
 
 export default {

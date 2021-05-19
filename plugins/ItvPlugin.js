@@ -1,73 +1,35 @@
-const RuleSet = require('webpack/lib/RuleSet');
-class ItvPlugin {
-    constructor(content){
-      this.content = content;
-    }
-    // 将 `apply` 定义为其原型方法，此方法以 compiler 作为参数
-    apply(compiler) {
-      let rawRules = compiler.options.module.rules;
+const webpack = require('webpack')
+const VueLoaderPlugins = require('vue-loader/lib/plugin');
+let VueLoaderPlugin = null
+const path = require('path');
+function resolve(dir) {
+  return path.join(__dirname, '../../', dir)
+}
 
-      //标准化rules
-      const { rules } = new RuleSet(rawRules);
-      //查找对应该的规则
-      let ruleIndex = rawRules.findIndex(this.createMatcher(`foo.vue`))
-
-      
-    
-      // console.log(rulesIndex);
-      // console.log(rules)
-      // rules.forEach(element => {
-      //   console.log('----------------')
-      //   console.log(element.use)
-         
-         
-      // });
-
-      // compiler.hooks.beforeRun.tapAsync('ItvPlugin', (context, entry) => {
-      //   console.log(context);
-        
-      // });
-      
-
-      // 指定要附加到的事件钩子函数
-      // console.log(compiler);
-      // compiler.hooks.emit.tapAsync(
-      //   'TestPlugin',
-      //   (compilation, callback) => {
-      //     console.log('This is an example plugin!');
-      //     console.log('Here’s the `compilation` object which represents a single build of assets:', compilation);
-          
-        
-      //     callback();x
-      //   }
-      // );
-      // compiler.options.module.rules.push({ test: /\.(css)$/, loader: 'css-loader' })
-   
-      // console.log(compiler.options);
-      
-      // compiler.hooks.entryOption.tapAsync('TestPlugin',(arg, callback)=>{
-      //   console.log('-----------------------');
-      //   console.log(arguments);
-      //   callback()
-      // })
-      
-      
-      
-    }
-    createMatcher (fakeFile) {
-      return (rule, i) => {
-        //跳过include
-        const clone = Object.assign({}, rule)
-        delete clone.include //
-        const normalized = RuleSet.normalizeRule(clone, {}, '')
-        return (
-          !rule.enforce &&
-          normalized.resource &&
-          normalized.resource(fakeFile)
-        )
+let apply = VueLoaderPlugins.prototype.apply;
+VueLoaderPlugins.prototype.apply = function(compiler) {
+  let rawRules = compiler.options.module.rules;     
+  rawRules.forEach(item => {
+      if(item.test.test('foo.js')) {
+        if(item.include) {
+            if(Array.isArray(item.include)) {
+              item.include.push(resolve('node_modules/itv-ui'))
+            }else{
+              item.include=[item.include, resolve('node_modules/itv-ui')]
+            }
+        }
       }
-    }
-    
-  }
+  });
+  apply.call(this, compiler)
+ 
+}
 
-  module.exports = ItvPlugin;
+if (webpack.version && webpack.version[0] > 4) {
+  // webpack5 and upper
+  VueLoaderPlugin = require('./plugin-webpack5')
+} else {
+  // webpack4 and lower
+  VueLoaderPlugin = require('./plugin-webpack4')
+}
+
+module.exports = VueLoaderPlugin
