@@ -14,11 +14,10 @@
 </template>
 <script>
 import pickerSlot from "../picker/picker-slot.vue";
-import ItvDialog from "../dialoger/index.vue";
 import { formatDate } from '../../libs/tool.js'
 import util from '../../libs/date.js';
 export default {
-    name:'itv-datepicker',
+    name:'datepicker',
     props: {
         value: { //是否显示
             type: Boolean,
@@ -86,8 +85,7 @@ export default {
 
     },
     components: {
-        pickerSlot,
-        ItvDialog
+        pickerSlot
     },
     computed: {
         list() {
