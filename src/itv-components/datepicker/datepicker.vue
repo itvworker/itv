@@ -120,9 +120,6 @@ export default {
                 this.$emit('onCancel');
             }
             
-        },
-        selectValue(n) {
-            this.$emit('onChangeItem', n);
         }
     },
     methods: {
@@ -281,10 +278,11 @@ export default {
                     this.setYm(index,  item === this.toNow);
                     break;
                 default:
-                     this.selectValue[index] = item;
+                    this.selectValue[index] = item;
                     this.setDatatime(index);
                     break;
             }
+            this.$emit('onChangeItem', n);
         }
 
     },
