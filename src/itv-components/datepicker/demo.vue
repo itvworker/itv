@@ -36,6 +36,7 @@ export default {
                 defaultValue: '至今',
                 title:"请选择出生日期",
                 confirmText:"选中",
+                startTime:"2016-02-05",
                 cancelText:"关闭",
                 toNow:"至今",
                 onConfirm:(msg)=> {
@@ -52,6 +53,7 @@ export default {
                 type:'ym',
                 defaultValue: '至今',
                 title:"请选择出生日期",
+                startTime:"2016-01-01",
                 confirmText:"选中",
                 cancelText:"关闭",
                 toNow:"至今",

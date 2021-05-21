@@ -36,7 +36,7 @@ export default {
      * 返回月份天数
      * @return {Number}
      */
-    getMonthDays: function(year, month) {
+    getMonthDayNumber: function(year, month) {
         if (/^0/.test(month)) {
             month = month.split('')[1];
         }
@@ -157,6 +157,7 @@ export default {
         let arr = []
         //当前选中年份等于结束年份时
         if(end[0] === now[0] && start[0]!==end[0]) {
+          
             for(let i = 1; i <=parseInt(end[1]); i++) {
                 arr.push(this.getNumTwoBit(i));
             }
@@ -164,13 +165,14 @@ export default {
         }
         //当前选中年份等于结束年份时
         if(start[0] === now[0] && start[0]!==end[0]) {
-            for(let i = parseInt(now[1]); i <=12; i++) {
+            for(let i = parseInt(start[1]); i <=12; i++) {
                 arr.push(this.getNumTwoBit(i));
             }
             return arr;
         }
         //其它都显示12个月份
         if(end[0] !== now[0] && start[0] !== now[0] && start[0]!==end[0]) {
+       
             for(let i = 1; i <=12; i++) {
                 arr.push(this.getNumTwoBit(i));
             }
@@ -226,7 +228,8 @@ export default {
         }
         //开始月份与选中是同一月份，同一年
         if(start[0] === now[0] && start[1] === now[1] ) {
-            for(let i = start[2], l = now[2]; i <= l; i++) {
+            let endNumber= this.getMonthDayNumber(start[2],now[1])
+            for(let i = start[2]; i <= endNumber; i++) {
                 arr.push(this.getNumTwoBit(i))
             }
             return arr;

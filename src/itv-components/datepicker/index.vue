@@ -114,6 +114,7 @@ export default {
             startTimeArr:[], //开始时间数组
             endTimeArr:[], //结速时间数
             timeIndex: 0,
+            initing: true, //是否在初始化
         };
     },
     watch: {
@@ -131,15 +132,13 @@ export default {
                 this.$emit('onCancel');
             }
             
-        },
-    },
-    mounted() {
-        this.init()
+        }
     },
     methods: {
         init() {
             this.items = [];
             this.timeIndex = 0;
+            
             switch (this.type) {
                 case 'time':
                     let start = '2020-01-01 ' + this.startTime;
@@ -157,24 +156,29 @@ export default {
                     this.startTimeArr = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
                     this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
                     this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
-                    if(this.toNow  === this.defaultValue) {
-                        this.selectValue = [this.toNow,this.toNow,this.toNow]
-                    }
                     this.items = [];
                     this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0],this.toNow);
+                    if(this.toNow  === this.defaultValue) {
+                        this.selectValue = [this.toNow,this.toNow,this.toNow]
+                        this.items[1] = [this.toNow];
+                        this.items[2] = [this.toNow];
+                    }
                     this.setDate(0)
                     break;
                 case 'ym':
                     this.startTimeArr = formatDate(this.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
                     this.endTimeArr = formatDate(this.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
                     this.selectValue = formatDate(this.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
-                    if(this.toNow  === this.defaultValue) {
-                        this.selectValue = [this.toNow,this.toNow]
-                    }
+                    
                     this.items = [];
                     this.items[0] = util.getBeignEndArr(this.startTimeArr[0], this.endTimeArr[0],this.toNow);
+                    if(this.toNow  === this.defaultValue) {
+                        this.selectValue = [this.toNow, this.toNow]
+                        this.items[1] = [this.toNow];
+                    }else{
+                        this.setYm(0)
+                    }
                     
-                    this.setYm(0)
                     break;
             
                 default:
@@ -220,10 +224,15 @@ export default {
          * @param {Number} index 当type==='datetime' picker的索引
          */
         setYm(index, isToNow) {
+            if(!this.selectValue[1] && this.startTimeArr[0]===this.selectValue[0]) {
+                this.selectValue[1]=this.startTimeArr[1];
+            }
+            
             let month =  util.getMonthArr(this.startTimeArr , this.endTimeArr, this.selectValue);
              if(isToNow) {
                 month = [this.toNow]
             }
+            
             if(!util.isArrayEquality(this.items[1], month) &&  index>=0) { 
                 this.$set(this.items, 1, month)
             }
@@ -292,15 +301,15 @@ export default {
                     this.setYm(index,  item === this.toNow);
                     break;
                 default:
-                     this.selectValue[index] = item;
+                    this.selectValue[index] = item;
                     this.setDatatime(index);
                     break;
             }
+           
+            this.$emit('onChangeItem', this.selectValue);
+            
         }
 
-    },
-    created() {
-       
     }
 }
 </script>
