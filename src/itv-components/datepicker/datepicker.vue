@@ -121,6 +121,9 @@ export default {
             }
             
         },
+        selectValue(n) {
+            this.$emit('onChangeItem', n);
+        }
     },
     methods: {
         init() {
