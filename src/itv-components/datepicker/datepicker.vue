@@ -282,7 +282,7 @@ export default {
                     this.setDatatime(index);
                     break;
             }
-            this.$emit('onChangeItem', n);
+            this.$emit('onChangeItem', this.selectValue);
         }
 
     },
