@@ -2,24 +2,23 @@
   <div class="itv-picker-list" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"  @touchcancel="touchEnd">
     <div class="itv-picker-content" :class="['itv-picker-row'+rows]"    ref="height" @transitionEnd="transitionEnd"  @webkitTransitionEnd="transitionEnd" >
         <div class="itv-picker-list-panel"  ref="list">
-            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll,'picker-forbid': item.forbid }" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up' : index+'up'"
                 >{{item | formatWord(word)}} 
                
             </div>
-            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}" v-for="(item,index) in listData" 
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up1' : index+'up1'"
                 >{{item | formatWord(word)}}
             </div>
-            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}"  v-for="(item,index) in listData"
+            <div class="itv-picker-item" :class="{'picker-forbid': item.forbid}" :style="{height: lineSpacing+'px'}"  v-for="(item,index) in listData"
                 :key="item.label ? item.label : index">{{item | formatWord(word)}}
-
                 
             </div>
-            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}"  v-for="(item,index) in listData"
                 :key="item.label ? item.label+'next' : index+'next'">{{item | formatWord(word)}}
             </div>
-            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll}"  v-for="(item,index) in listData"
+            <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}"  v-for="(item,index) in listData"
                 :key="item.label ? item.label+'next2' : index+'next2'">{{item | formatWord(word) }}
             </div>
         </div>
@@ -67,7 +66,6 @@ export default {
             type: Number,
             default: null
         }
-        
     },
     data() {
         return {

@@ -22,13 +22,11 @@ const plugin = {
                 $vm.currentSelect = [];
                 merge($vm, options) 
                 $vm.currentSelect = $vm.selected;
-    
                 $vm.value = true;
-               
                 $vm.$off('hide')
                 $vm.$off('confirm');
                 $vm.$off('select')
-
+                $vm.init();
                 $vm.$on('select', (msg)=>{
                     if(options.onSelect) {
                         options.onSelect(msg)

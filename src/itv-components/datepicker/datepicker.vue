@@ -1,33 +1,23 @@
 <template>
-<itv-dialog v-model="currentValue" :hideOnClick="hideOnClick" type="bottom">
-    <div class="itv-picker-ui" :class="className"> 
-        <div class="title-bar">
-            <div class="left-btn" @click="onClose">{{cancelText}}</div>
-            {{title}}
-            <div class="right-btn" @click="onConfirm">{{confirmText}}</div>
-        </div>
-        <div class="itv-picker-panel">
-            <picker-slot :class="pickerClassName"  v-for="(item, index) of items" :ref="`picer-slot-${(index)}`"
-                :default-value="selectValue[index+timeIndex]"
-                :is-update="isUpdate"
-                :list-data="item"
-                @chooseItem="onChooseItem"
-                :key="index"
-                :key-index="index"
-                :rows="rows"
-                :isLoop="isLoop"
-            ></picker-slot>
-        </div>
-    </div>
-</itv-dialog>    
+<div class="itv-picker-panel">
+    <picker-slot :class="pickerClassName"  v-for="(item, index) of items" :ref="`picer-slot-${(index)}`"
+        :default-value="selectValue[index+timeIndex]"
+        :is-update="isUpdate"
+        :list-data="item"
+        @chooseItem="onChooseItem"
+        :key="index"
+        :key-index="index"
+        :rows="rows"
+        :isLoop="isLoop"
+    ></picker-slot>
+</div> 
 </template>
 <script>
 import pickerSlot from "../picker/picker-slot.vue";
-import ItvDialog from "../dialoger/index.vue";
 import { formatDate } from '../../libs/tool.js'
 import util from '../../libs/date.js';
 export default {
-    name:'itv-datepicker',
+    name:'datepicker',
     props: {
         value: { //是否显示
             type: Boolean,
@@ -74,12 +64,10 @@ export default {
             type: String,
             default: formatDate(null,'Y-M-D h:m')
         },
-        //是否循环滑动
         isLoop: {
             type: Boolean,
             default: false
         },
-        //行数，只能是5行7行
         rows:{
             type: Number,
             default: 5
@@ -97,8 +85,7 @@ export default {
 
     },
     components: {
-        pickerSlot,
-        ItvDialog
+        pickerSlot
     },
     computed: {
         list() {
@@ -116,7 +103,6 @@ export default {
             startTimeArr:[], //开始时间数组
             endTimeArr:[], //结速时间数
             timeIndex: 0,
-            initing: true, //是否在初始化
         };
     },
     watch: {
@@ -311,7 +297,9 @@ export default {
             this.$emit('onChangeItem', this.selectValue);
             
         }
-
+    },
+    created() {
+       
     }
 }
 </script>
