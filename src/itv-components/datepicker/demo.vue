@@ -26,6 +26,8 @@ export default {
     data(){
         return{
             detepicker: true,
+            date: null,
+            yearMonth: null,
         }
        
     },
@@ -60,6 +62,21 @@ export default {
                 onConfirm:(msg)=> {
                     console.log(msg);
 
+                },
+                onCancel:(msg)=>{
+
+                }
+            })
+        },
+        onYearMonth() {
+            this.$itv.datepicker.show({
+                type:'ym',
+                defaultValue: this.yearMonth || '1987-06',
+                title:"请选择年月",
+                confirmText:"选中",
+                cancelText:"关闭",
+                onConfirm:(msg)=> {
+                    this.yearMonth = msg;
                 },
                 onCancel:(msg)=>{
 
