@@ -4,12 +4,11 @@
         <div class="title-bar" v-if="titleBar">
             <div class="left-btn" @click="closePicker">{{cancelText}}</div>
             {{title}}
-            <div class="right-btn" :class="{'forbid': isForbidConfirm}" @click="confirm">{{confrimText}}</div>
+            <div class="right-btn" @click="confirm">{{confrimText}}</div>
         </div>
         <div class="itv-picker-panel">
-            <picker-slot :class="pickerClassName"  v-for="(item, index) of list" :ref="`picer-slot-${(index)}`"
-                :clearMask="clearMask"
-                :default-value="chooseValue[index]"
+            <picker-slot :class="pickerClassName"  v-for="(item, index) of listData" :ref="`picer-slot-${(index)}`"
+                :default-value="chooseValueData[index]"
                 :is-update="isUpdate"
                 :list-data="item"
                 @chooseItem="chooseItem"
@@ -37,7 +36,7 @@ export default {
             type: Boolean,
             default: true
         },
-        items: {
+        listData: {
             type: Array,
             default: () => []
         },
@@ -81,14 +80,6 @@ export default {
         pickerClassName: {
             type: String,
             default: ''
-        },
-        defaultValue:{
-            type: Array,
-            default: ()=>[]
-        },
-        clearMask:{
-            type: Boolean,
-            default: false
         }
     },
     components: {
@@ -96,36 +87,36 @@ export default {
         ItvDialog
     },
     computed: {
-        isForbidConfirm() {
-            let isForbid = false;
-            this.selceted.forEach(item=>{
-                if(item.forbid){
-                    isForbid = true;
-                }
-            })
-            
-            return isForbid
+        list() {
+            return JSON.parse(JSON.stringify(this.listData))
         }
     },
     data() {
         return {
-            chooseValue: this.defaultValue,
+            chooseValue: [],
             cacheValueData: [],
+            
             isUpdate: false,
-            currentValue: this.value,
-            list:[],
-            selceted:[]
+            currentValue: this.value
         };
     },
     watch: {
-        value(n) {
+        'defaultValueData': function() {
+            this.chooseValueData = [...this.defaultValueData];
+            this.cacheValueData = [...this.defaultValueData];
+            // this.$emit('onConfirm', this.cacheValueData);
+        },
+        value(n, o) {
+            
             this.currentValue = n;
         },
         currentValue(n) {
-            this.$emit('input', n)
-        },
-        defaultValue(n) {
-            this.chooseValue = n;
+            
+            if(!n) {
+                this.$emit('input', false);
+                this.$emit('onCancel');
+            }
+            
         }
     },
     mounted() {
@@ -133,33 +124,46 @@ export default {
 
     },
     methods: {
-        init() {
-            this.list = [];
-            this.selceted = [];
-            this.list[0] = this.items.map(item=>{
-                return item;
-            })
-        },   
-        chooseItem(res, index) {
-            this.$set(this.selceted, index, res);
-            if(res.value != this.chooseValue[index]){
-                
-                this.chooseValue[index] = res.value;
-            }
-            if(res && res.children&&res.children.length>0) {
-                this.$set(this.list, index+1, res.children)
-            }
-        },
         closePicker() {
-            this.$emit('input', false)
+            this.$emit('onCancel')
         },
+        updateChooseValue(self, index, value) {
+            self.cacheValueData.splice(index, 1, value);
+            let ref = `picer-slot-${index}`;
+            self.$refs[ref][0].updateTransform(value);
+        },
+
+
+        closeActionSheet() {
+            this.isUpdate = !this.isUpdate;
+            this.cacheValueData = [...this.chooseValueData];
+            this.$emit('onCancel');
+            this.$emit('onCancelUpdate', this, this.chooseValueData);
+        },
+
         confirm() {
-            if(this.isForbidConfirm) return;
-            this.$emit('onConfirm', this.selceted);
+            this.$emit('onConfirm', this.cacheValueData);
+            this.chooseValueData = [...this.cacheValueData];
+            this.$emit('onCancel');
+        },
+
+        chooseItem(value, index) {
+            if (this.cacheValueData[index] !== value) {
+                this.cacheValueData[index] = value;
+                this.$emit('onChoose', index, value, this.cacheValueData);
+            }
         }
     },
     created() {
-        
+        if (this.defaultValueData && this.defaultValueData.length) {
+            this.chooseValueData = [...this.defaultValueData];
+        } else {
+            let defaultValueData = [];
+            this.listData.forEach((item, index) => {
+                defaultValueData.push(item[0]);
+            });
+            this.chooseValueData = [...defaultValueData];
+        }
     }
 }
 </script>

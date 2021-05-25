@@ -21,7 +21,8 @@ const plugin = {
                 options.hideOnClick = true;
                 options.soltName = 'default';
                 merge($vm, options);
-                
+                $vm.value = true;
+                $vm.init();
                 $vm.$off('onHide')
                 $vm.$off('onConfirm');
                 $vm.$off('onCancel');
@@ -29,7 +30,7 @@ const plugin = {
                 $vm.$off('onChoose');
               
                 $vm.$on('input', (msg)=>{
-                    $vm.value = false;
+                    $vm.value = msg;
                 })
 
                 $vm.$on('onConfirm', (msg) => {

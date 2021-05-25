@@ -189,6 +189,7 @@ export default {
             this.currentHeader = null;
             this.isLast = false;
             this.currentSelect = JSON.parse(JSON.stringify(this.selected));
+           
             this.$refs.body.scrollToNow(0,0);
             if(this.selected.length>0) {
                 this.selected.forEach((item, index)=>{
@@ -278,12 +279,14 @@ export default {
            
             //没有默认选择的时候
             if(this.currentSelect.length<=0) {
+                 debugger
                 this.items.forEach(element => {
                     if(element[this.pidKey] === 0 || !element[this.pidKey]) {
                         data.push(element)
                     }   
                 });
                  this.nowItems = data;
+               
                  this.$nextTick(()=>{
                   this.$refs.body.calcMax();
                   })
@@ -298,6 +301,7 @@ export default {
                         data.push( JSON.parse(JSON.stringify(element)))
                     }   
                 });
+               
                 if(data.length > 0) {
                     this.nowItems = data
                     this.isLast = false;

@@ -13,7 +13,6 @@
             
     </div>
 </template>
-
 <script>
 
 export default {
@@ -202,24 +201,16 @@ export default {
             // this.$refs.img1.style.webkitTransform=`translate3d(${this.translateX}px, ${this.translateY}px) scale('${this.scale}') rotate(${this.rotate}deg)`
             // this.$refs.img2.style.webkitTransform=`translate3d(${this.translateX}px, ${this.translateY}px) scale('${this.scale}') rotate(${this.rotate}deg)`
             
-              this.$refs.img1.style.webkitTransform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
-              this.$refs.img2.style.webkitTransform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
-              this.$refs.img1.style.transform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
-              this.$refs.img2.style.transform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
+            this.$refs.img1.style.webkitTransform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
+            this.$refs.img2.style.webkitTransform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
+            this.$refs.img1.style.transform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
+            this.$refs.img2.style.transform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
                 
         },
         initSize() {
 
             const body = document.documentElement || document.body
-
             let cw = this.$refs.clipic.clientWidth-60;
-
-            // if(this.clipType !== 'orthogon') {
-            //     cw = cw - 60
-            // }
-            // cw = cw - 60
-
-
             const ch = this.$refs.clipic.clientHeight-60;
             this.frame1Width = cw
             this.frame1Height = cw / this.ratio

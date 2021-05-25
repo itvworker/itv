@@ -30,6 +30,7 @@
             justify-content: center;
             align-items: center;
             font-size: @itv-font-size-base;
+           
 
         }
         .left-btn {
@@ -41,7 +42,9 @@
             right: 0;
             color: @itv-primary-color;
             padding-right: 16pt;
-            
+            &.forbid{
+                color: #aaa;
+            }
         }
         
 
@@ -100,6 +103,9 @@
         &.itv-picker-row7{
             background-size: 100% 132ipx;
         }
+        &.clear-mask {
+            background-image: none;
+        }
     }
     .itv-picker-indicator{
         position: absolute;
@@ -152,6 +158,9 @@
         background: #FFF;
         &.hide-opacity {
             opacity: 0;
+        }
+        &.picker-forbid{
+            color: #aaa;
         }
     }
     .itv-picker-roller{

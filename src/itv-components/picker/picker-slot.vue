@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="itv-picker-mask"  :class="['itv-picker-row'+rows]"></div>
+    <div class="itv-picker-mask"  :class="['itv-picker-row'+rows, {'clear-mask': clearMask}]"></div>
     <div class="itv-picker-indicator"   :class="['itv-picker-row'+rows]"></div>
 </div>
 </template>
@@ -65,6 +65,10 @@ export default {
         pickerIndex:{
             type: Number,
             default: null
+        },
+        clearMask: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -384,7 +388,11 @@ export default {
         modifyStatus (type, defaultValue) {
            
             this.lineSpacing = this.$refs.height.clientHeight;
-            defaultValue = defaultValue ? defaultValue : this.defaultValue;
+            defaultValue =  defaultValue || this.defaultValue;
+            if(typeof defaultValue === 'number') {
+                console.log(defaultValue);
+                defaultValue = defaultValue.toString();
+            }
             let index = this.listIndexs.indexOf(defaultValue);
             this.currIndex = index === -1 ? 1 : (index + 1);
             let move = index === -1 ? 0 : (index * this.lineSpacing);
@@ -400,7 +408,6 @@ export default {
 
         this.$nextTick(() => {
             this.modifyStatus(true);
-          
         });
       
      

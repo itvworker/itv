@@ -46,6 +46,7 @@
 <script>
 import Cascader from './index.vue'
 import area from './area.js'
+import area2 from './area2.js'
 export default {
     components: {
         Cascader
@@ -54,6 +55,7 @@ export default {
         return {
             show: false,
             items: area,
+            items2: area2,
             selected:[420000,421100,421123],
             plugin1Selected:[],
             plugin1Content:"请选择地区",
@@ -61,7 +63,6 @@ export default {
             plugin2Content:"湖北省黄冈市罗田县",
             comvalue:"请选择地区",
             comSelected:[]
-                
         };
     },
     methods: {
@@ -90,9 +91,10 @@ export default {
             });
         },
         plugin2(value) {
+            
             this.$itv.cascader.show({
-                items: this.items,
-                selected:this.plugin2Selected,
+                items: this.items2,
+                selected:[],
                 onConfirm:(res)=>{
                     this.plugin2Content = ""
                     this.plugin2Selected=res.map((item)=>{
@@ -101,6 +103,17 @@ export default {
                     })
                 }
             });
+            // this.$itv.cascader.show({
+            //     items: this.items,
+            //     selected:this.plugin2Selected,
+            //     onConfirm:(res)=>{
+            //         this.plugin2Content = ""
+            //         this.plugin2Selected=res.map((item)=>{
+            //             this.plugin2Content+=item.name
+            //             return item.id
+            //         })
+            //     }
+            // });
         },
         page() {
             
