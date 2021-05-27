@@ -15,7 +15,7 @@ const plugin = {
             })
             document.body.appendChild($vm.$el)
         }
-
+        
         const opts = {
             show (options) {
                 $vm.value = true;

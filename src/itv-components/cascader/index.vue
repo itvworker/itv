@@ -2,9 +2,11 @@
     <itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
         <div class="level-select-box">
             <div class="level-select-title">
-                <div class="btn-cancel"  @click="cancel">{{cancelText}}</div>    
+                <div class="btn-cancel" v-show="type==='confirm'"  @click="cancel">{{cancelText}}</div>    
                 {{titleText}}
-                <div class="btn-confirm" :class="{'forbid-btn':isLastConfirm && !isLast}" @click="confirmBtn">{{confirmText}}</div>
+                <div class="btn-confirm" v-show="type==='confirm'" :class="{'forbid-btn':isLastConfirm && !isLast}" @click="confirmBtn">{{confirmText}}</div>
+                <div calss="icon-close" v-show="type==='close'"></div>
+                
             </div>
             <itv-scroll ref="header"  :percent="0.7" :speed="40"  pattern="horizontal" class="case-box">
                 <div class="level-select-bar">
@@ -91,7 +93,12 @@ export default {
         teleport:{
             type: Boolean,
             default: false
+        },
+        type:{
+            type: String,
+            close: 'close'
         }
+        
     },
     data() {
         return {
@@ -114,8 +121,7 @@ export default {
         currented() {
             return null
         },
-         activeIndex() {
-            
+        activeIndex() {    
             if(this.currentHeader === null && this.isLast) {
                 return  this.currentIndex[this.currentIndex.length-1]
             } 
@@ -244,13 +250,14 @@ export default {
                     this.$set(this.currentItems,i,JSON.parse(JSON.stringify(this.nowItems[index])));
                     this.$set(this.currentSelect,i,this.nowItems[index][this.idKey]);
                     this.$set(this.currentIndex,i,index);
+                    
                    
                 }else{
                     this.currentItems.push(JSON.parse(JSON.stringify(this.nowItems[index])))
                     this.currentSelect.push(this.nowItems[index][this.idKey])
                     this.currentIndex.push(index)
                 }
-              
+
             }else{
                 let len = this.currentItems.length;
                 this.currentItems = this.currentItems.splice(0, this.currentHeader+1)
@@ -265,8 +272,11 @@ export default {
             }
             this.calcNowItems()
             this.$nextTick(()=>{
+               
                if(!this.isLast) {
                    this.$refs.body.scrollToNow(0, 0)
+               }else{
+                   this.confirmBtn();
                }
                this.$refs.body.calcMax();
             })
@@ -279,7 +289,6 @@ export default {
            
             //没有默认选择的时候
             if(this.currentSelect.length<=0) {
-                 debugger
                 this.items.forEach(element => {
                     if(element[this.pidKey] === 0 || !element[this.pidKey]) {
                         data.push(element)
