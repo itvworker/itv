@@ -1,6 +1,6 @@
 <template lang="html">
-<!--    -->
-    <div class="itv-cliper"  ref="clipic" @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart" @mousemove="touchmove"   @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" >
+<!--   @mousemove="touchmove"  -->
+    <div class="itv-cliper"  ref="clipic" @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart"   @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" >
         <div class="itv-cliper-clipic-frame" :class="{'itv-cliper-circle':clipType==='circle'}"  :style="{width:frame1Width+'px', height:frame1Height+'px'}" ref="frame1" id="clipicFrame1">
             <img ref="img1" :width="imgWidth" :height="imgHeight" 
              :src="src" /></div>
