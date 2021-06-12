@@ -28,6 +28,9 @@ export function formatDate(arg="", format) {
         if(arg.indexOf('/')<0) {
             arg = parseInt(arg);
         }
+        if(arg.length===7 && arg.indexOf('/')===4) {
+            arg = arg+'/01'
+        }
     }
     
     format = format || "Y/M/D h:m";
