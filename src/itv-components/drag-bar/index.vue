@@ -165,6 +165,7 @@ export default {
         touchstart(e) {
             this.timeEnd = false;
             if(!this.isCanDrag) return;
+            e.preventDefault();
             this.itvDrag.$emit('onStart', this.index, this.id);
             let touches = e.touches;
             //检查手指数量
@@ -196,6 +197,7 @@ export default {
             },this.tapTime)
         },
         touchmove(e) {
+            
             if(!this.isCanDrag) return;
             let touches = e.touches;
             let moveX, moveY

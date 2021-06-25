@@ -1,5 +1,5 @@
 <template>
-    <div class="itv-drag-outer">
+    <div class="itv-drag-outer"  >
         <slot></slot>
     </div>
 </template>
@@ -17,6 +17,10 @@ export default {
         }
     },
     methods: {
+        percent(e) {
+            e.preventDefault();
+            
+        },
         restart() {
             this.$emit("onRestart");
         },

@@ -2,22 +2,13 @@
     <itv-container class="page-dialog">
         <itv-header>dialog</itv-header>
         <itv-main >
-             <itv-scroller 
-           
-            :key="0" ref="scrolle1" 
-            pattern="vertical" 
-            :percent="0.95"
-            :speed="50" 
-            :showScrollBar="true"
-          >
-                <itv-drag-outer  ref="drag" @onStart="record" @onEnd="finish" @onTouchend="touchend">
-                    <transition-group name="flip-list" tag="p">
-                        <itv-drag-bar pattern="vertical"   class="dragbar-bottom"   v-for="(item, index) in list" :index="index" :key="item.id" :id="item.id">
-                            <itv-cell :showIcon="true" :title="'中间弹出'+item.id" @click="show=true"  desc="中间弹出" />
-                        </itv-drag-bar>
-                    </transition-group>
-                </itv-drag-outer>
-            </itv-scroller>
+            <itv-drag-outer  ref="drag" @onStart="record" @onEnd="finish" @onTouchend="touchend">
+                <transition-group name="flip-list" tag="p">
+                    <itv-drag-bar pattern="vertical"   class="dragbar-bottom"   v-for="(item, index) in list" :index="index" :key="item.id" :id="item.id">
+                        <itv-cell :showIcon="true" :title="'中间弹出'+item.id" @click="show=true"  desc="中间弹出" />
+                    </itv-drag-bar>
+                </transition-group>
+            </itv-drag-outer>
         </itv-main>
     </itv-container>
 
@@ -94,7 +85,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.page-dialog {
+    user-select:none;
+}
 .dragbar-bottom {
     &.itv-drag-moved{
         background-color:fade(@itv-page-main, 10%);

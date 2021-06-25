@@ -96,6 +96,7 @@ export default {
 
 <style lang="less" scoped>
 .page-dialog {
+    user-select:none;
     .page-content{
         display: none;
     }
