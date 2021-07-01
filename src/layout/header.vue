@@ -1,24 +1,25 @@
-<template lang="html">
+<template>
         <div class="itv-header">
             <div class="itv-icon-arrow" v-if="showArrow" @click="back"></div>
             <slot></slot>
         </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent } from 'vue'
+export default defineComponent ({
     props: {
         showArrow: {
             type: Boolean,
             default: true
         }
-    },
+    }, 
     methods: {
         back() {
             this.$router.go(-1);
         }
     }
-}
+})
 </script>
 
 <style lang="less" scoped>

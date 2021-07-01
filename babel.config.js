@@ -2,26 +2,25 @@ module.exports = {
     presets: [
         [
             '@babel/preset-env',
+            // "@babel/preset-typescript",
             {
                 modules: false,
+                useBuiltIns: 'entry',
                 targets: {
                     chrome: '58',
-                    ie: '11',
+                    ie: '10',
                 },
             },
         ],
+        "@babel/typescript",
     ],
     plugins: [
-        'babel-plugin-remove-vconsole',
+        "@vue/babel-plugin-jsx",
+        '@babel/plugin-transform-runtime',
         '@babel/plugin-syntax-dynamic-import',
-        [
-            'babel-plugin-load-module',
-            {
-                cssPath: '@midea/pix-h5-components/dist/components/{key}/styles/{key}.css', //必须css路径
-                jsPath: '@midea/pix-h5-components/dist/components/{key}', //js路径必须
-                public: '@midea/pix-h5-components/dist/assets/fonts/iconfont.css', //公用css,可不传
-                name: '@midea/pix-h5-components', //包名
-            },
-        ],
+        '@babel/plugin-transform-modules-commonjs',
+        "@babel/plugin-transform-classes",
+        "@babel/plugin-proposal-class-static-block",
+        "@babel/plugin-proposal-class-properties"
     ],
 }

@@ -1,10 +1,12 @@
-<template lang="html">
+<template>
     <div class="itv-page-content"><slot /></div>
 </template>
-<script>
+<script lang="ts">
 
-export default {
-}
+import {defineComponent } from 'vue'
+export default defineComponent({
+    name:"ItvMain"
+})
 </script>
 
 <style lang="less" >
