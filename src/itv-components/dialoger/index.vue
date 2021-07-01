@@ -130,6 +130,9 @@ export default {
         },
         state() {
             return this.value
+        },
+        preventDefault(e) {
+            e.preventDefault()
         }
     }
 
