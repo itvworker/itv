@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="itv-model" @touchstart="preventDefault" >
+    <div class="itv-model" >
         <slot name="outer"></slot>
         <transition :name="type==='none'?'none':'itv-fade'">
             <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex }"></div>
