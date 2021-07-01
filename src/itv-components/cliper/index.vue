@@ -14,7 +14,6 @@
     </div>
 </template>
 <script>
-
 export default {
     name: 'itv-cliper',
     props: {
@@ -43,7 +42,7 @@ export default {
         return {
             scale: 1,
             rotate: 0,
-            translateX: 0,
+            translateX: 0, 
             translateY: 0,
             distance: null,
             ratio: 1,
@@ -86,7 +85,7 @@ export default {
             let tempImage = new Image()
             tempImage.src = url;
             this.src = url;
-
+ 
             tempImage.onload = () => {
                 this.originW = tempImage.width
                 this.originH = tempImage.height
@@ -286,14 +285,10 @@ export default {
 
     },
     mounted() {
-       
         window.addEventListener('mousewheel',this.handleScroll,false) || window.addEventListener("DOMMouseScroll",this.handleScroll,false)
         // this.$refs.clipic.addEventListener('touchstart',this.touchstart, false)
         //  this.$refs.clipic.addEventListener('touchmove',this.touchmove, false)
         //   this.$refs.clipic.addEventListener('touchend',this.touchend, false)
-
-    },
-    created() {
 
     }
 }
