@@ -2,7 +2,6 @@ module.exports = {
     presets: [
         [
             '@babel/preset-env',
-            // "@babel/preset-typescript",
             {
                 modules: false,
                 useBuiltIns: 'entry',
@@ -23,4 +22,12 @@ module.exports = {
         "@babel/plugin-proposal-class-static-block",
         "@babel/plugin-proposal-class-properties"
     ],
+    overrides: [ //必要，用于转换vue文件的ts,tsx文件
+        {
+            test: /\.vue$/,
+            plugins: [
+                '@babel/transform-typescript',
+            ]
+        }
+    ]
 }

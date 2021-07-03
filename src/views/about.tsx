@@ -21,7 +21,6 @@ export default defineComponent({
         return (
             <>
                 <div class="">
-                    ----
                     <Calendar setDay={this.setDay}  />
                 </div>
             </>

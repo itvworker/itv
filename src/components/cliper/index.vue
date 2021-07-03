@@ -15,6 +15,9 @@
 </template>
 <script lang="ts">
 import {defineComponent} from 'vue';
+interface Props {
+    
+}
 export default defineComponent({
     name: 'itv-cliper',
     props: {
@@ -74,8 +77,8 @@ export default defineComponent({
     },
 
     methods: {
-        insertImage(url: string) {
-        // 初始化参数
+        insertImage(url: any){
+            // 初始化参数
             this.scale = 1 // 缩放
             this.rotate = 0 // 旋转
             this.translateX = 0 // 水平偏移
@@ -98,7 +101,6 @@ export default defineComponent({
                     this.initVal.translateY = this.translateY;
                     this.initVal.translateX = 0;
                 } else {
-
                     this.imgHeight = this.frameHeight;
                     this.imgWidth =  this.frameHeight*this.originRatio;
                     this.translateX = -(this.frameHeight*this.originRatio-this.frameWidth)/2
@@ -107,15 +109,9 @@ export default defineComponent({
 
                 }
                 this.setImgTransform();
-                
             }
-
-
-
-
         },
         touchend(e: any) {
-        
             this.distance = null
             this.angle = null
             this.moveX = null
@@ -126,7 +122,6 @@ export default defineComponent({
             this.press = true;
         },
         handleScroll(e: any) {
-           
             if(e.wheelDelta>0) {
                  this.scale += 0.1;
             }else{
@@ -150,8 +145,6 @@ export default defineComponent({
                 this.setImgTransform();
                 return
             }
-
-            
             this.setTranslate(e.touches[0])
             this.setImgTransform();
         },
@@ -190,31 +183,21 @@ export default defineComponent({
             }
             this.moveX = x
             this.moveY = y
-           
-            
         },
         setImgTransform() {
-            
             // this.$refs.img1.style.webkitTransform=`translate3d(${this.translateX}px, ${this.translateY}px) scale('${this.scale}') rotate(${this.rotate}deg)`
             // this.$refs.img2.style.webkitTransform=`translate3d(${this.translateX}px, ${this.translateY}px) scale('${this.scale}') rotate(${this.rotate}deg)`
-            
             this.$refs.img1.style.webkitTransform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
             this.$refs.img2.style.webkitTransform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
             this.$refs.img1.style.transform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
             this.$refs.img2.style.transform =`translate3d(${this.translateX}px,${this.translateY}px, 0px) scale(${this.scale}) rotate(${this.rotate}deg)`
-                
         },
         initSize() {
-
             const body = document.documentElement || document.body
             let cw = this.$refs.clipic.clientWidth-60;
             const ch = this.$refs.clipic.clientHeight-60;
             this.frameWidth = cw
             this.frameHeight = cw / this.ratio
-           
-
-
-
             if (cw / this.ratio > ch) {
                 this.frameHeight = ch
                 this.frameWidth = ch * this.ratio
@@ -251,8 +234,8 @@ export default defineComponent({
             }
 
 
-            let drawImageW:number | null;
-            let drawImageH:number | null;
+            let drawImageW;
+            let drawImageH;
             if (this.ratio > this.originRatio) {
                 drawImageW = this.width
                 drawImageH = this.originH / (this.originW / this.width)
@@ -260,7 +243,7 @@ export default defineComponent({
                 drawImageH = this.height
                 drawImageW = this.originW / (this.originH / this.height)
             }
-            const point:any = { x: drawImageW / 2, y: drawImageH / 2 }
+            const point = { x: drawImageW / 2, y: drawImageH / 2 }
             ctx.translate(this.translateX * zommRatio, this.translateY * zommRatio)
             if (this.rotate !== 0) {
                 ctx.translate(point.x, point.y)

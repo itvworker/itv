@@ -16,12 +16,9 @@
     </itv-container>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 import { defineComponent } from 'vue';
-interface obj {
-    routerName?: string,
-    name?: string
-}
+
 export default defineComponent({
     name: 'Index',
     data() { 
@@ -61,7 +58,7 @@ export default defineComponent({
         }
     },
     methods: {
-        onPage(item: obj) {
+        onPage(item) {
             this.$router.push({
                 name: item.routerName
             })
@@ -73,7 +70,7 @@ export default defineComponent({
 </script>
 <style lang="less" scoped>
 .itv-bar{
-    height: 80px;
+    height: 80px;vue-loadervue
     min-height: 80px;
     display: flex;
     justify-content: space-between;

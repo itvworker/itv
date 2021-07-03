@@ -43,11 +43,7 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|jsx|tsx|ts)(\?.*)?$/,
-                use: [
-                    {
-                        loader: 'babel-loader'
-                    }
-                ]
+                loader:"babel-loader"
             },
             {
                 test: /\.vue$/,
@@ -56,8 +52,9 @@ module.exports = {
                         loader: 'vue-loader',
                         options: {
                             soureMap: true,
-                        },
-                    },
+                        }
+                    }
+                    
                 ],
             },
             {
@@ -84,12 +81,12 @@ module.exports = {
                     {
                         loader: 'less-loader'
                     },
-                    // {
-                    //     loader: 'sass-resources-loader',
-                    //     options: {
-                    //         resources: [resolve('src/assets/css/animate.less'), resolve('src/assets/css/page.less')]
-                    //     },
-                    // },
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: [resolve('src/assets/css/animate.less'), resolve('src/assets/css/page.less')]
+                        },
+                    },
                 ],
             },
             {
