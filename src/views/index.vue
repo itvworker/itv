@@ -63,6 +63,9 @@ export default defineComponent({
             
         }
     },
+    mounted() {
+        console.log(this.$itv);
+    },
     methods: {
         onPage(item: any) {
             console.log(item.params);

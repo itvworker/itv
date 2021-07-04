@@ -24,6 +24,25 @@ export default [
                     keepAlive: false,
                     title: 'iTV',
                 },
+            },
+            {
+                path: 'view-video',
+                name: 'demoViewVideo',
+                component: () => import('@/components/view-video/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'iTV',
+                },
+            },
+            {
+                path: 'schedule',
+                name: 'demoSchedule',
+                component: () => import('@/components/schedule/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'iTV',
+                },
+
             }
         ]
     },  
