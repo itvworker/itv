@@ -312,7 +312,7 @@ export default defineComponent({
                                         this.nowMonth.map((item:any, index: number)=>{
                                             return (
                                                 <div
-                                                onClick={this.selectDay(index, item)}
+                                               
                                                 class={{'day-item':true, 'day-today': this.today === item.key ,'overtop':!item.overtop,'day-active':this.currentValue===item.time, 'opacity-day':(item.type==='prev'||item.type==='next') && !this.isShowPrevMonth, 'prev-month': item.type==='prev', 'next-month': item.type==='next'}}
                                                 >
                                                     {this.currentValue}---{item.time}
