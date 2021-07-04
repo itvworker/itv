@@ -11,15 +11,15 @@ module.exports = {
                 },
             },
         ],
-        "@babel/typescript",
+        "@babel/preset-typescript",
     ],
     plugins: [
         "@vue/babel-plugin-jsx",
-        '@babel/plugin-transform-runtime',
-        '@babel/plugin-syntax-dynamic-import',
-        '@babel/plugin-transform-modules-commonjs',
-        "@babel/plugin-transform-classes",
-        "@babel/plugin-proposal-class-static-block",
+        // '@babel/plugin-transform-runtime',
+        // '@babel/plugin-syntax-dynamic-import',
+        // '@babel/plugin-transform-modules-commonjs',
+        // "@babel/plugin-transform-classes",
+        // "@babel/plugin-proposal-class-static-block",
         "@babel/plugin-proposal-class-properties"
     ],
     overrides: [ //必要，用于转换vue文件的ts,tsx文件

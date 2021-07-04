@@ -25,8 +25,8 @@ export default defineComponent ({
 <style lang="less" scoped>
 .itv-header {
     height: 44ipx;
-    background-color: @itv-page-main;
-    color: @itv-page-white;
+    background-color: @page-primary-color;
+    color: @page-color-text-white;
     position: relative;
     text-align: center;
     font-size: 18ipx;

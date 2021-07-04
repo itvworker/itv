@@ -8,6 +8,9 @@
     line-height: 180%;
     padding-bottom: 20px;
     flex: 1;
+    .hljs{
+        padding: 0px;
+    }
     .phone-show{
         position: fixed;
         top: 0px;
@@ -29,19 +32,24 @@
         thead{
             background-color: #eee;
             th{
-                border:#ddd solid 1px;
+                // border:#ddd solid 1px;
                 padding: 10px;
             }
         }
         td{
-            border:#ddd solid 1px;
+            // border-bottom:#ddd solid 1px;
             text-align: center;
             padding: 10px;
+        }
+        tbody{
+            tr:nth-child(2n) {
+                background-color: #efefef;
+            }
         }
     }
     h1{
         font-size: 28px;
-        color: @itv-page-main;
+        color: @page-primary-color;
         font-weight: normal;
     }
     h2{
@@ -76,7 +84,7 @@
                 padding: 10px;
                 cursor: pointer;
                 &.active{
-                    border-bottom:@itv-page-main solid 2px;
+                    border-bottom:@page-primary-color solid 2px;
                 }
             }
         }

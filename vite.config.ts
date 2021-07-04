@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import itv from './vite/itv-plugin'
+import md from './vite/md'
 import path from 'path';
 export default defineConfig({
-  plugins: [vue(), itv()],
+  plugins: [vue(), itv(), md()],
   esbuild: {
     jsxFactory: 'h',
     jsxFragment: 'Fragment',

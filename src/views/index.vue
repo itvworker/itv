@@ -6,19 +6,16 @@
                 iTV
             </div>
             <div class="nav">
-                <div class="nav-item" v-for="item in navs" :key="item.name" @click.stop="onPage(item)">
+                <div class="nav-item" :class="{active:item.routerName===routeName}" v-for="item in navs" :key="item.name" @click.stop="onPage(item)">
                     {{item.name}}
-                </div>
-                                   
+                </div>        
             </div>
         </div>
         <router-view />
     </itv-container>
 </template>
-
 <script lang="tsx">
 import { defineComponent } from 'vue';
-
 export default defineComponent({
     name: 'Index',
     data() { 
@@ -30,7 +27,10 @@ export default defineComponent({
                 },
                 {
                     name: "组件",
-                    routerName: 'itv_doc_index'
+                    routerName: 'components',
+                    params:{
+                        id: 'cliper'
+                    }
                 },
                 {
                     name: "主题",
@@ -51,6 +51,12 @@ export default defineComponent({
             ]
         }
     },
+    computed:{
+        routeName() {
+            console.log(this.$route.name);
+            return this.$route.name
+        }
+    },
     setup() {
         
         return {
@@ -58,9 +64,11 @@ export default defineComponent({
         }
     },
     methods: {
-        onPage(item) {
+        onPage(item: any) {
+            console.log(item.params);
             this.$router.push({
-                name: item.routerName
+                name: item.routerName,
+                params: {...item.params}
             })
         }
     }
@@ -70,7 +78,7 @@ export default defineComponent({
 </script>
 <style lang="less" scoped>
 .itv-bar{
-    height: 80px;vue-loadervue
+    height: 80px;
     min-height: 80px;
     display: flex;
     justify-content: space-between;
@@ -80,7 +88,7 @@ export default defineComponent({
         height: 80px;
         font-size: 40px;
         line-height: 80px;
-        color: @itv-page-main;
+        color: @page-primary-color;
         cursor: pointer;
     }
     .nav{
@@ -89,6 +97,9 @@ export default defineComponent({
         .nav-item{
             padding: 10px;
             cursor: pointer;
+            &.active {
+                color: @page-primary-color;
+            }
         }
     }
    

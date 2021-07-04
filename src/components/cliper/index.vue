@@ -16,7 +16,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 interface Props {
-    
+
 }
 export default defineComponent({
     name: 'itv-cliper',
@@ -87,7 +87,7 @@ export default defineComponent({
             let tempImage = new Image()
             tempImage.src = url;
             this.src = url;
- 
+            //加载图片
             tempImage.onload = () => {
                 this.originW = tempImage.width
                 this.originH = tempImage.height

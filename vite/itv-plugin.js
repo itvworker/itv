@@ -12,7 +12,7 @@ export default function itv() {
             console.log(str);
         },
         transform(code, id) {
-            console.log(id);
+           
             return code
         }
       };

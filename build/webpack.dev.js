@@ -45,6 +45,7 @@ module.exports = {
                 test: /\.(js|jsx|tsx|ts)(\?.*)?$/,
                 loader:"babel-loader"
             },
+            
             {
                 test: /\.vue$/,
                 use: [
@@ -99,6 +100,17 @@ module.exports = {
                     esModule: false,
                     outputPath: './static/assets/img',
                 },
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: 'html-loader'
+                    },
+                    {
+                        loader: "markdown-loader"
+                    }
+                ]
             },
             {
                 test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,

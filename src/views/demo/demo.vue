@@ -97,7 +97,7 @@ export default defineComponent({
             line-height: 40ipx;
         }
         i{
-            color:@itv-page-main;
+            color:@page-primary-color;
         }
         &:nth-child(3n) {
             border-right: #ddd solid 0px;
