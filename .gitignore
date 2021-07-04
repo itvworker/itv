@@ -1,4 +1,5 @@
 .DS_Store
+origin
 node_modules/
 nutui-2-dev/
 /dist/
