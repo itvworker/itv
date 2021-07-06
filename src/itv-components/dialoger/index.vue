@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="itv-model" >
+    <div class="itv-model" @touchmove="preventDefault" >
         <slot name="outer"></slot>
         <transition :name="type==='none'?'none':'itv-fade'">
             <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex }"></div>
@@ -9,12 +9,11 @@
             </div>
         </transition>
         <transition :name="animate"  >
-            <div :class="className"   v-show="value && !html" :style="{'z-index':zIndex+1}">
+            <div @animationend="onEnd"   :class="[{'itv-opc': opc},className]"   v-show="value && !html" :style="{'z-index':zIndex+1}">
                 <slot></slot>
             </div>
         </transition>
     </div>
-
 </template>
 
 <script>
@@ -90,7 +89,8 @@ export default {
     },
     data() {
         return {
-            content: ''
+            content: '',
+            opc: true
         }
     },
     watch: {
@@ -98,6 +98,11 @@ export default {
             if(!a) {
                 this.$emit('onHide');
                 return
+            }else{
+                
+                setTimeout(()=>{
+                    this.opc = false;   
+                },10)
             }
             this.$emit('onShow')
         },
@@ -133,6 +138,12 @@ export default {
         },
         preventDefault(e) {
             e.preventDefault()
+        },
+        onEnd() {
+            if(!this.value) {
+                this.opc = true;
+            }
+            
         }
     }
 
