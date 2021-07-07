@@ -92,6 +92,7 @@ export default {
                 this.sMaxY = ph - parent.clientHeight || 0;
                 
             }
+            this.$emit('onChangeCalenderType', n);
         }
     },
     
@@ -405,14 +406,8 @@ export default {
                         this.calendarX = -this.elWidth
                         this.dom(this.elWidth, 0, 1)
                     }
-
                 default:
-                    
             }
-          
-            
-            
-           
         },
         //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
         getDirection(startx, starty, endx, endy , show) {

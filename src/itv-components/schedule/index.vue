@@ -452,10 +452,7 @@ export default {
                 this.scrollDom(0, this.sMaxY, 1) 
                 this.sy = -this.sMaxY
             }
-        },
-        
-        
-        
+        }
     },
         
 }

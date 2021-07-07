@@ -498,6 +498,7 @@ export default {
                     let _nday = nrevdate.getDate()
                     let _ndayWeek = nrevdate.getDay()
                     this.nextWeek = this.calcWeek(_nyear, _nmonth, _nday, _ndayWeek)
+                    
                 } else {
                     this.prevMonth = this.nowMonth
                     this.nowMonth = this.nextMonth
@@ -526,6 +527,12 @@ export default {
                     this.slideHeight = this.maxHeight;
                     this.y = this.maxHeight;
                 }
+
+                this.$emit('onChangeCalender', {
+                    nowMonth: this.nowMonth,
+                    nowWeek: this.nowWeek,
+                    type: this.calendarStatus
+                })
             }
 
             if (this.endStatus === 0) {
@@ -576,6 +583,13 @@ export default {
                     this.slideHeight = this.maxHeight;
                     this.y = this.maxHeight;
                 }
+
+                this.$emit('onChangeCalender', {
+                    nowMonth: this.nowMonth,
+                    nowWeek: this.nowWeek,
+                    type: this.calendarStatus
+                })
+                
             }
             
             this.$nextTick(() => {
