@@ -75,10 +75,7 @@ export default {
         this.hdom = slideHeight(this.$refs.calendar)
         this.scrollerDom = render(this.$refs.scroller)
         this.scrollDom = render(this.$refs.scroll)
-        // let ele = this.$refs.scroller.parentNode
-       
-        
-
+     
     },
     watch: {
         /**

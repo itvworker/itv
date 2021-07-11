@@ -10,7 +10,6 @@
         </div>
     </div>
     </itv-dialog>
-   
 </template>
 
 <script>

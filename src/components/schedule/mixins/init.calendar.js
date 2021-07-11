@@ -46,6 +46,7 @@ export default {
                     this.slideHeight = this.rowHeight;
                 }
                 this.y = this.slideHeight;
+                this.hdom(this.y);
                 this.currentValue = temp;
                 this.step = parseInt(this.rowHeight*5/20)
                 this.setShowTop()

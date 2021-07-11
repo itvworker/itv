@@ -26,9 +26,7 @@
             <div
                 class="calendar-box"
                 ref="calendar"
-                :style="{height: showTop? rowHeight+'px': maxHeight+'px'}"
             >
-
                 <div
                     class="week-slide"
                     v-show="showTop"
@@ -74,7 +72,6 @@
                     :class="{animating: isAni, 'slow-action':isMove}"
                     @transitionend="aniamteend"
                     :style="{height:maxHeight+'px',transform: 'translateX('+calendarX+'px)'}"
-                    
                 >   
                     <div class="calendar-content">
                         <div class="month-item prev-item-month" :class="{'none-item':isCalendarMinMonth}">
@@ -91,9 +88,7 @@
                             v-for="(item, index) in prevMonth"
                             :key="item.id"
                             v-html="monthHtml(index, item, monthText)"
-                        >   
-                            
-                        </div>
+                        ></div>
                     </div>
                     <div class="month-item now-item-month" >
                         <div class="year-tips">
@@ -108,27 +103,18 @@
                             :class="{ 'day-today': today === item.key ,'overtop':!item.overtop,'day-active':currentValue===item.time, 'opacity-day':(item.type==='prev'||item.type==='next') && !isShowPrevMonth, 'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
                             v-for="(item, index) in nowMonth"
                             :key="item.id"
-                             v-html="monthHtml(index, item, monthText)"
-                        >
-                          
-                        </div>
+                             v-html="monthHtml(index, item, monthText)"></div>
                     </div>
                     <div class="month-item next-item-month " :class="{'none-item':isCalendarMaxMonth}">
-                        <div class="year-tips">
-                            {{nextMonth[15].year}}
-                        </div>
-                        <div class="month-tips">
-                            {{nextMonth[15].month}}
-                        </div>
+                        <div class="year-tips">{{nextMonth[15].year}}</div>
+                        <div class="month-tips">{{nextMonth[15].month}}</div>
                         <div
                             class="day-item"
                             :class="{'day-today': today === item.key, 'overtop':!item.overtop, 'opacity-day':(item.type==='prev'||item.type==='next') && !isShowPrevMonth,'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
                             v-for="(item, index) in nextMonth"
                             :key="item.id"
-                             v-html="monthHtml(index, item, monthText)"
-                        >
-                            
-                        </div>
+                            v-html="monthHtml(index, item, monthText)"
+                        ></div>
                     </div>
                     </div>
                     
@@ -161,7 +147,7 @@ import calcScroll from './mixins/calc.scroll'
 import animateScroll from './mixins/animate.scroll'
 import animateScroller from './mixins/animate.scroller'
 import move from './mixins/move'
-import refreshIcon from './refresh'
+import refreshIcon from './refresh.vue'
 import {svgXml} from '../../libs/tool'
 import {defineComponent} from 'vue';
 export default defineComponent({
@@ -263,6 +249,7 @@ export default defineComponent({
         monthHtml: {
             type: Function,
             default:(index, item, text)=>{
+               
                 return `
                     <div class="active">${item.day}</div>
                 `
@@ -271,7 +258,12 @@ export default defineComponent({
         weekHtml: {
             type: Function,
             default:(index, item, text)=>{
-              
+                if(index == 0 || item.day==1) {
+                    return `
+                        <span class="month-name" >${text[item.month-1]}</span>
+                        <div class="active">${item.day}</div>
+                    `
+                }
                 return `
                     <div class="active">${item.day}</div>
                 `

@@ -5,15 +5,9 @@
             <!-- <itv-scheduleclass="calendar-demo" :isClickNowMonth="false" isKeepRows initState="week" :isChangeState="false" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull"  /> -->
             <!-- <itv-schedule class="calendar-demo" :calendarFormat="0" :weekHtml="weekHtml" :monthHtml="monthHtml" :isShowPrevMonth="false" :isClickNowMonth="true" endType="end"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" /> -->
             <itv-schedule class="calendar-demo" endType="end" :calendarFormat="1"  :isShowPrevMonth="false" :isClickNowMonth="true" :isKeepRows="false"  initState="month" :isChangeState="true" v-model="currentDate" :min="minMonth" :max="maxMonth"  :bounceTop="false" @refresh="refresh" @pull="pull" >
-                <div class="bottom" slot="bottom">
-                        bgIconColor
-                </div>
-                <div class="max-height">
-                    有村大埼 
-                </div>    
-                <div class="max-height">
-                    有村大埼 
-                </div>    
+                <div class="item-list" v-for="(item, index) in list" :key="index">
+                    {{item.title}}{{index}}
+                </div>  
             </itv-schedule> 
         </itv-main>
     </itv-container>
@@ -24,7 +18,7 @@ import {defineComponent} from 'vue';
 import ItvSchedule from './index.vue';
 export default defineComponent({
     components:{
-        // ItvSchedule
+        ItvSchedule
     },
     data() {
         return {
@@ -42,17 +36,6 @@ export default defineComponent({
                 <div class="active">{{item.day}}</div>
             `
         }
-    },
-    computed: {
-    //    list() {
-    //         let arr = [];
-    //         for(let i = 0; i < 100; i++) {
-    //             arr.push({
-    //                 title: '测试内容'
-    //             })
-    //         }
-    //         return arr;
-    //    } 
     },
     methods: {
        refresh() {
@@ -74,7 +57,6 @@ export default defineComponent({
             })
         },500)
 
-        
     }
 
 });
@@ -94,6 +76,12 @@ export default defineComponent({
     height:500ipx;
     margin-bottom:10ipx;
     background:#ddd;
+}
+.item-list{
+    height: 50ipx;
+    line-height: 50ipx;
+    padding: 0 15px;
+    border-bottom: #ddd solid 1px;
 }
 </style>
 

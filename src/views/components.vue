@@ -6,7 +6,7 @@
                     {{item.title}}
                 </div>
             
-                <div class="item" v-for="sub in item.children" :key="sub.id" :class="{active:type===sub.id}">
+                <div class="item" @click.stop="onChangeDoc(sub)" v-for="sub in item.children" :key="sub.id" :class="{active:type===sub.id}">
                     {{sub.title}}
                 </div>        
             </div>
@@ -24,8 +24,9 @@ import 'highlight.js/styles/atom-one-light.css'
 export default defineComponent({
     computed:{
         doc() {
-            let id = doc.cliper;
-            let msg = new html(doc.cliper).getHtml();
+            let id = this.$route.params.id;
+           
+            let msg = new html(doc[id]).getHtml();
             return msg
         },
         type() {
@@ -41,11 +42,21 @@ export default defineComponent({
                     key: 0,
                     children:[{
                         id: 'cliper',
-                        title:"cliper(截图)"
+                        title:"Cliper(截图)"
+                    }]
+                },{
+                    title:"日历",
+                    key:1,
+                    children:[{
+                        id: "schedule",
+                        title:"Schedule(日程)"
                     }]
                 }
             ]
         }
+    },
+    updated() {
+         this.mdhljs();
     },
     methods:{
         mdhljs() {
@@ -53,6 +64,16 @@ export default defineComponent({
             preEl.forEach((el:any) => {
                 hljs.highlightBlock(el)
             })
+        },
+        //** 切换组件文档 */
+        onChangeDoc(item: any) {
+            this.$router.replace({
+                name: this.$route.name,
+                params:{
+                    id: item.id
+                }
+            })
+            
         }
     },
     mounted() {
@@ -68,11 +89,14 @@ export default defineComponent({
         padding-top: 20px;
         .component-type{
             font-size: 22px;
+            margin-bottom: 30px;
             .item {
                 font-size: 16px;
                 color: @page-color-text-sub;
                 padding-left: 20px;
                 cursor: pointer;
+                margin-bottom: 10px;
+                margin-top: 10px;
                 &.active {
                     color: @page-primary-color;
                 }

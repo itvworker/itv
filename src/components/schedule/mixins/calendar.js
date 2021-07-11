@@ -145,7 +145,6 @@ export default {
             
             if(this.minMonthNumber && item.number < this.minMonthNumber) {
                 for (let i = index; i <= 6; i++) {
-                    console.log(this.nowWeek[i].number);
                     if(this.nowWeek[i].number >= this.minMonthNumber) {
                         return i
                     }
@@ -526,6 +525,7 @@ export default {
                     this.isClickChange = false
                     this.slideHeight = this.maxHeight;
                     this.y = this.maxHeight;
+                    this.hdom(this.y);
                 }
 
                 this.$emit('onChangeCalender', {
@@ -582,6 +582,7 @@ export default {
                     this.isClickChange = false
                     this.slideHeight = this.maxHeight;
                     this.y = this.maxHeight;
+                    this.hdom(this.y);
                 }
 
                 this.$emit('onChangeCalender', {

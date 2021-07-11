@@ -10,7 +10,6 @@
           ref="frame2"  >
           <img ref="img2"
           :width="imgWidth" :height="imgHeight"    :src="src" /></div>
-            
     </div>
 </template>
 <script lang="ts">

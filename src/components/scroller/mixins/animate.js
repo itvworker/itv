@@ -161,7 +161,7 @@ export default {
                 this.stepX = 0
             }
     
-
+            //
             if(this.pattern === 'vertical') {
                 this.stepX = 0;
                 this.scrollX = 0;

@@ -18,7 +18,6 @@
     </itv-container>
 
 </template>
-
 <script>
 export default {
   data() {

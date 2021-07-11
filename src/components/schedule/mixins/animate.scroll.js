@@ -50,8 +50,7 @@ export default {
             
                 return 
             }
-           
-            console.log(this.sStepY);
+         
             window.requestAnimationFrame(this.srollStep);
         },
       
@@ -111,7 +110,6 @@ export default {
             // this.sStepX = this.sStepX * this.percent;
             this.sStepY = this.sStepY * this.percent;
             this.sy = scrollY;
-            console.log(this.sy);
           
             
             window.requestAnimationFrame(this.srollStep)

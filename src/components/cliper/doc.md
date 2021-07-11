@@ -6,11 +6,11 @@
 ```js
 //全局安装
 import vue from "vue";
-import { Cliper } from "itv-ui";
+import { Cliper } from "itv-plus";
 vue.use(Cliper);
 
 //局部安装
-import { Cliper } from "itv-ui";
+import { Cliper } from "itv-plus";
 export default {
   components: {
 ​    Cliper
