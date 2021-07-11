@@ -27,6 +27,8 @@ module.exports = {
             test: /\.vue$/,
             plugins: [
                 '@babel/transform-typescript',
+                "@vue/babel-plugin-jsx",
+                
             ]
         }
     ]

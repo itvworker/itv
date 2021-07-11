@@ -2,14 +2,14 @@
 // content = content.replace(/</ig,'%3c').replace(/\//ig,'%2f').replace(/>/ig, '%3e').replace(/"/ig, "'")
 // console.log(content);
 
-export function svgXml(content) {
+export function svgXml(content:string):string {
     content = content.replace(/</ig,'%3c').replace(/\//ig,'%2f').replace(/>/ig, '%3e').replace(/"/ig, "'");
     return 'data:image/svg+xml,'+ content;
 }
 
 
-export function slideHeight (dom) {
-    return function(height) {
+export function slideHeight (dom: any) {
+    return function(height:number) {
         dom.style.height = height + 'px';
     };
 }
@@ -19,7 +19,7 @@ export function slideHeight (dom) {
  * @param {String,Number} arg 时戳或日期字符串
  * @param {String} format 格式化的时间 Y：年 M:月 D:日 h：时 m:分 s:秒
  */
-export function formatDate(arg="", format) {
+export function formatDate(arg:any="", format:string):string {
     // console.log(typeof arg.toString());
    
 
@@ -34,7 +34,7 @@ export function formatDate(arg="", format) {
     }
     
     format = format || "Y/M/D h:m";
-    let now = ''
+    let now:any = ''
     if(!arg) {
         now = new Date();
     }else{
@@ -63,7 +63,7 @@ export function formatDate(arg="", format) {
   /**
    * 压缩html字符串
    */
-export function compressHtmlStr(value) {
+export function compressHtmlStr(value:string) {
     return value.replace(/\n/g, '').replace(/(^\s*)|(\s*$)/g, "").replace(/(>)(\s*)(<)/g, function (match, p1, p2, p3, offset) {
         return p1 + p3
     });      　　 
@@ -71,8 +71,8 @@ export function compressHtmlStr(value) {
 /**
  * 驼峰命名转换为前-号命名
  */
-export function humpToFront(name) {
-        let arr = [];
+export function humpToFront(name: string) {
+        let arr:number[] = [];
         let nameArr = name.split('')
         nameArr.forEach((item,index)=>{
             if(/[A-Z]/.test(item) && index!==0) {
@@ -99,14 +99,14 @@ export function humpToFront(name) {
  * @description 判断数据类型
  * @param {any} value 
  */
-export function dataType(value) {
+export function dataType(value: any):string{
     return Object.prototype.toString.call(value).slice(8,-1).toLowerCase()
 }
 /**
  * @description 去除前后两边空格
  * @param {String} value 
  */
-export function tirmRL(str) {
+export function tirmRL(str:string):string {
     return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 
@@ -114,7 +114,7 @@ export function tirmRL(str) {
  * @description 删除左边的空格
  * @param {String} value 
  */
-export function tirmL(str) {
+export function tirmL(str: string):string {
     return str.replace(/(^\s*)/g,"");
 }
 
@@ -122,7 +122,7 @@ export function tirmL(str) {
  * @description 删除右边的空格
  * @param {String} value 
  */
-export function tirmR(str) {
+export function tirmR(str: string):string {
     return str.replace(/(\s*$)/g,"");
 }
 
@@ -130,7 +130,7 @@ export function tirmR(str) {
  * @description 删除所有空格
  * @param {String} value 
  */
- export function tirm(str) {
+ export function tirm(str: string):string {
     return str.replace(/\s/g,"");
 }
 
