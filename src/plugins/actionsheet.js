@@ -3,7 +3,7 @@ import merge from '../libs/merge'
 
 let $vm
 const plugin = {
-    install (vue, options = {}) {
+    install (app, options = {}) {
         const Component = vue.extend(PluginComponent)
 
         if (!$vm) {
@@ -50,9 +50,9 @@ const plugin = {
         }
 
         if (!vue.prototype.$itv) {
-            vue.prototype.$itv = {}
+            app.config.globalProperties.$itv = {}
         }
-        vue.prototype.$itv.actionsheet = opts;
+        app.config.globalProperties.$itv.actionsheet = opts;
       
     }
 }
