@@ -98,7 +98,7 @@ export default {
         },
         words:{
             type: String,
-            default: ["{value}","{value}","{value}","{value}","{value}"],
+            default: ()=>["{value}","{value}","{value}","{value}","{value}"],
         },
         isInteger:{
             type: Boolean,
