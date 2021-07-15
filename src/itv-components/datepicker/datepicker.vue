@@ -1,11 +1,5 @@
 <template>
-<itv-dialog v-model="currentValue" :hideOnClick="hideOnClick" type="bottom">
     <div class="itv-picker-ui" :class="className"> 
-        <div class="title-bar">
-            <div class="left-btn" @click="onClose">{{cancelText}}</div>
-            {{title}}
-            <div class="right-btn" @click="onConfirm">{{confirmText}}</div>
-        </div>
         <div class="itv-picker-panel">
             <picker-slot :class="pickerClassName"  v-for="(item, index) of items" :ref="`picer-slot-${(index)}`"
                 :default-value="selectValue[index+timeIndex]"
