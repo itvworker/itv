@@ -97,7 +97,7 @@ export default {
             default:null
         },
         words:{
-            type: String,
+            type: Array,
             default: ()=>["{value}","{value}","{value}","{value}","{value}"],
         },
         isInteger:{
