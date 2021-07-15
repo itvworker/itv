@@ -5,8 +5,7 @@
                 <div class="btn-cancel" v-show="type==='confirm'"  @click="cancel">{{cancelText}}</div>    
                 {{titleText}}
                 <div class="btn-confirm" v-show="type==='confirm'" :class="{'forbid-btn':isLastConfirm && !isLast}" @click="confirmBtn">{{confirmText}}</div>
-                <div calss="icon-close" v-show="type==='close'"></div>
-                
+                <div class="icon-close" v-show="type==='close'" @click="cancel"></div>
             </div>
             <itv-scroll ref="header"  :percent="0.7" :speed="40"  pattern="horizontal" class="case-box">
                 <div class="level-select-bar">
