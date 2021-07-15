@@ -4,22 +4,22 @@
         <div class="itv-picker-list-panel"  ref="list">
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll,'picker-forbid': item.forbid }" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up' : index+'up'"
-                >{{item | formatWord(word)}} 
+                >{{item | formatWord(word, isInteger)}} 
                
             </div>
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up1' : index+'up1'"
-                >{{item | formatWord(word)}}
+                >{{item | formatWord(word, isInteger)}}
             </div>
             <div class="itv-picker-item" :class="{'picker-forbid': item.forbid}" :style="{height: lineSpacing+'px'}"  v-for="(item,index) in listData"
-                :key="item.label ? item.label : index">{{item | formatWord(word)}}
+                :key="item.label ? item.label : index">{{item | formatWord(word, isInteger)}}
                 
             </div>
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}"  v-for="(item,index) in listData"
-                :key="item.label ? item.label+'next' : index+'next'">{{item | formatWord(word)}}
+                :key="item.label ? item.label+'next' : index+'next'">{{item | formatWord(word, isInteger)}}
             </div>
             <div class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}"  v-for="(item,index) in listData"
-                :key="item.label ? item.label+'next2' : index+'next2'">{{item | formatWord(word) }}
+                :key="item.label ? item.label+'next2' : index+'next2'">{{item | formatWord(word, isInteger) }}
             </div>
         </div>
     </div>
@@ -53,6 +53,11 @@ export default {
         word: {
             type: String,
             default: '{value}'
+        },
+        //是否取整
+        isInteger:{
+           type: Boolean,
+           default: false 
         },
         isLoop: {
             type: Boolean,
@@ -416,11 +421,14 @@ export default {
         clearTimeout(this.timer);
     },
     filters: {
-        formatWord(value, format) {
+        formatWord(value, format, isInteger) {
             if(typeof value === 'object'){
                 value = value.name || item.label
             }
             if(!value) return ''
+            if(isInteger) {
+                value = parseInt(value);
+            }
             return format.replace('{value}', value)
         }
     }

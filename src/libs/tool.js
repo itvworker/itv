@@ -134,3 +134,26 @@ export function tirmR(str) {
     return str.replace(/\s/g,"");
 }
 
+
+export function focusInit() {
+    let u = navigator.userAgent;
+    let isIos = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    let timeout = ""
+    document.addEventListener("focusin", e => {
+        if(isIos) {
+            clearTimeout(timeout);
+        }
+        setTimeout(() => {
+            e.target.scrollIntoViewIfNeeded(true);
+        }, 300);
+    });
+    
+    document.addEventListener("focusout", () => {
+        if (isIos) {
+            
+            timeout = setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 300);
+        }
+    });
+}
