@@ -1,10 +1,6 @@
 export default {
-    created() {
-       this.init(this.currentValue)
-    },
-    mounted() {
-        this.resize();
-    },
+   
+   
     methods: {
 
         //设计大小
@@ -31,11 +27,9 @@ export default {
             this.month = month
             this.calcInit(year, month);
             this.initWeek(year, month, day, dayWeek);
-            
             this.$nextTick(()=>{
                 this.findWeekIndex(temp);
-                this.findWeekRow(temp);
-                this.elHeight = this.$refs.day0.clientHeight*6;
+                this.elHeight =this.$refs.day0.clientHeight*6;
                 this.rowHeight =  this.elHeight /6;
                 if(this.initState==='week') {
                     this.calendarStatus = 0;

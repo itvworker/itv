@@ -15,7 +15,25 @@ export default defineComponent({
       }
     },
     mounted(){
-      
+        setTimeout(()=>{
+            this.$itv.actionsheet.show({
+                items:[
+                    {
+                        text:'选项一'
+                    },
+                    {
+                        text:'选项二'
+                    },
+                    {
+                        text:"选项三"
+                    }
+                ],
+                onConfirm:(item)=> {
+
+                }
+            })
+        })
+        
     },
     render() {
         return (

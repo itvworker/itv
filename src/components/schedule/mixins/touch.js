@@ -1,6 +1,4 @@
-import render from '../../../libs/render'
-import { slideHeight } from '../../../libs/tool'
-import getDirection from '../../../libs/touch'
+
 export default {
     data() {
         return {
@@ -69,14 +67,7 @@ export default {
         }
     },
 
-    mounted() {
-        this.dom = render(this.$refs.slide)
-        this.wdom = render(this.$refs.week)
-        this.hdom = slideHeight(this.$refs.calendar)
-        this.scrollerDom = render(this.$refs.scroller)
-        this.scrollDom = render(this.$refs.scroll)
-     
-    },
+  
     watch: {
         /**
          * 
@@ -331,7 +322,7 @@ export default {
                     if (this.y >= this.maxHeight) { //----
                         this.slideHeight = this.maxHeight
                     }
-
+                    
                     if(this.y > this.rowHeight && this.y < this.maxHeight) {
                         this.aniStatus = true;
                         if ((!isfast && this.y > this.rowHeight * 3) || (isfast && dis > 0 )) {

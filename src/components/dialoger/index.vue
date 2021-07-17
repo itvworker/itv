@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="itv-model" @touchmove="preventDefault" >
         <slot name="outer"></slot>
         <transition :name="type==='none'?'none':'itv-fade'">

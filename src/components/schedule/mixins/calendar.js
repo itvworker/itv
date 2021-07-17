@@ -1,7 +1,6 @@
 import { formatDate } from "../../../libs/tool";
 
 export default {
-    created() {},
 
     data() {
         return {

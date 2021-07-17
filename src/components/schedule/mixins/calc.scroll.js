@@ -1,15 +1,7 @@
 
 
 export default {
-    mounted() {
-        // setTimeout(()=>{
-        //     this.scrollTo(1000, 1000)
-        // },3000)
-        // setTimeout(()=>{
-        //     this.scrollTo(1000, 200)
-        // },6000)
-       
-    },
+    
     computed: {
         /**
          * 判断是否竖向滑动

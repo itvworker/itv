@@ -1,27 +1,22 @@
-import PluginComponent from "../itv-components/actionsheet/index.vue"
+import PluginComponent from "../components/actionsheet/index.vue"
 import merge from '../libs/merge'
-
+import { createApp, defineComponent } from 'vue';
 let $vm
 const plugin = {
     install (app, options = {}) {
-        const Component = vue.extend(PluginComponent)
-
         if (!$vm) {
-            $vm = new Component({
-                el: document.createElement('div'),
-                propsData: {
-                    title: ''
-                }
-            })
-            document.body.appendChild($vm.$el)
+            const Component = defineComponent(PluginComponent);
+            debugger
         }
+        
 
         const opts = {
             show (options) {
-                $vm.title = ''
-                $vm.codetype = ''
-                $vm.params = []
+               
+              
+                console.log($vm);
                 if (typeof options === 'object') {
+                    
                     merge($vm, options)
                 }
 
@@ -49,7 +44,7 @@ const plugin = {
             }
         }
 
-        if (!vue.prototype.$itv) {
+        if (!app.config.globalProperties.$itv) {
             app.config.globalProperties.$itv = {}
         }
         app.config.globalProperties.$itv.actionsheet = opts;

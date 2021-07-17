@@ -83,7 +83,8 @@
                         </div>
                         <div
                             class="day-item"
-                            :ref="'day'+index"
+                            
+                            
                             :class="{'day-today': today === item.key, 'overtop':!item.overtop, 'opacity-day':(item.type==='prev'||item.type==='next') && !isShowPrevMonth, 'prev-month': item.type==='prev',  'next-month': item.type==='next'}"
                             v-for="(item, index) in prevMonth"
                             :key="item.id"
@@ -103,6 +104,7 @@
                             :class="{ 'day-today': today === item.key ,'overtop':!item.overtop,'day-active':currentValue===item.time, 'opacity-day':(item.type==='prev'||item.type==='next') && !isShowPrevMonth, 'prev-month': item.type==='prev', 'next-month': item.type==='next'}"
                             v-for="(item, index) in nowMonth"
                             :key="item.id"
+                            :ref="'day'+index"
                              v-html="monthHtml(index, item, monthText)"></div>
                     </div>
                     <div class="month-item next-item-month " :class="{'none-item':isCalendarMaxMonth}">
@@ -149,6 +151,9 @@ import animateScroller from './mixins/animate.scroller'
 import move from './mixins/move'
 import refreshIcon from './refresh.vue'
 import {svgXml} from '../../libs/tool'
+import render from '../../libs/render'
+import { slideHeight } from '../../libs/tool'
+import getDirection from '../../libs/touch'
 import {defineComponent} from 'vue';
 export default defineComponent({
     name:'itv-schedule',
@@ -289,6 +294,7 @@ export default defineComponent({
             return arr;
         }
     },
+
      data() {
         return {
             nowMonth: [], //当前月份数组
@@ -313,19 +319,33 @@ export default defineComponent({
             isAni: false,
             showTop: true,
             isRefresh: false,
-            pullHeight:0
+            pullHeight:0,
+            itemRefs: []
         };
         
     },
-   
-   
+    created() {
+        this.init(this.currentValue)
+       
+    },
     mounted() {
-        
+        this.dom = render(this.$refs.slide)
+        this.wdom = render(this.$refs.week)
+        this.hdom = slideHeight(this.$refs.calendar)
+        this.scrollerDom = render(this.$refs.scroller)
+        this.scrollDom = render(this.$refs.scroll)
         this.pullHeight = this.$refs.pull.clientHeight;
         
+        this.resize();
+     
     },
     methods: {
         svgXml,
+        setItemRef(el) {
+            if (el) {
+                this.itemRefs.push(el)
+            }
+        },
         /** 
          * 列表内容有更新时调用
         */

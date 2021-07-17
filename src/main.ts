@@ -4,14 +4,13 @@ import routers from './router/index.tsx';
 import layout from './layout';
 import '@/assets/css/index.less';
 import 'lib-flexible'
+import itv from './index.ts';
 
 const app = createApp(App)
 
 
 app.use(routers);
-app.config.globalProperties.$itv = {
-    name:'itv-content'
-}
+app.use(itv);
 app.use(layout)
 app.mount('#app')
 
