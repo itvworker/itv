@@ -4,10 +4,10 @@
         <transition :name="type==='none'?'none':'itv-fade'">
             <div class="itv-bg" @animationend="animateEnd" @click.stop="close" v-show="value"  :style="{'z-index':zIndex }"></div>
         </transition>
-        <transition :name="animate">
+        <!-- <transition :name="animate">
             <div ref="content" :class="className"   v-show="value && html" :style="{'z-index':zIndex+1}">
             </div>
-        </transition>
+        </transition> -->
         <!-- <div v-show="!isIos">
             <transition :name="animate" v-show="!isIos" >
                 <div @animationend="onEnd"   :class="[{'itv-opc': opc},className]"   v-show="value && !html" :style="{'z-index':zIndex+1}">
@@ -15,7 +15,11 @@
                 </div>
             </transition>
         </div> -->
-        <div v-show="iosShow" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
+        <div v-show="iosShow && html" v-html="html" :style="{'z-index':zIndex+1}" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
+            <slot></slot>
+        </div>
+
+        <div v-show="iosShow && !html" :style="{'z-index':zIndex+1}" ref="content" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
             <slot></slot>
         </div>
     </div>
@@ -31,7 +35,7 @@ export default {
             default: false
         },
         type: {
-            type:String,
+            type: String,
             default: 'center'
         },
          opacity:  {
@@ -53,39 +57,7 @@ export default {
 
     },
     computed: {
-        animate() {
-            switch (this.type) {
-                case 'bottom':
-                    return 'itv-slide-top'
-                case 'top':
-                    return 'itv-slide-bottom'
-                case 'none':
-                    return 'none';    
-                case 'left':
-                    return 'itv-slide-left';
-                case 'right':
-                    return 'itv-slide-right';        
-                default:
-                    return 'itv-dialog'
-            }
-        },
-        className() {
-            switch (this.type) {
-                case 'center':
-                    return 'itv-dialog'
-                case 'bottom':
-                    return 'itv-dialog-bottom'
-                case 'top':
-                    return 'itv-dialog-top' 
-                case 'left':
-                    return 'itv-dialog-left' 
-                 case 'right':
-                    return 'itv-dialog-right'             
-                default:
-                    return 'itv-dialog'
-                    break;
-            }
-        },
+       
          animateIos() {
             switch (this.type) {
                 case 'bottom':
@@ -183,21 +155,11 @@ export default {
         close() {
            
             if(!this.hideOnClick) return
-
             this.$emit('input', false);
             this.$emit("hide", false);
         },
-        state() {
-            return this.value
-        },
         preventDefault(e) {
             e.preventDefault()
-        },
-        onEnd() {
-            if(!this.value) {
-                this.opc = true;
-            }
-            
         }
     }
 

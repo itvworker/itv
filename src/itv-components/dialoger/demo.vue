@@ -21,7 +21,7 @@
             
             </section>
         </itv-main>
-        <itv-dialoger v-model="show" :type="type" :hideOnClick="true">
+        <itv-dialoger v-model="show" type="center" :hideOnClick="true">
             <div class="dialog-center">
                 中间弹出的内容
             </div>
@@ -85,7 +85,6 @@ export default {
 
       },
       page() {
-          console.log('page------');
       }
   },
   mounted() {
