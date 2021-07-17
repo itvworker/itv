@@ -2,23 +2,29 @@
     <div class="itv-model" @touchmove="preventDefault" >
         <slot name="outer"></slot>
         <transition :name="type==='none'?'none':'itv-fade'">
-            <div class="itv-bg" @click.stop="close" v-show="value"  :style="{'z-index':zIndex }"></div>
+            <div class="itv-bg" @animationend="animateEnd" @click.stop="close" v-show="value"  :style="{'z-index':zIndex }"></div>
         </transition>
         <transition :name="animate">
             <div ref="content" :class="className"   v-show="value && html" :style="{'z-index':zIndex+1}">
             </div>
         </transition>
-        <transition :name="animate"  >
-            <div @animationend="onEnd"   :class="[{'itv-opc': opc},className]"   v-show="value && !html" :style="{'z-index':zIndex+1}">
-                <slot></slot>
-            </div>
-        </transition>
+        <!-- <div v-show="!isIos">
+            <transition :name="animate" v-show="!isIos" >
+                <div @animationend="onEnd"   :class="[{'itv-opc': opc},className]"   v-show="value && !html" :style="{'z-index':zIndex+1}">
+                    <slot></slot>
+                </div>
+            </transition>
+        </div> -->
+        <div v-show="iosShow" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name:'itv-dialoger',
+
     props: {
         value: {
             type: Boolean,
@@ -80,31 +86,74 @@ export default {
                     break;
             }
         },
+         animateIos() {
+            switch (this.type) {
+                case 'bottom':
+                    return 'itv-ios-slide-bottom'
+                case 'top':
+                    return 'itv-ios-slide-top'
+                case 'none':
+                    return 'itv-ios-none';    
+                case 'left':
+                    return 'itv-ios-slide-left';
+                case 'right':
+                    return 'itv-ios-slide-right';        
+                default:
+                    return 'itv-ios-slide-center'
+            }
+        },
+        classNameIos() {
+            switch (this.type) {
+                case 'center':
+                    return 'itv-ios-dialog-center'
+                case 'bottom':
+                    return 'itv-ios-dialog-bottom'
+                case 'top':
+                    return 'itv-ios-dialog-top' 
+                case 'left':
+                    return 'itv-ios-dialog-left' 
+                 case 'right':
+                    return 'itv-ios-dialog-right'             
+                default:
+                    return 'itv-ios-dialog'
+                    break;
+            }
+        },
         domShow() {
             if(typeof html === 'object') {
                 return true
             }
             return  false
+        },
+        isIos() {
+            return !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         }
     },
     data() {
         return {
             content: '',
-            opc: true
+            iosShow: false,
+            iosShowAnimate: false
         }
     },
     watch: {
         value(a,b) {
             if(!a) {
+                this.iosShowAnimate = false;
                 this.$emit('onHide');
                 return
             }else{
                 
-                setTimeout(()=>{
-                    this.opc = false;   
-                },10)
+                this.iosShow = true;
             }
             this.$emit('onShow')
+        },
+        iosShow(a, b) {
+            if(a){
+                setTimeout(()=>{
+                     this.iosShowAnimate = true;
+                },5)
+            }
         },
         html(a, b) {
           
@@ -126,6 +175,11 @@ export default {
         }
     },
     methods: {
+        animateEnd() {
+            if(!this.value){
+                this.iosShow = false;
+            }
+        },
         close() {
            
             if(!this.hideOnClick) return

@@ -8,10 +8,10 @@
                 <itv-cell :showIcon="true" title="中间弹出" @click="show=true"  desc="中间弹出">
                 </itv-cell>
 
-                <itv-cell :showIcon="true" title="向下弹出" @click="bottomShow=true"  desc="向下弹出">
+                <itv-cell :showIcon="true" title="在下方弹出" @click="bottomShow=true"  desc="向下弹出">
                 </itv-cell>
 
-                <itv-cell :showIcon="true" title="从上弹出" @click="topshow=true"  desc="从上弹出">
+                <itv-cell :showIcon="true" title="从上方弹出" @click="topshow=true"  desc="从上弹出">
                 </itv-cell>
 
                 <itv-cell :showIcon="true" title="从左弹出" @click="leftshow=true"  desc="从左弹出">
