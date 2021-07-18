@@ -23,8 +23,8 @@
                 success
             </div>
 
-            <div class="itv-demo-btn btn-content" @click="successHtml('html')" >
-                success
+            <div class="itv-demo-btn btn-content" @click="onTitle('wever')" >
+                title
             </div>
 
         </itv-main>
@@ -75,6 +75,16 @@ export default {
         },
         successHtml() {
             this.$itv.toast.html("<div class='style' style='font-size:40px'>hmtl</div>")
+        },
+        onTitle() {
+            this.$itv.toast.show({
+                type: 'cancel',
+                width: 'auto',
+                title:"提交失败",
+                position:'middle',
+                text:"网络有问题，请重试",
+                color:"rgba(255, 255, 255, 0.65)"
+            })
         }
     }
 }
