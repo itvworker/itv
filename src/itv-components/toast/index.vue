@@ -4,17 +4,16 @@
         <div class="itv-bg" v-show="showBg" >
 
         </div>
-        <transition :name="currentTransition" v-if="!html">
+        <transition :name="currentTransition" >
             <div class="itv-toast" :class="toastClass"  v-show="show" >
-                <img class="icon" v-show="type!=='text'" :src="icon">
-                <p v-if="text">{{text}}</p>
+                <div class="itv-toast-title" :class="{'itv-toast-title-lit': title}">
+                     <img class="icon" v-show="type!=='text'" :src="icon">
+                    <span>{{title}}</span>
+                </div>
+                <p v-if="text" :style="{color: color}">{{text}}</p>
             </div>
         </transition>
-        <transition :name="currentTransition" v-else>
-            <div class="itv-toast" :class="toastClass"  v-show="show" v-html="html">
-               
-            </div>
-        </transition>
+        
     </div>
 </template>
 
@@ -43,6 +42,14 @@ export default {
         html:{
             type: Number, 
             default: null
+        },
+        title:{
+            type: String,
+            default: null
+        },
+        color:{
+            type: String,
+            default: "#fff"
         }
     },
     data() {
