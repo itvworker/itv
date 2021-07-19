@@ -207,7 +207,10 @@ export default {
             type: Boolean,
             default: false
         },
-        
+        minScrollHeihgt:{
+            type: Number,
+            default: 0
+        }
         
     },
     watch: {

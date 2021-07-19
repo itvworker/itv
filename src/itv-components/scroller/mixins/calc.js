@@ -76,11 +76,15 @@ export default {
           
             this.maxX = Math.max(0,childWidth - parentWidth);
             this.maxY = Math.max(0,childHeight - parentHeight);
+
+            if(this.minScrollHeihgt > this.maxY) {
+                this.maxY = this.minScrollHeihgt
+            }
             this.contentHeight = parentHeight;
             this.contentWidth = parentWidth;
             this.elPositon = this.$el.getBoundingClientRect()
             //当滚动值超过最大值时，恢复到最大值
-
+            
             if(this.scrollX > this.maxX) {
                 this.scrollX =  this.maxX;
                 this.x =  this.maxX
@@ -91,6 +95,8 @@ export default {
                 this.y =  this.maxY
                 
             }
+
+            debugger
             this.scrollRender(this.scrollX , this.scrollY, 1);
        
             //计算下拉加载触发点

@@ -8,11 +8,9 @@
             <div ref="content" :class="className"   v-show="value && html" :style="{'z-index':zIndex+1}">
             </div>
         </transition>
-        <transition :name="animate"  >
-            <div @animationend="onEnd"   :class="[{'itv-opc': opc},className]"   v-show="value && !html" :style="{'z-index':zIndex+1}">
-                <slot></slot>
-            </div>
-        </transition>
+        <div @animationend="onEnd" class=""   :class="[{'itv-opc': showValue},className]"   v-show="value && !html" :style="{'z-index':zIndex+1}">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
