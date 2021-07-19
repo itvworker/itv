@@ -166,10 +166,10 @@ export default {
             this.scrollRender(this.scrollX, this.scrollY, 1)
 
             if(this.scrollXRender) {
-                this.scrollXRender(this.scrollX,0,1)
+                this.scrollXRender(-this.scrollX,0,1)
             }
             if(this.scrollYRender) {
-                this.scrollYRender(0,this.scrollY,1)
+                // this.scrollYRender(0,-this.scrollY,1)
             }
             this.hideBarY = false;
             if(this.scrollBarYRender) {
@@ -190,7 +190,9 @@ export default {
            
             this.$emit('scroll',{
                 x: this.scrollX,
-                y: this.scrollY
+                y: this.scrollY,
+                stepX: res.angx,
+                stepY: res.angy
             })
 
             

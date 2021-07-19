@@ -1,0 +1,104 @@
+
+.item {
+    height: 60ipx;
+    border-bottom: #ddd solid 1px;
+    line-height: 30ipx;
+    padding: 15ipx;
+    box-sizing: border-box;
+    font-size: 18ipx;
+}
+
+.tab-meun{
+    height: 44rpx;
+    display: flex;
+    .tab-btn{
+        height: 44ipx;
+        flex: 1;
+        text-align: center;
+        line-height: 44ipx;
+        font-size: 16ipx;
+        border-bottom: #ddd solid 1px;
+        &.active {
+            color: @itv-page-main;
+            border-bottom: @itv-page-main solid 2px;
+        }
+    }
+}
+
+.item-list{
+    border-bottom: #eee solid 1px;
+    padding: 10ipx;
+    line-height: 24ipx;
+}
+
+.flex-row-box{
+    display: flex;
+    .flex-row-item {
+        flex:1;
+        padding: 10ipx 0;
+        text-align: center;
+        line-height: 24ipx;
+        border-bottom: #ddd solid 1px;
+        &.active{
+            color: #e1251b;
+            border-bottom: #e1251b solid 2ipx;
+        }
+    }
+}
+.itv-case-box {
+    padding: 5ipx;
+    display: flex;
+    width:fit-content;
+    .item-list-section{
+        width: 120ipx;;
+        border:#ddd solid 1px;
+        margin: 5ipx;
+        height: 120ipx;
+        line-height: 120ipx;
+        flex:0 0 auto;
+        text-align: center;
+        flex-wrap: nowrap;
+        
+    }
+}
+
+.case-box{
+    height: 140ipx;
+}
+.msg-word{
+    font-size: 16ipx;
+    width: 2000ipx;
+    line-height: 32ipx;
+    color: #666;
+}
+.itv-swpier-height {
+    height:100%;
+}
+.swpier-scroller{
+    height: 100%;
+}
+.content-fix{
+    /deep/ .fix-action-header {
+        background-color: #ddd;
+        height: 36ipx;
+        padding-left: 16ipx;
+        line-height: 36ipx;
+    }
+    .l1 {
+        height: 44ipx;
+        line-height: 44ipx;
+        padding-left: 15ipx;
+    }
+}
+.demo-toggle{
+    background-color:#eee;
+    height: 44ipx;
+    position:absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+
+}
+.demo-toggle-header{
+    height: 44ipx;
+}

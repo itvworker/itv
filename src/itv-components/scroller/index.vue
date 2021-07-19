@@ -5,10 +5,9 @@
         <div class="itv-scroll-x-touch" v-if="scrollXel" ref="x" :style="{'transform':`translate3d(-${x},0,0)`,'WebkitTransform':`translate3d(-${x},0,0)`}">
             <slot name="x"/>
         </div>
-        <!-- 跟随y轴滚 -->
-        <div class="itv-scroll-y-touch" v-if="scrollYel" ref="y" :style="{'transform':`translate3d(0,-${y},0)`,'WebkitTransform':`translate3d(0,-${y},0)`}" >
-            <slot name="y"/>
-        </div>
+     
+        <slot name="y"/>
+        
         <slot name="other"/>
         <!-- 滚动的内容 -->
         <div class="itv-scroll-content"  >

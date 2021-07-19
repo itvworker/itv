@@ -105,6 +105,15 @@ export default [
                 },
             },
             {
+                path: '/demo/scroller-toggle',
+                name: 'itv_scroller-toggle',
+                component: () => import('@/itv-components/scroller-toggle/demo.vue'),
+                meta: {
+                    keepAlive: false,
+                    title: 'scroller',
+                },
+            },
+            {
                 path: '/demo/scroller/parent',
                 name: 'itv_scroller_parent',
                 component: () => import('@/itv-components/scroller/parent.demo.vue'),

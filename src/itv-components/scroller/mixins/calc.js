@@ -96,7 +96,6 @@ export default {
                 
             }
 
-            debugger
             this.scrollRender(this.scrollX , this.scrollY, 1);
        
             //计算下拉加载触发点
