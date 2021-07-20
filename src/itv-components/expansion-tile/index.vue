@@ -13,7 +13,7 @@
                 </div>
             </div>
         </slot>
-        <div class="itv-expansion-tile-toggle" :style="{height: currentValue? height+'px':minHeight+'px'}">
+        <div class="itv-expansion-tile-toggle" :style="{height: currentValue? height+'px':minHeight+'px', 'margin-top': currentValue? null:minHeight+'px'}">
             <div class="itv-expansion-height" ref="content">
                 <slot></slot>
             </div>

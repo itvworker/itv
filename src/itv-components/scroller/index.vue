@@ -7,7 +7,7 @@
         </div>
      
         <slot name="y"/>
-        
+
         <slot name="other"/>
         <!-- 滚动的内容 -->
         <div class="itv-scroll-content"  >
@@ -292,7 +292,6 @@ export default {
             scrollBarTimeout: '',
             elPostion:{}, //位置滑动区所在的位置
             moreStatus: 'loadingStop', // loading加载中, loadingStop 加载完成，等待下次加载， none //没有更多数据 
-
             parentScroller: null,
             childScroller: null
         }
