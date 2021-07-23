@@ -302,6 +302,7 @@ export default {
                 this.rotate = 0
             }
             this.setImgTransform();
+            clearTimeout(this.timeOut)
             this.timeOut = setTimeout(()=>{
                 this.transition = false;
                 if(this.rotate<=-360) {
