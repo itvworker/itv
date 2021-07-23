@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="itv-picker-mask"  :class="['itv-picker-row'+rows, {'clear-mask': clearMask}]"></div>
-    <div class="itv-picker-indicator"   :class="['itv-picker-row'+rows]"></div>
+    <div class="itv-picker-indicator"  :class="['itv-picker-row'+rows]"></div>
 </div>
 </template>
 <script>

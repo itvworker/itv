@@ -15,11 +15,11 @@
                 </div>
             </transition>
         </div> -->
-        <div v-show="iosShow && html" v-html="html" :style="{'z-index':zIndex+1}" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
+        <div v-show="iosShow && html" ref="content" v-html="html" :style="{'z-index':zIndex+1}" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
             <slot></slot>
         </div>
 
-        <div v-show="iosShow && !html" :style="{'z-index':zIndex+1}" ref="content" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
+        <div v-show="iosShow && !html" :style="{'z-index':zIndex+1}"  class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
             <slot></slot>
         </div>
     </div>

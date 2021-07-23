@@ -22,13 +22,17 @@ p {
     position: fixed;
     border-radius: 8ipx;
     background-color: rgba(0, 0, 0, 0.75);
-    padding: 12ipx 15ipx;
+    padding: 15ipx 32ipx;
     color: #fff;
-    min-width: 80ipx;
-    max-width: 100%;
+    min-width: 96ipx;
+    max-width: 272ipx;
+    box-sizing: border-box;
     text-align: center;
     font-size: 14ipx;
     z-index: 100;
+    width: fit-content;
+   
+    
 }
 .itv-toast.itv-toast-top {
     top: 60ipx;
@@ -59,20 +63,62 @@ p {
     transition: all 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
 }
 
-.itv-toast-title-lit{
+
+.itvui-toast-success,.itvui-toast-cancel,.itvui-toast-forbidden{
+    width: 96ipx;
+    height: 96ipx;
+    padding-left: 0;
+    padding-right: 0;
     display: flex;
     align-items: center;
-    height: 24ipx;
     justify-content: center;
-    margin-bottom: 3ipx;
-    .icon{
-        width: 20ipx;
-        height: 20ipx;
-        margin-bottom: 0;
-        
+    flex-direction: column;
+    padding-top: 18ipx;
+    padding-bottom: 15ipx;
+    p{
+        padding-top: 8ipx;
     }
-    span{
-        margin-left: 8ipx;
+    .itv-toast-title{
+        width: 36ipx;
+        height: 36ipx;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+   
+}
+
+.itvui-toast-title {
+   
+    padding-top: 15pt;
+    padding-bottom: 12pt;
+    padding-left: 24pt;
+    padding-right: 24pt;
+    .itv-toast-title-lit{
+        display: flex;
+        align-items: center;
+        height: 24ipx;
+        justify-content: center;
+        line-height: 0;
+        margin-bottom: 3ipx;
+        .icon{
+            width: 20ipx;
+            height: 20ipx;
+            margin-bottom: 0;
+            
+        }
+        .text{
+            margin-left: 8ipx;
+            font-size: 16ipx;
+        }
+    }
+}
+.itvui-toast-text {
+    padding: 15ipx 32ipx;
+    p {
+        line-height: 24ipx;
         font-size: 16ipx;
     }
 }

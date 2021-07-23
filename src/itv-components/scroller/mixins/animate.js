@@ -17,8 +17,6 @@ export default {
             this.stepX = dx > 0? this.calcStep(dx):-this.calcStep(dx)
             this.stepX*=value
             this.stepY*=value
-           
-           
             window.requestAnimationFrame(this.step);                 
 
         },

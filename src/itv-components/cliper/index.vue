@@ -3,7 +3,12 @@
     <div class="itv-cliper"  ref="clipic" @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart"   @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" >
         <div class="itv-cliper-clipic-frame" :class="{'itv-cliper-circle':clipType==='circle'}"  :style="{width:frame1Width+'px', height:frame1Height+'px'}" ref="frame1" id="clipicFrame1">
             <img ref="img1" :width="imgWidth" :height="imgHeight" 
-             :src="src" /></div>
+             :src="src" />
+        <div class="left-top"></div>
+        <div class="right-top"></div>
+        <div class="left-bottom"></div>
+        <div class="right-bottom"></div>     
+        </div>
         <div class="itv-cliper-clipic-layer"></div>
         <div class="itv-cliper-clipic-frame itv-cliper-clipic-frame-show" :class="{'itv-cliper-circle':clipType==='circle'}"
           :style="{width:frame2Width+'px', height:frame2Height+'px'}"

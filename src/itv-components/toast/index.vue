@@ -7,13 +7,12 @@
         <transition :name="currentTransition" >
             <div class="itv-toast" :class="toastClass"  v-show="show" >
                 <div class="itv-toast-title" :class="{'itv-toast-title-lit': title}">
-                     <img class="icon" v-show="type!=='text'" :src="icon">
-                    <span>{{title}}</span>
+                    <img class="icon" v-show="type!=='text'" :src="icon">
+                    <div class="text">{{title}}</div>
                 </div>
                 <p v-if="text" :style="{color: color}">{{text}}</p>
             </div>
         </transition>
-        
     </div>
 </template>
 
@@ -78,9 +77,10 @@ export default {
         },
         toastClass() {
             return {
-                "itvui-toast-forbidden": this.type === "warn",
-                "itvui-toast-cancel": this.type === "cancel",
-                "itvui-toast-success": this.type === "success",
+                "itvui-toast-forbidden": this.type === "warn" && !this.title,
+                "itvui-toast-title": (this.type === "warn" || this.type === "cancel" || this.type === "success") && this.title,
+                "itvui-toast-cancel": this.type === "cancel" && !this.title,
+                "itvui-toast-success": this.type === "success" && !this.title,
                 "itvui-toast-text": this.type === "text",
                 "itv-toast-top": this.position === "top",
                 "itv-toast-bottom": this.position === "bottom",
