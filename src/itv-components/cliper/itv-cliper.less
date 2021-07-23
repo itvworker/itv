@@ -17,7 +17,7 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%,-50%);
-            border: #fff solid 2px;
+          
             box-sizing: border-box;
             
             // border-radius: 50%;
@@ -28,8 +28,20 @@
             }
         }
 
+        .itv-cliper-front-bg{
+            
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            border: #fff solid 1px;
+            z-index: 10;
+        } 
+            
+
         .itv-cliper-clipic-frame-show {
             overflow: hidden;
+          
         }
 
         .itv-cliper-clipic-layer {
@@ -93,7 +105,53 @@
     }
 
     
+.left-top{
+    height: 16ipx;
+    width: 16ipx;
+    border-left: #fff solid 4px;
+    border-top: #fff solid 4px;
+    position: absolute;
+    top: -4ipx;
+    left: -4ipx;
+    z-index: 100;
+}
 
+.right-top{
+    height: 16ipx;
+    width: 16ipx;
+    border-right: #fff solid 4px;
+    border-top: #fff solid 4px;
+    position: absolute;
+    top: -4ipx;
+    right: -4ipx;
+    z-index: 100;
+}
+
+
+.left-bottom{
+    height: 16ipx;
+    width: 16ipx;
+    border-left: #fff solid 4px;
+    border-bottom: #fff solid 4px;
+    position: absolute;
+    bottom: -4ipx;
+    left: -4ipx;
+    z-index: 100;
+}
+
+.right-bottom{
+    height: 16ipx;
+    width: 16ipx;
+    border-right: #fff solid 4px;
+    border-bottom: #fff solid 4px;
+    position: absolute;
+    bottom: -4ipx;
+    right: -4ipx;
+    z-index: 100;
+}
+.transition{
+    transition: transform 200ms;
+}
     // <div class="left-top"></div>
     // <div class="right-top"></div>
     // <div class="left-bottom"></div>

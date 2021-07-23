@@ -30,7 +30,7 @@ module.exports = Object.assign(baseWepback, {
         compress: true, // 服务端压缩是否开启
         open: false, // 自动打开浏览器
         hot: true, // 开启热更新
-        port: 8888,
+        port: 8889,
         proxy: proxy,
     },
     stats: {

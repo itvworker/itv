@@ -40,6 +40,7 @@
                 <itv-main>
                     <itv-cliper :width="w" :height="h" ref="cliper" :clipType="clipType"></itv-cliper>
                 </itv-main>
+                <button @click="setAngle">旋转</button>
                 <itv-flex-row>
                     <div class="item" @click="reset">重置</div>
                     <div class="item">
@@ -67,7 +68,7 @@ export default {
             url:'',
             w:100,
             h:200,
-            width: 100,
+            width: 200,
             height:300,
             toggle: false,
             previewerList:[
@@ -113,7 +114,10 @@ export default {
             let result = this.$refs.cliper.done();
             this.url = result;
             this.toggle = false;
-
+            
+        },
+        setAngle() {
+          this.$refs.cliper.setAngle()
         }
     },
     mounted() {

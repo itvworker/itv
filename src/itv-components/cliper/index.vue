@@ -3,17 +3,24 @@
     <div class="itv-cliper"  ref="clipic" @mouseup="touchend" @mouseleave="touchend"  @mousedown="touchstart"   @touchstart="touchstart" @touchmove="touchmove"   @touchend="touchend" >
         <div class="itv-cliper-clipic-frame" :class="{'itv-cliper-circle':clipType==='circle'}"  :style="{width:frame1Width+'px', height:frame1Height+'px'}" ref="frame1" id="clipicFrame1">
             <img ref="img1" :width="imgWidth" :height="imgHeight" 
+            :class="{'transition':transition}"
              :src="src" />
-        <div class="left-top"></div>
-        <div class="right-top"></div>
-        <div class="left-bottom"></div>
-        <div class="right-bottom"></div>     
+         
         </div>
         <div class="itv-cliper-clipic-layer"></div>
+        <div class="itv-cliper-front-bg"
+          :style="{width:frame2Width+'px', height:frame2Height+'px'}"
+          
+        >
+            <div class="left-top"></div>
+            <div class="right-top"></div>
+            <div class="left-bottom"></div>
+            <div class="right-bottom"></div>  
+        </div>
         <div class="itv-cliper-clipic-frame itv-cliper-clipic-frame-show" :class="{'itv-cliper-circle':clipType==='circle'}"
           :style="{width:frame2Width+'px', height:frame2Height+'px'}"
           ref="frame2"  >
-          <img ref="img2"
+          <img ref="img2" :class="{'transition':transition}"
           :width="imgWidth" :height="imgHeight"    :src="src" /></div>
             
     </div>
@@ -41,6 +48,10 @@ export default {
         clipType: {
             type: String,
             default: 'orthogon' //square circle orthogon
+        },
+        isTouchRotate: {
+            type: Boolean,
+            default: false 
         }
     },
     data() {
@@ -70,7 +81,9 @@ export default {
             },
             supportTouch: true,
             press: false,
-            src: ''
+            src: '',
+            transition: false,
+            timeOut:null
         }
     },
 
@@ -115,10 +128,6 @@ export default {
                 this.setImgTransform();
                 
             }
-
-
-
-
         },
         touchend(e) {
         
@@ -153,12 +162,13 @@ export default {
             }   
             if (e.touches.length>1) {
                 this.setScale(e.touches[0], e.touches[1])
-                this.setRotate(e.touches[0], e.touches[1])
+                if(this.isTouchRotate) {
+                    this.setRotate(e.touches[0], e.touches[1])
+                }
                 this.setImgTransform();
                 return
             }
 
-            
             this.setTranslate(e.touches[0])
             this.setImgTransform();
         },
@@ -182,7 +192,6 @@ export default {
                 this.rotate += angle - this.angle
             }
             this.angle = angle
-            
         },
         setTranslate(touches) {
             const x = touches.clientX
@@ -285,7 +294,23 @@ export default {
             let result = canvas.toDataURL(`image/${this.outputFormat}`, this.quality)
             this.$emit('output', result);
             return result
-
+        },
+        setAngle() {
+            this.transition  = true;
+            this.rotate-=90;
+            if(this.rotate<-360) {
+                this.rotate = 0
+            }
+            this.setImgTransform();
+            this.timeOut = setTimeout(()=>{
+                this.transition = false;
+                if(this.rotate<=-360) {
+                    this.rotate = 0
+                    this.setImgTransform()
+                }
+            },200)
+            
+            
         }
 
     },
