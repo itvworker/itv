@@ -18,6 +18,8 @@
                 </itv-cell>
                 <itv-cell :showIcon="true" title="从右弹出" @click="rightshow=true"  desc="从右弹出">
                 </itv-cell>
+                <itv-cell :showIcon="true" title="从右弹出" @click="onPlugin"  desc="从右弹出">
+                </itv-cell>
             
             </section>
         </itv-main>
@@ -51,7 +53,9 @@
                 我是向上弹出来的内容
             </div>
         </itv-dialoger>
-       
+        <div class="text" ref="plugin">
+            plugin
+        </div>
     </itv-container>
 
 </template>
@@ -83,6 +87,11 @@ export default {
               })
           }
 
+      },
+      onPlugin() {
+            this.$itv.dialoger.show({
+                html: this.$refs.plugin
+            })
       },
       page() {
       }

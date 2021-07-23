@@ -15,7 +15,7 @@
                 </div>
             </transition>
         </div> -->
-        <div v-show="iosShow && html" ref="content" v-html="html" :style="{'z-index':zIndex+1}" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
+        <div v-show="iosShow && html" ref="content" v-html="content" :style="{'z-index':zIndex+1}" class="itv-ios-dialog" @transitionend="animateEnd" :class="[classNameIos, iosShowAnimate?animateIos:'']">
             <slot></slot>
         </div>
 
@@ -128,7 +128,7 @@ export default {
             }
         },
         html(a, b) {
-          
+           
             this.$refs.content.innerHTML= ''
             if(!a){
                 this.content = ''
@@ -141,8 +141,11 @@ export default {
                 return
             }
             this.content = ''
-            this.$refs.content.appendChild(a)
-            this.$refs.content.style.display = '';
+            this.$nextTick(()=>{
+                this.$refs.content.appendChild(a)
+                this.$refs.content.style.display = '';
+            })
+          
 
         }
     },

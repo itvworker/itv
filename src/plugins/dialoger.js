@@ -41,6 +41,7 @@ const plugin = {
             }
         } else {
             vue.prototype.$itv.dialoger  = dialog
+            vue.prototype.$itv.dialog  = dialog
         }
     }
 }
