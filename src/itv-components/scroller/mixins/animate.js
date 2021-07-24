@@ -71,7 +71,8 @@ export default {
             if(this.stepY===0 && this.stepX === 0) {
                 this.$emit('stopscroll',{
                     x: this.scrollX,
-                    y: this.scrollY
+                    y: this.scrollY,
+                    type: this.direction
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;
@@ -108,8 +109,6 @@ export default {
                 this.stepX = 0;
                 scrollX = this.scrollToX;
                 this.scrollToX = null;
-                
-                
             }
 
             //当是指定滚动到某一点时
@@ -202,7 +201,10 @@ export default {
                 x: this.scrollX,
                 y: this.scrollY,
                 stepY: this.stepY,
-                stepX: this.stepY
+                stepX: this.stepY,
+                type: this.direction,
+                maxY: this.maxY
+
             })
             this.stepX = this.stepX * this.percent
             this.stepY = this.stepY * this.percent
@@ -237,7 +239,8 @@ export default {
                 }
                 this.$emit('stopscroll', {
                     x: this.scrollX,
-                    y: this.scrollY
+                    y: this.scrollY,
+                    type: this.direction
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;

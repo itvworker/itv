@@ -130,7 +130,7 @@ export default {
         },
         percent: {
             type: Number,
-            default: 0.95
+            default: 0.98
         },
         speed: {
             type: Number,
@@ -183,7 +183,7 @@ export default {
         },
         maxSpeed:{
             type: Number,
-            default: 30
+            default: 100
         },
         /**除数，控制计算速度 */
         divisor:{

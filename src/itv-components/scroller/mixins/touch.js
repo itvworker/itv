@@ -192,7 +192,9 @@ export default {
                 x: this.scrollX,
                 y: this.scrollY,
                 stepX: res.angx,
-                stepY: res.angy
+                stepY: res.angy,
+                type: this.direction,
+                maxY: this.maxY
             })
 
             
@@ -260,9 +262,9 @@ export default {
                 } 
             }
             let speed = this.calcMoveSpeed();
-          
-            speed.x = speed.x*0.5
-            speed.x = speed.y*0.5
+           
+            // speed.x = speed.x
+            // speed.x = speed.y
            
             
             
