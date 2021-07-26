@@ -6,11 +6,13 @@
         </div>
         <transition :name="currentTransition" >
             <div class="itv-toast" :class="toastClass"  v-show="show" >
-                <div class="itv-toast-title" :class="{'itv-toast-title-lit': title}">
-                    <img class="icon" v-show="type!=='text'" :src="icon">
-                    <div class="text">{{title}}</div>
+                <div class="itv-toast-indoor">
+                    <div class="itv-toast-title" :class="{'itv-toast-title-lit': title}">
+                        <img class="icon" v-show="type!=='text'" :src="icon">
+                        <div class="text">{{title}}</div>
+                    </div>
+                    <p v-if="text" :style="{color: color}">{{text}}</p>
                 </div>
-                <p v-if="text" :style="{color: color}">{{text}}</p>
             </div>
         </transition>
     </div>
