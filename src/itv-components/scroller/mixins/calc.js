@@ -112,8 +112,8 @@ export default {
             
             // this.touchMoveList = [];
             let num = touchList.length
-            if(num > 20) {
-                touchList = touchList.slice(num-20, num)
+            if(num > 30) {
+                touchList = touchList.slice(num-30, num)
             }
             let last = touchList.length-1;
             let first = 0;

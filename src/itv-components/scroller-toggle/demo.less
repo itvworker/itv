@@ -29,6 +29,9 @@
     border-bottom: #eee solid 1px;
     padding: 10ipx;
     line-height: 24ipx;
+    &:first-child{
+        margin-top: 188ipx;
+    }
 }
 
 .flex-row-box{
@@ -94,11 +97,33 @@
     background-color:#eee;
     height: 44ipx;
     position:absolute;
-    z-index: 1;
+    z-index: 90;
     left: 0;
     right: 0;
+    &.meun {
+        color: #000;
+        z-index: 100;
+    }
 
 }
 .demo-toggle-header{
     height: 44ipx;
+    &:nth-child(2) {
+        background-color: orange;
+        font-size: 16ipx;
+        color: #fff;
+        line-height: 44ipx;
+        padding-left: 16ipx;
+    }
+    &:nth-child(3) {
+        background-color: blueviolet;
+        font-size: 16ipx;
+        color: #fff;
+        line-height: 44ipx;
+        padding-left: 16ipx;
+    }
+}
+
+.demo-toggle-banner{
+    height: 100ipx;
 }

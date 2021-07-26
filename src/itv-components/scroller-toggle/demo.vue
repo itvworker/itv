@@ -3,14 +3,13 @@
         <itv-header>scroller</itv-header>
         <itv-main>
             <itv-scroller 
-            v-if="tabIndex===0" 
             :key="0" ref="scrolle1" 
-           
             :bottomBounce="true" 
             :pullDown="true" 
             pattern="vertical" 
             :percent="0.95"
-            :speed="50" 
+            :speed="500" 
+            :maxSpeed="300"
             :showScrollBar="true"
             @scroll="scroll" 
             @stopscroll="stopscroll"
@@ -18,15 +17,15 @@
             scrollYel
             >
             <div slot="y">
-                <itv-scroller-toggle class="demo-toggle" >
-                我是要滑滚动的内容
+                <itv-scroller-toggle class="demo-toggle meun" :maxY="meunHeight" ref="meun" >
+                  我是要滑滚动的内容
                 </itv-scroller-toggle>
 
-                <itv-scroller-toggle class="demo-toggle" :maxY="88">
-                    <div class="demo-toggle-header">
+                <itv-scroller-toggle class="demo-toggle" type="section" :maxY="maxHeight" :startY="startY" :sectionY="startY">
+                    <div class="demo-toggle-header" ref="header">
 
                     </div>
-                    <div class="demo-toggle-header">
+                    <div class="demo-toggle-header demo-toggle-banner" ref="banner">
                         我是一个标题
                     </div>
                     <div class="demo-toggle-header">
@@ -51,7 +50,10 @@ export default {
     data() {
         return {
           list:[],
-          columnIndex: 0  
+          columnIndex: 0,
+          meunHeight: 0,
+          maxHeight: 0,
+          startY:0
         }
     },
     computed: {
@@ -126,6 +128,9 @@ export default {
         this.changeList(50,1)
     },
     mounted() {
+       this.meunHeight = this.$refs.meun.$el.clientHeight+1;
+       this.maxHeight = this.$refs.header.clientHeight + this.$refs.banner.clientHeight;
+       this.startY = this.$refs.banner.clientHeight
        
     }
 
