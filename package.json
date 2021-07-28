@@ -12,9 +12,9 @@
   "author": "lanjie",
   "license": "ISC",
   "devDependencies": {
+    "wxss-cli": "^1.0.4"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "browserslist": [
     "> 1%",
     "last 2 versions",
