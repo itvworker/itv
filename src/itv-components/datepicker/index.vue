@@ -16,6 +16,7 @@
                 :key-index="index"
                 :rows="rows"
                 :isLoop="isLoop"
+                :isInteger="isInteger"
                 :word="words[index]"
             ></picker-slot>
         </div>
@@ -98,6 +99,11 @@ export default {
         words:{
             type: Array,
             default: ()=>["{value}","{value}","{value}","{value}","{value}"],
+        },
+        //是否取整
+        isInteger:{
+           type: Boolean,
+           default: false 
         }
 
     },
