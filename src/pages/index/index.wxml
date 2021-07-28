@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<wxs module="touchs" src="./render.wxs"></wxs>
+<view class="container">
+    <view class="move-bar" data-id="{{motto}}" bindtouchmove="{{touchs.touchmove}}" bindload="{{touchs.loaded}}">
+        move
+    </view>
+</view>
