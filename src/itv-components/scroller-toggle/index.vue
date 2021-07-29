@@ -97,12 +97,18 @@ export default {
 
 
        this.$parent.$on('stopscroll', (res)=>{
+           
             if(res.type !== 'vertical') {
                 return
             }
             if(res.y<=0) {
-                this.y =0;
+                this.y = 0;
                 this.header(0, -this.y, 1);
+            }
+            if(res.y >=  this.maxY) {
+                this.y = -this.maxY;
+                this.header(0, -this.y, 1);
+                return
             }
 
        })
