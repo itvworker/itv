@@ -49,8 +49,12 @@ export default {
     },
     mounted() {
        this.$parent.$on('scroll', (res)=>{
-           
-            if(res.type !== 'vertical' || res.y >  res.maxY) {
+            if(res.type !== 'vertical') {
+                return
+            }
+            if(res.y >=  res.maxY) {
+                this.y = -this.maxY;
+                this.header(0, -this.y, 1);
                 return
             }
 
@@ -74,14 +78,12 @@ export default {
                         this.y = this.minY;
                     }
                 }
-               
                 if(res.y > this.startY) {
                     if(this.y>= -this.sectionY) {
                         this.y= -this.sectionY
                         console.log(this.sectionY);
                     }
                 }
-
                 if(res.y<=1) {
                     this.y =0;
                 }

@@ -17,6 +17,17 @@ export default {
             this.stepX = dx > 0? this.calcStep(dx):-this.calcStep(dx)
             this.stepX*=value
             this.stepY*=value
+            if(this.stepY===0 && this.stepX === 0) {
+                return
+            }
+            if(x === 0) {
+                this.direction ="vertical"
+            }
+
+            if(y === 0) {
+                this.direction ="horizontal"
+            }
+            
             window.requestAnimationFrame(this.step);                 
 
         },
@@ -201,10 +212,9 @@ export default {
                 x: this.scrollX,
                 y: this.scrollY,
                 stepY: this.stepY,
-                stepX: this.stepY,
+                stepX: this.stepX,
                 type: this.direction,
                 maxY: this.maxY
-
             })
             this.stepX = this.stepX * this.percent
             this.stepY = this.stepY * this.percent
