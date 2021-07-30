@@ -17,14 +17,12 @@ export default {
             this.stepX = dx > 0? this.calcStep(dx):-this.calcStep(dx)
             this.stepX*=value
             this.stepY*=value
-            if(this.stepY===0 && this.stepX === 0) {
-                return
-            }
-            if(x === 0) {
+           
+            if(x === this.x) {
                 this.direction ="vertical"
             }
 
-            if(y === 0) {
+            if(y === this.y) {
                 this.direction ="horizontal"
             }
             
@@ -51,7 +49,7 @@ export default {
                 y = 0
             }
 
-            this.scrollX =x;
+            this.scrollX = x;
             this.scrollY = y;
             this.scrollRender(x, y, 1)
         },

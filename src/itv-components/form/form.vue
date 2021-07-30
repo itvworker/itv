@@ -17,6 +17,10 @@ export default {
         model: {
             type: Object,
             default: ()=>{}
+        },
+        isClose: {
+            type: Boolean,
+            defaut: false
         }
     },
     data(){
@@ -26,11 +30,16 @@ export default {
     },
     provide(){
         return {
-            itvForm:this,
-           
+            itvForm:this
         }
     },
-    
+    watch:{
+        isClose(n) {
+            if(!n) {
+                this.closeVaildata();
+            }
+        }
+    },
     methods:{
         /**
          * @description 验证值是否通过验证
@@ -44,7 +53,15 @@ export default {
             let vail = res.getResult();
             if(vail) {
                 vail.component = obj;
+                if(obj.errorText) {
+                    vail.message = obj.errorText;
+                    obj.errorVaildate = obj.errorText;
+                }else{
+                    obj.errorVaildate = vail.message;
+                }
                 return vail
+            }else{
+                obj.errorVaildate = null;
             }
         },
         vaildataAll() {
@@ -54,14 +71,20 @@ export default {
                 return a.$el.offsetTop - b.$el.offsetTop;
             })
             this.items.forEach(item=>{
-               let res = this.vaildata(item.value, item.rule, item);
-               if(res){
-                   arr.push(res);
-               }
+                let res = this.vaildata(item.value, item.rule, item);
+                if(res){
+                    arr.push(res);
+                }
             })
             if(arr.length>0) {
                 return arr;
             }
+        },
+        closeVaildata() {
+            
+            this.items.forEach(item=>{
+                item.closeVaildata();
+            })
         },
         addItem(value) {
             this.items.push(value);

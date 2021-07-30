@@ -19,7 +19,6 @@ export default function Vaildata(value, rules) {
         this.rulesType = 'array';
     }
     
-        
 }
 
 Vaildata.prototype = {
@@ -27,10 +26,9 @@ Vaildata.prototype = {
         return Object.prototype.toString.call(value).slice(8,-1).toLowerCase()
     },
     getResult() {
-        
         switch (this.rulesType) {
             case 'function':
-                return rules(this.value);
+                return this.rules(this.value);
             case 'array':
                 return this.verify()  
             default:
@@ -45,8 +43,6 @@ Vaildata.prototype = {
             throw new Error("此类型无法通过已有的规则完成验证，请自定义验证规则");
         }
         this.value = this.value.toString().replace(/(^\s*)|(\s*$)/g, "");
-        let index = null;
-
         for(let i = 0, l = this.rules.length; i < l; i++) {
             //假如不是必要的，并且没有值，验证通过
             if(!this.rules[i].required && !this.value) {
@@ -222,12 +218,12 @@ Vaildata.prototype = {
             return true
         }
         let value = this.value.toUpperCase();
-        let areaCode = value.substring(0,6);
         let year = parseInt(value.substring(6,10));
         let month = parseInt(value.substring(10,12));
         let day = parseInt(value.substring(12,14));
+        
         //判断年份是否合格
-        if (parseInt(year) < min || max > parseInt(year)) {
+        if (parseInt(year) < min || max < parseInt(year)) {
             return true
         }
 
