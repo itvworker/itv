@@ -17,17 +17,17 @@ export default {
             this.stepX*=value
             this.stepY*=value
            
-            if(x === this.x) {
+            if(x === this.x && this.stepX === 0) {
                 this.direction ="vertical"
             }
 
-            if(y === this.y) {
+            if(y === this.y && this.stepY === 0) {
                 this.direction ="horizontal"
             }
             if(this.stepY<0){
                 this.upOrDown = 'up'
             }else{
-                this.upOrDown = 'dwon'
+                this.upOrDown = 'down'
             }
 
             if(this.stepX<0){
@@ -104,7 +104,7 @@ export default {
             if(this.stepY<0){
                 this.upOrDown = 'up'
             }else{
-                this.upOrDown = 'dwon'
+                this.upOrDown = 'down'
             }
                 
             if(this.stepX<0){
