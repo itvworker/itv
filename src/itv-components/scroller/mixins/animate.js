@@ -8,7 +8,6 @@ export default {
          * @param {Nubmer} value 速度倍数 
          */
         scrollTo(x,y,value=1) {
-     
             this.scrollToX =x;
             this.scrollToY = y;
             let dx = this.scrollX - x;
@@ -25,7 +24,18 @@ export default {
             if(y === this.y) {
                 this.direction ="horizontal"
             }
-            
+            if(this.stepY<0){
+                this.upOrDown = 'up'
+            }else{
+                this.upOrDown = 'dwon'
+            }
+
+            if(this.stepX<0){
+                this.LeftOrRight = 'left'
+            }else{
+                this.LeftOrRight = 'right'
+            }
+
             window.requestAnimationFrame(this.step);                 
 
         },
@@ -73,7 +83,6 @@ export default {
             }
       
             if(Math.abs(this.stepY)<5 || (this.cacheDirection === 'horizontal'&& this.pattern ==="vertical")) {
-                
                 this.stepY = 0
             }
 
@@ -83,16 +92,26 @@ export default {
                     y: this.scrollY,
                     type: this.direction,
                     maxY: this.maxY,
-                    maxX: this.maxX
-                    
+                    maxX: this.maxX,
+                    upOrDown: this.upOrDown,
+                    leftOrRight: this.leftOrRight
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;
                 },2000)
                 return 
             }
-
-            
+            if(this.stepY<0){
+                this.upOrDown = 'up'
+            }else{
+                this.upOrDown = 'dwon'
+            }
+                
+            if(this.stepX<0){
+                this.LeftOrRight = 'left'
+            }else{
+                this.LeftOrRight = 'right'
+            }
             window.requestAnimationFrame(this.step, value)
         },
       
@@ -253,7 +272,9 @@ export default {
                     y: this.scrollY,
                     type: this.direction,
                     maxY: this.maxY,
-                    maxX: this.maxX
+                    maxX: this.maxX,
+                    upOrDown: this.upOrDown,
+                    leftOrRight: this.leftOrRight
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;
