@@ -105,10 +105,9 @@ export default {
                 this.y = 0;
                 this.header(0, -this.y, 1);
             }
-            if(res.y >=  this.maxY) {
+            if(res.y >=  res.maxY) {
                 this.y = -this.maxY;
                 this.header(0, -this.y, 1);
-                return
             }
 
        })

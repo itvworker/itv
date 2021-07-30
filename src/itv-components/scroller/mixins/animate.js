@@ -81,7 +81,10 @@ export default {
                 this.$emit('stopscroll',{
                     x: this.scrollX,
                     y: this.scrollY,
-                    type: this.direction
+                    type: this.direction,
+                    maxY: this.maxY,
+                    maxX: this.maxX
+                    
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;
@@ -248,7 +251,9 @@ export default {
                 this.$emit('stopscroll', {
                     x: this.scrollX,
                     y: this.scrollY,
-                    type: this.direction
+                    type: this.direction,
+                    maxY: this.maxY,
+                    maxX: this.maxX
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;
