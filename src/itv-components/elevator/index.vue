@@ -1,189 +1,299 @@
 <template>
-    <div class="itv-elevator"  ref="itv-elevator" @scroll="scroll" >
-        <ul class="itv-elevator-ul"
-            ref="itv-elevator-ul"
-            >
-            <li
-            v-for="item in dataArray"
-            v-bind:key="item.title"
-            class="itv-list-title"
-            >
-                <h3 class="itv-list-h" :ref="item.title">{{item.title}}</h3>
-                <ul class="itv-people-list">
-                    <li v-for="(list,idx) in item.list"
-                    v-bind:key="idx"
-                    class="itv-list-name"
-                    :ref="list.id?list.id:'list'+item.title+idx"
-                    @click="clickList(list,item)"
-                    >{{list.name}}</li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="itv-elevator-nav" ref="itv-elevator-nav"
-            @touchmove="onPointerMove($event)"
-            @touchstart="onPointerMove($event)"
-            @touchend="onPointerEnd($event)"
-            >
-            <li v-for="(item,index) in dataArray"
-            v-bind:key="index"
-            :ref="'nav'+index"
-            class="itv-nav-list"
-            :class="{'itv-nav-curr':item.title==currTitle}"
-            :style="{height:navListHeight+'px'}"
-            @click="clickNav(item.title,index)"
-            >{{item.title}}</li>
-        </ul>
-        <template v-if="showIndicator">
-            <div class="itv-big-box" v-show="currBox">
-                {{currTitle}}
+<transition name="slide-bottom">
+    <page-container class="elevator-container" v-show="value">
+        <div class="div" ref="search">
+            <div class="select-title"  >
+                {{type==='country'?'选择国籍':'选择区号'}}
             </div>
-        </template>
-    </div>
+            <form class="search" action=""   @submit.stop="stopSubmit">
+                <div class="iconsearch">
+
+                </div>  
+                <input type="text" class="search-input" v-model="searchText" @input="search"   @keyup.enter="search" :placeholder="lang.$t('inputKeySearh')" />
+                <div class="btn" @click="$emit('input', false)">
+                    {{cancelText}}
+                </div>
+            </form>
+        </div>
+        
+        <page-main class="elevtor-main">
+            <itv-scroller  
+                ref="scroller" 
+                pattern="vertical" 
+                :speed="100"
+                class="scroller"
+                @scroll="scroll"
+            >
+                <itv-scroller-elevator  class="content-fix" :ref="item.id" v-for="(item, index) in fixList" :key="item.title+index" :title="item.text || item.title">
+                    <div class="l1" v-for="(subItem, subIndex) in item.list" :key="subIndex" @click="onConfirm(subItem)">
+                         <div class="left" v-html="subItem.text"></div>
+                         <div class="right">{{subItem.value}}</div>
+                    </div>
+                </itv-scroller-elevator>
+
+                <div slot="other" ref="elevator" class="elevator-bar" @touchstart="touchmove"  @touchmove="touchmove" @touchend="touchend" @touchcancel="touchend">
+                    <div class="elevator-name" :class="{'active': elevatorIndex === index}" :key="index" v-for="(item, index) in fixList">
+                        {{item.title}}
+                        <div class="elevator-name-now" :class="{'elevator-name-min':  elevatorName!==null && elevatorName.length>=2}"  v-show="elevatorIndex === index && elevatorNameShow">{{elevatorName}}</div>
+                    </div>
+                </div>
+            </itv-scroller>
+            <itv-scroller  
+                ref="searchlist" 
+                pattern="vertical" 
+                :speed="100"
+                class="scroller-search"
+                v-show="showSearch"
+            >
+            
+            <div class="l1-search" v-for="(subItem, subIndex) in searchList" :key="subIndex" @click="onConfirm(subItem)">
+                <div class="left" v-html="subItem.text"></div>
+                <div class="right">{{subItem.value}}</div>
+            </div>
+            </itv-scroller>
+           
+        </page-main>
+    </page-container>
+ </transition>    
 </template>
 <script>
+import manage from './manage'
+import action from '@/store/api/actions'
+import lang from "@/init/init.lang";
+
 export default {
     name:'itv-elevator',
     props: {
-        dataArray:{
-            type:Array,
-            required:true,
+        value: {
+            type: Boolean,
+            default: false
         },
-        navHeight:{
-            type:Number,
-            default:'40',
+        type: {
+            type: String,
+            default: 'code'
         },
-        hiddenTime:{
-            type:Number,
-            default:'10',
+        id: {
+            type:  [String , Number],
+            default: null
         },
-        showIndicator:{
-            type:Boolean,
-            default:true,
+        placeholder:{
+            type: String,
+            default:null
         },
-        initIndex:{
-            type:Number,
-            default:0,
+        context:{
+            type: String,
+            default: ()=>{}
+        },
+        cancelText:{
+            type: String,
+            default: "取消"
         }
     },
-    computed:{
-        navListHeight:function(){
-            return this.navHeight;
+    computed: {
+        showSearch() {
+            if(!this.searchText) return false;
+           
+            return this.searchText.replace(/(^\s*)|(\s*$)/g, "");
+        }
+    },
+    watch: {
+        searchText(n) {
+            if(!n) return false;
+            this.search();
+        },
+        value(n) {
+            if(n) {
+                this.fixList = [];
+                this.getCountry();
+            }
+            
         }
     },
     data() {
-        return {
-            currTitle:'',
-            currBox:false,
-        };
+        return  {
+            fixList: [],
+            barTop: 0,
+            btnHeight:0,
+            elevatorNameShow: false,
+            elevatorName:null,
+            elevatorIndex: 0,
+            elevatorTops:[],
+            scrollTimeout: false,
+            searchText: '',
+            list:[],
+            searchList:[],
+            timeout:null,//防抖搜索
+            isNone: false,
+            lang: lang
+           
+        }
     },
-    mounted(){
-        this.initPage();
-    },
+   
     methods: {
-        initPage(){
-            // let doc = document.querySelector('.itv-elevator .itv-list-h')
-            // console.log(doc.clientHeight);
-
-            this.calcPosition()
-            let initIndex = this.dataArray[this.initIndex].title;
-            this.$refs[initIndex][0].scrollIntoView()
-            this.currTitle = initIndex;
-
-
-
-            // document.getElementById(initIndex).scrollIntoView();
-        },
-        calcPosition() {
-            let height= 0;
-            this.dataArray.map((item, index)=>{
-                let ele = this.$refs[item.title][0]
-                if(index===0){
-                    item['top']=0;
-                    height = ele.offsetTop;
-                    return item
-                }
-                item['top']=ele.offsetTop-height;
-                return item
-            })
-
-        },
-        getStyle(element, attr) {
-            if(element.currentStyle) {
-                    return element.currentStyle[attr];
-            } else {
-                    return getComputedStyle(element, false)[attr];
-            }
-        },
-        getFontSize(){
-            let htmlDom = document.getElementsByTagName('html')[0];
-            let bili = this.getStyle(htmlDom,'fontSize');
-            return bili.substring(0,bili.length-2);
-        },
-        clickNav(title,index){
-            this.currBox =true;
-            setTimeout(()=>{
-                this.currBox =false;
-            },this.hiddenTime);
-            this.moveFun(title,index);
-        },
-        clickList(list,item){
-            this.$emit('clickList',list,item);
-        },
-        moveFun(title,index){
-            let titleBox = this.$refs[title][0];
-            titleBox.scrollIntoView();
-        },
-        onPointerEnd(e){
-            let fontSize = this.getFontSize();
-            let dataArrayLength = this.dataArray.length;
-            let navHeight = this.$refs['itv-elevator-nav'].clientHeight;
-            let navTop = this.$refs['itv-elevator-nav'].offsetTop;
-            let navOffsetTop=navTop-navHeight/2 //nav距离顶部的距离
-            let eTop = e.type.indexOf('touch') !== -1 ? e.changedTouches[0].clientY : e.clientY;
-            //let navIndex =parseInt((eTop - navOffsetTop)/this.navHeight/fontSize);
-            let navIndex =parseInt((eTop - navOffsetTop)/this.navHeight);
-            setTimeout(()=>{
-                this.currBox = false;
-            },this.hiddenTime);
-            if(navIndex<dataArrayLength && navIndex>=0){
-            this.$emit('clickNav',this.dataArray[navIndex].title,navIndex);
-            }
-        },
-        onPointerMove(e){
+        stopSubmit(e) {
+            e.stopPropagation();
             e.preventDefault();
-            let fontSize = this.getFontSize();
-            let dataArrayLength = this.dataArray.length;
-            let navHeight = this.$refs['itv-elevator-nav'].clientHeight;
-            let navTop = this.$refs['itv-elevator-nav'].offsetTop;
-            let navOffsetTop=navTop-navHeight/2 //nav距离顶部的距离
-            let eTop = e.type.indexOf('touch') !== -1 ? e.touches[0].clientY : e.clientY;
-            //let navIndex =parseInt((eTop - navOffsetTop)/this.navHeight/fontSize);
-            let navIndex =parseInt((eTop - navOffsetTop)/this.navHeight);
-
-            if(navIndex<dataArrayLength && navIndex>=0){
-                this.moveFun(this.dataArray[navIndex].title,navIndex);
-                this.currBox =true;
-                this.currTitle = this.dataArray[navIndex].title;
-            }
         },
-        scroll(e) {
-            let top = e.target.scrollTop;
-            for(let i = 0, l = this.dataArray.length; i < l; i++) {
-                if(i===l-1) {
-                    this.currTitle = this.dataArray[i].title
-                    break;
-                }
-               if(top>=this.dataArray[i].top && top<this.dataArray[i+1].top){
-                   this.currTitle = this.dataArray[i].title
-                   break;
-               }
-
+        touchstart(e) {
+            e.stopPropagation();
+            e.preventDefault();
+        },
+        touchmove(e) {
+            e.stopPropagation();
+            e.preventDefault();
+           
+            let touches = e.touches;
+            //检查手指数量
+            if (touches.length == null) {
+                throw new Error("Invalid touch list: " + touches);
             }
+            let moveY = touches[0].pageY;
+            let index = (moveY - this.barTop)/this.btnHeight;
+          
+            if(index<=0) {
+                index = 0;
+            }
+            if(index >= this.fixList.length-1) {
+                index = this.fixList.length - 1;
+            }
+           
+            index = Math.floor(index);
+            
+            if(this.elevatorIndex === index) return;  //相同的要再往下走了
+            this.elevatorIndex = index;
+            this.elevatorNameShow = true;
+            this.elevatorName = this.fixList[index].title;
+            let top = this.$refs[this.fixList[index].id][0].top
+            this.$refs.scroller.setPosition(0, top);
+        },
+        touchend() {
+            this.elevatorNameShow = false;
+            this.elevatorName = null;
+        },  
+        init() {
+            this.showSearch = false;
+            this.searchText = ""
+            this.$refs.scroller.setPosition(0, 0);
+            let dom = this.$refs.elevator;
+            let top = dom.offsetTop;
+            top = top - dom.clientHeight/2 
+            let parentTop = this.$refs.search.clientHeight;
+            this.barTop = top + parentTop;
+            this.barBottom = this.barTop + dom.clientHeight;
+            this.btnHeight = dom.clientHeight/this.fixList.length;
+            this.elevatorTops = this.fixList.map((item)=>{
+                return this.$refs[item.id][0].top
+            })
+            this.$refs.scroller.calcMax();
+        },
+        scroll(obj) {
+            if(this.scrollTimeout) return;
+            this.scrollTimeout = true;
+            setTimeout(()=>{    
+                this.scrollTimeout = false;
+            },100)
+            if(this.elevatorNameShow) return;
+            if(this.elevatorTops.length <= 1) return;
+            for(let i = 0, l = this.elevatorTops.length; i < l; i++) {
+                if(this.elevatorTops[i+1]){
+                    if(obj.y >= this.elevatorTops[i] && obj.y < this.elevatorTops[i+1]) {
+                        this.elevatorIndex = i;
+                        break
+                    }
+                }else{
+                    this.elevatorIndex = i;
+                }
+            }
+            
+        },
+        /**
+         * 获取国家 或区号
+         */
+        async getCountry() {
+            if(this.type==='country') {
+                let res = await Promise.all([
+                    action.getCountry({},{}),
+                    action.getDict({},{dictCodes:["SCHOOL_COMMON_COUNTRY_ID"]})
+                    // this.$store.dispatch('getCountry'),
+                    // this.$store.dispatch('getDict', {dictCodes:["SCHOOL_COMMON_COUNTRY_ID"]})
+                ]) 
+                if(res[0].code == 0 && res[1].code == 0) {
+                    let result = manage.mangeDictCountry(res[0].data, res[1].data[0].dict, this.context.useCountry);
+                    this.fixList = result.list;
+                    this.list = result.searchList;
+                    this.$nextTick(()=>{
+                        this.init()
+                    })
+                }
+            }else{
+                let res = await action.getDict({}, {
+                    dictCodes:["RECRUIT_NATIONAL_AREA_CODE", "SCHOOL_COMMOM_NATIONAL_AREA_CODE"]
+                })
+
+                //整理字典
+                let obj = {}
+                if(res.code == 0) {
+                    res.data.forEach(item => {
+                        obj[item.dictName] = item.dict; 
+                    });
+                }
+
+                //将字典变为可搜索，列表数据
+                let result = manage.mangeCodeDict(obj['RECRUIT_NATIONAL_AREA_CODE'], obj['SCHOOL_COMMOM_NATIONAL_AREA_CODE'], this.context.useCountry,this.context.useCuntryArea);
+                this.fixList = result.list;
+                this.list = result.searchList;
+                this.$nextTick(()=>{
+                    this.init()
+                })
+                
+            }
+
+            // let res = this.$store.dispatch('getDict', {
+            //     dictCodes:["RECRUIT_NATIONAL_AREA_CODE"]
+            // })
+
+            // let res = await this.$store.dispatch('getCountry');
+
+            
+        },
+        onConfirm(item) {
+            this.$emit('onConfirm', {
+                item: item,
+                key: this.id
+            });
+        },
+        search(){
+            clearTimeout(this.timeout)
+            this.timeout = setTimeout(()=>{
+                let key = this.searchText.replace(/(^\s*)|(\s*$)/g, "");
+                key = key.toLowerCase();
+                let reg = new RegExp(key, 'ig');
+                let list = [];
+                this.list.forEach(item=>{
+                    //判断名称，拼音，首字母
+                    let result = item.text.indexOf(key)>=0 || item.all.indexOf(key)===0 || item.initial.indexOf(key)===0;
+                    if(result) {
+                        let obj = JSON.parse(JSON.stringify(item))
+                        obj.text = item.text.replace(reg, (a)=>{
+                            return `<span class="text-primary">${a}</span>`
+                        })
+                        list.push(obj);
+                    }
+                })
+                this.searchList = list;
+                this.$refs.searchList.setPosition(0,0);
+                this.$refs.searchList.refresh();
+            },500)
+            
+            
+        },
+        elevator() {
+            
+            
         }
     }
 }
 </script>
 <style lang="less" scoped>
-@import '../../assets/css/itv-theme.less';
-@import 'itv-elevator.less';
+@import "index.less";
 </style>
