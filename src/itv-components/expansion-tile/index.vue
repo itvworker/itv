@@ -13,7 +13,7 @@
                 </div>
             </div>
         </slot>
-        <div class="itv-expansion-tile-toggle" :style="{height: currentValue? height+'px':minHeight+'px', 'margin-top': currentValue? null:'0px'}">
+        <div class="itv-expansion-tile-toggle" @transitionend="$emit('onEnd')" :style="{height: currentValue? height+'px':minHeight+'px', 'margin-top': currentValue? null:'0px'}">
             <div class="itv-expansion-height" ref="content">
                 <slot></slot>
             </div>
@@ -78,6 +78,7 @@ export default {
        toggle(value) {
             if((this.isClickAll && value ==='bar') || value ==='icon'){
                 this.currentValue = !this.currentValue;
+                this.$emit('onStart')
             }
        }
     }

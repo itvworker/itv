@@ -115,17 +115,12 @@ export default {
                 this.$emit('onHide');
                 return
             }else{
-                
                 this.iosShow = true;
-            }
-            this.$emit('onShow')
-        },
-        iosShow(a, b) {
-            if(a){
                 setTimeout(()=>{
-                     this.iosShowAnimate = true;
+                    this.iosShowAnimate = true;
                 },5)
             }
+            this.$emit('onShow')
         },
         html(a, b) {
            
@@ -153,6 +148,7 @@ export default {
         animateEnd() {
             if(!this.value){
                 this.iosShow = false;
+               
             }
         },
         close() {

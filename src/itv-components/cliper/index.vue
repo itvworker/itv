@@ -22,7 +22,7 @@
           ref="frame2"  >
           <img ref="img2" :class="{'transition':transition}"
           :width="imgWidth" :height="imgHeight"    :src="src" /></div>
-            
+        
     </div>
 </template>
 <script>

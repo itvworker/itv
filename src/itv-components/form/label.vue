@@ -1,21 +1,11 @@
 <template>
-    <div class="itv-form-item">
-        <div class="itv-form-item-title">
-         <slot name="left">
-             *{{label}}
-        </slot>   
-        </div>
-        <div class="itv-form-item-content">
-            <slot />
-        </div>
-        <div class="right">
-            <button @click="$emit('del')">del</button>
-        </div>
-    </div>
+    <balel class="itv-form-item">
+       
+    </balel>
 </template>
 <script>
     export default {
-        name: 'itv-form-item',
+        name: 'itv-form-label',
         props: {
             label: {
                 type: String,
@@ -35,7 +25,7 @@
             }
            
         },
-        inject:['itvForm', 'formScroller'],
+        inject:['itvForm'],
         provide() {
             return  {
                 itvFormItem: this,

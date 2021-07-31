@@ -293,7 +293,9 @@ export default {
             elPostion:{}, //位置滑动区所在的位置
             moreStatus: 'loadingStop', // loading加载中, loadingStop 加载完成，等待下次加载， none //没有更多数据 
             parentScroller: null,
-            childScroller: null
+            childScroller: null,
+            upOrDown: '', //滚动方向
+            leftOrRight: ''
         }
     },
     

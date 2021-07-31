@@ -403,19 +403,15 @@ export default {
             let move = index === -1 ? 0 : (index * this.lineSpacing);
             this.transformY = -move
             type && this.setChooseValue(-move);
-            this.setTransform(this.transformY, null, null, 0);
-            
-        },
+            this.setTransform(this.transformY, null, null, 0);   
+        }
     },
     
     mounted() {
         this.lineSpacing = Math.round(this.$refs.height.clientHeight); //每一行的高度
-
         this.$nextTick(() => {
             this.modifyStatus(true);
         });
-      
-     
     },
     beforeDestroy() {
         clearTimeout(this.timer);

@@ -8,7 +8,6 @@ export default {
          * @param {Nubmer} value 速度倍数 
          */
         scrollTo(x,y,value=1) {
-     
             this.scrollToX =x;
             this.scrollToY = y;
             let dx = this.scrollX - x;
@@ -17,6 +16,26 @@ export default {
             this.stepX = dx > 0? this.calcStep(dx):-this.calcStep(dx)
             this.stepX*=value
             this.stepY*=value
+           
+            if(x === this.x && this.stepX === 0) {
+                this.direction ="vertical"
+            }
+
+            if(y === this.y && this.stepY === 0) {
+                this.direction ="horizontal"
+            }
+            if(this.stepY<0){
+                this.upOrDown = 'up'
+            }else{
+                this.upOrDown = 'down'
+            }
+
+            if(this.stepX<0){
+                this.LeftOrRight = 'left'
+            }else{
+                this.LeftOrRight = 'right'
+            }
+
             window.requestAnimationFrame(this.step);                 
 
         },
@@ -40,7 +59,7 @@ export default {
                 y = 0
             }
 
-            this.scrollX =x;
+            this.scrollX = x;
             this.scrollY = y;
             this.scrollRender(x, y, 1)
         },
@@ -64,7 +83,6 @@ export default {
             }
       
             if(Math.abs(this.stepY)<5 || (this.cacheDirection === 'horizontal'&& this.pattern ==="vertical")) {
-                
                 this.stepY = 0
             }
 
@@ -72,15 +90,28 @@ export default {
                 this.$emit('stopscroll',{
                     x: this.scrollX,
                     y: this.scrollY,
-                    type: this.direction
+                    type: this.direction,
+                    maxY: this.maxY,
+                    maxX: this.maxX,
+                    upOrDown: this.upOrDown,
+                    leftOrRight: this.leftOrRight
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;
                 },2000)
                 return 
             }
-
-            
+            if(this.stepY<0){
+                this.upOrDown = 'up'
+            }else{
+                this.upOrDown = 'down'
+            }
+                
+            if(this.stepX<0){
+                this.LeftOrRight = 'left'
+            }else{
+                this.LeftOrRight = 'right'
+            }
             window.requestAnimationFrame(this.step, value)
         },
       
@@ -201,10 +232,9 @@ export default {
                 x: this.scrollX,
                 y: this.scrollY,
                 stepY: this.stepY,
-                stepX: this.stepY,
+                stepX: this.stepX,
                 type: this.direction,
                 maxY: this.maxY
-
             })
             this.stepX = this.stepX * this.percent
             this.stepY = this.stepY * this.percent
@@ -240,7 +270,11 @@ export default {
                 this.$emit('stopscroll', {
                     x: this.scrollX,
                     y: this.scrollY,
-                    type: this.direction
+                    type: this.direction,
+                    maxY: this.maxY,
+                    maxX: this.maxX,
+                    upOrDown: this.upOrDown,
+                    leftOrRight: this.leftOrRight
                 })
                 this.scrollBarTimeout = setTimeout(()=>{
                     this.hideBarY = true;
