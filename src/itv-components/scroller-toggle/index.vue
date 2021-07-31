@@ -78,18 +78,13 @@ export default {
                 if(res.y > this.startY) {
                     if(this.y>= -this.sectionY) {
                         this.y= -this.sectionY
-                        console.log(this.sectionY);
                     }
                 }
 
                 if(res.y<=1) {
                     this.y =0;
                 }
-
             }
-            
-
-
            this.header(0, -this.y, 1);
        })
 
@@ -102,15 +97,12 @@ export default {
                 this.y =0;
                 this.header(0, -this.y, 1);
             }
-
        })
-
        this.init();
         
     },
     methods: {
         init() {
-
             this.header = render(this.$el);
         }
     }

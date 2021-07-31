@@ -67,10 +67,6 @@
                     @refresh="refershone"
                     @infinite="infiniteone"
                     >
-                    
-
-                    
-
                     <div class="item-list" v-for="(item, index) in list" :key="index">
                         {{item.name}}one{{index}}
                     </div>
