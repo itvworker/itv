@@ -1,0 +1,125 @@
+@itv-sec: 300ms;
+.itv-slide-top-enter-active {
+    animation: itv-slide-top @itv-sec;
+}
+.itv-slide-top-leave-active {
+    animation: itv-slide-top @itv-sec reverse;
+}
+@keyframes itv-slide-top {
+    0% {
+        transform: translate3d(0,100%,0)
+    }
+    100% {
+        transform: translate3d(0,0,0)
+    }
+}
+
+
+
+
+.itv-slide-bottom-enter-active {
+    animation: itv-slide-bottom @itv-sec;
+}
+.itv-slide-bottom-leave-active {
+    animation: itv-slide-bottom @itv-sec reverse;
+}
+@keyframes itv-slide-bottom {
+    0% {
+        transform: translate3d(0,-100%,0)
+    }
+    100% {
+        transform: translate3d(0,0,0)
+    }
+}
+
+.itv-slide-left-enter-active {
+    animation: itv-slide-left @itv-sec;
+}
+.itv-slide-left-leave-active {
+    animation: itv-slide-left @itv-sec reverse;
+}
+@keyframes itv-slide-left {
+    0% {
+        transform: translate3d(-100%,0,0)
+    }
+    100% {
+        transform: translate3d(0,0,0)
+    }
+}
+
+
+.itv-slide-right-enter-active {
+    animation: itv-slide-right @itv-sec;
+}
+.itv-slide-right-leave-active {
+    animation: itv-slide-right @itv-sec reverse;
+}
+@keyframes itv-slide-right {
+    0% {
+        transform: translate3d(100%,0,0)
+    }
+    100% {
+        transform: translate3d(0,0,0)
+    }
+}
+
+
+@keyframes itv-fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.itv-fade-enter-active{
+    animation: itv-fade @itv-sec ease-in;
+}
+
+.itv-fade-leave-active {
+    animation: itv-fade @itv-sec ease-out reverse;;
+}
+
+
+.itv-dialog-enter-active {
+    animation: itv-dialog-in @itv-sec  ease-out;
+}
+.itv-dialog-leave-active {
+    animation: itv-dialog-out @itv-sec ease-in;
+}
+@keyframes itv-dialog-in {
+    0% {
+        transform-origin: center;
+        transform: translate3d(-50%, -50%) scale(1.185);
+        opacity: 0;
+    }
+    100% {
+        transform-origin: center;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+@keyframes itv-dialog-out {
+    0% {
+        transform-origin: center;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform-origin: center;
+        transform: translate(-50%, -50%) scale(0.85);
+        opacity: 0;
+    }
+}
+.itv-mask-enter,
+.itv-mask-leave-active {
+    opacity: 0;
+    transition: opacity @itv-sec ease-out;
+}
+.itv-mask-leave-active,
+.itv-mask-enter-active {
+    transition: opacity @itv-sec ease-in;
+}
+
+

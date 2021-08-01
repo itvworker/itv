@@ -1,0 +1,263 @@
+var obj ={
+    itemHeight: null,
+    touchParams: {
+        startY: 0,
+        endY: 0,
+        startTime: 0,
+        endTime: 0
+    },
+    currIndex: 1,
+    transformY: 0,
+    scrollDistance: 0,
+    lineSpacing: 44,
+    rotation: 24,
+    timer: null,
+    isTouch: false,
+    moveArr:[],
+    lastIndex: 0
+}
+
+var props = {}
+
+var dom = null; //滑动的dom
+var listData = null;
+/**
+ * 是否达到循环滚动的条件
+ */
+function isLoopScroll() {
+    return props.isLoop && listData.length >= parseInt(props.rows/2)+1;
+}
+
+/**
+ * 计算时否超出来滚距离
+ */
+function calcOverScroll(touch){
+    if(isLoopScroll() && !touch) {
+        if (obj.transformY > maxLast()) {
+            obj.transformY = maxLast(); 
+        }
+        
+        if (obj.transformY < -minLast()) {
+            obj.transformY = -minLast();
+        }
+    }else{
+        if (obj.transformY > 0) {
+            obj.transformY = 0;
+        }
+        if (obj.transformY < -(listData.length - 1) * obj.lineSpacing) {
+            obj.transformY = -(listData.length - 1) * obj.lineSpacing;
+        }
+    }
+}
+
+function setMove(move, type, time) {
+    obj.transformY = move + obj.transformY;
+    
+    if (type === 'end') { //手指结束滑动走这里
+        if(isLoopScroll()) {
+            calcOverScroll();
+        }
+
+        // 设置滚动距离为lineSpacing的倍数值
+        obj.transformY = Math.round(obj.transformY / obj.lineSpacing) * obj.lineSpacing;
+        
+        var deg = ((Math.abs(Math.round(obj.transformY / obj.lineSpacing)) + 1) * obj.rotation)+'deg';
+        setTransform(obj.transformY, type, time, deg);
+        
+            
+        obj.currIndex = (Math.abs(Math.round(obj.transformY/ obj.lineSpacing)) + 1);
+    } else {
+        
+        var deg = '0deg';
+        if(isLoopScroll()) {
+            if(obj.transformY > obj.lineSpacing){
+                
+                obj.transformY = obj.transformY-listData.length  * obj.lineSpacing
+            } 
+
+            if (obj.transformY < -listData.length  * obj.lineSpacing) {
+              
+                obj.transformY = Math.abs(obj.transformY) - listData.length * obj.lineSpacing;
+            }
+        }
+        
+        
+        setTransform(obj.transformY, null, null, deg);
+        obj.currIndex = (Math.abs(Math.round(obj.transformY/obj.lineSpacing)) + 1);
+    }
+}
+
+
+function setTransform(translateY = 0, type, time = 1000, deg) {
+    if (type === "end") { //手指结束滑动时走这里，给过渡动画加上时间
+        
+        dom.setStyle({
+            transition: "transform "+time+"ms cubic-bezier(0.19, 1, 0.22, 1)",
+            "margin-top": -obj.lineSpacing*listData.length*2+'px',
+            transform: "translate3d(0, "+translateY+"px, 0)"
+        })
+    } else {
+        dom.setStyle({
+            "margin-top": -obj.lineSpacing*listData.length*2+'px',
+            transform: "translate3d(0, "+translateY+"px, 0)"
+        })
+       
+       
+    }
+    obj.scrollDistance = translateY;
+    obj.transformY =  translateY;
+}
+
+
+/**
+ * 获取100毫秒的距离和时间
+ *  */
+function getDistance() {
+    var index = obj.moveArr.length-1;
+    if(index <=0) {
+        return {
+            timestamp: 0,
+            disY: 0
+        }
+    }
+    var last = obj.moveArr[index];
+    for(var i = index; i>=0; i--) {
+        if(last.timestamp - obj.moveArr[i].timestamp<300) {
+            index = i;
+        }else{
+            break;
+        }
+    }
+    if(index === obj.moveArr.length-1) {
+         return {
+            timestamp: 0,
+            disY: 0
+        }
+    }
+
+    return {
+        timestamp: last.timestamp - obj.moveArr[index].timestamp,
+        disY: last.y - obj.moveArr[index].y
+    }
+}
+
+function minLast() {
+    return (listData.length - 1) * obj.lineSpacing + (listData.length - 3) * obj.lineSpacing
+}
+function maxLast() {
+    return (listData.length - 3) * obj.lineSpacing
+}
+
+module.exports = {
+    touchStart: function(event, ownerInstance) {
+        var changedTouches = event.touches[0]
+        obj.touchParams.startY = changedTouches.pageY;
+        obj.touchParams.lastY = changedTouches.pageY;
+        obj.touchParams.startTime = event.timestamp || Date.now();
+        obj.transformY = obj.scrollDistance;
+        return false;
+    },
+    touchMove: function(event, ownerInstance) {
+        var changedTouches = event.touches[0];
+        var move = changedTouches.pageY - obj.touchParams.lastY;
+        obj.touchParams.lastY = changedTouches.pageY;
+        obj.touchParams.lastTime = event.timestamp || Date.now();
+        obj.moveArr.push({
+            y: changedTouches.pageY,
+            timestamp: event.timestamp || Date.now()
+        })
+        if(obj.moveArr.length > 20) {
+           obj.moveArr = obj.moveArr.splice(-20,20)
+        }
+        setMove(move);
+        return false
+    },
+    touchEnd: function(event) {
+        
+        var length = listData.length;
+        var changedTouches = event.changedTouches[0];
+        var move =changedTouches.pageY - obj.touchParams.lastY;
+        obj.touchParams.lastY = changedTouches.pageY;
+        obj.touchParams.lastTime = event.timestamp || Date.now();
+        var moveTime = obj.touchParams.lastTime - obj.touchParams.startTime;
+        setMove(move);
+        obj.moveArr.push({
+            y: changedTouches.pageY,
+            timestamp: event.timestamp || Date.now()
+        })
+        if(obj.moveArr.length>20) {
+            obj.moveArr = obj.moveArr.splice(-20,20)
+        }
+
+
+        var moveDis  = getDistance();   
+        if (Math.abs(moveDis.disY)>= 50) {
+            move = moveDis.disY;
+            if(Math.abs(move)>(length-1)*obj.lineSpacing) {
+                if(move>=0) {
+                    move = (length-1)*obj.lineSpacing
+                }else{
+                    move = -(length-1)*obj.lineSpacing
+                }
+            }
+            moveTime = moveDis.timestamp + 1000;
+            setMove(move, 'end', moveTime);
+        } else {
+            setMove(move, 'end', 300);
+        }
+        obj.isTouch = false
+        return false
+    },
+    reload: function(newValue, oldValue, ownerInstance, instance) {
+        obj = {
+            itemHeight: null,
+            touchParams: {
+                startY: 0,
+                endY: 0,
+                startTime: 0,
+                endTime: 0
+            },
+            currIndex: 1,
+            transformY: 0,
+            scrollDistance: 0,
+            lineSpacing: 44,
+            rotation: 24,
+            timer: null,
+            isTouch: false,
+            moveArr:[],
+            lastIndex: 0
+        }
+        
+       
+        var res = ownerInstance.selectComponent(".itv-picker-content");
+        var content = ownerInstance.selectComponent(".itv-picker-list");
+        props = JSON.parse(JSON.stringify(content.getDataset()));
+        
+       
+        dom = ownerInstance.selectComponent('.itv-picker-list-panel')
+        var style = res.getComputedStyle(['height']);
+        obj.lineSpacing = parseInt(style.height);
+        
+       dom.setTimeout(function(){
+            dom.setStyle({
+                "margin-top": -obj.lineSpacing*listData.length*2+'px'
+            })
+       })
+        
+       
+       
+    },
+    loaded: function(){
+    
+        console.log('loaded')
+    },    
+    propObserver: function(newValue, oldValue, ownerInstance, instance) {
+        var res = ownerInstance.selectComponent('.itv-picker-list-panel"');
+        console.log(JOSN.stringify(res));
+    },
+    setListData: function (newValue, oldValue) {
+        listData = newValue;
+        
+        
+    }
+}

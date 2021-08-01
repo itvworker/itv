@@ -1,0 +1,178 @@
+.itv-picker {
+  background-color: #FFF;
+  width: 100%;
+}
+.itv-picker-ui {
+  width: 100%;
+}
+.itv-picker-ui .title-bar {
+  height: 80rpx;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32rpx;
+  position: relative;
+  background-color: #fff;
+}
+.itv-picker-ui .title-bar::after {
+  content: '';
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-bottom: #DADADA solid 1px;
+  transform: scaleY(0.5);
+  position: absolute;
+}
+.itv-picker-ui .title-bar .left-btn,
+.itv-picker-ui .title-bar .right-btn {
+  height: 80rpx;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+}
+.itv-picker-ui .title-bar .left-btn {
+  left: 0;
+  color: #666;
+  padding-left: 32rpx;
+}
+.itv-picker-ui .title-bar .right-btn {
+  right: 0;
+  color: #2caf4f;
+  padding-right: 32rpx;
+}
+.itv-picker-ui .title-bar .right-btn.forbid {
+  color: #aaa;
+}
+.itv-picker-control {
+  display: flex;
+  height: 80rpx;
+  border-bottom: 1px solid #fff;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 14ipx;
+}
+.itv-picker-control .itv-picker-cancel-btn,
+.itv-picker-control .itv-picker-confirm-btn {
+  width: 60ipx;
+  color: #2caf4f;
+}
+.itv-picker-control .itv-picker-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.itv-picker-panel {
+  height: 220ipx;
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+}
+.itv-picker-list {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+}
+.itv-picker-list .itv-picker-list-panel {
+  transform-style: preserve-3d;
+}
+.itv-picker-list .itv-picker-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(180deg, hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0.3)), linear-gradient(0deg, hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0.3));
+  background-position: top, bottom;
+  background-repeat: no-repeat;
+  z-index: 3;
+}
+.itv-picker-list .itv-picker-mask.itv-picker-row5 {
+  background-size: 100% 160rpx;
+}
+.itv-picker-list .itv-picker-mask.itv-picker-row7 {
+  background-size: 100% 240rpx;
+}
+.itv-picker-list .itv-picker-mask.clear-mask {
+  background-image: none;
+}
+.itv-picker-list .itv-picker-indicator {
+  position: absolute;
+  top: 88rpx;
+  width: 100%;
+  height: 80rpx;
+  border-top: 1rpx solid #DADADA;
+  border-bottom: 1rpx solid #DADADA;
+  z-index: 3;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.04);
+  display: none;
+}
+.itv-picker-list .itv-picker-indicator.itv-picker-row5 {
+  top: 80rpx;
+}
+.itv-picker-list .itv-picker-indicator.itv-picker-row7 {
+  top: 80rpx;
+}
+.itv-picker-list .itv-picker-content,
+.itv-picker-list .itv-picker-roller {
+  position: absolute;
+  top: 80rpx;
+  width: 100%;
+  height: 80rpx;
+  background: rgba(0, 0, 0, 0.04);
+}
+.itv-picker-list .itv-picker-content.itv-picker-row5,
+.itv-picker-list .itv-picker-roller.itv-picker-row5 {
+  top: 160rpx;
+}
+.itv-picker-list .itv-picker-content.itv-picker-row7,
+.itv-picker-list .itv-picker-roller.itv-picker-row7 {
+  top: 240rpx;
+}
+.itv-picker-list .itv-picker-content {
+  z-index: 2;
+}
+.itv-picker-list .itv-picker-item,
+.itv-picker-list .itv-picker-roller-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 80rpx;
+  color: #333;
+  font-size: 28rpx;
+  height: 80rpx;
+  text-align: center;
+}
+.itv-picker-list .itv-picker-item {
+  font-size: 28rpx;
+}
+.itv-picker-list .itv-picker-item.hide-opacity {
+  opacity: 0;
+}
+.itv-picker-list .itv-picker-item.picker-forbid {
+  color: #aaa;
+}
+.itv-picker-list .itv-picker-roller {
+  z-index: 1;
+  transform-style: preserve-3d;
+  display: none;
+}
+.itv-picker-list .itv-picker-roller .itv-picker-roller-item {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  color: #333;
+  height: 80rpx;
+}
+.itv-picker-list .itv-picker-roller .itv-picker-roller-item-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
