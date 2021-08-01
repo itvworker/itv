@@ -86,7 +86,11 @@
     width: 100%;
     .itv-picker-list-panel{
         transform-style: preserve-3d;
-     
+        &.opacity-hide{
+            .hide{
+                opacity: 0;
+            }
+        }
     }
     .itv-picker-mask{
         position: absolute;

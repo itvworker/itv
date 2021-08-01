@@ -49,12 +49,19 @@ Component({
     data: {
         reload: 0,
     },
+    
     methods: {
         onLoad: function() {
             this.setData({
                 reload: this.data.reload+1
             })
+        },
+        onChooseItem(obj) {
+            console.log('------------');
+            console.log(obj);
         }
-    }
+       
+    },
+   
   
 })

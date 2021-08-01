@@ -82,6 +82,9 @@
 .itv-picker-list .itv-picker-list-panel {
   transform-style: preserve-3d;
 }
+.itv-picker-list .itv-picker-list-panel.opacity-hide .hide {
+  opacity: 0;
+}
 .itv-picker-list .itv-picker-mask {
   position: absolute;
   top: 0;

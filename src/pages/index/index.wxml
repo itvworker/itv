@@ -4,5 +4,5 @@
    <!-- <view class="move-bar" data-id="{{motto}}" bindtouchmove="{{touchs.touchmove}}" bindload="{{touchs.loaded}}">
         move
     </view> -->
-    <slot-picker listData="{{listData}}" defaultValue="{{defaultValue}}"/>
+    <slot-picker listData="{{listData}}" bindonChooseItem="{{onChooseItem}}" defaultValue="{{defaultValue}}"/>
 </view>

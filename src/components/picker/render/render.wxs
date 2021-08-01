@@ -54,7 +54,7 @@ function setMove(move, type, time) {
     obj.transformY = move + obj.transformY;
     
     if (type === 'end') { //手指结束滑动走这里
-        if(isLoopScroll()) {
+        if(!isLoopScroll()) {
             calcOverScroll();
         }
 
@@ -76,12 +76,9 @@ function setMove(move, type, time) {
             } 
 
             if (obj.transformY < -listData.length  * obj.lineSpacing) {
-              
                 obj.transformY = Math.abs(obj.transformY) - listData.length * obj.lineSpacing;
             }
         }
-        
-        
         setTransform(obj.transformY, null, null, deg);
         obj.currIndex = (Math.abs(Math.round(obj.transformY/obj.lineSpacing)) + 1);
     }
@@ -148,6 +145,18 @@ function maxLast() {
     return (listData.length - 3) * obj.lineSpacing
 }
 
+function setChooseValue(move) {
+    if(obj.isTouch) return;
+    var index = Math.round(-obj.transformY / obj.lineSpacing);
+    dom.callMethod("onChooseItem", {
+        value: listData[index],
+        index: index
+    })
+}
+
+/**
+ * 过渡动画结束
+ */
 module.exports = {
     touchStart: function(event, ownerInstance) {
         var changedTouches = event.touches[0]
@@ -180,7 +189,7 @@ module.exports = {
         obj.touchParams.lastY = changedTouches.pageY;
         obj.touchParams.lastTime = event.timestamp || Date.now();
         var moveTime = obj.touchParams.lastTime - obj.touchParams.startTime;
-        setMove(move);
+        // setMove(move);
         obj.moveArr.push({
             y: changedTouches.pageY,
             timestamp: event.timestamp || Date.now()
@@ -242,22 +251,62 @@ module.exports = {
             dom.setStyle({
                 "margin-top": -obj.lineSpacing*listData.length*2+'px'
             })
+            if(isLoopScroll()) {
+                dom.removeClass('opcity-hide');
+            }else{
+                dom.addClass('opcity-hide');
+            }
        })
         
        
        
     },
-    loaded: function(){
-    
-        console.log('loaded')
-    },    
-    propObserver: function(newValue, oldValue, ownerInstance, instance) {
-        var res = ownerInstance.selectComponent('.itv-picker-list-panel"');
-        console.log(JOSN.stringify(res));
+    transitionEnd: function() {
+        var index = Math.round(-obj.transformY / obj.lineSpacing);
+        if(index > listData.length-1) {
+            var num = index - listData.length;
+            obj.transformY = -num * obj.lineSpacing
+        }
+        if(index<0) {
+            var num = listData.length+index;
+            obj.transformY = -num * obj.lineSpacing
+        }
+        index = Math.round(-obj.transformY / obj.lineSpacing);
+        setTransform(obj.transformY, null, null, 0);
+        setChooseValue(obj.transformY);
     },
     setListData: function (newValue, oldValue) {
         listData = newValue;
-        
+        if(!oldValue) return
+        if(isLoopScroll()) {
+            dom.removeClass('opacity-hide');
+        }else{
+            dom.addClass('opacity-hide');
+        }
+        var index = Math.round(-obj.transformY / obj.lineSpacing);
+        if(oldValue.length > newValue.length) {
+            //当前的数组数理比 新数组的索引要大时
+            if(index > newValue.length -1) {
+                obj.transformY = -(listData.length - 1) * obj.lineSpacing;
+                obj.scrollDistance = obj.transformY;
+                index = listData.length - 1;
+                dom.setStyle({
+                    "margin-top": -obj.lineSpacing*listData.length*2+'px',
+                    transform: "translate3d(0, "+obj.transformY+"px, 0)"
+                })
+            }else{
+                dom.setStyle({
+                    "margin-top": -obj.lineSpacing*listData.length*2+'px',
+                    transform: "translate3d(0, "+obj.transformY+"px, 0)"
+                })
+            }
+        }
+
+        dom.callMethod("onChooseItem", {
+            value: listData[index],
+            index: index
+        })
         
     }
+    
 }

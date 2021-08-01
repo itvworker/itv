@@ -12,14 +12,18 @@
     change:listData="{{touchs.setListData}}"
     data-rows="{{rows}}"
     data-defaultValue ="{{defaultValue}}"
+    
+   
 >
-    <view class="itv-picker-content itv-picker-row{{rows}}"  bindtransitionEnd="transitionEnd"  bindwebkitTransitionEnd="transitionEnd" >
-        <view class="itv-picker-list-panel"  ref="list">
-            <view class="itv-picker-item" wx:for="{{listData}}" wx:key="index" >{{item}}</view>
-            <view class="itv-picker-item" wx:for="{{listData}}" wx:key="index">{{item}}</view>
+    <view class="itv-picker-content itv-picker-row{{rows}}">
+        <view class="itv-picker-list-panel" 
+        bindtransitionend="{{touchs.transitionEnd}}"
+        >
+            <view class="itv-picker-item hide" wx:for="{{listData}}" wx:key="index" >{{item}}</view>
+            <view class="itv-picker-item hide" wx:for="{{listData}}" wx:key="index">{{item}}</view>
             <view class="itv-picker-item" wx:key="index" wx:for="{{listData}}">{{item}}</view>
-            <view class="itv-picker-item" wx:key="index" wx:for="{{listData}}">{{item}}</view>
-            <view class="itv-picker-item" wx:key="index" wx:for="{{listData}}">{{item}}</view>
+            <view class="itv-picker-item hide" wx:key="index" wx:for="{{listData}}">{{item}}</view>
+            <view class="itv-picker-item hide" wx:key="index" wx:for="{{listData}}">{{item}}</view>
         </view>
     </view>
     <view class="itv-picker-mask itv-picker-row{{rows}} {{clearMask?'clear-mask':''}}"></view>
