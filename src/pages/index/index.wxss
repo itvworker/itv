@@ -25,3 +25,7 @@
   left: 0;
   top: 0;
 }
+slot-picker {
+    width: 100%;
+    height: 400rpx;
+}

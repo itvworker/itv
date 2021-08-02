@@ -1,0 +1,31 @@
+<wxs module="touchs" src="./render/render.wxs"></wxs>
+<view 
+    class="itv-picker-list" 
+    reload="{{reload}}" 
+    change:reload="{{touchs.reload}}" 
+    bindtouchstart="{{touchs.touchStart}}" 
+    bindtouchmove="{{touchs.touchMove}}" 
+    bindtouchend="{{touchs.touchEnd}}" 
+    bindtouchcancel="{{touchs.touchEnd}}"
+    data-isLoop="{{isLoop}}"
+    listData="{{listData}}"
+    change:listData="{{touchs.setListData}}"
+    data-rows="{{rows}}"
+    defaultValue ="{{defaultValue}}"
+    change:defaultValue="{{touchs.setDefaultValue}}"
+   
+>
+    <view class="itv-picker-content itv-picker-row{{rows}}">
+        <view class="itv-picker-list-panel" 
+        bindtransitionend="{{touchs.transitionEnd}}"
+        >
+            <view class="itv-picker-item hide" wx:for="{{listData}}" wx:key="index" >{{item.text || item}}</view>
+            <view class="itv-picker-item hide" wx:for="{{listData}}" wx:key="index">{{item.text || item}}</view>
+            <view class="itv-picker-item" wx:key="index" wx:for="{{listData}}">{{item.text || item}}</view>
+            <view class="itv-picker-item hide" wx:key="index" wx:for="{{listData}}">{{item.text || item}}</view>
+            <view class="itv-picker-item hide" wx:key="index" wx:for="{{listData}}">{{item.text || item}}</view>
+        </view>
+    </view>
+    <view class="itv-picker-mask itv-picker-row{{rows}} {{clearMask?'clear-mask':''}}"></view>
+    <view class="itv-picker-indicator itv-picker-row{{rows}}"></view>
+</view>
