@@ -1,0 +1,18 @@
+module.exports = {
+    touchmove: function(event, ownerInstance) {
+        
+        var instance = ownerInstance.selectComponent('.move-bar')
+        var touch1 = event.touches[0]
+        instance.setStyle({
+            transform: "translate("+touch1.pageX+"px, "+touch1.pageY+"px)",
+        })
+       
+        return false;
+    },
+    loaded: function(){
+        console.log('loaded')
+    },    
+    propObserver: function(newValue, oldValue, ownerInstance, instance) {
+        console.log('prop observer', newValue, oldValue)
+    }
+}

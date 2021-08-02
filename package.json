@@ -4,10 +4,7 @@
   "description": "Mobile Project Initial chemical tool ",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inspect-brk --config=build/webpack.dev.tool.js",
-    "demo": "webpack-dev-server --inspect-brk --config=build/webpack.dome.dev.js",
-    "build": "webpack --config ./build/webpack.dev.tool.js",
-    "build:demo": "webpack --config ./build/webpack.dome.dev.js"
+    "start": "wxss src"
   },
   "author": "lanjie",
   "license": "ISC",

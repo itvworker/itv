@@ -4,4 +4,5 @@
     <view class="move-bar" data-id="{{motto}}" bindtouchmove="{{touchs.touchmove}}" bindload="{{touchs.loaded}}">
         move
     </view>
+    <picker></picker>
 </view>

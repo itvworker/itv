@@ -1,0 +1,27 @@
+<view class="itv-picker-list" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd"  bindtouchcancel="touchEnd">
+    <view class="itv-picker-content" :class="['itv-picker-row'+rows]"    ref="height" bindtransitionEnd="transitionEnd"  >
+        <view class="itv-picker-list-panel"  ref="list">
+            <view class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll,'picker-forbid': item.forbid }" v-for="(item,index) in listData" 
+                :key="item.label ? item.label+'up' : index+'up'"
+                >{{item | formatWord(word, isInteger)}} 
+               
+            </view>
+            <view class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}" v-for="(item,index) in listData" 
+                :key="item.label ? item.label+'up1' : index+'up1'"
+                >{{item | formatWord(word, isInteger)}}
+            </view>
+            <view class="itv-picker-item" :class="{'picker-forbid': item.forbid}" :style="{height: lineSpacing+'px'}"  v-for="(item,index) in listData"
+                :key="item.label ? item.label : index">{{item | formatWord(word, isInteger)}}
+                
+            </view>
+            <view class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}"  v-for="(item,index) in listData"
+                :key="item.label ? item.label+'next' : index+'next'">{{item | formatWord(word, isInteger)}}
+            </view>
+            <view class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}"  v-for="(item,index) in listData"
+                :key="item.label ? item.label+'next2' : index+'next2'">{{item | formatWord(word, isInteger) }}
+            </view>
+        </view>
+    </view>
+    <view class="itv-picker-mask"  :class="['itv-picker-row'+rows, {'clear-mask': clearMask}]"></view>
+    <view class="itv-picker-indicator"  :class="['itv-picker-row'+rows]"></view>
+</view>
