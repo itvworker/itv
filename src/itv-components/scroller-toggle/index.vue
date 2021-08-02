@@ -89,29 +89,7 @@ export default {
                 }
 
             }
-            
-
-
            this.header(0, -this.y, 1);
-       })
-
-
-       this.$parent.$on('stopscroll', (res)=>{
-            if(res.type !== 'vertical') {
-                return
-            }
-            if(res.y<=0) {
-                this.y = 0;
-                this.header(0, -this.y, 1);
-            }
-            if(res.y >=  res.maxY) {
-                this.y = -this.maxY;
-                this.header(0, -this.y, 1);
-            }
-            if(res.y >= this.maxY && res.upOrDown==='up') {
-                this.y = -this.maxY;
-                this.header(0, -this.y, 1);
-            }
        })
 
        this.init();
