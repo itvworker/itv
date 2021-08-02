@@ -33,8 +33,8 @@ Page({
         })
     }, 10000);
   },
-  getUserInfo() {
-        return 'user'
+  onChooseItem(item) {
+    console.log(item);
   }
   
 })

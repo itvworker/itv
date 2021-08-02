@@ -1,0 +1,16 @@
+<view class="itv-bg"></view>
+
+<view class="itv-datepicker">
+    <view  class="itv-datepicker-title">
+        <view class="btn btn-cancel">
+            {{cancelText}}
+        </view>
+            {{titleText}}
+        <view class="btn btn-confirm">
+            {{confirmText}}
+        </view>
+    </view>
+    <view class="itv-datepicker-content">
+        
+    <view>
+</view>

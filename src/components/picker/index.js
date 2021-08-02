@@ -35,17 +35,7 @@ Component({
     },
     
     methods: {
-        onLoad: function() {
-            this.setData({
-                reload: this.data.reload+1
-            })
-        },
-        onChooseItem(obj) {
-            console.log('----------------------------------------');
-            obj.keyIndex = this.properties.keyIndex;
-            console.log(this.properties.keyIndex);
-            this.triggerEvent('chooseItem', {}, obj)
-        }
+       
     }
   
 })
