@@ -2,6 +2,8 @@
     height: 270ipx;
     background-color: #fff;
     width: 100%;
+    padding-bottom: constant(safe-area-inset-bottom); /* 兼容 iOS < 11.2 */
+    padding-bottom: env(safe-area-inset-bottom); /* 兼容 iOS >= 11.2 */
     .level-select-title{
         height: 50ipx;
         border-bottom: @itv-border-color-base @itv-border-style-base @itv-border-width-base;

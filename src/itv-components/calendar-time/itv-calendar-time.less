@@ -5,6 +5,8 @@
   flex-direction: column;
   width: 100%;
   background-color: #fff; // #efefef;
+  padding-bottom: constant(safe-area-inset-bottom); /* 兼容 iOS < 11.2 */
+  padding-bottom: env(safe-area-inset-bottom); /* 兼容 iOS >= 11.2 */  
   .itv-picker-list-mark {
     width: 14ipx;
     flex:0 0 auto;
