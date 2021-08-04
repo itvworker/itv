@@ -1,10 +1,25 @@
 const fs = require('fs-extra');
 const path = require('path');
-
+const configJsonPath = './build/package.json'
 
 
 
 async function init(){
+    let config = fs.readJsonSync(configJsonPath)
+    arr = config.version.split('.');
+    arr[2]++;
+    if(arr[2]>=100){
+        arr[2]=0;
+        arr[1]++;
+    }
+
+    if(arr[1]>=10) {
+        arr[1]=0;
+        arr[0]++
+    }
+    config.version = arr.join('.')
+    fs.writeFileSync(configJsonPath, JSON.stringify(config, null, 4));
+
     await fs.remove(path.join(__dirname, '../source'));
     await fs.mkdirs(path.join(__dirname, '../source'))
     await fs.copy(path.join(__dirname, './package.json'), path.join(__dirname, '../source/package.json') )
