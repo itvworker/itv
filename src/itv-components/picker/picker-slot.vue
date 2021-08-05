@@ -170,7 +170,7 @@ export default {
             }
         },
 
-        setTransform(translateY = 0, type, time = 1000, deg) {
+        setTransform(translateY = 0, type, time = null, deg) {
            
             let dom = this.$refs.list;
             if (type === 'end') { //手指结束滑动时走这里，给过渡动画加上时间
@@ -331,7 +331,7 @@ export default {
             this.touchParams.lastY = changedTouches.pageY;
             this.touchParams.lastTime = event.timestamp || Date.now();
             let moveTime = this.touchParams.lastTime - this.touchParams.startTime;
-            this.setMove(move);
+            // this.setMove(move);
             this.moveArr.push({
                 y: changedTouches.pageY,
                 timestamp: event.timestamp || Date.now()
@@ -352,10 +352,10 @@ export default {
                     }
                 }
 
-                moveTime = moveDis.timestamp + 1000;
+                moveTime = moveDis.timestamp * 8;
                 this.setMove(move, 'end', moveTime);
             } else {
-                this.setMove(move, 'end', 300);
+                this.setMove(move, 'end', 100);
             }
             this.isTouch = false
         },

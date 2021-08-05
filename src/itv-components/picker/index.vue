@@ -155,7 +155,9 @@ export default {
         },
         confirm() {
             if(this.isForbidConfirm) return;
-            this.$emit('onConfirm', this.selceted);
+            setTimeout(()=>{
+                this.$emit('onConfirm', this.selceted);
+            },300)
         }
     },
     created() {
