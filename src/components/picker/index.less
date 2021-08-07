@@ -1,0 +1,63 @@
+@import '../../assets/theme.less';
+.itv-bg {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 99;
+}
+
+.itv-datepicker {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 16rpx 16rpx 0 0;
+    .itv-datepicker-title {
+        display: flex;
+        height: 100rpx;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        &::after {
+            display: block;
+            content: ' ';
+            border-bottom: @itv-border-color-base solid 1px;
+            bottom: 0;
+            position: absolute;
+            left: 0; right: 0;
+            transform:scaleY(0.5);
+        }
+    }
+    .btn {
+        position: absolute;
+        padding: 0 30rpx;
+        height: 100rpx;
+        display: flex;
+        align-items: center;
+        &.btn-cancel {
+            color: @itv-color-text-gray;
+            left: 0;
+            right: 0;
+        }
+        &.btn-confirm {
+            right: 0;
+            top: 0;
+            color: @itv-primary-color;
+        }
+    }
+    .itv-datepicker-content {
+        height: 400rpx;
+        display: flex;
+        .picker{
+            overflow: hidden;
+            width: 30%;
+        }
+        
+    }
+}

@@ -9,8 +9,18 @@
         <view class="btn btn-confirm">
             {{confirmText}}
         </view>
+        
     </view>
     <view class="itv-datepicker-content">
-        
-    <view>
+          <slot-picker wx:for="{{list}}" wx:key="index" 
+                class="picker picker{{index}}"
+                clearMask="clearMask"
+                default-value="{{chooseValue[index]}}"
+                listData="{{item}}"
+                bindchooseItem="chooseItem"
+                keyIndex="index"
+                rows="{{rows}}"
+                isLoop="{{isLoop}}"
+            />
+    </view>
 </view>

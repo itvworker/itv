@@ -4,7 +4,6 @@
             <view class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll,'picker-forbid': item.forbid }" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up' : index+'up'"
                 >{{item | formatWord(word, isInteger)}} 
-               
             </view>
             <view class="itv-picker-item" :style="{height: lineSpacing+'px'}" :class="{'hide-opacity': !isLoopScroll, 'picker-forbid': item.forbid}" v-for="(item,index) in listData" 
                 :key="item.label ? item.label+'up1' : index+'up1'"

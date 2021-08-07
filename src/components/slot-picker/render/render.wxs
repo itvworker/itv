@@ -67,8 +67,6 @@ function setMove(move, type, time) {
         
         var deg = ((Math.abs(Math.round(obj.transformY / obj.lineSpacing)) + 1) * obj.rotation)+'deg';
         setTransform(obj.transformY, type, time, deg);
-        
-            
         obj.currIndex = (Math.abs(Math.round(obj.transformY/ obj.lineSpacing)) + 1);
     } else {
         
@@ -166,16 +164,50 @@ function setChooseValue(move) {
     )
 }
 
+function setDataIndex(value) {
+    var index = 0;
+    var num = listData.length;
+    for(var i = 0; i < num; i++) {
+        if(typeof listData[i] === 'object' && listData[i].value == value) {
+            index = i;
+        }else if(listData[i] == value){
+            index = i
+        }
+    }
+    obj.transformY = -index * obj.lineSpacing
+    obj.scrollDistance = obj.transformY
+    dom.setStyle({
+        "margin-top": -obj.lineSpacing*listData.length*2+'px',
+        transform: "translate3d(0, "+obj.transformY+"px, 0)"
+    })
+    wxOwnerInstance.triggerEvent("chooseItem", {
+            value: listData[index],
+            index: index,
+            keyIndex: keyIndex
+        },
+        {
+            value: listData[index],
+            index: index,
+            keyIndex: keyIndex
+        }    
+    )
+}
 /**
  * 过渡动画结束
  */
 module.exports = {
+    data:{
+
+    },
     touchStart: function(event, ownerInstance) {
+        console.log(JSON.stringify(this));
         var changedTouches = event.touches[0]
         obj.touchParams.startY = changedTouches.pageY;
         obj.touchParams.lastY = changedTouches.pageY;
         obj.touchParams.startTime = event.timestamp || Date.now();
         obj.transformY = obj.scrollDistance;
+        var res = ownerInstance.selectComponent(".itv-picker-list");
+        console.log(JSON.stringify(res.obj));
         return false;
     },
     touchMove: function(event, ownerInstance) {
@@ -229,7 +261,15 @@ module.exports = {
         obj.isTouch = false
         return false
     },
+    /**
+     * 
+     * @param newValue 新值
+     * @param oldValue 旧值
+     * @param ownerInstance 
+     * @param instance 
+     */
     reload: function(newValue, oldValue, ownerInstance, instance) {
+       
         obj = {
             itemHeight: null,
             touchParams: {
@@ -251,6 +291,7 @@ module.exports = {
         wxOwnerInstance  = ownerInstance;
         var res = ownerInstance.selectComponent(".itv-picker-content");
         var content = ownerInstance.selectComponent(".itv-picker-list");
+        content.obj = obj;
         props = JSON.parse(JSON.stringify(content.getDataset()));
         
         dom = ownerInstance.selectComponent('.itv-picker-list-panel')
@@ -266,6 +307,13 @@ module.exports = {
             }else{
                 dom.addClass('opcity-hide');
             }
+
+            if(defaultValue !== null) {
+                setDataIndex(defaultValue);
+            }else{
+                setDataIndex(listData[0].value);
+            }
+           
        })
 
     },
@@ -335,15 +383,15 @@ module.exports = {
             transform: "translate3d(0, "+obj.transformY+"px, 0)"
         })
         wxOwnerInstance.triggerEvent("chooseItem", {
-            value: listData[index],
-            index: index,
-            keyIndex: keyIndex
-        },
-        {
-            value: listData[index],
-            index: index,
-            keyIndex: keyIndex
-        }    
+                value: listData[index],
+                index: index,
+                keyIndex: keyIndex
+            },
+            {
+                value: listData[index],
+                index: index,
+                keyIndex: keyIndex
+            }    
         )
     },
     setKeyIndex: function(newValue, oldValue) {

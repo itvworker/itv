@@ -1,8 +1,9 @@
 Component({
+    externalClasses:['el-class'],
     properties: {
         listData: {
             type: Array,
-            required: true
+            value:[]
         },
         defaultValue: {
             type: String | Number
@@ -33,18 +34,18 @@ Component({
     data: {
         reload: 0,
     },
-    
+    ready() {
+        this.onLoad();
+    },
     methods: {
         onLoad: function() {
             this.setData({
                 reload: this.data.reload+1
             })
         },
-        onChooseItem(obj) {
-            console.log('----------------------------------------');
-            obj.keyIndex = this.properties.keyIndex;
+        onClick() {
             console.log(this.properties.keyIndex);
-            this.triggerEvent('chooseItem', {}, obj)
+            
         }
     }
   

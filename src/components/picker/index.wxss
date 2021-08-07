@@ -1,0 +1,61 @@
+.itv-bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+}
+.itv-datepicker {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 16rpx 16rpx 0 0;
+}
+.itv-datepicker .itv-datepicker-title {
+  display: flex;
+  height: 100rpx;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+.itv-datepicker .itv-datepicker-title::after {
+  display: block;
+  content: ' ';
+  border-bottom: #DADADA solid 1px;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: scaleY(0.5);
+}
+.itv-datepicker .btn {
+  position: absolute;
+  padding: 0 30rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+}
+.itv-datepicker .btn.btn-cancel {
+  color: #999;
+  left: 0;
+  right: 0;
+}
+.itv-datepicker .btn.btn-confirm {
+  right: 0;
+  top: 0;
+  color: #2caf4f;
+}
+.itv-datepicker .itv-datepicker-content {
+  height: 400rpx;
+  display: flex;
+}
+.itv-datepicker .itv-datepicker-content .picker {
+  overflow: hidden;
+  width: 30%;
+}

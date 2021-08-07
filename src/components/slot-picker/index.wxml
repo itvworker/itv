@@ -15,12 +15,13 @@
     change:defaultValue="{{touchs.setDefaultValue}}"
     keyIndex="{{keyIndex}}"
     change:keyIndex = "{{touchs.setKeyIndex}}"
-   
+    
 >
     <view class="itv-picker-content itv-picker-row{{rows}}">
         <view class="itv-picker-list-panel" 
-        bindtransitionend="{{touchs.transitionEnd}}"
-        bindchooseItem="onChooseItem"
+            bindtransitionend="{{touchs.transitionEnd}}"
+            bindchooseItem="onChooseItem"
+            bindtap="onClick"
         >
             <view class="itv-picker-item hide" wx:for="{{listData}}" wx:key="index" >{{item.text || item}}</view>
             <view class="itv-picker-item hide" wx:for="{{listData}}" wx:key="index">{{item.text || item}}</view>
