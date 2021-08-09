@@ -2,7 +2,10 @@
 module.exports = {
     setValue: function (newValue, oldValue, ownerInstance, instance) {
         if(newValue) {
-            ownerInstance.callMethod('init', null);
+            ownerInstance.setTimeout(function(){
+                ownerInstance.callMethod('init', null);
+            })
+           
         }
     }
 }

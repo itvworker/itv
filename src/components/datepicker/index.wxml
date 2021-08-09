@@ -3,7 +3,10 @@
 items="{{list}}"
 value="{{value}}"
 change:value="{{picker.setValue}}"
+defaultValue="{{selectValue}}"
 bindchooseItem="chooseItem"
 bindclose="onClose"
+bindconfirm="onConfirm"
 
  />
+ 

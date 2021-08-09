@@ -6,7 +6,8 @@ Component({
             value:[]
         },
         defaultValue: {
-            type: String | Number
+            type: String | Number,
+            value: null
         },
 
         keyIndex: {
@@ -35,8 +36,12 @@ Component({
         reload: 0,
     },
     methods: {
+        init() {
+            this.setData({
+                reload: this.data.reload+1
+            })
+        },
         onClick() {
-            console.log(this.properties.keyIndex);
             
         }
     }

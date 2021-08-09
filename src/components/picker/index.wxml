@@ -32,7 +32,7 @@
             wx:key="index" 
             class="picker picker{{index}}"
             clearMask="clearMask"
-            defaultValue="{{selceted[index]}}"
+            defaultValue="{{defaultValue[index]}}"
             listData="{{item}}"
             bindchooseItem="chooseItem"
             keyIndex="{{index}}"
@@ -40,4 +40,5 @@
             isLoop="{{isLoop}}"
         />
     </view>
+    
 </view>

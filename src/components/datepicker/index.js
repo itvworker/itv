@@ -1,43 +1,9 @@
-function formatDate(arg="", format) {
-    if(typeof arg === "string") {
-        arg = arg.replace(/-/ig, '/');
-        if(arg.indexOf('/')<0) {
-            arg = parseInt(arg);
-        }
-        if(arg.length===7 && arg.indexOf('/')===4) {
-            arg = arg+'/01'
-        }
-    }
-    
-    format = format || "Y/M/D h:m";
-    let now = ''
-    if(!arg) {
-        now = new Date();
-    }else{
-        now = new Date(arg);
-    }
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1;
-    month = month >= 10 ? month : "0" + month;
-    var date = now.getDate();
-    date = date >= 10 ? date : "0" + date;
-    var hour = now.getHours();
-    hour = hour >= 10 ? hour : "0" + hour;
-    var minute = now.getMinutes();
-  
-    minute = minute >= 10 ? minute : "0" + minute;
-    var second = now.getSeconds();
-    second = second >= 10 ? second : "0" + second;
-    return format
-        .replace("Y", year)
-        .replace("M", month)
-        .replace("D", date)
-        .replace("h", hour)
-        .replace("m", minute)
-        .replace("s", second);
-}
 
 
+
+
+
+const util = require('./date.js')
 
 Component({
     properties: {
@@ -76,7 +42,7 @@ Component({
         },
         endTime: {
             type: String,
-            value: formatDate(null,'Y-M-D h:m')
+            value: util.formatDate(null,'Y-M-D h:m')
         },
         pickerClassName:{
             type: String,
@@ -84,7 +50,7 @@ Component({
         },
         defaultValue: {
             type: String,
-            value: formatDate(null,'Y-M-D h:m')
+            value: util.formatDate(null,'Y-M-D h:m')
         },
         //是否循环滑动
         isLoop: {
@@ -104,57 +70,202 @@ Component({
         //至今
         toNow: {
             type: String,
-            value:null
+            value: null
+        },
+        yearText:{
+            type: String,
+            value: "{value}年"
+        },
+        monthText:{
+            type: String,
+            value: "{value}月"
+        },
+        dayText: {
+            type: String,
+            value: "{value}日"
+        },
+        hourText:{
+            type: String,
+            value: "{value}时"
+        },
+        minuteText:{
+            type: String,
+            value: "{value}分"
         }
     },
     data: {
         reload: 0,
-        list: [
-            [
-                {
-                    text: '1900年',
-                    value: 0
-                },
-                {
-                    text: '1901年',
-                    value: 1
-                },
-                {
-                    text: '1901年',
-                    value: 2
-                }
-            ],
-            [
-                {
-                    text: '1月',
-                    value: 1
-                },
-                {
-                    text: '2月',
-                    value: 2
-                },
-                {
-                    text: '3月',
-                    value: 3
-                }
-            ]
-            
-        ],
-        selceted:[]
+        list: [],
+        startTimeArr:[],
+        endTimeArr:[],
+        selectValue:[],
+        timeIndex: 0,
     },
     created() {
-        console.log(this.data.list);
     },
     methods: {
-        init(){
-            console.log('datepicker-load');
+        init() {
+            this.data.list = [];
+            this.timeIndex = 0;
+            
+            switch (this.properties.type) {
+                case 'time':
+                    let start = '2020-01-01 ' + this.properties.startTime;
+                    let end = '2020-01-01 ' + this.properties.endTime;
+                    let now =  '2020-01-01 ' +this.properties.defaultValue;
+                    this.data.startTimeArr = util.formatDate(start,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.data.endTimeArr = util.formatDate(end, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.data.selectValue = util.formatDate(now, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.data.timeIndex = 3;
+                    let hour = util.getHourArr(this.properties.startTimeArr , this.data.endTimeArr, this.data.selectValue)
+                    his.$set(this.data.list, 0, hour);
+                    
+                    this.setTime(0);
+                    break;
+                case 'date':
+                    this.data.startTimeArr = util.formatDate(this.properties.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.data.endTimeArr = util.formatDate(this.properties.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.data.selectValue = util.formatDate(this.properties.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.data.list = [];
+                    this.data.list[0] = util.getBeignEndArr(this.data.startTimeArr[0], this.data.endTimeArr[0], this.properties.toNow);
+
+                    if(this.properties.toNow  === this.properties.defaultValue) {
+                        this.data.selectValue = [this.properties.toNow,this.properties.toNow, this.properties.toNow]
+                        this.data.list[1] = [this.properties.toNow];
+                        this.data.list[2] = [this.properties.toNow];
+                    }
+                    this.setDate(0)
+                    break;
+                case 'ym':
+                    this.data.startTimeArr = util.formatDate(this.properties.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.data.endTimeArr = util.formatDate(this.properties.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.data.selectValue = util.formatDate(this.properties.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.data.list = [];
+                    this.data.list[0] = util.getBeignEndArr(this.properties.startTimeArr[0], this.properties.endTimeArr[0],this.properties.toNow);
+                    if(this.properties.toNow  === this.properties.defaultValue) {
+                        this.data.selectValue = [this.properties.toNow, this.properties.toNow]
+                        this.data.list[1] = [this.properties.toNow];
+                    }else{
+                        this.setYm(0)
+                    }
+                    
+                    break;
+            
+                default:
+                    this.data.startTimeArr = util.formatDate(this.properties.startTime,"Y,M,D,h,m").split(','); // 将开始时间变为数组
+                    this.data.endTimeArr = util.formatDate(this.properties.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
+                    this.data.selectValue = util.formatDate(this.properties.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.data.list = [];
+                    let list = util.getBeignEndArr(this.data.startTimeArr[0], this.data.endTimeArr[0], this.properties.toNow);
+                    this.data.list[0] = list.map(item=>{
+                        return {
+                            text: this.properties.yearText.replace('{value}', item),
+                            value: item
+                        }
+                    }) 
+                    
+                    this.setData({
+                        list: this.data.list,
+                        selectValue: this.data.selectValue
+                    })
+                    this.setDatatime(0);
+                    break;
+            }
+        },
+        setDatatime(index) {
+            let month =  util.getMonthArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
+            if(!util.isArrayEquality(this.data.list[1], month) &&  index>=0) { 
+                this.data.list[1] = month.map(item=>{
+                    return {
+                        text: this.properties.monthText.replace('{value}', parseInt(item)),
+                        value: item
+                    }
+                });
+            }
+
+           
+            let day = util.getDayArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
+            if(!util.isArrayEquality(this.data.list[2], day) && index <=1) {
+                this.data.list[2] = day.map(item=>{
+                    return {
+                        text: this.properties.dayText.replace('{value}', parseInt(item)),
+                        value: item
+                    }
+                });
+            }
+
+            let hour = util.getHourArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue)
+            if(!util.isArrayEquality(this.data.list[3], hour) && index <=2) {
+                this.data.list[3] =  hour.map(item=>{
+                    return {
+                        text: this.properties.hourText.replace('{value}', parseInt(item)),
+                        value: item
+                    }
+                });
+            }
+
+            let minute = util.getMinuteArr(this.data.startTimeArr, this.data.endTimeArr, this.data.selectValue, this.properties.step)
+            if(!util.isArrayEquality(this.data.list[4], minute) && index <=3) {
+                this.data.list[4] =  minute.map(item=>{
+                    return {
+                        text: this.properties.minuteText.replace('{value}', parseInt(item)),
+                        value: item
+                    }
+                });
+            }
+            this.setData({
+                list: this.data.list
+            })
         },
         chooseItem(res) {
-            console.log(res.detail);
+            switch (this.properties.type) {
+                case 'time':
+                    this.data.selectValue[index+this.timeIndex] = item;
+                    this.setTime(index);
+                    break;
+                case 'date':
+                    this.data.selectValue[index] = item;
+                    this.setDate(index, item === this.properties.toNow);
+                    break;
+                case 'ym':
+                    this.data.selectValue[index] = item;
+                    this.setYm(index,  item === this.properties.toNow);
+                    break;
+                default:
+                    this.data.selectValue[res.detail.keyIndex] = res.detail.value.value;
+                    this.setData({
+                        selectValue: this.data.selectValue
+                    })
+                    this.setDatatime(res.detail.keyIndex);
+                    break;
+            }
         },
         onClose() {
             this.triggerEvent("close", {}, {})
-        }
+        },
+        onConfirm(res) {
+            this.triggerEvent("confirm", this.data.selectValue, this.data.selectValue)
+        },
+        /**
+         * @param {Number} index 当type==='datetime' picker的索引
+         */
+         setYm(index, isToNow) {
+            if(!this.data.selectValue[1] && this.data.startTimeArr[0]===this.data.selectValue[0]) {
+                this.data.selectValue[1]=this.data.startTimeArr[1];
+            }
+            
+            let month =  util.getMonthArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
+             if(isToNow) {
+                month = [this.properties.toNow]
+            }
+            
+            if(!util.isArrayEquality(this.data.list[1], month) &&  index>=0) { 
+                this.data.list[1] = month;
+                this.setData({
+                    list:this.data.list
+                })
+            }
+        },
     }
   
 })

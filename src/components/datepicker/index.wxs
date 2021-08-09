@@ -1,7 +1,6 @@
 
 module.exports = {
     setValue: function (newValue, oldValue, ownerInstance, instance) {
-        console.log(newValue);
         if(newValue) {
             ownerInstance.callMethod('init', null);
         }

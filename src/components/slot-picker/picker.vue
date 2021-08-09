@@ -395,7 +395,6 @@ export default {
             this.lineSpacing = this.$refs.height.clientHeight;
             defaultValue =  defaultValue || this.defaultValue;
             if(typeof defaultValue === 'number') {
-                console.log(defaultValue);
                 defaultValue = defaultValue.toString();
             }
             let index = this.listIndexs.indexOf(defaultValue);

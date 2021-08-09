@@ -120,13 +120,17 @@ Page({
   },
   onClose() {
     this.setData({
-        show: false
+        show: false,
+        datePickerShow: false
     })
   },
   onDatepicker() {
         this.setData({
             datePickerShow: true
         })
+  },
+  onConfirm(res) {
+     this.onClose();
   }
   
 })

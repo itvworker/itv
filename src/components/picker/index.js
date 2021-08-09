@@ -67,13 +67,11 @@ Component({
         selceted:[]
     },
     created() {
-        console.log('show-----------');
-        console.log(this.properties.items);
+        
     },
     methods: {
         init() {
-           
-            if (this.properties.pickerType === 'parent') {
+            if (this.properties.pickerType === 'parent'){
                 this.setData({
                     list: []
                 })
@@ -94,7 +92,7 @@ Component({
             }
 
             if (this.properties.pickerType === 'normal') {
-
+                this.selectComponent('.picker').init();
             }
             
         },   
@@ -110,10 +108,10 @@ Component({
                 }
                 this.data.selceted[res.detail.keyIndex] = res.detail.value;
             }
-
+       
             //
             if (this.properties.pickerType === 'normal') {
-                this.triggerEvent('chooseItem', res.detail.value,  res.detail.value);
+                this.triggerEvent('chooseItem', res.detail,  res.detail);
                 this.data.selceted[res.detail.keyIndex] = res.detail.value;
             }
             

@@ -334,7 +334,6 @@ module.exports = {
         if(start[0] === now[0] && start[1] === now[1] && start[2] === now[2] && start[3] === now[3] ) {
           
             for(let i = start[4];i <= 59; i+=step) {
-                console.log(i);
                 arr.push(this.getNumTwoBit(i))
             }
            

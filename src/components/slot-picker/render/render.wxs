@@ -155,8 +155,6 @@ function setDataIndex(value, state) {
         "margin-top": -state.lineSpacing*state.listData.length*2+'px',
         transform: "translate3d(0, "+state.transformY+"px, 0)"
     })
-    console.log('----------+++++=========');
-    console.log(state.defaultValue);
     state.wxOwnerInstance.triggerEvent("chooseItem", {
             value: state.listData[index],
             index: index,
@@ -242,8 +240,6 @@ module.exports = {
      * @param instance 
      */
     reload: function(newValue, oldValue, ownerInstance, instance) {
-        console.log('reload-------');
-        console.log(newValue, oldValue);
         wxOwnerInstance  = ownerInstance;
         var res = ownerInstance.selectComponent(".itv-picker-content");
         var content = ownerInstance.selectComponent(".itv-picker-list");

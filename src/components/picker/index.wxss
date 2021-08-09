@@ -34,6 +34,7 @@
   position: relative;
   align-items: center;
   justify-content: center;
+  font-size: 36rpx;
 }
 .itv-datepicker .itv-datepicker-title::after {
   display: block;
@@ -51,6 +52,7 @@
   height: 100rpx;
   display: flex;
   align-items: center;
+  font-size: 32rpx;
 }
 .itv-datepicker .btn.btn-cancel {
   color: #999;
