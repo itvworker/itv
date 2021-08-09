@@ -1,26 +1,43 @@
-<view class="itv-bg"></view>
-
-<view class="itv-datepicker">
+<wxs module="picker" src="./index.wxs"></wxs>
+<view class="itv-bg {{!value ? 'itv-bg_hidden' : '' }}" bindtap="onClose"></view>
+<view class="itv-datepicker {{!value ? 'picker_hidden' : '' }}"
+    value="{{value}}"
+    change:value="{{picker.setValue}}"
+>
     <view  class="itv-datepicker-title">
-        <view class="btn btn-cancel">
+        <view class="btn btn-cancel" bindtap="onClose">
             {{cancelText}}
         </view>
             {{titleText}}
-        <view class="btn btn-confirm">
+        <view class="btn btn-confirm" bindtap="onConfirm">
             {{confirmText}}
         </view>
-        
     </view>
-    <view class="itv-datepicker-content">
-          <slot-picker wx:for="{{list}}" wx:key="index" 
-                class="picker picker{{index}}"
-                clearMask="clearMask"
-                default-value="{{chooseValue[index]}}"
-                listData="{{item}}"
-                bindchooseItem="chooseItem"
-                keyIndex="index"
-                rows="{{rows}}"
-                isLoop="{{isLoop}}"
-            />
+    <view class="itv-datepicker-content" wx:if="{{pickerType === 'parent'}}">
+        <slot-picker wx:for="{{list}}" 
+            wx:key="index" 
+            class="picker picker{{index}}"
+            clearMask="clearMask"
+            defaultValue="{{selceted[index]}}"
+            listData="{{item}}"
+            bindchooseItem="chooseItem"
+            keyIndex="{{index}}"
+            rows="{{rows}}"
+            isLoop="{{isLoop}}"
+        />
+    </view>
+    <view class="itv-datepicker-content" wx:if="{{pickerType === 'normal'}}">
+        <slot-picker 
+            wx:for="{{items}}" 
+            wx:key="index" 
+            class="picker picker{{index}}"
+            clearMask="clearMask"
+            defaultValue="{{selceted[index]}}"
+            listData="{{item}}"
+            bindchooseItem="chooseItem"
+            keyIndex="{{index}}"
+            rows="{{rows}}"
+            isLoop="{{isLoop}}"
+        />
     </view>
 </view>

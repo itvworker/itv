@@ -1,8 +1,9 @@
 <!--index.wxml-->
 <wxs module="touchs" src="./render.wxs"></wxs>
 <view class="container">
-   <!-- <view class="move-bar" data-id="{{motto}}" bindtouchmove="{{touchs.touchmove}}" bindload="{{touchs.loaded}}">
-        move
-    </view> -->
-    <itv-picker id="picker" items="{{items}}"></itv-picker>
+   <view bindtap="onOpen">picker</view>
+   <view bindtap="onDatepicker">datepicker</view>
+   <itv-picker id="picker" pickerType="parent" isLoop="{{true}}" defaultValue="{{defaultValue}}" value="{{show}}" items="{{items}}" bindclose="onClose" bindconfirm="onChooseItem"></itv-picker>
+  
+   <datepicker value="{{datePickerShow}}" />
 </view>

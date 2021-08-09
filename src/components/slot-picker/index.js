@@ -34,15 +34,7 @@ Component({
     data: {
         reload: 0,
     },
-    ready() {
-        this.onLoad();
-    },
     methods: {
-        onLoad: function() {
-            this.setData({
-                reload: this.data.reload+1
-            })
-        },
         onClick() {
             console.log(this.properties.keyIndex);
             

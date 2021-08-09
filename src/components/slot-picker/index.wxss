@@ -102,9 +102,6 @@
 .itv-picker-list .itv-picker-mask.itv-picker-row7 {
   background-size: 100% 240rpx;
 }
-.itv-picker-list .itv-picker-mask.clear-mask {
-  background-image: none;
-}
 .itv-picker-list .itv-picker-indicator {
   position: absolute;
   top: 88rpx;

@@ -55,6 +55,10 @@ Component({
         clearMask:{
             type: Boolean,
             value: false
+        },
+        pickerType: {
+            type: String,
+            value: 'normal'
         }
     },
     data: {
@@ -62,38 +66,65 @@ Component({
         list: [],
         selceted:[]
     },
+    created() {
+        console.log('show-----------');
+        console.log(this.properties.items);
+    },
     methods: {
         init() {
-            let list = [];
-            let selceted = [];
-            list[0] = this.properties.items.map(item=>{
-                return item;
-            })
-            this.setData({
-                selceted: selceted,
-                list: list
-            })
+           
+            if (this.properties.pickerType === 'parent') {
+                this.setData({
+                    list: []
+                })
+                setTimeout(()=>{
+                    let list = [];
+                    let selceted = [];
+                    if (this.properties.defaultValue) {
+                        selceted = JSON.parse(JSON.stringify(this.properties.defaultValue));
+                    }
+                    list[0] = this.properties.items.map(item=>{
+                        return item;
+                    })
+                    this.setData({
+                        selceted: selceted,
+                        list: list
+                    })
+                })
+            }
+
+            if (this.properties.pickerType === 'normal') {
+
+            }
+            
         },   
         chooseItem(res) {
-           
-            let list = this.data.list;
-            
-            if(this.properties.items[res.detail.keyIndex]) {
-                list[res.detail.keyIndex+1] = this.properties.items[res.detail.keyIndex].children;
-                this.setData({
-                    list: list
-                })
+            //
+            if (this.properties.pickerType === 'parent') {
+                let list = this.data.list;
+                if(res.detail.value && res.detail.value.children) {
+                    list[res.detail.keyIndex+1] = res.detail.value.children;
+                    this.setData({
+                        list: list
+                    })
+                }
+                this.data.selceted[res.detail.keyIndex] = res.detail.value;
+            }
+
+            //
+            if (this.properties.pickerType === 'normal') {
+                this.triggerEvent('chooseItem', res.detail.value,  res.detail.value);
+                this.data.selceted[res.detail.keyIndex] = res.detail.value;
             }
             
         },
-        closePicker() {
-            this.$emit('input', false);
-        },
-        confirm() {
-            if(this.isForbidConfirm) return;
+        onConfirm() {
             setTimeout(()=>{
-                this.$emit('onConfirm', this.selceted);
-            },200)
+                this.triggerEvent('confirm', this.data.selceted,  this.data.selceted);
+            },100)
+        },
+        onClose() {
+            this.triggerEvent('close', {},  {});
         }
     }
   

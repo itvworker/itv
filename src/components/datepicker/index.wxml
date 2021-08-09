@@ -1,0 +1,9 @@
+<wxs module="picker" src="./index.wxs"></wxs>
+<itv-picker 
+items="{{list}}"
+value="{{value}}"
+change:value="{{picker.setValue}}"
+bindchooseItem="chooseItem"
+bindclose="onClose"
+
+ />
