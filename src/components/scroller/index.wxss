@@ -92,3 +92,7 @@
   width: 28rpx;
   margin-right: 20rpx;
 }
+.svg-box {
+  width: 100px;
+  height: 100px;
+}

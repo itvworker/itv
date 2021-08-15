@@ -118,22 +118,23 @@ function getAngle(angx, angy) {
  * @param {Nubmer} value 速度倍数 
  */
 function scrollTo(value, state, props) {
-    states = state;
-    propes = props;
+    state = state || states;
+    props = props || propes;
     var dx = state.scrollX - state.scrollToX;
     var dy = state.scrollY - state.scrollToY;
+   
     state.stepY = dy > 0? calcStep(dy,state, props):-calcStep(dy,state, props)
-    state.stepX = dx > 0? calcStep(dx,state, props):-calcStep(dx.state, props)
+    state.stepX = dx > 0? calcStep(dx,state, props):-calcStep(dx,state, props)
     state.stepX*=value
     state.stepY*=value
 
+    console.log(state.stepY);
     
-    
-    if(x === state.x && state.stepX === 0) {
+    if(state.scrollToX === state.x && state.stepX === 0) {
         state.direction ="vertical"
     }
 
-    if(y === state.y && state.stepY === 0) {
+    if(state.scrollToY === state.y && state.stepY === 0) {
         state.direction ="horizontal"
     }
     if(state.stepY<0){
@@ -148,7 +149,7 @@ function scrollTo(value, state, props) {
         state.LeftOrRight = 'right'
     }
 
-    state.scrollRender.requestAnimationFrame(step, state, props);                 
+    state.scrollRender.requestAnimationFrame(step);                 
 }
 
 
@@ -158,20 +159,24 @@ function scrollTo(value, state, props) {
  * @param {Number} distance 
  */
 function calcStep(distance, state, props) {
-    let dis = Math.abs(distance);
+    
+    state = state || states;
+    props = props || propes;
+    var dis = Math.abs(distance);
 
     if(dis===0) {
         return 0
     }
-    let step = state.stopStep; 
-    let numDis = 0;
+    var step = state.stopStep; 
+    var numDis = 0;
     while(numDis<dis) {
         numDis+= step/props.percent
         step = step/props.percent
     }
-
+   
     
     step = step/props.percent
+    
     return step
 }
 
@@ -215,20 +220,20 @@ function calcMoveSpeed(state, props) {
         y = 0
     }
 
-    if(y>props.maxSpeed) {
-        y = props.maxSpeed
+    if(y>props.maxspeed) {
+        y = props.maxspeed
     }
 
-    if(y <-props.maxSpeed) {
-        y = -props.maxSpeed
+    if(y <-props.maxspeed) {
+        y = -props.maxspeed
     }
 
-    if(x>props.maxSpeed) {
-        x = props.maxSpeed
+    if(x>props.maxspeed) {
+        x = props.maxspeed
     }
 
-    if(x <-props.maxSpeed) {
-        x = -props.maxSpeed
+    if(x <-props.maxspeed) {
+        x = -props.maxspeed
     }
 
     
@@ -294,98 +299,99 @@ function animate(speed, state, props) {
 
 //滚动动画
 function step(time, value) {
-   
+    var state = states;
+    var props = propes;
     var continuing = true;
-    if(states.isTouch || states.isMove) return;
-    var scrollX = states.scrollX - states.stepX
-    var scrollY = states.scrollY - states.stepY
+    if(state.isTouch || state.isMove) return;
+    var scrollX = state.scrollX - state.stepX
+    var scrollY = state.scrollY - state.stepY
      
    
     //当快要滚动到指定点的Y轴时
-    var arriveY = ((states.stepY < 0 && scrollY > states.scrollToY) || (states.stepY > 0 && scrollY < states.scrollToY)) && states.scrollToY!==null
+    var arriveY = ((state.stepY < 0 && scrollY > state.scrollToY) || (state.stepY > 0 && scrollY < state.scrollToY)) && state.scrollToY!==null
     if(arriveY) {
-        states.stepY = 0;
-        scrollY = states.scrollToY;
-        states.scrollToY = null;
+        state.stepY = 0;
+        scrollY = state.scrollToY;
+        state.scrollToY = null;
         continuing = false;
     }
 
-    var arriveX = ((states.stepX < 0 && scrollX > states.scrollToX) || (states.stepX > 0 && scrollX < states.scrollToX)) && states.scrollToX!==null
+    var arriveX = ((state.stepX < 0 && scrollX > state.scrollToX) || (state.stepX > 0 && scrollX < state.scrollToX)) && state.scrollToX!==null
     if(arriveX) {
-        states.stepX = 0;
-        scrollX = states.scrollToX;
-        states.scrollToX = null;
+        state.stepX = 0;
+        scrollX = state.scrollToX;
+        state.scrollToX = null;
     }
    
     //当是指定滚动到某一点时
-    if(states.stepY > 0 && states.scrollToY!==null &&scrollY < states.scrollToY) {
-        states.stepY = 0;
-        scrollY = states.scrollToY;
-        states.scrollToY = null;
+    if(state.stepY > 0 && state.scrollToY!==null &&scrollY < state.scrollToY) {
+        state.stepY = 0;
+        scrollY = state.scrollToY;
+        state.scrollToY = null;
     }
     //允许弹动时
-    if((scrollY < 0 && propes.topBounce) || (scrollY >= states.maxY && propes.bottomBounce)) {
+    if((scrollY < 0 && props.topbounce) || (scrollY >= state.maxY && props.bottombounce)) {
         //是否回弹
-        let isBounce = (states.stepY < 0 && states.scrollY < 0) || (states.stepY > 0 && states.scrollY> states.maxY);
+        var isBounce = (state.stepY < 0 && state.scrollY < 0) || (state.stepY > 0 && state.scrollY> state.maxY);
         if(!isBounce && continuing) {
-            scrollY = states.scrollY - states.stepY*0.5
-            states.stepY = states.stepY*0.8
+            scrollY = state.scrollY - state.stepY*0.5
+            state.stepY = state.stepY*0.8
         }
     }
     
     //不许弹动时
-    if(scrollY < 0 && !propes.topBounce) {
+    if(scrollY < 0 && !props.topbounce) {
         scrollY = 0
-        states.stepY = 0
+        state.stepY = 0
     }
     //不许弹动时
-    if(scrollY > states.maxY && !propes.bottomBounce) {
-        scrollY = states.maxY
-        states.stepY = 0
+    if(scrollY > state.maxY && !props.bottombounce) {
+        scrollY = state.maxY
+        state.stepY = 0
     }
     //当是指定滚动到某一点时
-    if((scrollX < 0 && propes.leftBounce) || (scrollX >= states.maxX && propes.rightBounce)) {
+    if((scrollX < 0 && props.leftbounce) || (scrollX >= state.maxX && props.rightbounce)) {
         //是否回弹
-        let isBounce = (states.stepX < 0 && states.scrollX < 0) || (states.stepX > 0 && states.scrollX> states.maxX);
+        var isBounce = (state.stepX < 0 && state.scrollX < 0) || (state.stepX > 0 && state.scrollX> state.maxX);
         if(!isBounce) {
-            scrollX = states.scrollX - states.stepX*0.5
-            states.stepX = states.stepX*0.8
+            scrollX = state.scrollX - state.stepX*0.5
+            state.stepX = state.stepX*0.8
         }
     }
     
     //不许弹动时
-    if(scrollX < 0 && !propes.leftBounce) {
+    if(scrollX < 0 && !props.leftBounce) {
         scrollX = 0
-        states.stepX= 0
+        state.stepX= 0
     }
     //不许弹动时
-    if(scrollX > states.maxX && !propes.rightBounce) {
-        scrollX = states.maxX
-        states.stepX = 0
+    if(scrollX > state.maxX && !props.rightBounce) {
+        scrollX = state.maxX
+        state.stepX = 0
     }
 
 
-    if(propes.pattern === 'vertical') {
-        states.stepX = 0;
-        states.scrollX = 0;
+    if(props.pattern === 'vertical') {
+        state.stepX = 0;
+        state.scrollX = 0;
     }
 
-    if(propes.pattern === 'horizontal') {
-        states.stepY = 0;
-        states.scrollY = 0;
+    if(props.pattern === 'horizontal') {
+        state.stepY = 0;
+        state.scrollY = 0;
     }   
-    if(propes.pattern === 'auto' && states.direction === 'vertcial') {
-        states.stepX = 0;
+    if(props.pattern === 'auto' && state.direction === 'vertcial') {
+        state.stepX = 0;
         
     }
    
-    states.scrollX = scrollX;
-    states.scrollY = scrollY;
-    states.hideBarY = false;
+    state.scrollX = scrollX;
+    state.scrollY = scrollY;
+    state.hideBarY = false;
     
    
-    states.scrollRender.setStyle({
-        transform: "translate3d("+(-states.scrollX)+"px, "+(-states.scrollY)+"px, 0)"
+    state.scrollRender.setStyle({
+        transform: "translate3d("+(-state.scrollX)+"px, "+(-state.scrollY)+"px, 0)"
     })
    
     // if(this.scrollXRender) {
@@ -407,68 +413,68 @@ function step(time, value) {
     //     this.scrollBarXRender( -this.cacheScrollBarX,0,1)
     // }
    
-    states.scrollRender.triggerEvent('scroll',
+    state.scrollRender.triggerEvent('scroll',
     {
-        x: states.scrollX,
-        y: states.scrollY,
-        stepY: states.stepY,
-        stepX: states.stepX,
-        type: states.direction,
-        maxY: states.maxY
+        x: state.scrollX,
+        y: state.scrollY,
+        stepY: state.stepY,
+        stepX: state.stepX,
+        type: state.direction,
+        maxY: state.maxY
     },
     {
-        x: states.scrollX,
-        y: states.scrollY,
-        stepY: states.stepY,
-        stepX: states.stepX,
-        type: states.direction,
-        maxY: states.maxY
+        x: state.scrollX,
+        y: state.scrollY,
+        stepY: state.stepY,
+        stepX: state.stepX,
+        type: state.direction,
+        maxY: state.maxY
     })
-    states.stepX = states.stepX * propes.percent
-    states.stepY = states.stepY * propes.percent
+    state.stepX = state.stepX * props.percent
+    state.stepY = state.stepY * props.percent
     
        
-    if(Math.abs(states.stepX) <= states.stopStep) {
-        states.stepX = 0
+    if(Math.abs(state.stepX) <= state.stopStep) {
+        state.stepX = 0
     }
-    if(Math.abs(states.stepY) <= states.stopStep) {
-        states.stepY = 0
+    if(Math.abs(state.stepY) <= state.stopStep) {
+        state.stepY = 0
     }
     
-    if(states.stepX===0 && states.stepY === 0) {
+    if(state.stepX===0 && state.stepY === 0) {
        
-        if(states.scrollY < 0 && continuing) {
-            states.scrollToY =0;
+        if(state.scrollY < 0 && continuing) {
+            state.scrollToY =0;
             scrollTo(1.5, states, propes)
             return
         }
        
-        if(states.scrollY > states.maxY && continuing) {
-            states.scrollToY = states.maxY;
+        if(state.scrollY > state.maxY && continuing) {
+            state.scrollToY = state.maxY;
             scrollTo(1.5, states, propes)
             return
         } 
 
-        if(states.scrollX < 0 && continuing) {
-            states.scrollToX = 0
+        if(state.scrollX < 0 && continuing) {
+            state.scrollToX = 0
             scrollTo(1.5, states, propes)
             return
         }
 
-        if(states.scrollX > states.maxX && continuing) {
-            states.scrollToX = states.maxX;
+        if(state.scrollX > state.maxX && continuing) {
+            state.scrollToX = state.maxX;
             scrollTo(1.5, states, propes);
             return
         }
        
-        states.scrollRender.triggerEvent('stopscroll', {
-            x: states.scrollX,
-            y: states.scrollY,
-            type: states.direction,
-            maxY: states.maxY,
-            maxX: states.maxX,
-            upOrDown: states.upOrDown,
-            leftOrRight: states.leftOrRight
+        state.scrollRender.triggerEvent('stopscroll', {
+            x: state.scrollX,
+            y: state.scrollY,
+            type: state.direction,
+            maxY: state.maxY,
+            maxX: state.maxX,
+            upOrDown: state.upOrDown,
+            leftOrRight: state.leftOrRight
         })
 
         
@@ -479,7 +485,18 @@ function step(time, value) {
     }
     
     
-    states.scrollRender.requestAnimationFrame(step)
+    state.scrollRender.requestAnimationFrame(step)
+}
+
+//是否触发上拉加载
+function loadingData(state, props) {
+    if(state.isMore && state.scrollY >= state.maxY && state.moreStatus ==='loadingStop') {
+        state.moreStatus = 'loading';
+        state.scrollYRender.triggerEvent('infinite',{},{})
+        // this.$nextTick(()=>{
+        //     this.calcMax()
+        // })
+    }
 }
 
 var Touch = {
@@ -491,7 +508,7 @@ var Touch = {
         wxOwnerInstance  = ownerInstance;
         var res = ownerInstance.selectComponent(".itv-scroll");
         var state = res.getState();
-       
+        var props = res.getDataset();
         state.text = ""
         state.status = 0
         state.x = 0 //x轴位置，初始化有用 
@@ -539,7 +556,8 @@ var Touch = {
         state.leftOrRight= ''
         state.pullEl =  ownerInstance.selectComponent(".pull-top")
 
-        
+        states = state;
+        propes = props;
     },
     touchstart: function(e, ownerInstance) {
         
@@ -653,18 +671,22 @@ var Touch = {
                 state.scrollX = 0;
             }
             //允许弹动时
-            if((scrollY < 0 && props.topBounce) || (scrollY > state.maxY && props.bottomBounce)) {
+
+            if((scrollY < 0 && props.topbounce) || (scrollY > state.maxY && props.bottombounce)) {
+                
                 if((state.scrollY < 0 && dirs.angy > 0) || (state.scrollY > state.maxY && dirs.angy < 0) ) {
                     scrollY = state.scrollY - (dirs.angy*0.5)
                 }
             }
             //不许弹动时
-            if(scrollY < 0 && !props.topBounce) {
+            if(scrollY < 0 && !props.topbounce) {
                 scrollY = 0
+                console.log('不许弹动时1');
             }
             //不许弹动时
-            if(scrollY > state.maxY && !props.bottomBounce) {
+            if(scrollY > state.maxY && !props.bottombounce) {
                 scrollY = state.maxY
+                console.log('不许弹动时2',props.bottomBounce);
             }
 
             state.scrollY = scrollY  
@@ -678,17 +700,17 @@ var Touch = {
 
 
             //允许弹动时
-            if((scrollX < 0 && props.leftBounce) || (scrollX > state.maxX && props.rightBounce)) {
+            if((scrollX < 0 && props.leftbounce) || (scrollX > state.maxX && props.rightbounce)) {
                 if((state.scrollX < 0 && dir.angx > 0) || (state.scrollX > state.maxX && dirs.angx < 0) ) {
                     scrollX = state.scrollX - (dirs.angx*0.5)
                 }
             }
             //不许弹动时
-            if(scrollX < 0 && !props.leftBounce) {
+            if(scrollX < 0 && !props.leftbounce) {
                 scrollX = 0
             }
             //不许弹动时
-            if(scrollX > state.maxX && !props.rightBounce) {
+            if(scrollX > state.maxX && !props.rightbounce) {
                 scrollX = state.maxX
             }
             state.scrollX = scrollX;
@@ -729,13 +751,14 @@ var Touch = {
         })
 
         
-        // this.loadingData(this.scrollY)
+        loadingData(state, props)
     },
     touchend: function(e, ownerInstance) {
         var res = ownerInstance.selectComponent(".itv-scroll");
         var state = res.getState();
         var props = res.getDataset();
-        
+        states = state;
+        propes = props;
         if(state.isTouch===false) return; 
         state.isMove = false;
         state.isTouch = false;
@@ -757,7 +780,7 @@ var Touch = {
             if(state.scrollX > state.maxX) {
                 state.scrollToX = state.maxX;
                 state.scrollToY = state.scrollY;
-                scrollTo(1.5, state.maxX, state.scrollY)
+                scrollTo(1.5, state, props)
                 return
             } 
         }
@@ -773,20 +796,20 @@ var Touch = {
                         state.scrollRender.triggerEvent('refresh',{},{})
                         state.scrollToX = state.scrollX;
                         state.scrollToY = state.pullDownPoint;
-                        scrollTo(1.5, state, props)
+                        scrollTo(1.5, state, props);
                         return
                     }
 
                     if(state.scrollY < state.pullDownPoint) {
                         state.scrollToX = state.scrollX;
                         state.scrollToY = state.pullDownPoint;
-                        scrollTo(1.5, state, props)
+                        scrollTo(1.5, state, props);
                         return
                     }
                     
                     
                 }
-                
+                state.scrollToY = 0;
                 scrollTo(1.5, state, props)
                 return
             } 
@@ -795,6 +818,7 @@ var Touch = {
                 state.scrollToX = state.scrollX;
                 state.scrollToY = state.maxY;
                 scrollTo(1.5, state, props);
+              
                 return
             } 
         }

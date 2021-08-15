@@ -16,7 +16,7 @@ Component({
             type: Boolean,
             value: false
         },
-        pullDown: { //开启此功能必须，要开启topBounce
+        pullDown: { //开启此功能必须要开启topBounce
             type: Boolean,
             value: false
         },
@@ -51,11 +51,11 @@ Component({
         },
         percent: {
             type: Number,
-            value: 0.95
+            value: 0.96
         },
         speed: {
             type: Number,
-            value: 100
+            value: 200
         },
         //是否显示滚动条
         showScrollBar: {
@@ -93,7 +93,7 @@ Component({
         },
         maxSpeed:{
             type: Number,
-            value: 100
+            value: 300
         },
         /**除数，控制计算速度 */
         divisor:{
