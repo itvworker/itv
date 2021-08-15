@@ -245,29 +245,3 @@
 .itviconguanbi1:before {
   content: "\e65a";
 }
-.container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-page {
-  height: 100%;
-}
-.link-bar {
-  display: flex;
-  flex-direction: row;
-  background-color: #eee;
-  line-height: 60rpx;
-  justify-content: space-between;
-  padding: 20rpx 30rpx 20rpx 40rpx;
-  box-sizing: border-box;
-  border-radius: 100rpx;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
-  align-items: center;
-}
-.link-bar .itviconxiangyou {
-  font-size: 40rpx;
-  color: #999;
-}

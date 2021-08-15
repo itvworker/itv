@@ -1,0 +1,97 @@
+@import '../../assets/theme.less';
+.itv-scroll{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .itv-scroll-content{
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        .itv-scroller-msg{
+            overflow: hidden;
+        }
+        .itv-scroll-touch {
+            position: relative;
+            width: fit-content;
+            min-width: 100%;
+            .pull-top{
+                position: absolute;
+                width: 100%;
+                top: 0;
+                transform: translateY(-100%);
+                .spinner-holder{
+                    height: 60pt;
+                    text-align: center;
+                    -webkit-font-smoothing: antialiased;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding-top: 20rpx;
+                    .arrow {
+                        width: 40rpx;
+                        height: 40rpx;
+                        margin: 16rpx auto 0;
+                         transition: transform .2s linear;
+                        &.active{
+                            transform: rotate(-180deg);
+                        }
+                    }
+                    .spinner{
+                        width: 52rpx;
+                        height: 52rpx;
+                    }
+                    .text{
+                        line-height: 52rpx;
+                    }
+                }
+            }
+        } 
+        
+        .scroller-bar{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 8rpx;
+            z-index: 99;
+            background-color:rgba(0, 0, 0, 0.1); 
+            .scroll-indoor{
+                border-radius: 8rpx;
+                background-color: rgba(0, 0, 0, 0.3);
+                box-shadow: 0 0 8rpx rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .scroller-barx{
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 8rpx;
+            z-index: 99;
+            background-color:rgba(0, 0, 0, 0.1); 
+            .scroll-indoor{
+                background-color: rgba(0, 0, 0, 0.3);
+                border-radius: 8rpx;
+                box-shadow: 0 0 8rpx rgba(0, 0, 0, 0.3);
+                height: 8rpx;
+            }
+        }
+        .itv-scroller-more{
+            display: flex;
+            height: 100rpx;
+            align-items: center;
+            justify-content: center;
+            font-size: 28rpx;
+            color: @itv-color-text-gray;
+            .itv-scroller-more-icon{
+                width: 28rpx;
+                margin-right: 20rpx;
+            }
+        }
+    }
+}

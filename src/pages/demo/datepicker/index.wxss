@@ -1,0 +1,31 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+}
+
+.userinfo-avatar {
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+.move-bar{
+  background:#ddd;
+  width: 200rpx;
+  height: 200rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+slot-picker {
+    width: 100%;
+    height: 400rpx;
+}

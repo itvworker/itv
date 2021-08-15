@@ -1,0 +1,808 @@
+//computed
+var states = {};
+var propes = {};
+/**
+ * 判断是否竖向滑动
+ */
+function isVertcialMove(state, props) {
+    return (props.pattern === 'vertical' || props.pattern === 'auto') && state.direction === 'vertical'
+}
+
+/**
+ * 判断是否横向滑动
+ */
+function isHorizontalMove(state, props) {
+    return (props.pattern === 'horizontal' || props.pattern === 'auto') && state.direction === 'horizontal'
+}
+function scrollbarHeight(state, props) {
+  return parseInt((state.contentHeight /state.maxY)*100);
+}
+function scrollbarWidth(state, props) {
+    return parseInt((state.contentWidth / state.maxX)*100);
+}
+function scrollBarOuter(state, props) {
+    return state.contentHeight - parseInt(state.scrollbarHeight)/100 * state.contentHeight;
+}
+function scrollBarOuterWidth(state, props) {
+    
+    return state.contentWidth - parseInt(state.scrollbarWidth)/100 * state.contentWidth;
+}
+
+
+
+
+// 计算滚动的最大值
+function calcMax(state, props) {
+    var parentStyle = state.parentDom.getComputedStyle(['height', 'width']);
+    
+    var parentWidth = parseInt(parentStyle.width);
+    var parentHeight = parseInt(parentStyle.height);
+
+    console.log(parentHeight);
+ 
+    var childStyle = state.scrollRender.getComputedStyle(['height', 'width']);
+    var childWidth = parseInt(childStyle.width);
+    var childHeight = parseInt(childStyle.height);
+
+   
+    
+    state.maxX = Math.max(0, childWidth - parentWidth);
+    state.maxY = Math.max(0, childHeight - parentHeight);
+
+    if(state.minScrollHeihgt > state.maxY) {
+        state.maxY = state.minScrollHeihgt
+    }
+    state.contentHeight = parentHeight;
+    state.contentWidth = parentWidth;
+    //当滚动值超过最大值时，恢复到最大值
+    
+    if(state.scrollX > state.maxX) {
+        state.scrollX =  state.maxX;
+        state.x =  state.maxX
+    }
+    
+    if(state.scrollY > state.maxY) {
+        state.scrollY =  state.maxY;
+        state.y =  state.maxY
+        
+    }
+
+    state.scrollRender.setStyle({
+        transform: "translate3d("+(-state.scrollX)+"px, "+(-state.scrollY)+"px, 0)"
+    })
+
+    //计算下拉加载触发点
+    if(state.pullDown) {
+        state.pullDownPoint = -state.pullEl.getComputedStyle().height;
+    }
+    
+}
+
+//根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
+function getDirection(startx, starty, endx, endy, show) {
+    var angx = endx - startx
+    var angy = endy - starty
+    var result = 0
+    //如果滑动距离太短
+    if (Math.abs(angx) < 1.5 && Math.abs(angy) < 1.5 && !show) {
+        return result
+    }
+    var angle = getAngle(angx, angy)
+    if (angle >= -135 && angle <= -45) {
+        result = 1
+    } else if (angle > 45 && angle < 135) {
+        result = 2
+    } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+        result = 3
+    } else if (angle >= -45 && angle <= 45) {
+        result = 4
+    }
+    var data = {
+        type: result,
+        angx: angx,
+        angy: angy,
+    }
+    return data
+}
+
+//获得角度
+function getAngle(angx, angy) {
+    return (Math.atan2(angy, angx) * 180) / Math.PI
+}
+
+//滚动到指定位置
+/**
+ * 
+ * @param {Number} x 
+ * @param {Number} y 
+ * @param {Nubmer} value 速度倍数 
+ */
+function scrollTo(value, state, props) {
+    states = state;
+    propes = props;
+    var dx = state.scrollX - state.scrollToX;
+    var dy = state.scrollY - state.scrollToY;
+    state.stepY = dy > 0? calcStep(dy,state, props):-calcStep(dy,state, props)
+    state.stepX = dx > 0? calcStep(dx,state, props):-calcStep(dx.state, props)
+    state.stepX*=value
+    state.stepY*=value
+
+    
+    
+    if(x === state.x && state.stepX === 0) {
+        state.direction ="vertical"
+    }
+
+    if(y === state.y && state.stepY === 0) {
+        state.direction ="horizontal"
+    }
+    if(state.stepY<0){
+        state.upOrDown = 'up'
+    }else{
+        state.upOrDown = 'down'
+    }
+
+    if(state.stepX<0){
+        state.LeftOrRight = 'left'
+    }else{
+        state.LeftOrRight = 'right'
+    }
+
+    state.scrollRender.requestAnimationFrame(step, state, props);                 
+}
+
+
+
+/**
+ * 计滚动到一定距离的stepX,stepY的开始步数
+ * @param {Number} distance 
+ */
+function calcStep(distance, state, props) {
+    let dis = Math.abs(distance);
+
+    if(dis===0) {
+        return 0
+    }
+    let step = state.stopStep; 
+    let numDis = 0;
+    while(numDis<dis) {
+        numDis+= step/props.percent
+        step = step/props.percent
+    }
+
+    
+    step = step/props.percent
+    return step
+}
+
+//计算touch结束后的滑动速度
+function calcMoveSpeed(state, props) {
+    var touchList = state.touchMoveList;
+
+    
+    // this.touchMoveList = [];
+    var num = touchList.length
+    if(num > 30) {
+        touchList = touchList.slice(num-30, num)
+    }
+    var last = touchList.length-1;
+    var first = 0;
+   
+    var a = 0;
+    for(var i = last; i >= 0; i--) {
+        if(touchList[last].time-touchList[i].time > props.speed) {
+            first = i;
+            break
+        }
+        first = i;
+        a++;
+    }
+    
+    if(a < 3) {
+        return {
+            x: 0,
+            y: 0
+        }
+    }
+
+    var x = (touchList[last].x-touchList[first].x)/props.divisor 
+    var y = (touchList[last].y-touchList[first].y)/props.divisor 
+   
+    if(Math.abs(x)<2) {
+        x = 0
+    }
+    if(Math.abs(y)<2) {
+        y = 0
+    }
+
+    if(y>props.maxSpeed) {
+        y = props.maxSpeed
+    }
+
+    if(y <-props.maxSpeed) {
+        y = -props.maxSpeed
+    }
+
+    if(x>props.maxSpeed) {
+        x = props.maxSpeed
+    }
+
+    if(x <-props.maxSpeed) {
+        x = -props.maxSpeed
+    }
+
+    
+    return {
+        x: x,
+        y: y
+    }
+}
+
+function animate(speed, state, props) {
+    
+    state.stepX = speed.x;
+    state.stepY = speed.y;
+  
+    states = state;
+    propes = props;
+    if(Math.abs(state.stepX)<5 || (state.cacheDirection === 'vertical'  && props.pattern ==='horizontal')) {
+        state.stepX = 0
+    }
+
+    if(Math.abs(state.stepY)<5 || (state.cacheDirection === 'horizontal'&& props.pattern ==="vertical")) {
+        state.stepY = 0
+    }
+
+    if(state.stepY===0 && state.stepX === 0) {
+        state.scrollRender.triggerEvent('stopscroll',{
+            x: state.scrollX,
+            y: state.scrollY,
+            type: state.direction,
+            maxY: state.maxY,
+            maxX: state.maxX,
+            upOrDown: state.upOrDown,
+            leftOrRight: state.leftOrRight
+        },
+        {
+            x: state.scrollX,
+            y: state.scrollY,
+            type: state.direction,
+            maxY: state.maxY,
+            maxX: state.maxX,
+            upOrDown: state.upOrDown,
+            leftOrRight: state.leftOrRight
+        }
+        )
+        // this.scrollBarTimeout = setTimeout(()=>{
+        //     this.hideBarY = true;
+        // },2000)
+        return 
+    }
+    if(state.stepY<0){
+        state.upOrDown = 'up'
+    }else{
+        state.upOrDown = 'down'
+    }
+        
+    if(state.stepX<0){
+        state.LeftOrRight = 'left'
+    }else{
+        state.LeftOrRight = 'right'
+    }
+    state.scrollRender.requestAnimationFrame(step, state, props)
+}
+
+//滚动动画
+function step(time, value) {
+   
+    var continuing = true;
+    if(states.isTouch || states.isMove) return;
+    var scrollX = states.scrollX - states.stepX
+    var scrollY = states.scrollY - states.stepY
+     
+   
+    //当快要滚动到指定点的Y轴时
+    var arriveY = ((states.stepY < 0 && scrollY > states.scrollToY) || (states.stepY > 0 && scrollY < states.scrollToY)) && states.scrollToY!==null
+    if(arriveY) {
+        states.stepY = 0;
+        scrollY = states.scrollToY;
+        states.scrollToY = null;
+        continuing = false;
+    }
+
+    var arriveX = ((states.stepX < 0 && scrollX > states.scrollToX) || (states.stepX > 0 && scrollX < states.scrollToX)) && states.scrollToX!==null
+    if(arriveX) {
+        states.stepX = 0;
+        scrollX = states.scrollToX;
+        states.scrollToX = null;
+    }
+   
+    //当是指定滚动到某一点时
+    if(states.stepY > 0 && states.scrollToY!==null &&scrollY < states.scrollToY) {
+        states.stepY = 0;
+        scrollY = states.scrollToY;
+        states.scrollToY = null;
+    }
+    //允许弹动时
+    if((scrollY < 0 && propes.topBounce) || (scrollY >= states.maxY && propes.bottomBounce)) {
+        //是否回弹
+        let isBounce = (states.stepY < 0 && states.scrollY < 0) || (states.stepY > 0 && states.scrollY> states.maxY);
+        if(!isBounce && continuing) {
+            scrollY = states.scrollY - states.stepY*0.5
+            states.stepY = states.stepY*0.8
+        }
+    }
+    
+    //不许弹动时
+    if(scrollY < 0 && !propes.topBounce) {
+        scrollY = 0
+        states.stepY = 0
+    }
+    //不许弹动时
+    if(scrollY > states.maxY && !propes.bottomBounce) {
+        scrollY = states.maxY
+        states.stepY = 0
+    }
+    //当是指定滚动到某一点时
+    if((scrollX < 0 && propes.leftBounce) || (scrollX >= states.maxX && propes.rightBounce)) {
+        //是否回弹
+        let isBounce = (states.stepX < 0 && states.scrollX < 0) || (states.stepX > 0 && states.scrollX> states.maxX);
+        if(!isBounce) {
+            scrollX = states.scrollX - states.stepX*0.5
+            states.stepX = states.stepX*0.8
+        }
+    }
+    
+    //不许弹动时
+    if(scrollX < 0 && !propes.leftBounce) {
+        scrollX = 0
+        states.stepX= 0
+    }
+    //不许弹动时
+    if(scrollX > states.maxX && !propes.rightBounce) {
+        scrollX = states.maxX
+        states.stepX = 0
+    }
+
+
+    if(propes.pattern === 'vertical') {
+        states.stepX = 0;
+        states.scrollX = 0;
+    }
+
+    if(propes.pattern === 'horizontal') {
+        states.stepY = 0;
+        states.scrollY = 0;
+    }   
+    if(propes.pattern === 'auto' && states.direction === 'vertcial') {
+        states.stepX = 0;
+        
+    }
+   
+    states.scrollX = scrollX;
+    states.scrollY = scrollY;
+    states.hideBarY = false;
+    
+   
+    states.scrollRender.setStyle({
+        transform: "translate3d("+(-states.scrollX)+"px, "+(-states.scrollY)+"px, 0)"
+    })
+   
+    // if(this.scrollXRender) {
+    //     this.scrollXRender( -this.scrollX,0,1)
+    // }
+    // if(this.scrollYRender) {
+    //     // this.scrollYRender(0, -this.scrollY,1)
+    // }
+
+    // if(this.scrollBarYRender) {
+    //     let percent = parseInt(this.scrollY / this.maxY * 100)/100;
+    //     this.cacheScrollBarY = this.scrollBarOuter*percent;
+    //     this.scrollBarYRender(0,-this.cacheScrollBarY,1)
+    // }
+
+    // if(this.scrollBarXRender) {
+    //     let percent = parseInt(this.scrollX / this.maxX * 100)/100;
+    //     this.cacheScrollBarX = this.scrollBarOuterWidth*percent;
+    //     this.scrollBarXRender( -this.cacheScrollBarX,0,1)
+    // }
+   
+    states.scrollRender.triggerEvent('scroll',
+    {
+        x: states.scrollX,
+        y: states.scrollY,
+        stepY: states.stepY,
+        stepX: states.stepX,
+        type: states.direction,
+        maxY: states.maxY
+    },
+    {
+        x: states.scrollX,
+        y: states.scrollY,
+        stepY: states.stepY,
+        stepX: states.stepX,
+        type: states.direction,
+        maxY: states.maxY
+    })
+    states.stepX = states.stepX * propes.percent
+    states.stepY = states.stepY * propes.percent
+    
+       
+    if(Math.abs(states.stepX) <= states.stopStep) {
+        states.stepX = 0
+    }
+    if(Math.abs(states.stepY) <= states.stopStep) {
+        states.stepY = 0
+    }
+    
+    if(states.stepX===0 && states.stepY === 0) {
+       
+        if(states.scrollY < 0 && continuing) {
+            states.scrollToY =0;
+            scrollTo(1.5, states, propes)
+            return
+        }
+       
+        if(states.scrollY > states.maxY && continuing) {
+            states.scrollToY = states.maxY;
+            scrollTo(1.5, states, propes)
+            return
+        } 
+
+        if(states.scrollX < 0 && continuing) {
+            states.scrollToX = 0
+            scrollTo(1.5, states, propes)
+            return
+        }
+
+        if(states.scrollX > states.maxX && continuing) {
+            states.scrollToX = states.maxX;
+            scrollTo(1.5, states, propes);
+            return
+        }
+       
+        states.scrollRender.triggerEvent('stopscroll', {
+            x: states.scrollX,
+            y: states.scrollY,
+            type: states.direction,
+            maxY: states.maxY,
+            maxX: states.maxX,
+            upOrDown: states.upOrDown,
+            leftOrRight: states.leftOrRight
+        })
+
+        
+        // this.scrollBarTimeout = setTimeout(()=>{
+        //     this.hideBarY = true;
+        // },2000)
+        return
+    }
+    
+    
+    states.scrollRender.requestAnimationFrame(step)
+}
+
+var Touch = {
+    setValue: function (newValue, oldValue, ownerInstance, instance) {
+        
+
+    },
+    init: function (newValue, oldValue, ownerInstance, instance) {
+        wxOwnerInstance  = ownerInstance;
+        var res = ownerInstance.selectComponent(".itv-scroll");
+        var state = res.getState();
+       
+        state.text = ""
+        state.status = 0
+        state.x = 0 //x轴位置，初始化有用 
+        state.y = 0 //y轴位置, 初始化时有用
+        state.maxY = 0 //最大滚动高度
+        state.maxX = 0 //最大滚动宽度,
+        state.touchMoveList = [],//滑动点储存，最多20个滑动点
+        state.startX = 0 //touchstart的触摸点
+        state.startY = 0 //touchstart的触摸点
+        state.moveX = 0 //上次的触摸点
+        state.moveY = 0 //上次的触摸点,
+        state.scrollX = 0 //真实滚动值，只储存
+        state.scrollY = 0 //真实滚动值，只储存
+        state.scrollRender = ownerInstance.selectComponent(".itv-scroll-touch") //设定滚动位置 ref=scroller
+        state.parentDom = ownerInstance.selectComponent(".itv-scroll-content");
+
+      
+        state.scrollXRender = ''//设定滚动位置 ref = y
+        state.scrollYRender = '',//设定滚动位置 ref = x
+        state.scrollBarYRender = '' //y轴滚动动条
+        state.scrollBarXRender = '' //x轴滚动动
+        state.isTouch = false //是否手指在屏幕上
+        state.isMove = false//是否在滑动
+        state.direction = null //滑动方向, 当 pattern=freedom时失效
+        state.cacheDirection = null
+        state.stepX = 0 //动画每步的时速度的变化值
+        state.stepY = 0 //动画每步的时速度的变化值
+        state.stopStep = 0.5 //当stepX,stepY绝对值小于0.5停止滚动
+        state.scrollToX = null //滚动到某一点，仅存
+        state.scrollToY = null //滚动到某一点，仅存
+        state.pullDownPoint = 0 //下拉加载的触发点
+        state.isTriggerPullDown = false //是否触发了下拉加载
+        state.contentHeight = 0 //可视框高度
+        state.scrollbarY = 0 //缓存真实位置用到
+        state.cacheScrollbarY =0, //缓存用，滚动条y的真实位置
+        state.scrollbarX = 0 //缓存真实位置用到
+        state.cacheScrollbarX =0 //缓存用，滚动条y的真实位置
+        state.hideBarY = true //不可视化滚动动条
+        state.scrollBarTimeout= ''
+        state.elPostion = {} //位置滑动区所在的位置
+        state.moreStatus = 'loadingStop' // loading加载中, loadingStop 加载完成，等待下次加载， none //没有更多数据 
+        state.parentScroller = null
+        state.childScroller = null
+        state.upOrDown= '' //滚动方向
+        state.leftOrRight= ''
+        state.pullEl =  ownerInstance.selectComponent(".pull-top")
+
+        
+    },
+    touchstart: function(e, ownerInstance) {
+        
+        var res = ownerInstance.selectComponent(".itv-scroll");
+        var state = res.getState();
+        var props = res.getDataset();
+        calcMax(state, props, ownerInstance);
+        state.elPositon = res.getBoundingClientRect(); //{"x":0,"y":0,"width":320,"height":504,"top":0,"right":320,"bottom":504,"left":0} 
+        
+        state.direction = null;
+        state.isTouch = true;
+        state.scrollToX = null;
+        state.scrollToY = null;
+        var touches = e.touches;
+        state.touchMoveList.splice(0, state.touchMoveList.length)
+        //检查手指数量
+        if (touches.length == null) {
+            throw new Error("Invalid touch list: " + touches);
+        }
+        // 两只手指滑动处理中心点
+        var isSingleTouch = touches.length === 1;
+        if (isSingleTouch) {
+            state.moveX = touches[0].pageX;
+            state.moveY = touches[0].pageY;
+        } else {
+            state.moveX = Math.abs(touches[0].pageX + touches[1].pageX) / 2;
+            state.moveY = Math.abs(touches[0].pageY + touches[1].pageY) / 2;
+        }
+        state.startX = state.moveX 
+        state.startY = state.moveY
+
+        state.touchMoveList.push({
+            x: state.moveX,
+            y: state.moveY,
+            time: e.timeStamp
+        })
+        return false
+
+    },
+
+    
+    touchmove: function(e, ownerInstance) {
+        var res = ownerInstance.selectComponent(".itv-scroll");
+        var state = res.getState();
+        var props = res.getDataset();
+       
+        if(state.isTouch ===false) return
+        var touches = e.touches;
+        //检查手指数量
+        if (touches.length == null) {
+            throw new Error("Invalid touch list: " + touches);
+        }
+       
+        // 两只手指滑动处理中心点
+        var moveX, moveY
+        var isSingleTouch = touches.length === 1;
+        if (isSingleTouch) {
+            moveX = touches[0].pageX;
+            moveY = touches[0].pageY;
+        } else {
+            moveX = Math.abs(touches[0].pageX + touches[1].pageX) / 2;
+            moveY = Math.abs(touches[0].pageY + touches[1].pageY) / 2;
+        }
+        
+        var upxy = state.touchMoveList[state.touchMoveList.length-1];
+        state.moveX = upxy.x;
+        state.moveY = upxy.y;
+        var positon = state.elPositon
+        if(moveX  < positon.left || moveX  > positon.right ||  moveY < positon.top ||  moveY > positon.bottom) {
+            Touch.touchend(e, ownerInstance)
+            return
+        }
+
+        //判断滑动方向，并获取滑动距离
+        var dirs = getDirection(state.moveX, state.moveY, moveX, moveY, state.direction)
+        //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
+        if(!dirs) return
+        
+      
+        if((dirs.type===1 || dirs.type === 2) && !state.direction) {
+            state.direction = 'vertical'
+            state.cacheDirection = 'vertical'
+        }
+        if((dirs.type===3 || dirs.type === 4) && !state.direction) {
+            state.direction = 'horizontal'
+            state.cacheDirection = 'horizontal'  
+        }
+        if(!state.direction) return
+
+       
+        // this.moveX = moveX;
+        // this.moveY = moveY;
+        state.touchMoveList.push({
+            x: moveX,
+            y: moveY,
+            time: e.timeStamp
+        })
+        /**
+         * 滑动模式
+         * freedom x轴，y轴可自由滚动, 
+         * auto 可滚动x轴，y轴，但只能一次滚动一个方向，
+         * vertical竖向滚动，
+         * horizontal横向滚动
+        */
+         
+      
+        if(isVertcialMove(state, props) || props.pattern === 'freedom') {
+            var scrollY = state.scrollY - dirs.angy;
+
+            if(props.pattern === 'vertical' && props.pattern !== 'freedom') {
+                state.scrollX = 0;
+            }
+            //允许弹动时
+            if((scrollY < 0 && props.topBounce) || (scrollY > state.maxY && props.bottomBounce)) {
+                if((state.scrollY < 0 && dirs.angy > 0) || (state.scrollY > state.maxY && dirs.angy < 0) ) {
+                    scrollY = state.scrollY - (dirs.angy*0.5)
+                }
+            }
+            //不许弹动时
+            if(scrollY < 0 && !props.topBounce) {
+                scrollY = 0
+            }
+            //不许弹动时
+            if(scrollY > state.maxY && !props.bottomBounce) {
+                scrollY = state.maxY
+            }
+
+            state.scrollY = scrollY  
+        }
+        if(isHorizontalMove(state,props) || props.pattern === 'freedom' ) {
+           
+            let scrollX = state.scrollX - dirs.angx;
+            if(dirs.pattern === 'horizontal' && dirs.pattern !== 'freedom') {
+                state.scrollY = 0;
+            }
+
+
+            //允许弹动时
+            if((scrollX < 0 && props.leftBounce) || (scrollX > state.maxX && props.rightBounce)) {
+                if((state.scrollX < 0 && dir.angx > 0) || (state.scrollX > state.maxX && dirs.angx < 0) ) {
+                    scrollX = state.scrollX - (dirs.angx*0.5)
+                }
+            }
+            //不许弹动时
+            if(scrollX < 0 && !props.leftBounce) {
+                scrollX = 0
+            }
+            //不许弹动时
+            if(scrollX > state.maxX && !props.rightBounce) {
+                scrollX = state.maxX
+            }
+            state.scrollX = scrollX;
+
+        }
+
+       
+        state.scrollRender.setStyle({
+            transform: "translate3d("+(-state.scrollX)+"px, "+(-state.scrollY)+"px, 0)"
+        })
+    
+
+       
+        // state.hideBarY = false;
+        // if(props.scrollBarYRender) {
+        //     var percent = parseInt(this.scrollY / this.maxY * 100)/100;
+        //     this.cacheScrollBarY = this.scrollBarOuter*percent;
+        //     this.scrollBarYRender(0,-this.cacheScrollBarY,1)
+        // }
+        // if(this.scrollBarXRender) {
+        //     var percent = parseInt(this.scrollX / this.maxX * 100)/100;
+        //     this.cacheScrollBarX = this.scrollBarOuterWidth*percent;
+        //     this.scrollBarXRender( -this.cacheScrollBarX,0,1)
+        // }
+        // if(this.scrollBarTimeout){
+        //     this.hideBarY = false;
+        //     clearTimeout(this.scrollBarTimeout)
+        //     this.scrollBarTimeout = null
+        // }
+       
+        state.scrollRender.triggerEvent('scroll',{
+            x: state.scrollX,
+            y: state.scrollY,
+            stepX: dirs.angx,
+            stepY: dirs.angy,
+            type: state.direction,
+            maxY: state.maxY
+        })
+
+        
+        // this.loadingData(this.scrollY)
+    },
+    touchend: function(e, ownerInstance) {
+        var res = ownerInstance.selectComponent(".itv-scroll");
+        var state = res.getState();
+        var props = res.getDataset();
+        
+        if(state.isTouch===false) return; 
+        state.isMove = false;
+        state.isTouch = false;
+        
+        if(state.touchMoveList.length<=0) return
+        state.touchMoveList[state.touchMoveList.length-1].time = e.timeStamp
+        if(state.direction === 'horizontal') {
+            if(state.pattern === 'horizontal') {
+                state.scrollY = 0;
+            }
+
+            if(state.scrollX < 0 ) {
+                state.scrollToX = 0;
+                state.scrollToY = state.scrollY;
+                scrollTo(1.5, state, props)
+                return
+            } 
+
+            if(state.scrollX > state.maxX) {
+                state.scrollToX = state.maxX;
+                state.scrollToY = state.scrollY;
+                scrollTo(1.5, state.maxX, state.scrollY)
+                return
+            } 
+        }
+        if(state.direction === 'vertical') { 
+            if(props.pattern === 'vertical') {
+                state.scrollX = 0;
+            }
+            if(state.scrollY < 0 ) {
+                if(state.pullDown) {
+                    //触发下拉刷新事件
+                    if(!state.isTriggerPullDown && state.scrollY < state.pullDownPoint) {
+                        state.isTriggerPullDown = true
+                        state.scrollRender.triggerEvent('refresh',{},{})
+                        state.scrollToX = state.scrollX;
+                        state.scrollToY = state.pullDownPoint;
+                        scrollTo(1.5, state, props)
+                        return
+                    }
+
+                    if(state.scrollY < state.pullDownPoint) {
+                        state.scrollToX = state.scrollX;
+                        state.scrollToY = state.pullDownPoint;
+                        scrollTo(1.5, state, props)
+                        return
+                    }
+                    
+                    
+                }
+                
+                scrollTo(1.5, state, props)
+                return
+            } 
+
+            if(state.scrollY > state.maxY) {
+                state.scrollToX = state.scrollX;
+                state.scrollToY = state.maxY;
+                scrollTo(1.5, state, props);
+                return
+            } 
+        }
+        var speed = calcMoveSpeed(state, props);
+        animate(speed, state, props);          
+    },
+    
+
+    
+}
+module.exports = Touch

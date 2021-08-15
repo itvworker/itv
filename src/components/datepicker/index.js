@@ -91,6 +91,10 @@ Component({
         minuteText:{
             type: String,
             value: "{value}分"
+        },
+        isInteger: {
+            type: Boolean,
+            default: false
         }
     },
     data: {
@@ -110,16 +114,37 @@ Component({
             
             switch (this.properties.type) {
                 case 'time':
-                    let start = '2020-01-01 ' + this.properties.startTime;
-                    let end = '2020-01-01 ' + this.properties.endTime;
-                    let now =  '2020-01-01 ' +this.properties.defaultValue;
+
+                    let startime = this.properties.startTime.split(' ');
+                    let endtime = this.properties.endTime.split(' ');
+                    let nowtime = this.properties.defaultValue.split(' ')
+
+                    let start = '2020-01-01 ' + (startime[1] || startTime[0]);
+                    let end = '2020-01-01 ' + (endtime[1] || endtime[0]);
+                    let now =  '2020-01-01 ' +(nowtime [1] || nowtime[0]);
+                   
+
                     this.data.startTimeArr = util.formatDate(start,"Y,M,D,h,m").split(','); // 将开始时间变为数组
                     this.data.endTimeArr = util.formatDate(end, "Y,M,D,h,m").split(','); //将结束时间变为数组
                     this.data.selectValue = util.formatDate(now, "Y,M,D,h,m").split(','); //将默认选中时间为数组
+                    this.data.selectValue.splice(0,3)
                     this.data.timeIndex = 3;
                     let hour = util.getHourArr(this.properties.startTimeArr , this.data.endTimeArr, this.data.selectValue)
-                    his.$set(this.data.list, 0, hour);
-                    
+                    this.data.list = [];
+                    this.data.list[0] = hour.map(item=>{
+                        let value = item
+                        if (this.properties.isInteger) {
+                            value = parseInt(value)
+                        }
+                        return {
+                            text: this.properties.hourText.replace('{value}', value),
+                            value: value
+                        }
+                    })
+                    this.setData({
+                        list: this.data.list,
+                        selectValue: this.data.selectValue
+                    })
                     this.setTime(0);
                     break;
                 case 'date':
@@ -130,7 +155,7 @@ Component({
                     this.data.list[0] = util.getBeignEndArr(this.data.startTimeArr[0], this.data.endTimeArr[0], this.properties.toNow);
 
                     if(this.properties.toNow  === this.properties.defaultValue) {
-                        this.data.selectValue = [this.properties.toNow,this.properties.toNow, this.properties.toNow]
+                        this.data.selectValue = [this.properties.toNow, this.properties.toNow, this.properties.toNow]
                         this.data.list[1] = [this.properties.toNow];
                         this.data.list[2] = [this.properties.toNow];
                     }
@@ -141,7 +166,18 @@ Component({
                     this.data.endTimeArr = util.formatDate(this.properties.endTime, "Y,M,D,h,m").split(','); //将结束时间变为数组
                     this.data.selectValue = util.formatDate(this.properties.defaultValue, "Y,M,D,h,m").split(','); //将默认选中时间为数组
                     this.data.list = [];
-                    this.data.list[0] = util.getBeignEndArr(this.properties.startTimeArr[0], this.properties.endTimeArr[0],this.properties.toNow);
+                    let lists = util.getBeignEndArr(this.properties.startTimeArr[0], this.properties.endTimeArr[0],this.properties.toNow);
+                    this.data.list[0] = lists.map(item=>{
+                        let value = item
+                        if (this.properties.isInteger) {
+                            value = parseInt(value)
+                        }
+                        return {
+                            text: this.properties.yearText.replace('{value}', value),
+                            value: item
+                        }
+                    }) 
+                    
                     if(this.properties.toNow  === this.properties.defaultValue) {
                         this.data.selectValue = [this.properties.toNow, this.properties.toNow]
                         this.data.list[1] = [this.properties.toNow];
@@ -158,8 +194,12 @@ Component({
                     this.data.list = [];
                     let list = util.getBeignEndArr(this.data.startTimeArr[0], this.data.endTimeArr[0], this.properties.toNow);
                     this.data.list[0] = list.map(item=>{
+                        let value = item
+                        if (this.properties.isInteger) {
+                            value = parseInt(value)
+                        }
                         return {
-                            text: this.properties.yearText.replace('{value}', item),
+                            text: this.properties.yearText.replace('{value}', value),
                             value: item
                         }
                     }) 
@@ -172,12 +212,17 @@ Component({
                     break;
             }
         },
+
         setDatatime(index) {
             let month =  util.getMonthArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
             if(!util.isArrayEquality(this.data.list[1], month) &&  index>=0) { 
                 this.data.list[1] = month.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
                     return {
-                        text: this.properties.monthText.replace('{value}', parseInt(item)),
+                        text: this.properties.monthText.replace('{value}', value),
                         value: item
                     }
                 });
@@ -187,8 +232,12 @@ Component({
             let day = util.getDayArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
             if(!util.isArrayEquality(this.data.list[2], day) && index <=1) {
                 this.data.list[2] = day.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
                     return {
-                        text: this.properties.dayText.replace('{value}', parseInt(item)),
+                        text: this.properties.dayText.replace('{value}', value),
                         value: item
                     }
                 });
@@ -197,8 +246,12 @@ Component({
             let hour = util.getHourArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue)
             if(!util.isArrayEquality(this.data.list[3], hour) && index <=2) {
                 this.data.list[3] =  hour.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
                     return {
-                        text: this.properties.hourText.replace('{value}', parseInt(item)),
+                        text: this.properties.hourText.replace('{value}', value),
                         value: item
                     }
                 });
@@ -207,8 +260,12 @@ Component({
             let minute = util.getMinuteArr(this.data.startTimeArr, this.data.endTimeArr, this.data.selectValue, this.properties.step)
             if(!util.isArrayEquality(this.data.list[4], minute) && index <=3) {
                 this.data.list[4] =  minute.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
                     return {
-                        text: this.properties.minuteText.replace('{value}', parseInt(item)),
+                        text: this.properties.minuteText.replace('{value}', value),
                         value: item
                     }
                 });
@@ -218,21 +275,25 @@ Component({
             })
         },
         chooseItem(res) {
+            let value = res.detail.value;
+            if (typeof value === 'object') {
+                value = value.value
+            } 
             switch (this.properties.type) {
                 case 'time':
-                    this.data.selectValue[index+this.timeIndex] = item;
-                    this.setTime(index);
+                    this.data.selectValue[res.detail.keyIndex+this.data.timeIndex] = value;
+                    this.setTime(res.detail.keyIndex);
                     break;
                 case 'date':
-                    this.data.selectValue[index] = item;
-                    this.setDate(index, item === this.properties.toNow);
+                    this.data.selectValue[res.detail.keyIndex] = value
+                    this.setDate(res.detail.keyIndex, value === this.properties.toNow);
                     break;
                 case 'ym':
-                    this.data.selectValue[index] = item;
-                    this.setYm(index,  item === this.properties.toNow);
+                    this.data.selectValue[res.detail.keyIndex] = value;
+                    this.setYm(res.detail.keyIndex,  value === this.properties.toNow);
                     break;
                 default:
-                    this.data.selectValue[res.detail.keyIndex] = res.detail.value.value;
+                    this.data.selectValue[res.detail.keyIndex] = value;
                     this.setData({
                         selectValue: this.data.selectValue
                     })
@@ -255,16 +316,87 @@ Component({
             }
             
             let month =  util.getMonthArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
-             if(isToNow) {
+            if(isToNow) {
                 month = [this.properties.toNow]
             }
             
             if(!util.isArrayEquality(this.data.list[1], month) &&  index>=0) { 
-                this.data.list[1] = month;
+                this.data.list[1] = month.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
+                    return {
+                        text: this.properties.monthText.replace('{value}', value),
+                        value: item
+                    }
+                });
                 this.setData({
-                    list:this.data.list
+                    list:this.data.list,
+                    selectValue: this.data.selectValue
                 })
             }
+        },
+        setTime(index) {
+            let minute = util.getMinuteArr(this.data.startTimeArr, this.data.endTimeArr, this.data.selectValue, this.properties.step);
+            if(!util.isArrayEquality(this.data.list[1], minute) && index <=0) {
+                this.data.list[1]= minute.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
+                    return {
+                        text: this.properties.minuteText.replace('{value}', value),
+                        value: item
+                    }
+                })
+            }
+            this.setData({
+                list: this.data.list,
+                selectValue: this.data.selectValue
+            })
+        },
+        /**
+         * 年月日的变更
+         */
+         setDate(index, isToNow) {
+            let month =  util.getMonthArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
+            if(isToNow) {
+                month = [this.properties.toNow]
+            }
+            if(!util.isArrayEquality(this.data.list[1], month) &&  index>=0) { 
+                this.data.list[1] = month.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
+                    return {
+                        text: this.properties.monthText.replace('{value}', value),
+                        value: item
+                    }
+                });
+            }
+           
+            let day = util.getDayArr(this.data.startTimeArr , this.data.endTimeArr, this.data.selectValue);
+            if(isToNow) {
+                day = [this.toNow]
+            }
+            if(!util.isArrayEquality(this.data.list[2], day) && index <=1) {
+                this.data.list[2] = day.map(item=>{
+                    let value = item
+                    if (this.properties.isInteger) {
+                        value = parseInt(value)
+                    }
+                    return {
+                        text: this.properties.dayText.replace('{value}', value),
+                        value: item
+                    }
+                });
+            }
+            this.setData({
+                list: this.data.list,
+                selectValue: this.data.selectValue
+            })
         },
     }
   

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "itv-picker": "/components/picker",
+    "datepicker": "/components/datepicker"
+  }
+}

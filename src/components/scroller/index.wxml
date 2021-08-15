@@ -1,0 +1,69 @@
+
+<wxs module="touch" src="./index.wxs"></wxs>
+<view class="itv-scroll"
+    bindtouchstart="{{touch.touchstart}}" 
+    bindtouchmove="{{touch.touchmove}}" 
+    bindtouchend="{{touch.touchend}}" 
+    bindtouchcancel="{{touch.touchend}}"
+    init="{{initStatus}}"
+    change:init="{{touch.init}}"
+    data-topBounce="{{topBounce}}"
+    data-bottomBounce="{{bottomBounce}}"
+    data-leftBounce="{{leftBounce}}"
+    data-rightBounce="{{rightBounce}}"
+    data-pullDown = "{{pullDown}}"
+    data-pullDis = "{{pullDis}}"
+    data-pattern = "{{pattern}}"
+    data-percent = "{{percent}}"
+    data-speed="{{speed}}"
+    data-showScrollBar="{{showScrollBar}}"
+    data-refreshLayerColor="{{refreshLayerColor}}"       
+    data-loadingLayerColor="{{loadingLayerColor}}"
+    data-maxSpeed="{{maxSpeed}}"
+    data-isMore="{{isMore}}"
+    data-minScrollHeihgt="{{minScrollHeihgt}}"
+    data-divisor="{{divisor}}"
+>
+
+    <slot name="other"/>
+    <!-- 滚动的内容 -->
+    <view class="itv-scroll-content"  >
+        <view class="scroller-bar" v-if="showScrollBar" v-show="!hideBarY && maxY > 2 && (cacheDirection === 'vertical' || pattern === 'freedom' )" >
+            <view class="scroll-indoor" ref="barY" :style="{'height':scrollbarHeight+'%','transform':`translate3d(0,${scrollbarY}px,0)`,'WebkitTransform':`translate3d(0,${scrollbarY}px,0)`}"></view>
+        </view>
+        <view class="scroller-barx" v-if="showScrollBar " v-show="!hideBarY && maxX > 2 && (cacheDirection === 'horizontal' || pattern === 'freedom')" >
+            <view class="scroll-indoor" ref="barX" :style="{'width':scrollbarWidth+'%','transform':`translate3d(${scrollbarX}px,0,0)`,'WebkitTransform':`translate3d(${scrollbarX}px,0,0)`}"></view>
+        </view>
+        <view class="itv-scroll-touch" ref="scroller"  :style="{'transform':`translate3d(-${x},-${y},0)`,'WebkitTransform':`translate3d(-${x},-${y},0)`}">
+            <view class="pull-top" v-if="pullDown" ref="pull">
+                <slot name='pull'>
+                    <view class="spinner-holder">
+                        <arrow
+                            class="arrow"
+                            :class="{'active': status}"
+                            v-if="!isTriggerPullDown"
+                            :fillColor="refreshLayerColor"
+                        ></arrow>
+                            <spinner v-show="isTriggerPullDown" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}"></spinner>
+                        
+                        <span
+                            class="text"
+                            :style="{color: refreshLayerColor}"
+                            v-text="text"
+                        ></span>
+                    </view>
+                </slot>
+            </view> 
+            <view class="itv-scroller-msg">
+                <slot/>
+            </view>  
+                
+
+            <view class="itv-scroller-more" v-show='isMore && moreStatus!=="loadingStop"'>
+                <spinner v-show="moreStatus !== 'none'" class="itv-scroller-more-icon" :style="{fill: refreshLayerColor, stroke: refreshLayerColor}" />
+                <span v-show="moreStatus === 'none'">{{noDataText}}</span>
+                <span v-show="moreStatus !== 'none'">{{loadingText}}</span>
+            </view>  
+        </view>
+    </view>    
+</view>

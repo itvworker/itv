@@ -337,39 +337,13 @@ module.exports = {
                 transform: "translate3d(0, "+state.transformY+"px, 0)"
             })
         }
-        
+        setChooseValue(state)
        
     },
     setDefaultValue: function(newValue, oldValue, ownerInstance) {
         var state = ownerInstance.selectComponent(".itv-picker-list").getState();
         state.defaultValue = newValue;
-        // if(!oldValue) return
-        // var index = 0;
-        // var num = state.listData.length;
-        // for(var i = 0; i < num; i++) {
-        //     if(typeof state.listData[i] === 'object' && state.listData[i].value == state.defaultValue) {
-        //         index = i;
-        //     }else if(state.listData[i] == state.defaultValue){
-        //         index = i
-        //     }
-        // }
-        // state.transformY = -index * state.lineSpacing
-        // state.scrollDistance =  state.transformY
-        // state.dom.setStyle({
-        //     "margin-top": - state.lineSpacing*state.listData.length*2+'px',
-        //     transform: "translate3d(0, "+ state.transformY+"px, 0)"
-        // })
-        // ownerInstance.triggerEvent("chooseItem", {
-        //         value: state.listData[index],
-        //         index: index,
-        //         keyIndex: state.keyIndex
-        //     },
-        //     {
-        //         value: state.listData[index],
-        //         index: index,
-        //         keyIndex: state.keyIndex
-        //     }    
-        // )
+       
     },
     setKeyIndex: function(newValue, oldValue, ownerInstance) {
         var state = ownerInstance.selectComponent(".itv-picker-list").getState();
