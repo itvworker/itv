@@ -48,8 +48,9 @@
   width: 52rpx;
   height: 52rpx;
 }
-.itv-scroll .itv-scroll-content .itv-scroll-touch .pull-top .spinner-holder .text {
-  line-height: 52rpx;
+.itv-scroll .itv-scroll-content .itv-scroll-touch .pull-top .spinner-holder .text-pull {
+  color: #999;
+  font-size: 30rpx;
 }
 .itv-scroll .itv-scroll-content .scroller-bar {
   position: absolute;
@@ -89,10 +90,26 @@
   color: #999;
 }
 .itv-scroll .itv-scroll-content .itv-scroller-more .itv-scroller-more-icon {
-  width: 28rpx;
-  margin-right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 40rpx;
+}
+.itv-scroll .itv-scroll-content .itv-scroller-more.none {
+  display: none;
 }
 .svg-box {
   width: 100px;
   height: 100px;
+}
+.icon-size {
+  width: 80rpx;
+  height: 80rpx;
+}
+.arrow-size {
+  width: 60rpx;
+  height: 60rpx;
+  transition: all 300ms;
+}
+.none {
+  display: none;
 }

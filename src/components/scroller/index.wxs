@@ -34,18 +34,13 @@ function scrollBarOuterWidth(state, props) {
 // 计算滚动的最大值
 function calcMax(state, props) {
     var parentStyle = state.parentDom.getComputedStyle(['height', 'width']);
-    
     var parentWidth = parseInt(parentStyle.width);
     var parentHeight = parseInt(parentStyle.height);
 
-    console.log(parentHeight);
- 
     var childStyle = state.scrollRender.getComputedStyle(['height', 'width']);
     var childWidth = parseInt(childStyle.width);
     var childHeight = parseInt(childStyle.height);
 
-   
-    
     state.maxX = Math.max(0, childWidth - parentWidth);
     state.maxY = Math.max(0, childHeight - parentHeight);
 
@@ -66,14 +61,15 @@ function calcMax(state, props) {
         state.y =  state.maxY
         
     }
-
+    
+  
     state.scrollRender.setStyle({
         transform: "translate3d("+(-state.scrollX)+"px, "+(-state.scrollY)+"px, 0)"
     })
 
     //计算下拉加载触发点
-    if(state.pullDown) {
-        state.pullDownPoint = -state.pullEl.getComputedStyle().height;
+    if(props.pulldown) {
+        state.pullDownPoint = -parseInt(state.pullEl.getComputedStyle(['height']).height);
     }
     
 }
@@ -127,8 +123,7 @@ function scrollTo(value, state, props) {
     state.stepX = dx > 0? calcStep(dx,state, props):-calcStep(dx,state, props)
     state.stepX*=value
     state.stepY*=value
-
-    console.log(state.stepY);
+    
     
     if(state.scrollToX === state.x && state.stepX === 0) {
         state.direction ="vertical"
@@ -176,7 +171,7 @@ function calcStep(distance, state, props) {
    
     
     step = step/props.percent
-    
+   
     return step
 }
 
@@ -259,7 +254,7 @@ function animate(speed, state, props) {
     }
 
     if(state.stepY===0 && state.stepX === 0) {
-        state.scrollRender.triggerEvent('stopscroll',{
+        state.component.triggerEvent('stopscroll',{
             x: state.scrollX,
             y: state.scrollY,
             type: state.direction,
@@ -413,7 +408,7 @@ function step(time, value) {
     //     this.scrollBarXRender( -this.cacheScrollBarX,0,1)
     // }
    
-    state.scrollRender.triggerEvent('scroll',
+    state.component.triggerEvent('scroll',
     {
         x: state.scrollX,
         y: state.scrollY,
@@ -446,6 +441,7 @@ function step(time, value) {
         if(state.scrollY < 0 && continuing) {
             state.scrollToY =0;
             scrollTo(1.5, states, propes)
+            
             return
         }
        
@@ -467,7 +463,7 @@ function step(time, value) {
             return
         }
        
-        state.scrollRender.triggerEvent('stopscroll', {
+        state.component.triggerEvent('stopscroll', {
             x: state.scrollX,
             y: state.scrollY,
             type: state.direction,
@@ -483,21 +479,35 @@ function step(time, value) {
         // },2000)
         return
     }
-    
-    
+    loadingData(state, props);
     state.scrollRender.requestAnimationFrame(step)
 }
 
 //是否触发上拉加载
 function loadingData(state, props) {
-    if(state.isMore && state.scrollY >= state.maxY && state.moreStatus ==='loadingStop') {
+    state = state || states;
+    props = props || propes;
+    if(props.ismore && state.scrollY >= state.maxY && state.moreStatus ==='loadingStop') {
         state.moreStatus = 'loading';
-        state.scrollYRender.triggerEvent('infinite',{},{})
-        // this.$nextTick(()=>{
-        //     this.calcMax()
-        // })
+        state.component.triggerEvent('infinite',{},{})
+        state.moreRender.removeClass('none');
+        if(state.moreStatus !== 'none') {
+            state.moreIconRender.removeClass('none')
+            state.moreTextRender[1].removeClass('none')
+        }
+        if(state.moreStatus === 'none') {
+            state.moreIconRender.addClass('none')
+            state.moreTextRender[1].removeClass('none')
+        }
+        state.component.setTimeout(function(){
+            calcMax(state, props)
+        })
     }
+
 }
+
+//下拉加载复位
+
 
 var Touch = {
     setValue: function (newValue, oldValue, ownerInstance, instance) {
@@ -524,7 +534,12 @@ var Touch = {
         state.scrollY = 0 //真实滚动值，只储存
         state.scrollRender = ownerInstance.selectComponent(".itv-scroll-touch") //设定滚动位置 ref=scroller
         state.parentDom = ownerInstance.selectComponent(".itv-scroll-content");
-
+        state.spinerRender = ownerInstance.selectComponent('.icon-size');
+        state.arrowRender = ownerInstance.selectComponent('.arrow-size');
+        state.textRender = ownerInstance.selectAllComponents('.text-pull')
+        state.moreRender = ownerInstance.selectComponent(".itv-scroller-more");
+        state.moreIconRender = ownerInstance.selectComponent(".itv-scroller-more-icon")
+        state.moreTextRender = ownerInstance.selectAllComponents(".text-loading")
       
         state.scrollXRender = ''//设定滚动位置 ref = y
         state.scrollYRender = '',//设定滚动位置 ref = x
@@ -555,7 +570,7 @@ var Touch = {
         state.upOrDown= '' //滚动方向
         state.leftOrRight= ''
         state.pullEl =  ownerInstance.selectComponent(".pull-top")
-
+        state.component = ownerInstance;
         states = state;
         propes = props;
     },
@@ -564,7 +579,7 @@ var Touch = {
         var res = ownerInstance.selectComponent(".itv-scroll");
         var state = res.getState();
         var props = res.getDataset();
-        calcMax(state, props, ownerInstance);
+        calcMax(state, props);
         state.elPositon = res.getBoundingClientRect(); //{"x":0,"y":0,"width":320,"height":504,"top":0,"right":320,"bottom":504,"left":0} 
         
         state.direction = null;
@@ -588,13 +603,12 @@ var Touch = {
         }
         state.startX = state.moveX 
         state.startY = state.moveY
-
         state.touchMoveList.push({
             x: state.moveX,
             y: state.moveY,
             time: e.timeStamp
         })
-        return false
+        // return false
 
     },
 
@@ -691,13 +705,12 @@ var Touch = {
 
             state.scrollY = scrollY  
         }
-        if(isHorizontalMove(state,props) || props.pattern === 'freedom' ) {
+        if(isHorizontalMove(state, props) || props.pattern === 'freedom' ) {
            
             let scrollX = state.scrollX - dirs.angx;
             if(dirs.pattern === 'horizontal' && dirs.pattern !== 'freedom') {
                 state.scrollY = 0;
             }
-
 
             //允许弹动时
             if((scrollX < 0 && props.leftbounce) || (scrollX > state.maxX && props.rightbounce)) {
@@ -714,16 +727,11 @@ var Touch = {
                 scrollX = state.maxX
             }
             state.scrollX = scrollX;
-
         }
-
-       
         state.scrollRender.setStyle({
             transform: "translate3d("+(-state.scrollX)+"px, "+(-state.scrollY)+"px, 0)"
         })
-    
-
-       
+        
         // state.hideBarY = false;
         // if(props.scrollBarYRender) {
         //     var percent = parseInt(this.scrollY / this.maxY * 100)/100;
@@ -741,7 +749,7 @@ var Touch = {
         //     this.scrollBarTimeout = null
         // }
        
-        state.scrollRender.triggerEvent('scroll',{
+        state.component.triggerEvent('scroll',{
             x: state.scrollX,
             y: state.scrollY,
             stepX: dirs.angx,
@@ -749,9 +757,71 @@ var Touch = {
             type: state.direction,
             maxY: state.maxY
         })
+       
+        loadingData(state, props);
 
+         /**
+         *  <text class="text-pull none">{{refreshText}}</text>       
+            <text class="text-pull none">{{loseenText}}</text>
+            <text class="text-pull none">{{pullText}}</text> 
+              state.spinerRender = ownerInstance.selectComponent('.icon-size');
+        state.arrowRender = ownerInstance.selectComponent('.arrow-size');
+        state.textRender = ownerInstance.selectAllComponents('.text-pull')  
+        addClass/removeClass/hasClass
+         */
         
-        loadingData(state, props)
+        if(state.isTriggerPullDown) {
+            state.textRender[0].removeClass('none');
+            if(!state.textRender[1].hasClass('none')){
+                state.textRender[1].addClass('none')
+            }
+            if(!state.textRender[2].hasClass('none')){
+                state.textRender[2].addClass('none')
+            }
+
+            state.spinerRender.removeClass('none')
+            if(!state.arrowRender.hasClass('none')){
+                state.arrowRender.addClass('none')
+            }
+            return
+        }
+        if(state.isTouch && state.scrollY < state.pullDownPoint) {
+            state.textRender[1].removeClass('none');
+            if(!state.textRender[0].hasClass('none')){
+                state.textRender[0].addClass('none')
+            }
+            if(!state.textRender[2].hasClass('none')){
+                state.textRender[2].addClass('none')
+            }
+
+            state.arrowRender.removeClass('none')
+            state.arrowRender.setStyle({
+                transform: 'rotate(0deg)'
+            })
+            if(!state.spinerRender.hasClass('none')){
+                state.spinerRender.addClass('none')
+            }
+            return
+        }
+
+        if(state.isTouch && state.scrollY > state.pullDownPoint) {
+           
+            state.textRender[2].removeClass('none');
+            if(!state.textRender[0].hasClass('none')){
+                state.textRender[0].addClass('none')
+            }
+            if(!state.textRender[1].hasClass('none')){
+                state.textRender[1].addClass('none')
+            }
+            state.arrowRender.removeClass('none')
+            if(!state.spinerRender.hasClass('none')){
+                state.spinerRender.addClass('none')
+            }
+            state.arrowRender.setStyle({
+                transform: 'rotate(-180deg)'
+            })
+            return
+        }
     },
     touchend: function(e, ownerInstance) {
         var res = ownerInstance.selectComponent(".itv-scroll");
@@ -789,14 +859,26 @@ var Touch = {
                 state.scrollX = 0;
             }
             if(state.scrollY < 0 ) {
-                if(state.pullDown) {
+                if(props.pulldown) {
                     //触发下拉刷新事件
                     if(!state.isTriggerPullDown && state.scrollY < state.pullDownPoint) {
                         state.isTriggerPullDown = true
-                        state.scrollRender.triggerEvent('refresh',{},{})
+                        state.component.triggerEvent('refresh',{},{})
+                       
                         state.scrollToX = state.scrollX;
                         state.scrollToY = state.pullDownPoint;
                         scrollTo(1.5, state, props);
+                        state.spinerRender.removeClass('none')
+                        if(!state.arrowRender.hasClass('none')){
+                            state.arrowRender.addClass('none')
+                        }
+                        state.textRender[0].removeClass('none');
+                        if(!state.textRender[1].hasClass('none')){
+                            state.textRender[1].addClass('none')
+                        }
+                        if(!state.textRender[2].hasClass('none')){
+                            state.textRender[2].addClass('none')
+                        }
                         return
                     }
 
@@ -806,8 +888,6 @@ var Touch = {
                         scrollTo(1.5, state, props);
                         return
                     }
-                    
-                    
                 }
                 state.scrollToY = 0;
                 scrollTo(1.5, state, props)
@@ -825,8 +905,20 @@ var Touch = {
         var speed = calcMoveSpeed(state, props);
         animate(speed, state, props);          
     },
-    
-
-    
+    setRefresh: function(newValue, oldValue, ownerInstance, instance) {
+        var res = ownerInstance.selectComponent(".itv-scroll");
+        var state = res.getState();
+        var props = res.getDataset();
+        states = state;
+        propes = props;
+        if(state.scrollY < 0) {
+            state.scrollToY = 0;
+            scrollTo(1.5, state, props);
+        }
+        state.isTriggerPullDown = false
+        // state.component.setTimeout(function(){
+        //     calcMax(state, props)
+        // })
+    }
 }
 module.exports = Touch

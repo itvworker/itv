@@ -110,7 +110,10 @@ Component({
         }
     },
     data: {
-        initStatus: 0
+        initStatus: 0,
+        text: '',
+        status: '',
+        pullReload: 0
     },
     created() {
         this.setData({
@@ -119,21 +122,47 @@ Component({
         
     },
     methods: {
-         //下拉加载复位
         refresh() {
-            if(this.scrollY < 0) {
-                this.scrollTo(this.scrollX, 0, 1.5);
-            }
-            this.isTriggerPullDown = false
-            this.$nextTick(()=>{
-                this.calcMax()
-                // if(this.isMore) {
-                //     this.moreStatus = 'loadingStop'; 
-                // }
-            })  
-            this.$emit("content");
-          
+            this.setData({
+                pullReload: this.data.pullReload++
+            })
+           console.log('refresh----------');
         },
+        setScrollY(state) {
+            if(state.isTriggerPullDown) {
+                if(this.properties.refreshText !== this.data.text) {
+                    this.setData({
+                        text: this.properties.refreshText
+                    })
+                }
+                return
+            }
+            if(state.isTouch && n < state.pullDownPoint) {
+             
+                if(this.data.text !== this.properties.loseenText) {
+                    this.setData({
+                        text: this.properties.loseenText,
+                        status: 1
+                    })
+                }
+                return
+            }
+
+            if(this.isTouch && n > this.pullDownPoint) {
+                if(this.data.text !== this.properties.pullText) {
+                    this.setData({
+                        text: this.properties.pullText,
+                        status: 0
+                    })
+                }
+                return
+            }
+            
+            // this.loadingData(n);
+            
+            
+        },
+       
         //是否触发上拉加载
         loadingData(value) {
             if(this.isMore && value >= this.maxY && this.moreStatus ==='loadingStop') {
