@@ -110,10 +110,12 @@ Component({
         }
     },
     data: {
-        initStatus: 0,
+        initStatus: 1,
         text: '',
         status: '',
-        pullReload: 0
+        pullReload: 1,
+        noneMore:1,
+        stopLoading: 1,
     },
     created() {
         this.setData({
@@ -126,42 +128,9 @@ Component({
             this.setData({
                 pullReload: this.data.pullReload++
             })
-           console.log('refresh----------');
+         
         },
-        setScrollY(state) {
-            if(state.isTriggerPullDown) {
-                if(this.properties.refreshText !== this.data.text) {
-                    this.setData({
-                        text: this.properties.refreshText
-                    })
-                }
-                return
-            }
-            if(state.isTouch && n < state.pullDownPoint) {
-             
-                if(this.data.text !== this.properties.loseenText) {
-                    this.setData({
-                        text: this.properties.loseenText,
-                        status: 1
-                    })
-                }
-                return
-            }
-
-            if(this.isTouch && n > this.pullDownPoint) {
-                if(this.data.text !== this.properties.pullText) {
-                    this.setData({
-                        text: this.properties.pullText,
-                        status: 0
-                    })
-                }
-                return
-            }
-            
-            // this.loadingData(n);
-            
-            
-        },
+       
        
         //是否触发上拉加载
         loadingData(value) {
@@ -175,15 +144,16 @@ Component({
             }
         },
         infinite(value) {
+            console.log('infinite-------------');
             if(value) {
-                this.moreStatus = 'none';
+                this.setData({
+                    noneMore: this.data.noneMore++
+                })
             }else{
-                this.moreStatus = 'loadingStop'; 
+                this.setData({
+                    stopLoading: this.data.stopLoading++
+                })
             }
-            
-            this.$nextTick(()=>{
-                this.calcMax()
-            })  
         },
         setCache() {
             this.x = this.scrollX;

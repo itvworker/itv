@@ -25,6 +25,10 @@
     data-divisor="{{divisor}}"
     pullReload="{{pullReload}}"
     change:pullReload="{{touch.setRefresh}}"
+    noneMore="{{noneMore}}"
+    change:noneMore = "{{touch.setNoneMore}}"
+    stopLoading="{{stopLoading}}"
+    change:stopLoading = "{{touch.setStopLoading}}"
 >
 
     <slot name="other"/>

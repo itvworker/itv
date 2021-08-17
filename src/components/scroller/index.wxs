@@ -495,10 +495,7 @@ function loadingData(state, props) {
             state.moreIconRender.removeClass('none')
             state.moreTextRender[1].removeClass('none')
         }
-        if(state.moreStatus === 'none') {
-            state.moreIconRender.addClass('none')
-            state.moreTextRender[1].removeClass('none')
-        }
+       
         state.component.setTimeout(function(){
             calcMax(state, props)
         })
@@ -919,6 +916,54 @@ var Touch = {
         // state.component.setTimeout(function(){
         //     calcMax(state, props)
         // })
+    },
+    setNoneMore: function(newValue, oldValue, ownerInstance, instance) {
+        console.log('setNoneMore----');
+        if(!oldValue)return
+        var res = ownerInstance.selectComponent(".itv-scroll");
+        var state = res.getState();
+        var props = res.getDataset();
+        states = state;
+        propes = props;
+        state.moreStatus = 'none'
+        
+        if(!state.moreIconRender.hasClass('none')){
+            state.moreIconRender.addClass('none');
+        }
+
+        if(state.moreTextRender[0].hasClass('none')){
+            state.moreTextRender[0].removeClass('none');
+        }
+
+        if(!state.moreTextRender[1].hasClass('none')){
+            state.moreTextRender[1].addClass('none');
+        }
+    },
+    setStopLoading: function(newValue, oldValue, ownerInstance, instance) {
+        if(!oldValue)return
+        var res = ownerInstance.selectComponent(".itv-scroll");
+        var state = res.getState();
+        var props = res.getDataset();
+        states = state;
+        propes = props;
+        state.moreStatus = 'loadingStop'; 
+        if(!state.moreRender.hasClass('none')) {
+            state.moreRender.addClass('none');
+        }
+        if(!state.moreIconRender.hasClass('none')){
+            state.moreIconRender.addClass('none');
+        }
+        if(!state.moreTextRender[0].hasClass('none')){
+            state.moreTextRender[0].addClass('none');
+        }
+        if(!state.moreTextRender[1].hasClass('none')){
+            state.moreTextRender[1].addClass('none');
+        }
+        
+        
+        state.moreIconRender.removeClass('none')
+        
+        
     }
 }
 module.exports = Touch

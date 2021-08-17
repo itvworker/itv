@@ -17,5 +17,11 @@ Page({
         },3000)
         
        
+    },
+    infinite() {
+        setTimeout(()=>{
+            this.selectComponent('.scroller').infinite();
+        },2000)
+       
     }
 })
