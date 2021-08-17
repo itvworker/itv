@@ -144,7 +144,6 @@ Component({
             }
         },
         infinite(value) {
-            console.log('infinite-------------');
             if(value) {
                 this.setData({
                     noneMore: this.data.noneMore++

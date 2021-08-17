@@ -692,12 +692,10 @@ var Touch = {
             //不许弹动时
             if(scrollY < 0 && !props.topbounce) {
                 scrollY = 0
-                console.log('不许弹动时1');
             }
             //不许弹动时
             if(scrollY > state.maxY && !props.bottombounce) {
                 scrollY = state.maxY
-                console.log('不许弹动时2',props.bottomBounce);
             }
 
             state.scrollY = scrollY  
@@ -918,7 +916,6 @@ var Touch = {
         // })
     },
     setNoneMore: function(newValue, oldValue, ownerInstance, instance) {
-        console.log('setNoneMore----');
         if(!oldValue)return
         var res = ownerInstance.selectComponent(".itv-scroll");
         var state = res.getState();
