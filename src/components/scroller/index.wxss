@@ -26,7 +26,7 @@
   transform: translateY(-100%);
 }
 .itv-scroll .itv-scroll-content .itv-scroll-touch .pull-top .spinner-holder {
-  height: 60pt;
+  height: 88rpx;
   text-align: center;
   -webkit-font-smoothing: antialiased;
   display: flex;
@@ -86,7 +86,7 @@
   height: 100rpx;
   align-items: center;
   justify-content: center;
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #999;
 }
 .itv-scroll .itv-scroll-content .itv-scroller-more .itv-scroller-more-icon {

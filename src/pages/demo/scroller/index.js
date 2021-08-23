@@ -15,12 +15,10 @@ Page({
         setTimeout(()=>{
             this.selectComponent('.scroller').refresh();
         },3000)
-        
-       
     },
     infinite() {
         setTimeout(()=>{
-            this.selectComponent('.scroller').infinite();
+            this.selectComponent('.scroller').infinite(true);
         },2000)
        
     }

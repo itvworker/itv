@@ -517,6 +517,7 @@ var Touch = {
         var state = res.getState();
         var props = res.getDataset();
         state.text = ""
+        state.moveNumber = 0;
         state.status = 0
         state.x = 0 //x轴位置，初始化有用 
         state.y = 0 //y轴位置, 初始化时有用
@@ -611,11 +612,11 @@ var Touch = {
 
     
     touchmove: function(e, ownerInstance) {
+        console.log('touchmove');
         var res = ownerInstance.selectComponent(".itv-scroll");
         var state = res.getState();
         var props = res.getDataset();
-       
-        if(state.isTouch ===false) return
+        if(state.isTouch ===false) return true
         var touches = e.touches;
         //检查手指数量
         if (touches.length == null) {
@@ -645,19 +646,20 @@ var Touch = {
         //判断滑动方向，并获取滑动距离
         var dirs = getDirection(state.moveX, state.moveY, moveX, moveY, state.direction)
         //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
-        if(!dirs) return
+        if(!dirs) return true
         
       
         if((dirs.type===1 || dirs.type === 2) && !state.direction) {
             state.direction = 'vertical'
             state.cacheDirection = 'vertical'
+            
         }
         if((dirs.type===3 || dirs.type === 4) && !state.direction) {
             state.direction = 'horizontal'
             state.cacheDirection = 'horizontal'  
         }
-        if(!state.direction) return
-
+        if(!state.direction) return true
+      
        
         // this.moveX = moveX;
         // this.moveY = moveY;
@@ -697,7 +699,6 @@ var Touch = {
             if(scrollY > state.maxY && !props.bottombounce) {
                 scrollY = state.maxY
             }
-
             state.scrollY = scrollY  
         }
         if(isHorizontalMove(state, props) || props.pattern === 'freedom' ) {
@@ -723,7 +724,9 @@ var Touch = {
             }
             state.scrollX = scrollX;
         }
+        console.log(state.scrollY);
         state.scrollRender.setStyle({
+            transition: "transform 0ms cubic-bezier(0.19, 1, 0.22, 1)",
             transform: "translate3d("+(-state.scrollX)+"px, "+(-state.scrollY)+"px, 0)"
         })
         
@@ -744,26 +747,16 @@ var Touch = {
         //     this.scrollBarTimeout = null
         // }
        
-        state.component.triggerEvent('scroll',{
-            x: state.scrollX,
-            y: state.scrollY,
-            stepX: dirs.angx,
-            stepY: dirs.angy,
-            type: state.direction,
-            maxY: state.maxY
-        })
+        // state.component.triggerEvent('scroll',{
+        //     x: state.scrollX,
+        //     y: state.scrollY,
+        //     stepX: dirs.angx,
+        //     stepY: dirs.angy,
+        //     type: state.direction,
+        //     maxY: state.maxY
+        // })
        
         loadingData(state, props);
-
-         /**
-         *  <text class="text-pull none">{{refreshText}}</text>       
-            <text class="text-pull none">{{loseenText}}</text>
-            <text class="text-pull none">{{pullText}}</text> 
-              state.spinerRender = ownerInstance.selectComponent('.icon-size');
-        state.arrowRender = ownerInstance.selectComponent('.arrow-size');
-        state.textRender = ownerInstance.selectAllComponents('.text-pull')  
-        addClass/removeClass/hasClass
-         */
         
         if(state.isTriggerPullDown) {
             state.textRender[0].removeClass('none');
@@ -778,7 +771,7 @@ var Touch = {
             if(!state.arrowRender.hasClass('none')){
                 state.arrowRender.addClass('none')
             }
-            return
+            return true
         }
         if(state.isTouch && state.scrollY < state.pullDownPoint) {
             state.textRender[1].removeClass('none');
@@ -796,7 +789,7 @@ var Touch = {
             if(!state.spinerRender.hasClass('none')){
                 state.spinerRender.addClass('none')
             }
-            return
+            return true
         }
 
         if(state.isTouch && state.scrollY > state.pullDownPoint) {
@@ -815,8 +808,12 @@ var Touch = {
             state.arrowRender.setStyle({
                 transform: 'rotate(-180deg)'
             })
-            return
+            return true
         }
+        
+        // state.component.setTimeout(function(){
+        //     calcMax(state, props)
+        // })
     },
     touchend: function(e, ownerInstance) {
         var res = ownerInstance.selectComponent(".itv-scroll");
@@ -898,7 +895,8 @@ var Touch = {
             } 
         }
         var speed = calcMoveSpeed(state, props);
-        animate(speed, state, props);          
+        animate(speed, state, props); 
+                
     },
     setRefresh: function(newValue, oldValue, ownerInstance, instance) {
         var res = ownerInstance.selectComponent(".itv-scroll");
@@ -956,7 +954,6 @@ var Touch = {
         if(!state.moreTextRender[1].hasClass('none')){
             state.moreTextRender[1].addClass('none');
         }
-        
         
         state.moreIconRender.removeClass('none')
         

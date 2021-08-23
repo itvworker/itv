@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "查看启动日志",
   "usingComponents": {
-    "scroller": "/components/scroller"
+    "scroller": "/components/scroller",
+    "scroller-elevator": "/components/scroller-elevator"
   }
 }

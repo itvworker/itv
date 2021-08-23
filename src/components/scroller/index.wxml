@@ -2,7 +2,7 @@
 <wxs module="touch" src="./index.wxs"></wxs>
 <view class="itv-scroll"
     bindtouchstart="{{touch.touchstart}}" 
-    bindtouchmove="{{touch.touchmove}}" 
+    catchtouchmove="{{touch.touchmove}}" 
     bindtouchend="{{touch.touchend}}" 
     bindtouchcancel="{{touch.touchend}}"
     init="{{initStatus}}"

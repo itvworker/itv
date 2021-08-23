@@ -121,7 +121,13 @@ Component({
         this.setData({
             initStatus: this.data.initStatus++
         })
+
+       
         
+    },
+    ready() {
+        // let res = this.selectAllComponents('scroller-elevator');
+        console.log(this.getRelationNodes());
     },
     methods: {
         refresh() {
@@ -130,8 +136,6 @@ Component({
             })
          
         },
-       
-       
         //是否触发上拉加载
         loadingData(value) {
             if(this.isMore && value >= this.maxY && this.moreStatus ==='loadingStop') {

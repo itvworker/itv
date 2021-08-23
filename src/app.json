@@ -1,6 +1,8 @@
 {
   "pages":[
+    
     "pages/demo/scroller/index",
+    "pages/demo/datepicker/index",
     "pages/index/index",
     "pages/logs/logs"
   ],
