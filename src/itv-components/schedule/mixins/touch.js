@@ -72,7 +72,7 @@ export default {
     mounted() {
         this.dom = render(this.$refs.slide)
         this.wdom = render(this.$refs.week)
-        this.hdom = slideHeight(this.$refs.calendar)
+        this.hdom = slideHeight(this.$refs.calendar, this)
         this.scrollerDom = render(this.$refs.scroller)
         this.scrollDom = render(this.$refs.scroll)
         // let ele = this.$refs.scroller.parentNode
@@ -107,7 +107,7 @@ export default {
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
             this.sMaxY = ph - parent.clientHeight || 0;
-            
+
             this.scrollToX = null;
             this.scrollToY = null;
             this.moveDir = 0;

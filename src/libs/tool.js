@@ -11,6 +11,7 @@ export function svgXml(content) {
 export function slideHeight (dom, obj) {
     return function(height) {
         dom.style.height = height + 'px';
+
         if(obj){
             obj.$emit('onHeight', height)
         }

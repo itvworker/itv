@@ -12,8 +12,8 @@ import './layout'
 import itv from './index.js';
 import './assets/css/index.less'
 
-import VConsole from 'vconsole'
-new VConsole()
+// import VConsole from 'vconsole'
+// new VConsole()
 
 Vue.use(itv)
 
