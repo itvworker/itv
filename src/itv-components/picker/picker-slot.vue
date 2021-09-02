@@ -296,13 +296,11 @@ export default {
             
 	    touchStart(event) {
             this.isTouch = true
-            event.preventDefault();
             let changedTouches = event.changedTouches[0];
             this.touchParams.startY = changedTouches.pageY;
             this.touchParams.lastY = changedTouches.pageY;
             this.touchParams.startTime = event.timestamp || Date.now();
             this.transformY = this.scrollDistance;
-            
             
         },
 

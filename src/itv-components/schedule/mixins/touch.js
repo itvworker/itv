@@ -103,7 +103,11 @@ export default {
             if (!this.isAni) {
                 this.aniStatus = false
             }
-
+            let dom = this.$refs.scroll;
+            let parent = dom.parentNode;
+            let ph = dom.clientHeight;
+            this.sMaxY = ph - parent.clientHeight || 0;
+            
             this.scrollToX = null;
             this.scrollToY = null;
             this.moveDir = 0;

@@ -13,7 +13,6 @@ export default {
                 this.calendarStatus = 1
             }
             this.setShowTop();
-           
             this.hdom(this.y);
         }
     }

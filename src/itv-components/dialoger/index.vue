@@ -53,6 +53,10 @@ export default {
         html: {
             type: String,
             default: ''
+        },
+        isRoot:{
+            type: Boolean,
+            default: false
         }
 
     },
@@ -159,6 +163,16 @@ export default {
         },
         preventDefault(e) {
             e.preventDefault()
+        }
+    },
+    beforeDestroy() {
+        if(this.isRoot) {
+            document.body.removeChild(this.$el);
+        }
+    },
+    mounted() {
+        if(this.isRoot) {
+            document.body.append(this.$el);
         }
     }
 

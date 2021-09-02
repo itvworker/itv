@@ -7,9 +7,17 @@
 </template>
 
 <script>
-
+import { formatDate } from '../../libs/tool.js'
 export default {
-    
+    methods: {
+        getTime() {
+            let res = new Date().getTimezoneOffset()
+            
+        }
+    },
+    mounted() {
+        this.getTime()
+    }
 }
 </script>
 

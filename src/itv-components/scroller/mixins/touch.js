@@ -3,6 +3,9 @@ export default {
     methods: {
         touchstart(e, self) {
             //启用自定义调用事件
+
+            console.log('touch------------------------------start');
+            console.log(e);
             this.calcMax();
             this.elPositon = this.$el.getBoundingClientRect()
             if(this.touchType === 'custom' && self) return
@@ -50,11 +53,12 @@ export default {
         
         touchmove(e, self) {
             //启用自定义调用事件
+           
+            console.log(e.touches);
+            console.log('maxY:'+this.maxY);
             e.preventDefault();
             if(this.touchType === 'custom' && self) return
             if(this.isTouch ===false) return
-            
-            
             let touches = e.touches;
             //检查手指数量
             if (touches.length == null) {
@@ -205,6 +209,8 @@ export default {
 
         },
         touchend(e, self) {
+            console.log('touch------------------------------end');
+            console.log(e);
             //启用自定义调用事件
             if(this.touchType === 'custom' && self) return
             

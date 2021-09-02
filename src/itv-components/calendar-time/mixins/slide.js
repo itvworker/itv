@@ -32,7 +32,7 @@ export default {
     mounted() {
         this.dom = render(this.$refs.slide)
         this.wdom = render(this.$refs.week)
-        this.hdom = slideHeight(this.$refs.calendar)
+        this.hdom = slideHeight(this.$refs.calendar, this)
     },
       
     methods: {
@@ -202,7 +202,8 @@ export default {
                         }
                         
                         this.setShowTop()
-                        this.hdom(this.y)
+                        this.hdom(this.y);
+                        
                     
                         break
                     case 'progress':

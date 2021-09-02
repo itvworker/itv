@@ -36,12 +36,12 @@
 <script>
 import calendar from '../../libs/calendar';
 import itvScroller from '../scroller/index.vue';
-import itvElevator from '../scroller-elevator/index.vue';
+// import itvElevator from '../scroller-elevator/index.vue';
 export default {
     name:'itv-scroller-calendar',
     components: {
         itvScroller,
-        itvElevator
+        // itvElevator
     },
     props: {
         minDate:{

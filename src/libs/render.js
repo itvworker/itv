@@ -20,7 +20,7 @@ export default function (content) {
         webkit: 'Webkit',
         presto: 'O'
     }[engine];
-
+    
     var helperElem = document.createElement("div");
     var undef;
 
@@ -49,4 +49,3 @@ export default function (content) {
 
     }
 }
-

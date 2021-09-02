@@ -6,13 +6,13 @@ import TouchCircle from './itv-components/touch-circle';
 import Cliper from './itv-components/cliper';
 import Cialoger from './itv-components/dialoger';
 import Drawer from './itv-components/drawer';
-import Elevator from './itv-components/elevator'
+// import Elevator from './itv-components/elevator'
 import Loading from './itv-components/loading';
 import Picker from './itv-components/picker';
 import Popup from './itv-components/popup';
 import Schedule from './itv-components/schedule';
 import Scroller from './itv-components/scroller';
-import ScrollerElevator from './itv-components/scroller-elevator';
+// import ScrollerElevator from './itv-components/scroller-elevator';
 import ScrollerToggle from './itv-components/scroller-toggle';
 import Slidebutton from './itv-components/slidebutton';
 import Slideitem from './itv-components/slideitem';
@@ -50,13 +50,13 @@ export {
     Cliper,
     Cialoger,
     Drawer,
-    Elevator,
+    // Elevator,
     Loading,
     Picker,
     Popup,
     Schedule,
     Scroller,
-    ScrollerElevator,
+    // ScrollerElevator,
     ScrollerToggle,
     Slidebutton,
     Slideitem,
@@ -96,13 +96,13 @@ let Components = [
     Cliper,
     Cialoger,
     Drawer,
-    Elevator,
+    // Elevator,
     Loading,
     Picker,
     Popup,
     Schedule,
     Scroller,
-    ScrollerElevator,
+    // ScrollerElevator,
     ScrollerToggle,
     Slidebutton,
     Slideitem,

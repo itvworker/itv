@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import ItvCell from './cell'
 import ItvToast from './toast/plugin.js'
-import ItvElevator from './elevator/index.js'
+// import ItvElevator from './elevator/index.js'
 import ItvSlider from './slider/index.js'
 import ItvDialog from './dialoger/index.js'
 import PluginDialog from './dialoger/plugin.js'
@@ -20,7 +20,7 @@ Vue.use(PluginDatepicker);
 Vue.use(PluginCalendarTime)
 Vue.use(ItvCell);
 Vue.use(ItvToast);
-Vue.use(ItvElevator);
+// Vue.use(ItvElevator);
 Vue.use(ItvSlider);
 Vue.use(ItvDialog)
 Vue.use(PluginDialog);

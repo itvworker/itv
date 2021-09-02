@@ -8,9 +8,12 @@ export function svgXml(content) {
 }
 
 
-export function slideHeight (dom) {
+export function slideHeight (dom, obj) {
     return function(height) {
         dom.style.height = height + 'px';
+        if(obj){
+            obj.$emit('onHeight', height)
+        }
     };
 }
 
@@ -19,7 +22,7 @@ export function slideHeight (dom) {
  * @param {String,Number} arg 时戳或日期字符串
  * @param {String} format 格式化的时间 Y：年 M:月 D:日 h：时 m:分 s:秒
  */
-export function formatDate(arg="", format) {
+export function formatDate(arg="", format, timeZone) {
     // console.log(typeof arg.toString());
    
 

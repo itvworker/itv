@@ -448,11 +448,23 @@ export default {
             let parent = dom.parentNode;
             let ph = dom.clientHeight;
             this.sMaxY = ph - parent.clientHeight || 0;
-            if(this.sy>=this.sMaxY) {
+            if(this.sy >= this.sMaxY) {
                 this.scrollDom(0, this.sMaxY, 1) 
                 this.sy = -this.sMaxY
             }
+        },
+        /**
+         * scoller滚动到顶部
+         */
+        initTop(){
+            let dom = this.$refs.scroll;
+            let parent = dom.parentNode;
+            let ph = dom.clientHeight;
+            this.sMaxY = ph - parent.clientHeight || 0;
+            this.sy = 0;
+            this.scrollDom(0, this.sy, 1) 
         }
+        
     },
         
 }

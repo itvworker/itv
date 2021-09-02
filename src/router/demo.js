@@ -59,15 +59,15 @@ export default [
                     title: 'cliper',
                 },
             },
-            {
-                path: '/demo/elevator',
-                name: 'itv_elevator',
-                component: () => import('@/itv-components/elevator/demo.vue'),
-                meta: {
-                    keepAlive: false,
-                    title: 'cliper',
-                },
-            },
+            // {
+            //     path: '/demo/elevator',
+            //     name: 'itv_elevator',
+            //     component: () => import('@/itv-components/elevator/demo.vue'),
+            //     meta: {
+            //         keepAlive: false,
+            //         title: 'cliper',
+            //     },
+            // },
             {
                 path: '/demo/slider',
                 name: 'itv_slider',
@@ -234,15 +234,15 @@ export default [
                     title: 'Cascader',
                 }
             },
-            {
-                path: '/demo/form',
-                name: 'itv_form',
-                component: () => import('@/itv-components/form/demo.vue'),
-                meta: {
-                    keepAlive: false,
-                    title: 'Cascader',
-                }
-            },
+            // {
+            //     path: '/demo/form',
+            //     name: 'itv_form',
+            //     component: () => import('@/itv-components/form/demo.vue'),
+            //     meta: {
+            //         keepAlive: false,
+            //         title: 'Cascader',
+            //     }
+            // },
             {
                 path: '/demo/video',
                 name: 'itv_video',
