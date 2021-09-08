@@ -2,15 +2,15 @@
     <itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
         <div class="level-select-box">
             <div class="level-select-title">
-                <div class="btn-cancel" v-show="type==='confirm'"  @click="cancel">{{cancelText}}</div>    
+                <div class="btn-cancel" v-show="type==='confirm'"  @click.stop="cancel">{{cancelText}}</div>    
                 {{titleText}}
-                <div class="btn-confirm" v-show="type==='confirm'" :class="{'forbid-btn':isLastConfirm && !isLast}" @click="confirmBtn">{{confirmText}}</div>
-                <div class="icon-close" v-show="type==='close'" @click="cancel"></div>
+                <div class="btn-confirm" v-show="type==='confirm'" :class="{'forbid-btn':isLastConfirm && !isLast}" @click.stop="confirmBtn">{{confirmText}}</div>
+                <div class="icon-close" v-show="type==='close'" @click.stop="cancel"></div>
             </div>
             <itv-scroll ref="header"  :percent="0.7" :speed="40"  pattern="horizontal" class="case-box">
                 <div class="level-select-bar">
                     <template v-for="(item,index) in currentItems">
-                         <div class="select" :class="{'active': currentHeader===index||(isLast && index === currentItems.length-1 && currentHeader===null)}"  @click="changeNow(index)">
+                         <div class="select" :class="{'active': currentHeader===index||(isLast && index === currentItems.length-1 && currentHeader===null)}"  @click.stop="changeNow(index)">
                             {{item[textKey]}}
                         </div>
                         <div class="icon-gengduox arrow-icon" v-if="!(index===currentItems.length-1 && isLast)"></div>
@@ -96,6 +96,10 @@ export default {
         type:{
             type: String,
             close: 'close'
+        },
+        level:{
+            type: Number,
+            default: 0
         }
         
     },
@@ -106,7 +110,7 @@ export default {
             currentIndex: [],
             currentItems:[],
              //当前头部高亮
-            currentHeader:null,
+            currentHeader:null, //当选择级数，即头部点击显示的active
             nowItems:[],
             isLast: false,
             itemHeight: 0,
@@ -236,6 +240,7 @@ export default {
 
 
         calcHeight() {
+           
             this.itemHeight = this.$refs.item.offsetHeight
         },
         changeNow(index) {
@@ -282,10 +287,9 @@ export default {
             this.$emit('select', this.currentItems)
         },
         calcNowItems(isInit) {
-            
             if(!this.currentSelect) return []
             let data = [];
-           
+
             //没有默认选择的时候
             if(this.currentSelect.length<=0) {
                 this.items.forEach(element => {
@@ -295,21 +299,28 @@ export default {
                 });
                  this.nowItems = data;
                
-                 this.$nextTick(()=>{
-                  this.$refs.body.calcMax();
-                  })
-                 return
+                this.$nextTick(()=>{
+                    this.$refs.body.calcMax();
+                })
+                return
             }
 
-            //debugger
             if(this.currentSelect.length > 0 && this.currentHeader === null) {
                 let id = this.currentSelect[this.currentSelect.length-1];
-                this.items.forEach(element => {
-                    if(element[this.pidKey] == id ) {
-                        data.push( JSON.parse(JSON.stringify(element)))
-                    }   
-                });
-               
+                let len = this.currentSelect.length
+                //查找子层的数组
+                if(this.level>0 && len >= this.level ) {
+                    data = []
+                }else{
+                    this.items.forEach(element => {
+                        if(element[this.pidKey] == id ) {
+                            data.push( JSON.parse(JSON.stringify(element)))
+                        }   
+                    });
+                }
+                
+
+                //如查还有子元素时，显示下级的选择
                 if(data.length > 0) {
                     this.nowItems = data
                     this.isLast = false;
@@ -317,28 +328,33 @@ export default {
                         this.$refs.body.calcMax();
                     })
                 }else{
+                    //如果没有下级直接接选择
                     this.isLast = true;
                     let obj = this.currentItems[this.currentItems.length-1];
+
+                    //有没有下级选择把当兄递级显示出来即可
                     this.items.forEach(element => {
-                            if(element[this.pidKey] == obj[this.pidKey] ) {
-                                data.push( JSON.parse(JSON.stringify(element)))
-                            }   
-                        });
+                        if(element[this.pidKey] == obj[this.pidKey] ) {
+                            data.push( JSON.parse(JSON.stringify(element)))
+                        }   
+                    });
                     this.nowItems = data;
                     this.$nextTick(()=>{
+                        //判断是数据前后数据是否相等，不相等就重新计算
                          if(JSON.stringify(this.nowItems)!==JSON.stringify(data)) {
                             this.$refs.body.calcMax();
                             this.$refs.body.scrollToNow(0, this.currentIndex[this.currentIndex.length-1]*this.itemHeight)
                         }    
                     })
-                   
+
+                    //是否要是初始化
                     if(isInit) {
                         this.$refs.body.scrollToNow(0, this.currentIndex[this.currentIndex.length-1]*this.itemHeight)
                     }
                 }
                return
             }
-
+            
             if(this.currentSelect.length > 0 && this.currentHeader !== null) {
                 let pid = this.currentItems[this.currentHeader][this.pidKey] 
                 this.items.forEach(element => {
