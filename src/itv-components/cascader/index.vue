@@ -1,6 +1,6 @@
 <template lang="html">
     <itv-dialog v-model="isVisible" type="bottom" :hideOnClick="hideOnClick">
-        <div class="level-select-box">
+        <div class="level-select-box" >
             <div class="level-select-title">
                 <div class="btn-cancel" v-show="type==='confirm'"  @click.stop="cancel">{{cancelText}}</div>    
                 {{titleText}}
@@ -100,6 +100,14 @@ export default {
         level:{
             type: Number,
             default: 0
+        },
+        isAsyn:{
+            type: Boolean,
+            default: false
+        },
+        asynFun:{
+            type: Function,
+            default: ()=>{}
         }
         
     },
@@ -117,6 +125,7 @@ export default {
             cacheNumber:0,
             nextTarget:null,
             parentTarget:null,
+            asyncArr:[], //异步存储的数组
         }
     },
     computed: {
@@ -179,7 +188,6 @@ export default {
                 let vm = this.$refs.header;
                 vm.calcMax();
                 vm.scrollToNow(vm.maxX, 0);
-              
             })
         }
        
@@ -192,19 +200,31 @@ export default {
         }
     },
     methods: {
-        init() {
+        async init() {
             this.currentItems = [];
             this.currentIndex = [];
             this.currentHeader = null;
+            this.asyncArr = [];
             this.isLast = false;
             this.currentSelect = JSON.parse(JSON.stringify(this.selected));
-           
             this.$refs.body.scrollToNow(0,0);
+            let itemArr = this.items;
+            if(this.isAsyn && this.currentSelect.length >0 ) {
+                for(let i = 0, l = this.currentSelect.length;  i < l; i++) {
+                   this.asyncArr = this.asyncArr.concat(await this.asynFun(this.currentSelect[i]))
+                }
+                itemArr = this.asyncArr;
+            }
+             if(this.isAsyn && this.currentSelect.length <= 0 ) {
+                this.asyncArr = this.asyncArr.concat(await this.asynFun(null))
+            }
+           
+            
             if(this.selected.length>0) {
                 this.selected.forEach((item, index)=>{
                     if(index===0) {
                         let arr = [];
-                        this.items.forEach(ele=>{
+                        itemArr.forEach(ele=>{
                             if(ele[this.pidKey]===0) {
                                 arr.push(ele);
                             }
@@ -215,7 +235,7 @@ export default {
                         })   
                     }else{
                         let arr = [];
-                        this.items.forEach(ele=>{
+                        itemArr.forEach(ele=>{
                             if(ele[this.pidKey]===this.selected[index-1]) {
                                 arr.push(ele);
                             }
@@ -247,15 +267,13 @@ export default {
             this.currentHeader = index;
             this.calcNowItems()
         },
-        selectItem(index) {
+        async selectItem(index) {
             if(this.currentHeader === null) {
                 if(this.isLast) {
                     let i = this.currentItems.length -1; 
                     this.$set(this.currentItems,i,JSON.parse(JSON.stringify(this.nowItems[index])));
                     this.$set(this.currentSelect,i,this.nowItems[index][this.idKey]);
                     this.$set(this.currentIndex,i,index);
-                    
-                   
                 }else{
                     this.currentItems.push(JSON.parse(JSON.stringify(this.nowItems[index])))
                     this.currentSelect.push(this.nowItems[index][this.idKey])
@@ -271,9 +289,14 @@ export default {
                 this.currentSelect[this.currentHeader] = this.nowItems[index][this.idKey]
                 this.currentIndex[this.currentHeader]=index
                 this.currentHeader = null;
-
                
             }
+            
+
+            if(this.isAsyn) {
+                this.asyncArr = this.asyncArr.concat(await this.asynFun(this.nowItems[index]))
+            }
+
             this.calcNowItems()
             this.$nextTick(()=>{
                
@@ -289,10 +312,14 @@ export default {
         calcNowItems(isInit) {
             if(!this.currentSelect) return []
             let data = [];
-
+            let itemArr = this.items;
+            if(this.isAsyn) {
+                itemArr = this.asyncArr;
+            }
+           
             //没有默认选择的时候
             if(this.currentSelect.length<=0) {
-                this.items.forEach(element => {
+                itemArr.forEach(element => {
                     if(element[this.pidKey] === 0 || !element[this.pidKey]) {
                         data.push(element)
                     }   
@@ -312,7 +339,7 @@ export default {
                 if(this.level>0 && len >= this.level ) {
                     data = []
                 }else{
-                    this.items.forEach(element => {
+                    itemArr.forEach(element => {
                         if(element[this.pidKey] == id ) {
                             data.push( JSON.parse(JSON.stringify(element)))
                         }   
@@ -333,7 +360,7 @@ export default {
                     let obj = this.currentItems[this.currentItems.length-1];
 
                     //有没有下级选择把当兄递级显示出来即可
-                    this.items.forEach(element => {
+                    itemArr.forEach(element => {
                         if(element[this.pidKey] == obj[this.pidKey] ) {
                             data.push( JSON.parse(JSON.stringify(element)))
                         }   
@@ -357,7 +384,7 @@ export default {
             
             if(this.currentSelect.length > 0 && this.currentHeader !== null) {
                 let pid = this.currentItems[this.currentHeader][this.pidKey] 
-                this.items.forEach(element => {
+                itemArr.forEach(element => {
                     if(element[this.pidKey] == pid ) {
                         data.push( JSON.parse(JSON.stringify(element)))
                     }   

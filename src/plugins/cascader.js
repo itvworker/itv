@@ -26,7 +26,6 @@ const plugin = {
                 $vm.$off('hide')
                 $vm.$off('confirm');
                 $vm.$off('select')
-                $vm.init();
                 $vm.$on('select', (msg)=>{
                     if(options.onSelect) {
                         options.onSelect(msg)
