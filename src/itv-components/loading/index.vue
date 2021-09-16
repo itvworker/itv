@@ -74,6 +74,9 @@
         <div
             class="mx-loading-disable"
             v-show="disable"
+            @touchstart="touchevent"
+            @touchmove="touchevent"
+            @touchend="touchevent"
         ></div>
     </div>
 
@@ -97,6 +100,12 @@ export default {
         value: {
             type: Boolean,
             default: false
+        }
+    },
+    methods:{
+        touchevent(e) {
+            e.preventDefault();
+            e.stopPropagation()
         }
     }
 };
