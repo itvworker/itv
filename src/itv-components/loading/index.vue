@@ -73,7 +73,7 @@
         </div>
         <div
             class="mx-loading-disable"
-            v-show="disable"
+            v-show="value"
             @touchstart="touchevent"
             @touchmove="touchevent"
             @touchend="touchevent"
