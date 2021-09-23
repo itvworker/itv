@@ -154,12 +154,13 @@
 
 <script>
 import data from './data'
-
 import Fixed from './fixed.vue';
+import ItvScrollerElevator from '../scroller-elevator';
 export default {
     mixins:[data],
     components: {
-        Fixed
+        Fixed,
+        ItvScrollerElevator
     },
     data() {
         return {
