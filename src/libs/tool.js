@@ -70,7 +70,13 @@ export function formatDate(arg="", format, timezone) {
         .replace('dd', date)
         .replace('hh', hour)
         .replace('mm', minute)
-        .replace('ss', second);
+        .replace('ss', second)
+        .replace('Y', year)
+        .replace('M', month)
+        .replace('D', date)
+        .replace('h', hour)
+        .replace('m', minute)
+        .replace('s', second)
     ;
   }
   /**
