@@ -71,7 +71,6 @@ export function formatDate(arg="", format, timezone) {
         .replace('hh', hour)
         .replace('mm', minute)
         .replace('ss', second);
-
     ;
   }
   /**
