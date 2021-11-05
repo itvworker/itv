@@ -135,9 +135,6 @@ Component({
         this.setData({
             initStatus: this.data.initStatus++
         })
-
-       
-        
     },
     ready() {
         // let res = this.selectAllComponents('scroller-elevator');

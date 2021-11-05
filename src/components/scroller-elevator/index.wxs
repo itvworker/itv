@@ -1,0 +1,6 @@
+
+module.exports = {
+    setReload: function (newValue, oldValue, ownerInstance, instance) {
+        console.log('----------');
+    }
+}

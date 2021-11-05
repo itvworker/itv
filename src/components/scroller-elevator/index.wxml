@@ -1,4 +1,12 @@
-
-<view class="scroller-elevator">
-需要需要需要需要地奇才厅地
+<wxs module="touch" src="./index.wxs"></wxs>
+<view class="itv-scroll-evevator" 
+    reload="{{reload}}"
+    change:reload="{{touch.setReload}}"
+>
+    <view class="itv-scroll-evevator-header">
+        <slot name="header"></slot>
+    </view>
+    <view class="itv-scroll-evevator-body">
+        <slot></slot>
+    </view>
 </view>
